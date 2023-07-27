@@ -1,0 +1,17 @@
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import * as path from "path";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+      "@components": path.resolve(__dirname, "src/app/components"),
+      "@features": path.resolve(__dirname, "src/app/features"),
+      "./runtimeConfig": "./runtimeConfig.browser",
+    },
+  },
+  define: { global: "window" },
+});

@@ -1,0 +1,23 @@
+import { defineStore } from "pinia";
+
+interface User {
+  id: string;
+  username: string;
+  fullName: string;
+  role: string;
+  permissions: string[];
+}
+
+export const useAuthStore = defineStore("auth", {
+  state: (): { user: User } => {
+    return {
+      user: {} as User,
+    };
+  },
+
+  actions: {
+    async login(username: string, password: string): Promise<boolean> {
+      return username == "admin" && password == "admin";
+    },
+  },
+});

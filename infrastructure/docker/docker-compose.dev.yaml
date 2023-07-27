@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+  db:
+    image: couchdb:latest
+    volumes:
+      - db_data:/var/lib/couchdb
+    restart: unless-stopped
+    environment:
+      COUCHDB_USER: 4dm1n-us3r
+      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+    ports:
+      - 5984:5984
+
+  datawarehouse:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - warehouse_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: 4dm1n-us3r
+      POSTGRES_PASSWORD: 4dm1n-p4ssw0rd!!
+      POSTGRES_DB: medicaly
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    volumes:
+      - minio_data:/data
+    ports:
+      - 9000:9000
+    environment:
+      MINIO_ACCESS_KEY: 4dm1n-us3r
+      MINIO_SECRET_KEY: 4dm1n-p4ssw0rd!!
+
+volumes:
+  db_data:
+  warehouse_data:
+  minio_data:
