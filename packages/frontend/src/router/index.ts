@@ -1,9 +1,5 @@
 // import { useUserStore } from "@/store/user";
-import {
-  createRouter,
-  type RouteRecordRaw,
-  createWebHistory,
-} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import { routes } from "./routes";
 
 const router = createRouter({

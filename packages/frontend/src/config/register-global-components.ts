@@ -17,7 +17,8 @@ import {
 } from "@components/basic/icons";
 
 export function registerGlobalComponents(app: App) {
-  app.component("LoginLayout", Login).component("HomeLayout", Home);
+  app.component("LoginLayout", Login);
+  app.component("HomeLayout", Home);
   app.component("Home03Icon", Home03Icon);
   app.component("Tool02Icon", Tool02Icon);
   app.component("Users01Icon", Users01Icon);

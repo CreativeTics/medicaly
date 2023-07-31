@@ -1,11 +1,11 @@
-// const location = window.location.host.replace(/:[0-9]*/, "");
+const location = window.location.host.replace(/:[0-9]*/, "");
 
 export const DB_AUTH = {
   username: "4dm1n-us3r",
   password: "4dm1n-p4ssw0rd!!",
 };
 
-export const DB_URL = "http://localhost:5984";
+export const DB_URL = `http://${location}:5984`;
 
 export const menu = [
   {
