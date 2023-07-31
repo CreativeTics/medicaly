@@ -104,7 +104,7 @@ const openSidebar = (items?: MenuItem[], menuItem?: any) => {
 /**
  * Mostrar submenus del sidebar
  */
-const showChildrens = (id: any, arrow: any, childrens: any) => {
+const showChildren = (id: any, arrow: any, childrens: any) => {
   const children = document.getElementById(id);
   const arrowMenu = document.getElementById(arrow);
   if (children!.style.height === "0px") {
@@ -294,7 +294,7 @@ const emitLogout = () => {
                 :data-id="`children${subMenu.idMenu}${index}`"
                 @click="
                   subMenu.children
-                    ? showChildrens(
+                    ? showChildren(
                         `children${subMenu.idMenu}${index}`,
                         `arrow-menu${subMenu.idMenu}${index}`,
                         subMenuItems[index].children?.length

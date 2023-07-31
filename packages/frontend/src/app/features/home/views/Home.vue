@@ -1,1 +1,1 @@
-<template>Holas</template>
+<template>Home Page</template>

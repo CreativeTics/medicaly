@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Sidebar from "@components/Sidebar.vue";
+import DToastStack from "@components/DToastStack.vue";
 
 import { menu } from "../../config";
 </script>
