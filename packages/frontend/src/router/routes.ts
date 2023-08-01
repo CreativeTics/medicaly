@@ -4,6 +4,8 @@ import { authRoutes } from "@features/auth";
 import { employeesRoutes } from "@features/employees";
 import { positionsRoutes } from "@features/positions";
 import { laboratoriesRoutes } from "@features/laboratories";
+import { countriesRoutes } from "@features/countries";
+import { citiesRoutes } from "@features/cities";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -19,6 +21,9 @@ export const routes: RouteRecordRaw[] = [
   ...employeesRoutes,
   ...positionsRoutes,
   ...laboratoriesRoutes,
+  ...countriesRoutes,
+  ...citiesRoutes,
+
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",

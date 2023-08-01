@@ -14,7 +14,12 @@ export const menu = [
     route: "/home",
   },
   {
-    name: "Configuración",
+    name: "Reportes",
+    icon: "File07Icon",
+    route: "/home",
+  },
+  {
+    name: "Tablas Basicas",
     icon: "Tool02Icon",
     children: [
       {
@@ -22,188 +27,65 @@ export const menu = [
         idMenu: "1",
         children: [
           {
-            name: "Jornadas",
-            route: "/journeys",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Monedas",
-            route: "/currencies",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Tipo identificación",
-            route: "/identification-types",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Lista de festivos",
-            route: "/list-holidays",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Países",
+            name: "Paises",
             route: "/countries",
-            permission: "CREATE-PAYROLL",
+            permission: "countries:list",
           },
           {
-            name: "Estado",
-            route: "/states",
-            permission: "CREATE-PAYROLL",
-          },
-        ],
-      },
-      {
-        name: "Implementación",
-        idMenu: "1",
-        children: [
-          {
-            name: "Calendarios",
-            route: "/calendars",
-            permission: "CREATE-PAYROLL",
+            name: "Ciudades",
+            route: "/cities",
+            permission: "cities:list",
           },
           {
-            name: "Compañias",
-            route: "/companies",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Sucursales",
-            route: "/locations",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Direcciones",
-            route: "/directions",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Gerencias",
-            route: "/managements",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Departamentos",
-            route: "/departments",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Cargos",
-            route: "/positions",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Centros de Costo",
-            route: "/cost-centers",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Turnos",
-            route: "/turns",
-            permission: "CREATE-PAYROLL",
+            name: "Tipos de identificación",
+            route: "/identification-types",
+            permission: "identification-types:list",
           },
           {
             name: "Entidades",
             route: "/entities",
-            permission: "CREATE-PAYROLL",
+            permission: "entities:list",
+          },
+        ],
+      },
+      {
+        name: "Formularios",
+        idMenu: "1",
+        children: [
+          {
+            name: "Restricciones",
+            route: "/restrictions",
+            permission: "restrictions:list",
           },
           {
-            name: "Maestro Conceptos",
-            route: "/concept-masters",
-            permission: "CREATE-PAYROLL",
+            name: "Recomendaciones",
+            route: "/recommendations",
+            permission: "recommendations:list",
           },
           {
-            name: "Topes",
-            route: "/caps",
-            permission: "CREATE-PAYROLL",
+            name: "CIE10",
+            route: "/cie10",
+            permission: "cie10:list",
+          },
+        ],
+      },
+      {
+        name: "Examenes",
+        idMenu: "1",
+        children: [
+          {
+            name: "Tipos de Examen",
+            route: "/exam-types",
+            permission: "exam-types:list",
           },
           {
-            name: "Cuentas Contables",
-            route: "/accounts",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Conceptos por Nómina",
-            route: "/payroll-concepts",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Nóminas",
-            route: "/payrolls",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Bancos",
-            route: "/banks",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Tipos de Cambio",
-            route: "/exchange-rates",
-            permission: "CREATE-PAYROLL",
+            name: "Examenes",
+            route: "/exams",
+            permission: "exams:list",
           },
         ],
       },
     ],
-  },
-  {
-    name: "Empleados",
-    icon: "Users01Icon",
-    route: "/home",
-  },
-  {
-    name: "Procesos",
-    icon: "CalculatorIcon",
-    children: [
-      {
-        name: "Nóminas",
-        idMenu: "3",
-        children: [
-          {
-            name: "Incidencias",
-            route: "/incidents",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Incidencias Recurrentes",
-            route: "/recurring-incidents",
-            permission: "CREATE-PAYROLL",
-          },
-        ],
-      },
-      {
-        name: "Licencias",
-        idMenu: "3",
-        children: [
-          {
-            name: "Tipos de Licencia",
-            route: "/license-types",
-            permission: "CREATE-PAYROLL",
-          },
-          {
-            name: "Solicitud de Licencia y permisos",
-            route: "/license-request",
-            permission: "CREATE-PAYROLL",
-          },
-        ],
-      },
-      {
-        name: "Préstamos",
-        idMenu: "3",
-        children: [
-          {
-            name: "Registro de Préstamos",
-            route: "/loans",
-            permission: "CREATE-PAYROLL",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Reportes",
-    icon: "File07Icon",
-    route: "/home",
   },
   {
     name: "Administración",
@@ -224,7 +106,6 @@ export const menu = [
         route: "/laboratories",
         permission: "laboratories:list",
       },
-
       {
         name: "Roles",
         route: "/roles",
