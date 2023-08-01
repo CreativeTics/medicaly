@@ -8,6 +8,7 @@ import { countriesRoutes } from "@features/countries";
 import { citiesRoutes } from "@features/cities";
 import { identificationTypesRoutes } from "@features/identification-types";
 import { entitiesRoutes } from "@features/entities";
+import { restrictionsRoutes } from "@features/restrictions";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -27,6 +28,7 @@ export const routes: RouteRecordRaw[] = [
   ...citiesRoutes,
   ...identificationTypesRoutes,
   ...entitiesRoutes,
+  ...restrictionsRoutes,
 
   {
     path: "/:pathMatch(.*)*",
