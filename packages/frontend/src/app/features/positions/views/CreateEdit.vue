@@ -7,8 +7,8 @@ import { useNotificationsStore } from "@/store/notifications";
 import { create, getEntity, edit } from "../services";
 
 const notifications = useNotificationsStore();
-const moduleName = "Empleado";
-const modulePath = "employees";
+const moduleName = "Cargo";
+const modulePath = "positions";
 
 const route = useRoute();
 const router = useRouter();
@@ -17,96 +17,25 @@ let model = {};
 const loading = ref(false);
 
 const form: Form = {
-  entity: "employees",
+  entity: modulePath,
   tabs: [
     {
       name: "Datos",
       groups: [
         {
           name: "Información basica",
-          description: "Información basica del empleado",
+          description: "Información basica del cargo",
           fields: [
             {
-              name: "documentNumber",
-              label: "Numero de documento",
+              name: "name",
+              label: "Nombre del Cargo",
               type: "text",
               props: {
-                rows: 3,
-                placeholder: "Numero de documento",
+                placeholder: "Nombre del Cargo",
+                class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },
-              rules: ["required", "integer", "minlength:3", "maxlength:20"],
-            },
-            {
-              name: "fullName",
-              label: "Nombre completo",
-              type: "text",
-              props: {
-                placeholder: "Nombre completo",
-                class: "lg:col-span-4 xl:col-span-4",
-                required: true,
-              },
-              rules: ["required", "minlength:3", "maxlength:50"],
-            },
-            {
-              name: "position",
-              label: "Cargo",
-              type: "select",
-              props: {
-                required: true,
-              },
-              rules: ["required"],
-              query: {
-                entity: "general:positions",
-                fields: ["id", "name"],
-                orderBy: ["name", "asc"],
-              },
-            },
-          ],
-        },
-        {
-          name: "Datos de Habilitacion",
-          fields: [
-            {
-              name: "licenseNumber",
-              label: "Numero de documento Habilitado",
-              type: "text",
-              props: {
-                rows: 3,
-                placeholder: "Documento Habilitado",
-              },
-              rules: ["maxlength:20"],
-            },
-            {
-              name: "licenseName",
-              label: "Nombre Habilitado",
-              type: "text",
-              props: {
-                placeholder: "Nombre Habilitado",
-                class: "lg:col-span-4 xl:col-span-4",
-              },
-              rules: ["maxlength:50"],
-            },
-          ],
-        },
-        {
-          name: " Examenes Asignados",
-          description:
-            "Defina aqui los examenes que este empleado puede diligenciar.",
-          fields: [
-            {
-              name: "exams",
-              label: "Examenes Asignados",
-              type: "multiselect",
-              props: {
-                required: true,
-              },
-              rules: ["required-array"],
-              query: {
-                entity: "permissions",
-                fields: ["id", "name"],
-                orderBy: ["name", "asc"],
-              },
+              rules: ["required", "upper", "minlength:3", "maxlength:50"],
             },
           ],
         },
@@ -175,7 +104,7 @@ onBeforeMount(async () => {
       <div class="leading-4 pt-responsive">
         <p class="text-3xl font-semibold text-shadow text-blue-900">
           {{ route.params.id == undefined ? "Crear" : "Editar" }}
-          Empleado
+          {{ moduleName }}
         </p>
       </div>
     </div>

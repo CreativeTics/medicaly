@@ -30,31 +30,17 @@ export async function getSelectData<T>(
   localQuery.where = localQuery.where ?? [];
   replaceWhereTags(localQuery, selectId);
 
-  // if (params) {
-  //   params.forEach((value, key) => {
-  //     localQuery.where?.push(`${key} ${operator} '${value}'`);
-  //   });
-  // }
-
   if (localQuery.entity === "permissions") {
     return permissions as T;
   }
 
-  // const response: any = await http.post("get-table/query", {
-  //   type: "select",
-  //   ...localQuery,
-  // });
+  const data = await getData<T>(localQuery);
 
-  return [] as T;
+  return data as T;
 }
 
 function replaceWhereTags(query: TableDataQuery, selectId?: string) {
   console.log("replaceWhereTags", query, selectId);
-  // if (query.where) {
-  //   query.where = query.where.map((where: string) => {
-  //     return replacePayrollTags(where, true, selectId);
-  //   });
-  // }
 }
 
 export function replacePayrollTags(

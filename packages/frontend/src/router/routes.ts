@@ -2,6 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 
 import { authRoutes } from "@features/auth";
 import { employeesRoutes } from "@features/employees";
+import { positionsRoutes } from "@features/positions";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -15,4 +16,13 @@ export const routes: RouteRecordRaw[] = [
   },
   ...authRoutes,
   ...employeesRoutes,
+  ...positionsRoutes,
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@/app/features/not-found/views/NotFound.vue"),
+    meta: {
+      layout: "empty",
+    },
+  },
 ];

@@ -215,10 +215,16 @@ export const menu = [
         permission: "laboratories:list",
       },
       {
+        name: "Cargos",
+        route: "/positions",
+        permission: "positions:list",
+      },
+      {
         name: "Empleados",
         route: "/employees",
         permission: "roles:list",
       },
+
       {
         name: "Roles",
         route: "/roles",
