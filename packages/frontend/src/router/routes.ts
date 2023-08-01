@@ -3,6 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 import { authRoutes } from "@features/auth";
 import { employeesRoutes } from "@features/employees";
 import { positionsRoutes } from "@features/positions";
+import { laboratoriesRoutes } from "@features/laboratories";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -17,6 +18,7 @@ export const routes: RouteRecordRaw[] = [
   ...authRoutes,
   ...employeesRoutes,
   ...positionsRoutes,
+  ...laboratoriesRoutes,
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",

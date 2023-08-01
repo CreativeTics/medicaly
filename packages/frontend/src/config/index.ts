@@ -210,11 +210,6 @@ export const menu = [
     icon: "Shield02Icon",
     children: [
       {
-        name: "Laboratorios",
-        route: "/laboratories",
-        permission: "laboratories:list",
-      },
-      {
         name: "Cargos",
         route: "/positions",
         permission: "positions:list",
@@ -223,6 +218,11 @@ export const menu = [
         name: "Empleados",
         route: "/employees",
         permission: "roles:list",
+      },
+      {
+        name: "Laboratorios",
+        route: "/laboratories",
+        permission: "laboratories:list",
       },
 
       {
