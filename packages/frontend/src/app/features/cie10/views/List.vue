@@ -5,8 +5,8 @@ import ModuleListBasic from "../../../components/ModuleListBasic.vue";
 import { getList } from "../services";
 
 const router = useRouter();
-const moduleName = "Restriccion";
-const modulePath = "restrictions";
+const moduleName = "CIE10";
+const modulePath = "cie10";
 
 const columns = [
   {
@@ -16,7 +16,12 @@ const columns = [
   },
   {
     key: "name",
-    title: "Restricción",
+    title: "Nombre",
+    align: "left",
+  },
+  {
+    key: "parentCode",
+    title: "Grupo Padre",
     align: "left",
   },
   {
@@ -45,8 +50,8 @@ onMounted(async () => {
 
 <template>
   <ModuleListBasic
-    :title="`${moduleName}es`"
-    :subtitle="`Gestión de ${moduleName}es medicas`"
+    :title="`${moduleName}`"
+    :subtitle="`Gestión de codigos ${moduleName}`"
     :columns="columns"
     :rows="data"
     :actions="['edit', 'delete', 'create']"

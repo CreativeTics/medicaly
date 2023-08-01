@@ -7,8 +7,8 @@ import { useNotificationsStore } from "@/store/notifications";
 import { create, getEntity, edit } from "../services";
 
 const notifications = useNotificationsStore();
-const moduleName = "Restriccion";
-const modulePath = "restrictions";
+const moduleName = "Cie10";
+const modulePath = "cie10";
 
 const route = useRoute();
 const router = useRouter();
@@ -26,6 +26,19 @@ const form: Form = {
           name: "Información basica",
           description: "",
           fields: [
+            {
+              name: "parentCode",
+              label: "Grupo Padre",
+              type: "select",
+              props: {
+                "value-key": "code",
+              },
+              rules: [],
+              query: {
+                entity: "medical:cie10",
+                fields: ["code", "name"],
+              },
+            },
             {
               name: "code",
               label: "Codigo",

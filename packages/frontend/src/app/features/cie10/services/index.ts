@@ -3,12 +3,12 @@ import { getData } from "../../../core/services/get-table/";
 import { PouchService, DB } from "../../../services/pouch";
 
 const pouch = new PouchService();
-const doctype = "restrictions";
+const doctype = "cie10";
 
 export async function getList() {
   const data = await getData<any[]>({
     entity: `${DB.MEDICAL}:${doctype}`,
-    fields: ["id", "code", "name", "updatedAt"],
+    fields: ["id", "code", "name", "parentCode", "updatedAt"],
   });
 
   return data.map((doc: any) => {
@@ -16,6 +16,7 @@ export async function getList() {
       id: doc.id,
       name: doc.name,
       code: doc.code,
+      parentCode: doc.parentCode,
       updatedAt: doc.updatedAt,
     };
   });
@@ -26,6 +27,7 @@ export async function getEntity(id: string): Promise<any> {
   return {
     code: doc.code,
     name: doc.name,
+    parentCode: doc.parentCode,
   };
 }
 
