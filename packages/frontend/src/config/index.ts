@@ -74,11 +74,6 @@ export const menu = [
         idMenu: "1",
         children: [
           {
-            name: "Tipos de Examen",
-            route: "/exam-types",
-            permission: "exam-types:list",
-          },
-          {
             name: "Examenes",
             route: "/exams",
             permission: "exams:list",

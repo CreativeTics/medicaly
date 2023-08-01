@@ -11,6 +11,7 @@ import { entitiesRoutes } from "@features/entities";
 import { restrictionsRoutes } from "@features/restrictions";
 import { recommendationsRoutes } from "@features/recommendations";
 import { cie10Routes } from "@features/cie10";
+import { examsRoutes } from "@features/exams";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -33,6 +34,7 @@ export const routes: RouteRecordRaw[] = [
   ...restrictionsRoutes,
   ...recommendationsRoutes,
   ...cie10Routes,
+  ...examsRoutes,
   {
     path: "/",
     name: "Index",
