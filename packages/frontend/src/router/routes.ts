@@ -9,6 +9,8 @@ import { citiesRoutes } from "@features/cities";
 import { identificationTypesRoutes } from "@features/identification-types";
 import { entitiesRoutes } from "@features/entities";
 import { restrictionsRoutes } from "@features/restrictions";
+import { recommendationsRoutes } from "@features/recommendations";
+import { cie10Routes } from "@features/cie10";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -29,6 +31,16 @@ export const routes: RouteRecordRaw[] = [
   ...identificationTypesRoutes,
   ...entitiesRoutes,
   ...restrictionsRoutes,
+  ...recommendationsRoutes,
+  ...cie10Routes,
+  {
+    path: "/",
+    name: "Index",
+    component: () => import("@/app/features/index/views/Index.vue"),
+    meta: {
+      layout: "empty",
+    },
+  },
 
   {
     path: "/:pathMatch(.*)*",
