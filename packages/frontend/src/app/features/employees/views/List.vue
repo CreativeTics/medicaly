@@ -8,19 +8,18 @@ const router = useRouter();
 
 const columns = [
   {
-    key: "name",
+    key: "documentNumber",
+    title: "No. Documento",
+    align: "left",
+  },
+  {
+    key: "fullName",
     title: "Nombre",
     align: "left",
   },
   {
-    key: "description",
-    title: "Descripción",
-    align: "left",
-  },
-  {
-    key: "permissions",
-    title: "Permisos",
-    align: "left",
+    key: "position",
+    title: "Cargo",
   },
   {
     key: "updatedAt",
@@ -33,11 +32,11 @@ const data = ref<any>([]);
 
 const goToCreate = () => {
   console.log("Create");
-  router.push({ name: "roles.create" });
+  router.push({ name: "employees.create" });
 };
 const goToEdit = (id: string) => {
   console.log("Edit", id);
-  router.push({ name: "roles.edit", params: { id } });
+  router.push({ name: "employees.edit", params: { id } });
 };
 
 onMounted(async () => {

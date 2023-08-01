@@ -1,91 +1,91 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { ChevronDownIcon, Loading02Icon } from './icons'
+import { ref, computed } from "vue";
+import { ChevronDownIcon, Loading02Icon } from "./icons";
 
-const optionShow = ref(false)
-const showLabel = ref(true)
-const showInput = ref(false)
-const input = ref(null)
+const optionShow = ref(false);
+const showLabel = ref(true);
+const showInput = ref(false);
+const input = ref(null);
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string | number
-    label: string
-    hint: string
-    options: any[]
-    showKey: string
-    valueKey: string
-    disabled: boolean
-    error: string
-    required: boolean
-    placeholder: string
+    modelValue: string | number;
+    label: string;
+    hint?: string;
+    options: any[];
+    showKey?: string;
+    valueKey?: string;
+    disabled?: boolean;
+    error?: string;
+    required?: boolean;
+    placeholder?: string;
   }>(),
   {
-    modelValue: '',
-    label: '',
-    hint: '',
+    modelValue: "",
+    label: "",
+    hint: "",
     options: () => [],
-    showKey: 'name',
-    valueKey: 'id',
+    showKey: "name",
+    valueKey: "id",
     disabled: false,
-    error: '',
+    error: "",
     required: false,
-    placeholder: 'Seleccione'
+    placeholder: "Seleccione",
   }
-)
+);
 
-const emit = defineEmits(['update:modelValue', 'filter', 'focus', 'change'])
+const emit = defineEmits(["update:modelValue", "filter", "focus", "change"]);
 
 const emitUpdate = (val) => {
-  emit('update:modelValue', val)
-}
+  emit("update:modelValue", val);
+};
 
-const emitFilter = (filter) => emit('filter', filter)
-const emitFocus = () => emit('focus')
-const emitChange = (event) => emit('change', event)
+const emitFilter = (filter) => emit("filter", filter);
+const emitFocus = () => emit("focus");
+const emitChange = (event) => emit("change", event);
 
 const nameValue = computed(() => {
   return (
     props.options.find((item) => item[props.valueKey] == props.modelValue)?.[
       props.showKey
     ] || `${props.placeholder}`
-  )
-})
+  );
+});
 
 const showOptions = () => {
   if (!props.disabled) {
-    optionShow.value = true
-    focusSearch()
+    optionShow.value = true;
+    focusSearch();
   }
-}
+};
 
 const exit = () => {
-  optionShow.value = false
-  showLabel.value = true
-  showInput.value = false
-  emitFilter('')
-}
+  optionShow.value = false;
+  showLabel.value = true;
+  showInput.value = false;
+  emitFilter("");
+};
 
 const selectOption = (option) => {
-  optionShow.value = false
-  showLabel.value = true
-  showInput.value = false
-  emitFilter('')
+  optionShow.value = false;
+  showLabel.value = true;
+  showInput.value = false;
+  emitFilter("");
 
   if (option[props.valueKey]) {
-    emitUpdate(String(option[props.valueKey]))
-    emitChange(String(option[props.valueKey]))
+    emitUpdate(String(option[props.valueKey]));
+    emitChange(String(option[props.valueKey]));
   } else {
-    emitUpdate('')
-    emitChange('')
+    emitUpdate("");
+    emitChange("");
   }
-}
+};
 
 const focusSearch = () => {
   setTimeout(() => {
-    input.value.focus()
-  }, 1)
-}
+    input.value.focus();
+  }, 1);
+};
 </script>
 <template>
   <div class="relative block">
@@ -97,9 +97,10 @@ const focusSearch = () => {
       class="w-full flex justify-between items-center rounded-md shadow-sm border py-2 px-2 gap-2 cursor-default"
       :class="[
         disabled ? 'bg-gray-200 cursor-no-drop ' : 'bg-white',
-        error === '' ? 'btn-block border-gray-300' : 'border-red-500'
+        error === '' ? 'btn-block border-gray-300' : 'border-red-500',
       ]"
-      @click="showOptions">
+      @click="showOptions"
+    >
       <span v-if="options.length > 0" class="text-sm truncate ...">
         {{ `${nameValue}` }}
       </span>
@@ -108,7 +109,8 @@ const focusSearch = () => {
       </span>
       <ChevronDownIcon
         v-if="options.length > 0"
-        class="ml-2 w-4 h-4 text-black font-black" />
+        class="ml-2 w-4 h-4 text-black font-black"
+      />
       <Loading02Icon v-else class="rotate text-gray-400" />
     </label>
     <input
@@ -121,16 +123,25 @@ const focusSearch = () => {
       @focusout="($event: any) => emitFocus()"
       @change="emitChange($event)"
       :disabled="disabled"
-      :placeholder="placeholder" />
+      :placeholder="placeholder"
+    />
     <ul
       class="absolute z-10 mt-1 bg-white w-full border border-gray-300 rounded-md shadow-xl max-h-72 overflow-y-auto scroll px-1"
-      v-show="optionShow">
+      v-show="optionShow"
+    >
       <li
         class="dropdown-item rounded-md my-1 hover:bg-blue-500 hover:text-white cursor-pointer text-sm px-2 py-1"
         @mousedown="selectOption(option)"
-        v-for="(option, index) in options"
-        :key="index">
-        {{ typeof option == 'object' ? option[showKey] : option }}
+        v-for="(option, index) in [
+          {
+            [props.showKey]: `${props.placeholder}`,
+            [props.valueKey]: null,
+          },
+          ...options,
+        ]"
+        :key="index"
+      >
+        {{ typeof option == "object" ? option[showKey] : option }}
       </li>
     </ul>
     <span class="text-xs text-red-500">{{ error }}</span>

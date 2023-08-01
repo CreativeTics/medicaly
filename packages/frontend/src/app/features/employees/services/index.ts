@@ -3,55 +3,53 @@ import { getData } from "../../../core/services/get-table/";
 import { PouchService, DB } from "../../../services/pouch";
 
 const pouch = new PouchService();
+const doctype = "employees";
 
 export async function getList() {
   const data = await getData<any[]>({
     entity: "general:employees",
-    fields: ["id", "fullName", "documentNumber", "position", "updatedAt"],
+    fields: ["id", "documentNumber", "fullName", "position", "updatedAt"],
   });
 
   return data.map((doc: any) => {
     return {
       id: doc.id,
-      name: doc.name,
-      description: doc.description,
-      permissions: doc.permissions.length,
+      documentNumber: doc.documentNumber,
+      fullName: doc.fullName,
+      position: doc.position,
       updatedAt: doc.updatedAt,
     };
   });
 }
 
-export async function getRole(id: string): Promise<Role> {
-  const doc = await pouch.use(DB.AUTH).get(id);
+export async function getEntity(id: string): Promise<any> {
+  const doc = await pouch.use(DB.GENERAL).get(id);
   return {
-    name: doc.name,
-    description: doc.description,
-    permissions: doc.permissions,
+    documentNumber: doc.documentNumber,
+    fullName: doc.fullName,
+    position: doc.position,
+    licenseNumber: doc.licenseNumber,
+    licenseName: doc.licenseName,
+    exams: doc.exams,
   };
 }
 
-export async function create(role: Role): Promise<boolean> {
-  const response = await pouch.use(DB.AUTH).create({
-    doctype: "roles",
-    ...role,
+export async function create(entity: any): Promise<boolean> {
+  const response = await pouch.use(DB.GENERAL).create({
+    doctype,
+    ...entity,
   });
   console.log("edit", response);
   return true;
 }
 
-export async function edit(id: string, role: Role): Promise<boolean> {
+export async function edit(id: string, entity: any): Promise<boolean> {
   const response = await pouch.use(DB.AUTH).update({
-    doctype: "roles",
+    doctype,
     id,
-    ...role,
+    ...entity,
   });
   console.log("edit", response);
 
   return true;
-}
-
-export interface Role {
-  name: string;
-  description?: string;
-  permissions: string[];
 }

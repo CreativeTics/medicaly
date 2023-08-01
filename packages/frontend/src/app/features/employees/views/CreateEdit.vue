@@ -4,9 +4,11 @@ import { useRoute, useRouter } from "vue-router";
 import { Form, DynamicForm } from "../../dynamic-form";
 import { useNotificationsStore } from "@/store/notifications";
 
-import { create, getRole, edit } from "../services";
+import { create, getEntity, edit } from "../services";
 
 const notifications = useNotificationsStore();
+const moduleName = "Empleado";
+const modulePath = "employees";
 
 const route = useRoute();
 const router = useRouter();
@@ -15,28 +17,86 @@ let model = {};
 const loading = ref(false);
 
 const form: Form = {
-  entity: "roles",
+  entity: "employees",
   tabs: [
     {
-      name: "General",
+      name: "Datos",
       groups: [
         {
-          name: "General",
+          name: "Información basica",
+          description: "Información basica del empleado",
           fields: [
             {
-              name: "name",
-              label: "Nombre",
+              name: "documentNumber",
+              label: "Numero de documento",
               type: "text",
               props: {
                 rows: 3,
-                placeholder: "Nombre",
+                placeholder: "Numero de documento",
+                required: true,
+              },
+              rules: ["required", "integer", "minlength:3", "maxlength:20"],
+            },
+            {
+              name: "fullName",
+              label: "Nombre completo",
+              type: "text",
+              props: {
+                placeholder: "Nombre completo",
+                class: "lg:col-span-4 xl:col-span-4",
                 required: true,
               },
               rules: ["required", "minlength:3", "maxlength:50"],
             },
             {
-              name: "permissions",
-              label: "Permisos",
+              name: "position",
+              label: "Cargo",
+              type: "select",
+              props: {
+                required: true,
+              },
+              rules: ["required"],
+              query: {
+                entity: "permissions",
+                fields: ["id", "name"],
+                orderBy: ["name", "asc"],
+              },
+            },
+          ],
+        },
+        {
+          name: "Datos de Habilitacion",
+          fields: [
+            {
+              name: "licenseNumber",
+              label: "Numero de documento Habilitado",
+              type: "text",
+              props: {
+                rows: 3,
+                placeholder: "Documento Habilitado",
+              },
+              rules: ["maxlength:20"],
+            },
+            {
+              name: "licenseName",
+              label: "Nombre Habilitado",
+              type: "text",
+              props: {
+                placeholder: "Nombre Habilitado",
+                class: "lg:col-span-4 xl:col-span-4",
+              },
+              rules: ["maxlength:50"],
+            },
+          ],
+        },
+        {
+          name: " Examenes Asignados",
+          description:
+            "Defina aqui los examenes que este empleado puede diligenciar.",
+          fields: [
+            {
+              name: "exams",
+              label: "Examenes Asignados",
               type: "multiselect",
               props: {
                 required: true,
@@ -47,17 +107,6 @@ const form: Form = {
                 fields: ["id", "name"],
                 orderBy: ["name", "asc"],
               },
-            },
-            {
-              name: "description",
-              label: "Descripción",
-              type: "textarea",
-              props: {
-                rows: 3,
-                placeholder: "Description",
-                class: "lg:col-span-6 xl:col-span-6",
-              },
-              rules: ["maxlength:300"],
             },
           ],
         },
@@ -74,30 +123,30 @@ const onSubmit = async (data: any) => {
     if (await create(data)) {
       notifications.addNotification({
         type: "success",
-        title: "Rol creado",
-        text: "El rol se ha creado correctamente",
+        title: `${moduleName} creado`,
+        text: `El ${moduleName} se ha creado correctamente`,
       });
-      router.push({ name: "roles.list" });
+      router.push({ name: `${modulePath}.list` });
     } else {
       notifications.addNotification({
         type: "error",
         title: "Error",
-        text: "No se ha podido crear el rol",
+        text: `No se ha podido crear el ${moduleName}`,
       });
     }
   } else {
     if (await edit(route.params.id as string, data)) {
       notifications.addNotification({
         type: "success",
-        title: "Rol actualizado",
-        text: "El rol se ha actualizado correctamente",
+        title: `${moduleName} actualizado`,
+        text: `El ${moduleName} se ha actualizado correctamente`,
       });
-      router.push({ name: "roles.list" });
+      router.push({ name: `${modulePath}.list` });
     } else {
       notifications.addNotification({
         type: "error",
         title: "Error",
-        text: "No se ha podido actualizar el rol",
+        text: `No se ha podido actualizar el ${moduleName}`,
       });
     }
   }
@@ -105,7 +154,7 @@ const onSubmit = async (data: any) => {
 
 const back = () => {
   console.log("Back");
-  router.push({ name: "roles.list" });
+  router.push({ name: `${modulePath}.list` });
 };
 
 onBeforeMount(async () => {
@@ -113,7 +162,7 @@ onBeforeMount(async () => {
 
   console.log("Mounted", route.params.id);
   if (route.params.id) {
-    model = await getRole(route.params.id as string);
+    model = await getEntity(route.params.id as string);
     console.log("Model", model);
   }
   loading.value = false;
@@ -126,7 +175,7 @@ onBeforeMount(async () => {
       <div class="leading-4 pt-responsive">
         <p class="text-3xl font-semibold text-shadow text-blue-900">
           {{ route.params.id == undefined ? "Crear" : "Editar" }}
-          Rol
+          Empleado
         </p>
       </div>
     </div>

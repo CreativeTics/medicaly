@@ -75,7 +75,7 @@ const updateOptions = async (val: any = {}) => {
     val.operator
   );
   if (props.field.type === "select") {
-    options.value.unshift({ id: null, name: "Seleccione" });
+    // options.value.unshift({ id: null, name: "Seleccione" });
   }
   isLoading.value = false;
 };
@@ -124,6 +124,7 @@ onMounted(async () => {
     :class="field.class"
     :error="error"
     :readonly="readonly"
+    :header-title="field.label"
     v-bind="{
       ...(components.get(field.type)?.defaultProps ?? {}),
       ...field.props,
