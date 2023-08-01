@@ -48,7 +48,6 @@ const form: Form = {
               query: {
                 entity: "permissions",
                 fields: ["id", "name"],
-                orderBy: ["name", "asc"],
               },
             },
           ],

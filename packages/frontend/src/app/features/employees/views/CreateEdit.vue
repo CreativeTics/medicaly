@@ -59,7 +59,6 @@ const form: Form = {
               query: {
                 entity: "general:positions",
                 fields: ["id", "name"],
-                orderBy: ["name", "asc"],
               },
             },
           ],
@@ -105,7 +104,6 @@ const form: Form = {
               query: {
                 entity: "permissions",
                 fields: ["id", "name"],
-                orderBy: ["name", "asc"],
               },
             },
           ],
