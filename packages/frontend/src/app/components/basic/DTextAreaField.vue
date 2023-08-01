@@ -1,34 +1,34 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    modelValue: string
-    label: string
-    placeholder: string
-    hint: string
-    disabled: boolean
-    rows: number
-    validation: object
-    error: string
-    required: boolean
+    modelValue: string;
+    label: string;
+    placeholder?: string;
+    hint?: string;
+    disabled?: boolean;
+    rows?: number;
+    validation?: object;
+    error?: string;
+    required?: boolean;
   }>(),
   {
-    modelValue: '',
-    label: '',
-    placeholder: '',
-    hint: '',
+    modelValue: "",
+    label: "",
+    placeholder: "",
+    hint: "",
     disabled: false,
     rows: 3,
     validation: () => ({}),
-    error: '',
-    required: false
+    error: "",
+    required: false,
   }
-)
+);
 
-const emit = defineEmits(['update:modelValue', 'enter'])
+const emit = defineEmits(["update:modelValue", "enter"]);
 
 const emitUpdate = (val: any) => {
-  emit('update:modelValue', val.target.value)
-}
+  emit("update:modelValue", val.target.value);
+};
 </script>
 <template>
   <div>
@@ -45,7 +45,8 @@ const emitUpdate = (val: any) => {
         :rows="rows"
         @input="emitUpdate($event)"
         @keyup.enter="emit('enter')"
-        :class="[{ error }, { 'bg-gray-200': disabled }]" />
+        :class="[{ error }, { 'bg-gray-200': disabled }]"
+      />
     </div>
     <p v-if="!!hint" class="mt-2 text-sm text-gray-500">{{ hint }}</p>
     <span class="text-xs text-red-500">{{ error }}</span>

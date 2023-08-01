@@ -17,6 +17,13 @@ export const useAuthStore = defineStore("auth", {
 
   actions: {
     async login(username: string, password: string): Promise<boolean> {
+      this.$state.user = {
+        id: "1",
+        username: "admin",
+        fullName: "Administrador",
+        role: "admin",
+        permissions: ["roles:create", "roles:read", "roles:edit"],
+      };
       return username == "admin" && password == "admin";
     },
   },

@@ -279,7 +279,7 @@ const emitLogout = () => {
         class="nav-secondary-menu flex flex-col overflow-hidden overflow-y-auto scroll pr-2"
         style="margin-right: -8px"
       >
-        <template v-for="menuItem of menu" :key="i">
+        <template v-for="(menuItem, j) of menu" :key="j">
           <ul
             :style="
               activeMenu === menuItem.name ? 'display: block' : 'display: none'

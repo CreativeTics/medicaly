@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import ModuleListBasic from "../../../../components/ModuleListBasic.vue";
-import { getRoles } from "../services";
+import ModuleListBasic from "../../../components/ModuleListBasic.vue";
+import { getList } from "../services";
 
 const router = useRouter();
 
@@ -41,15 +41,15 @@ const goToEdit = (id: string) => {
 };
 
 onMounted(async () => {
-  data.value = await getRoles();
+  data.value = await getList();
   console.log("Mounted", data.value);
 });
 </script>
 
 <template>
   <ModuleListBasic
-    title="Roles"
-    subtitle="Gestión de Roles"
+    title="Empleados"
+    subtitle="Gestión de Empleados"
     :columns="columns"
     :rows="data"
     :actions="['edit', 'delete', 'create']"

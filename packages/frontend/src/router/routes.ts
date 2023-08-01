@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
 
 import { authRoutes } from "@features/auth";
+import { employeesRoutes } from "@features/employees";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -13,4 +14,5 @@ export const routes: RouteRecordRaw[] = [
     },
   },
   ...authRoutes,
+  ...employeesRoutes,
 ];
