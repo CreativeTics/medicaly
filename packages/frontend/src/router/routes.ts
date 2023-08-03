@@ -12,6 +12,7 @@ import { restrictionsRoutes } from "@features/restrictions";
 import { recommendationsRoutes } from "@features/recommendations";
 import { cie10Routes } from "@features/cie10";
 import { examsRoutes } from "@features/exams";
+import { contractsRoutes } from "@features/contracts";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -35,15 +36,7 @@ export const routes: RouteRecordRaw[] = [
   ...recommendationsRoutes,
   ...cie10Routes,
   ...examsRoutes,
-  {
-    path: "/",
-    name: "Index",
-    component: () => import("@/app/features/index/views/Index.vue"),
-    meta: {
-      layout: "empty",
-    },
-  },
-
+  ...contractsRoutes,
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",

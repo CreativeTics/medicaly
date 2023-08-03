@@ -63,9 +63,19 @@ export class PouchService {
     return await this.db?.put(doc);
   }
 
-  // public async delete(doc: any) {
-  //   return this.db?.remove(doc);
-  // }
+  public async delete(docId: string) {
+    const oldDoc = await this.get(docId);
+    const user = useAuthStore().user;
+    oldDoc.updatedAt = new Date().toISOString();
+    oldDoc.updatedBy = user?.id ?? "";
+    oldDoc.isDeleted = true;
+    oldDoc._rev = oldDoc?.rev;
+    oldDoc._id = oldDoc?.id;
+    delete oldDoc.id;
+    delete oldDoc.rev;
+    // TODO: emit audit event
+    return await this.db?.put(oldDoc);
+  }
 
   public read() {
     return this.db?.allDocs({ include_docs: true });

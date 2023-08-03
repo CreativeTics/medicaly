@@ -62,6 +62,11 @@ const optionsFiltered = computed<SelectOption[]>(() =>
 );
 
 const updateOptions = async (val: any = {}) => {
+  if (props.field.type === "select" && props.field.props?.options) {
+    options.value = props.field.props.options;
+    return;
+  }
+
   if (!props.query || props.field.type === "table") return;
   isLoading.value = true;
   const params = new Map<string, string>();
@@ -74,9 +79,6 @@ const updateOptions = async (val: any = {}) => {
     props.modelValue as string,
     val.operator
   );
-  if (props.field.type === "select") {
-    // options.value.unshift({ id: null, name: "Seleccione" });
-  }
   isLoading.value = false;
 };
 

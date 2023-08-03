@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { ref, useSlots, onMounted } from 'vue'
+import { ref, useSlots, onMounted } from "vue";
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
-    heightFormModal: boolean
+    fixedHeight: boolean;
   }>(),
   {
-    heightFormModal: false
+    fixedHeight: true,
   }
-)
+);
 
-const slots = useSlots()
-const selectedTitle = ref('')
-const tabs = ref([])
+const slots = useSlots();
+const selectedTitle = ref("");
+const tabs = ref([]);
 
 const calculateTabs = () => {
   const rawTabs =
     Number(slots.default()[0].children.length) > 0
       ? slots.default()?.[0]?.children
-      : slots.default()
-  selectedTitle.value = rawTabs?.[0].props?.title ?? ''
+      : slots.default();
+  selectedTitle.value = rawTabs?.[0].props?.title ?? "";
 
   tabs.value = [...(rawTabs as [])].map((tab: any) => {
     return {
       title: tab?.props?.title,
-      isActive: tab?.props?.isActive
-    }
-  })
-}
+      isActive: tab?.props?.isActive,
+    };
+  });
+};
 
 onMounted(() => {
-  calculateTabs()
-})
+  calculateTabs();
+});
 </script>
 <template>
   <div>
@@ -46,14 +46,16 @@ onMounted(() => {
               ? 'border-b-2 border-blue-600 text-blue-600 '
               : 'text-gray-400 border-b-2 border-gray-200'
           "
-          @click="selectedTitle = tab.title">
+          @click="selectedTitle = tab.title"
+        >
           {{ tab.title }}
         </li>
       </ul>
     </div>
     <div
-      :class="[heightFormModal ? 'content-modal' : 'content']"
-      class="shadow-md rounded-b-none scroll rounded-md overflow-y-auto w-full bg-white pt-1.5">
+      :class="[fixedHeight ? 'content' : 'min-h-min']"
+      class="shadow-md rounded-b-none scroll rounded-md overflow-y-auto w-full bg-white pt-1.5"
+    >
       <slot :selectedTitle="selectedTitle"></slot>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { markRaw, onMounted, reactive, ref } from "vue";
 import { useValidation } from "../../../core/composable/validation/index";
-import { DTab, DTabs, DBtn, DLoading } from "../../../components/basic";
+import { DTab, DTabs, DBtn } from "../../../components/basic";
 import DynamicField from "./DynamicField.vue";
 import { useNotificationsStore } from "../../../../store/notifications";
 
@@ -13,7 +13,11 @@ const props = defineProps({
   readonly: { type: Boolean, required: false, default: false },
   titleBtnSave: { type: String, required: false, default: "" },
   getData: { type: Boolean, required: false, default: false },
-  heightFormModal: { type: Boolean, required: false, default: false },
+  fixedHeight: { type: Boolean, required: false, default: true },
+  gridClass: {
+    required: false,
+    default: "grid grid-cols-8 px-6 py-4",
+  },
 });
 
 const emit = defineEmits([
@@ -150,9 +154,8 @@ defineExpose<{
 </script>
 
 <template>
-  <DLoading v-show="loading" message="Validando archivos..." />
   <form class="pt-responsive w-full" @submit.prevent="onHandleSubmit">
-    <DTabs :height-form-modal="heightFormModal">
+    <DTabs :fixed-eight="fixedHeight">
       <template v-slot:default="slotProps">
         <DTab
           v-for="tab in tabs"
@@ -163,7 +166,7 @@ defineExpose<{
           <div
             v-for="(group, index) in tab.groups as any[]"
             :key="index"
-            class="grid grid-cols-8 px-6 py-4"
+            :class="gridClass"
           >
             <div
               v-if="group.if ? !!model[group.if] : true"
@@ -211,7 +214,6 @@ defineExpose<{
         </DTab>
       </template>
     </DTabs>
-    {{ model }}
     <div class="p-5 bg-white shadow-md h-24 rounded-br-md rounded-bl-md">
       <hr class="pb-5" />
       <div class="flex items-center justify-end">

@@ -5,6 +5,7 @@ export interface Field {
   label: string;
   type: string;
   props?: any;
+  editingProps?: any;
   rules?: string[];
   query?: TableDataQuery;
   default?: string | number | boolean | [];

@@ -71,6 +71,7 @@ watch(
 );
 
 defineExpose({
+  updateRows,
   toggleRow,
   toggleAllRow,
   selectedRows,

@@ -14,6 +14,7 @@ import {
   PlusIcon,
   Mail01Icon,
   User01Icon,
+  File02Icon,
 } from "@components/basic/icons";
 
 export function registerGlobalComponents(app: App) {
@@ -30,4 +31,5 @@ export function registerGlobalComponents(app: App) {
   app.component("PlusIcon", PlusIcon);
   app.component("Mail01Icon", Mail01Icon);
   app.component("User01Icon", User01Icon);
+  app.component("File02Icon", File02Icon);
 }

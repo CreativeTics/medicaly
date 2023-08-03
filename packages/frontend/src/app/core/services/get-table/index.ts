@@ -4,7 +4,7 @@ import { PouchService, DB } from "@/app/services/pouch";
 const pouch = new PouchService();
 
 export async function getData<T>(query: TableDataQuery): Promise<T> {
-  query.where = query.where ?? [];
+  query.where = query.where ?? {};
   query.sort = query.sort ?? [];
   const [dbName, tableName] = query.entity.split(":");
   const db = pouch.use(dbName as DB);
@@ -27,7 +27,7 @@ export async function getSelectData<T>(
   console.log("getSelectData", query, params, selectId, operator);
 
   const localQuery = { ...query };
-  localQuery.where = localQuery.where ?? [];
+  localQuery.where = localQuery.where ?? {};
   replaceWhereTags(localQuery, selectId);
 
   if (localQuery.entity === "permissions") {
@@ -60,9 +60,7 @@ export function replacePayrollTags(
 export interface TableDataQuery {
   entity: string;
   fields: string[];
-  where?: {
-    [key: string]: string;
-  }[];
+  where?: any;
   sort?: string[];
 }
 

@@ -19,6 +19,17 @@ export const menu = [
     route: "/home",
   },
   {
+    name: "Contratos",
+    icon: "File02Icon",
+    children: [
+      {
+        name: "Contratos",
+        route: "/contracts",
+        permission: "contracts:list",
+      },
+    ],
+  },
+  {
     name: "Tablas Basicas",
     icon: "Tool02Icon",
     children: [
