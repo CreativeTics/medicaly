@@ -23,8 +23,6 @@ export async function getList() {
     return acc;
   }, new Map<string, any>());
 
-  console.log("uniques", uniques);
-
   return Array.from(uniques).map(([, doc]) => {
     return {
       id: doc.id,

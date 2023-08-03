@@ -34,9 +34,50 @@ export async function getSelectData<T>(
     return permissions as T;
   }
 
-  const data = await getData<T>(localQuery);
+  let data = (await getData<T>(localQuery)) as T[];
+  console.log(data);
 
-  return data as T;
+  if (localQuery.entity === "medical:exams") {
+    const uniques = data.reduce((acc: Map<string, any>, curr: any) => {
+      if (acc.has(curr.code)) {
+        const prev = acc.get(curr.code).version;
+        if (prev < curr.version) {
+          acc.set(curr.code, curr);
+        }
+        return acc;
+      }
+      acc.set(curr.code, curr);
+      return acc;
+    }, new Map<string, any>());
+
+    data = Array.from(uniques).map(([, doc]) => {
+      return {
+        id: doc.id,
+        name: doc.name,
+        code: doc.code,
+        version: doc.version,
+        updatedAt: doc.updatedAt,
+      };
+    }) as T[];
+  }
+
+  return applyModifiers(data, query) as T;
+}
+
+function applyModifiers(data: any[], query: TableDataQuery) {
+  if (query.modifier?.concat) {
+    data = data.map((_) => {
+      return {
+        ..._,
+        concat: query.modifier?.concat?.reduce(
+          (accumulator, acc) => accumulator + (_[acc] ?? acc),
+          ""
+        ),
+      };
+    });
+  }
+
+  return data;
 }
 
 function replaceWhereTags(query: TableDataQuery, selectId?: string) {
@@ -62,6 +103,9 @@ export interface TableDataQuery {
   fields: string[];
   where?: any;
   sort?: string[];
+  modifier?: {
+    concat?: string[];
+  };
 }
 
 export interface SelectOption {

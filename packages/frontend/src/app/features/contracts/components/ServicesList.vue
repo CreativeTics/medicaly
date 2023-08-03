@@ -9,12 +9,12 @@ import {
   edit,
   getEntity,
   deleteEntity,
-} from "../services/subsidiaries";
+} from "../services/services";
 import { Form, DynamicForm } from "../../dynamic-form";
 import { onMounted, ref } from "vue";
 import { useNotificationsStore } from "@/store/notifications";
 
-const moduleName = "Sede";
+const moduleName = "Servicio";
 // const modulePath = "contract-subsidiaries";
 
 const notifications = useNotificationsStore();
@@ -30,7 +30,7 @@ const form: Form = {
   entity: "",
   tabs: [
     {
-      name: "Sedes del contrato",
+      name: "Servicios del contrato",
       groups: [
         {
           name: "",
@@ -41,7 +41,7 @@ const form: Form = {
               label: "Codigo",
               type: "text",
               props: {
-                placeholder: "Codigo de la sede",
+                placeholder: "Codigo del Servicio",
                 class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },
@@ -52,11 +52,64 @@ const form: Form = {
               label: "Nombre",
               type: "text",
               props: {
-                placeholder: "Nombre de la sede",
+                placeholder: "Nombre del Servicio",
                 class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },
               rules: ["required", "minlength:3", "maxlength:50"],
+            },
+            {
+              name: "amount",
+              label: "Precio",
+              type: "text",
+              props: {
+                placeholder: "Precio del Servicio $",
+                class: "lg:col-span-6 xl:col-span-6",
+                required: true,
+              },
+              rules: ["required", "integer", "min:1000", "max:100000000"],
+            },
+          ],
+        },
+        {
+          name: " Examenes",
+          description:
+            "Defina aqui los examenes que se deberan diligenciar para este servicio.",
+          fields: [
+            {
+              name: "examType",
+              label: "Tipo de Examen",
+              type: "select",
+              props: {
+                required: true,
+                class: "lg:col-span-6 xl:col-span-6",
+                showKey: "concat",
+              },
+              rules: ["required"],
+              query: {
+                entity: "general:contract-medical-exam-types",
+                fields: ["id", "name", "emphasis"],
+                where: {
+                  contractId: props.id,
+                },
+                modifier: {
+                  concat: ["name", ":", "emphasis"],
+                },
+              },
+            },
+            {
+              name: "exams",
+              label: "Examenes Asignados",
+              type: "multiselect",
+              props: {
+                required: true,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+              rules: ["required-array"],
+              query: {
+                entity: "medical:exams",
+                fields: ["id", "code", "name", "version"],
+              },
             },
           ],
         },
@@ -67,12 +120,25 @@ const form: Form = {
 
 const columns = [
   {
+    key: "examType",
+    title: "Tipo de examen",
+  },
+  {
     key: "code",
     title: "Codigo",
   },
   {
     key: "name",
     title: "Nombre",
+  },
+
+  {
+    key: "amount",
+    title: "precio",
+  },
+  {
+    key: "exams",
+    title: "Examenes",
   },
   {
     key: "actions",

@@ -5,8 +5,6 @@ import { Form, DynamicForm } from "../../dynamic-form";
 import { useNotificationsStore } from "@/store/notifications";
 import { create, getEntity, edit } from "../services";
 
-import SubsidiaryList from "../components/SubsidiaryList.vue";
-
 const notifications = useNotificationsStore();
 const moduleName = "Contrato";
 const modulePath = "contracts";
@@ -147,6 +145,131 @@ const form: Form = {
         },
       ],
     },
+    {
+      name: "Sedes",
+      groups: [
+        {
+          name: "Sedes",
+          description: "Registre aqui la lista de sedes  del contrato.",
+          fields: [
+            {
+              name: "",
+              label: "Observaciones",
+              type: "ContractSubsidiaryList",
+              props: {
+                id: route.params.id,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Centros de Costo",
+      groups: [
+        {
+          name: "Centros de costo",
+          description:
+            "Registre aqui la lista de centros de costo del contrato.",
+          fields: [
+            {
+              name: "",
+              label: "",
+              type: "ContractCostCenterList",
+              props: {
+                id: route.params.id,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Cargos",
+      groups: [
+        {
+          name: "Cargos",
+          description:
+            "Registre aqui la lista de cargos habilitados del contrato.",
+          fields: [
+            {
+              name: "",
+              label: "",
+              type: "ContractPositionsList",
+              props: {
+                id: route.params.id,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Tipos de examen",
+      groups: [
+        {
+          name: "Tipos de Examen",
+          description:
+            "Registre aqui la lista de tipos de examen  habilitados del contrato.",
+          fields: [
+            {
+              name: "",
+              label: "",
+              type: "ContractMedicalExamTypes",
+              props: {
+                id: route.params.id,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Servicios",
+      groups: [
+        {
+          name: "Servicios",
+          description:
+            "Registre aqui la lista de Servicios habilitados del contrato.",
+          fields: [
+            {
+              name: "",
+              label: "",
+              type: "ContractServicesList",
+              props: {
+                id: route.params.id,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Usuarios",
+      groups: [
+        {
+          name: "Usuarios",
+          description:
+            "Registre aqui la lista de usuarios habilitados del contrato.",
+          fields: [
+            {
+              name: "",
+              label: "",
+              type: "ContractUserList",
+              props: {
+                id: route.params.id,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
 
@@ -222,27 +345,10 @@ onBeforeMount(async () => {
         :title-btn-save="
           route.params.id === undefined ? 'Guardar' : 'Actualizar'
         "
-        :fixed-height="false"
         @cancel="back"
         @submit="onSubmit"
       />
-      <Suspense>
-        <SubsidiaryList :id="route.params.id" />
-        <template #fallback> Cargando Sedes </template>
-      </Suspense>
-      <Suspense>
-        <SubsidiaryList :id="route.params.id" />
-        <template #fallback> Cargando Sedes </template>
-      </Suspense>
-      <Suspense>
-        <SubsidiaryList :id="route.params.id" />
-        <template #fallback> Cargando Sedes </template>
-      </Suspense>
     </div>
   </div>
 </template>
-<style scoped>
-.form {
-  height: calc(100vh - 10rem);
-}
-</style>
+<style scoped></style>

@@ -13,7 +13,6 @@ const props = defineProps({
   readonly: { type: Boolean, required: false, default: false },
   titleBtnSave: { type: String, required: false, default: "" },
   getData: { type: Boolean, required: false, default: false },
-  fixedHeight: { type: Boolean, required: false, default: true },
   gridClass: {
     required: false,
     default: "grid grid-cols-8 px-6 py-4",
@@ -154,8 +153,8 @@ defineExpose<{
 </script>
 
 <template>
-  <form class="pt-responsive w-full" @submit.prevent="onHandleSubmit">
-    <DTabs :fixed-eight="fixedHeight">
+  <div class="pt-responsive w-full">
+    <DTabs>
       <template v-slot:default="slotProps">
         <DTab
           v-for="tab in tabs"
@@ -229,11 +228,12 @@ defineExpose<{
           <DBtn
             v-if="!getData && !readonly"
             class="font-semibold py-1 text-base"
+            @click.prevent="onHandleSubmit"
           >
             {{ titleBtnSave }}
           </DBtn>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </template>

@@ -1,22 +1,14 @@
 <script setup lang="ts">
 import { ref, useSlots, onMounted } from "vue";
 
-withDefaults(
-  defineProps<{
-    fixedHeight: boolean;
-  }>(),
-  {
-    fixedHeight: true,
-  }
-);
-
 const slots = useSlots();
 const selectedTitle = ref("");
-const tabs = ref([]);
+const tabs = ref<any[]>([]);
 
 const calculateTabs = () => {
   const rawTabs =
-    Number(slots.default()[0].children.length) > 0
+    // @ts-ignore
+    Number(slots.default()[0].children?.length) > 0
       ? slots.default()?.[0]?.children
       : slots.default();
   selectedTitle.value = rawTabs?.[0].props?.title ?? "";
@@ -53,8 +45,7 @@ onMounted(() => {
       </ul>
     </div>
     <div
-      :class="[fixedHeight ? 'content' : 'min-h-min']"
-      class="shadow-md rounded-b-none scroll rounded-md overflow-y-auto w-full bg-white pt-1.5"
+      class="shadow-md content rounded-b-none scroll rounded-md overflow-y-auto w-full bg-white pt-1.5"
     >
       <slot :selectedTitle="selectedTitle"></slot>
     </div>

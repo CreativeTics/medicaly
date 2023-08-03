@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Sidebar from "@components/Sidebar.vue";
 import DToastStack from "@components/DToastStack.vue";
+import DIdleLogoutOverlay from "../components/DIdleLogoutOverlay.vue";
 
 import { useRouter } from "vue-router";
 
@@ -15,6 +16,7 @@ const changeRoute = (route: string) => {
 </script>
 
 <template>
+  <DIdleLogoutOverlay />
   <DToastStack class="left-14" />
   <main class="h-screen w-screen text-gray-900 bg-gray-50 flex">
     <Sidebar :menu="menu" @change:route="changeRoute"> </Sidebar>

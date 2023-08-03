@@ -9,12 +9,12 @@ import {
   edit,
   getEntity,
   deleteEntity,
-} from "../services/subsidiaries";
+} from "../services/cost-centers";
 import { Form, DynamicForm } from "../../dynamic-form";
 import { onMounted, ref } from "vue";
 import { useNotificationsStore } from "@/store/notifications";
 
-const moduleName = "Sede";
+const moduleName = "Centros de costo";
 // const modulePath = "contract-subsidiaries";
 
 const notifications = useNotificationsStore();
@@ -30,7 +30,7 @@ const form: Form = {
   entity: "",
   tabs: [
     {
-      name: "Sedes del contrato",
+      name: "Centros de costo del contrato",
       groups: [
         {
           name: "",
@@ -41,7 +41,7 @@ const form: Form = {
               label: "Codigo",
               type: "text",
               props: {
-                placeholder: "Codigo de la sede",
+                placeholder: "Codigo del Centro de costo",
                 class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },
@@ -52,7 +52,7 @@ const form: Form = {
               label: "Nombre",
               type: "text",
               props: {
-                placeholder: "Nombre de la sede",
+                placeholder: "Nombre del centro de costo",
                 class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },

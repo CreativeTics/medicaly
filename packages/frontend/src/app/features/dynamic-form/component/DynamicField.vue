@@ -118,7 +118,7 @@ onMounted(async () => {
   <component
     :label="field.label"
     v-if="field['if'] ? !!allModel[field?.['if']] : true"
-    :is="components.get(field.type)?.component || 'div'"
+    :is="components.get(field.type)?.component ?? field.type"
     :model-value="modelValue"
     :field="field"
     @update:modelValue="emitUpdate"

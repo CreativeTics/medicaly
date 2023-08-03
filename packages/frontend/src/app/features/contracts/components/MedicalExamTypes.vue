@@ -9,12 +9,12 @@ import {
   edit,
   getEntity,
   deleteEntity,
-} from "../services/subsidiaries";
+} from "../services/medical-exam-types";
 import { Form, DynamicForm } from "../../dynamic-form";
 import { onMounted, ref } from "vue";
 import { useNotificationsStore } from "@/store/notifications";
 
-const moduleName = "Sede";
+const moduleName = "Tipos de Examen";
 // const modulePath = "contract-subsidiaries";
 
 const notifications = useNotificationsStore();
@@ -30,7 +30,7 @@ const form: Form = {
   entity: "",
   tabs: [
     {
-      name: "Sedes del contrato",
+      name: "Tipo de Examen",
       groups: [
         {
           name: "",
@@ -41,22 +41,33 @@ const form: Form = {
               label: "Codigo",
               type: "text",
               props: {
-                placeholder: "Codigo de la sede",
+                placeholder: "Codigo del tipo de examen",
                 class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },
-              rules: ["required", "integer", "minlength:3", "maxlength:50"],
+              rules: ["required", "upper", "minlength:3", "maxlength:50"],
             },
             {
               name: "name",
               label: "Nombre",
               type: "text",
               props: {
-                placeholder: "Nombre de la sede",
+                placeholder: "Nombre del tipo de examen",
                 class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },
-              rules: ["required", "minlength:3", "maxlength:50"],
+              rules: ["required", "upper", "minlength:3", "maxlength:50"],
+            },
+            {
+              name: "emphasis",
+              label: "Enfasis",
+              type: "text",
+              props: {
+                placeholder: "",
+                class: "lg:col-span-6 xl:col-span-6",
+                required: true,
+              },
+              rules: ["required", "upper", "minlength:3", "maxlength:50"],
             },
           ],
         },

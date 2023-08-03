@@ -9,12 +9,12 @@ import {
   edit,
   getEntity,
   deleteEntity,
-} from "../services/subsidiaries";
+} from "../services/users";
 import { Form, DynamicForm } from "../../dynamic-form";
 import { onMounted, ref } from "vue";
 import { useNotificationsStore } from "@/store/notifications";
 
-const moduleName = "Sede";
+const moduleName = "Usuario";
 // const modulePath = "contract-subsidiaries";
 
 const notifications = useNotificationsStore();
@@ -30,33 +30,76 @@ const form: Form = {
   entity: "",
   tabs: [
     {
-      name: "Sedes del contrato",
+      name: "Usuarios del contrato",
       groups: [
         {
           name: "",
           description: "",
           fields: [
             {
-              name: "code",
-              label: "Codigo",
-              type: "text",
-              props: {
-                placeholder: "Codigo de la sede",
-                class: "lg:col-span-6 xl:col-span-6",
-                required: true,
-              },
-              rules: ["required", "integer", "minlength:3", "maxlength:50"],
-            },
-            {
               name: "name",
               label: "Nombre",
               type: "text",
               props: {
-                placeholder: "Nombre de la sede",
+                placeholder: "Nombre del Servicio",
                 class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },
               rules: ["required", "minlength:3", "maxlength:50"],
+            },
+            {
+              name: "username",
+              label: "Username",
+              type: "text",
+              props: {
+                placeholder: "",
+                class: "lg:col-span-6 xl:col-span-6",
+                required: true,
+              },
+              rules: ["required", "minlength:3", "maxlength:50"],
+            },
+            {
+              name: "tempPassword",
+              label: "Contraneña temporal",
+              type: "text",
+              props: {
+                placeholder: "********",
+                type: "password",
+                class: "lg:col-span-6 xl:col-span-6",
+                required: true,
+              },
+              rules: ["required", "minlength:6", "maxlength:50"],
+            },
+            {
+              name: "role",
+              label: "Rol",
+              type: "select",
+              props: {
+                required: true,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+              rules: ["required"],
+              query: {
+                entity: "auth:roles",
+                fields: ["id", "name"],
+              },
+            },
+            {
+              name: "subsidiaries",
+              label: "Sedes Asignadas",
+              type: "multiselect",
+              props: {
+                required: true,
+                class: "lg:col-span-6 xl:col-span-6",
+              },
+              rules: ["required-array"],
+              query: {
+                entity: "general:contract-subsidiaries",
+                fields: ["id", "code", "name", "version"],
+                where: {
+                  contractId: props.id,
+                },
+              },
             },
           ],
         },
@@ -67,13 +110,23 @@ const form: Form = {
 
 const columns = [
   {
-    key: "code",
-    title: "Codigo",
-  },
-  {
     key: "name",
     title: "Nombre",
   },
+  {
+    key: "username",
+    title: "Nombre de usuario",
+  },
+
+  {
+    key: "role",
+    title: "Rol Asignado",
+  },
+  {
+    key: "subsidiaries",
+    title: "Sedes habilitadas",
+  },
+
   {
     key: "actions",
     title: "",
@@ -110,13 +163,13 @@ const handleDelete = async (id: string) => {
     notifications.addNotification({
       type: "success",
       title: `${moduleName} creado`,
-      text: `La ${moduleName} se ha eliminado correctamente`,
+      text: `El ${moduleName} se ha eliminado correctamente`,
     });
   } else {
     notifications.addNotification({
       type: "error",
       title: "Error",
-      text: `No se ha podido eliminar la ${moduleName}`,
+      text: `No se ha podido eliminar el ${moduleName}`,
     });
   }
   await loadRows();
@@ -128,21 +181,21 @@ const onSubmit = async (data: any) => {
 
   if (data.id === undefined) {
     console.log("Create");
-    if (await create(data)) {
+    if (await create(props.id, data)) {
       notifications.addNotification({
         type: "success",
         title: `${moduleName} creado`,
-        text: `La ${moduleName} se ha creado correctamente`,
+        text: `el ${moduleName} se ha creado correctamente`,
       });
     } else {
       notifications.addNotification({
         type: "error",
         title: "Error",
-        text: `No se ha podido crear la ${moduleName}`,
+        text: `No se ha podido crear el ${moduleName}`,
       });
     }
   } else {
-    if (await edit(data.id as string, data)) {
+    if (await edit(props.id, data.id as string, data)) {
       notifications.addNotification({
         type: "success",
         title: `${moduleName} actualizado`,
@@ -152,7 +205,7 @@ const onSubmit = async (data: any) => {
       notifications.addNotification({
         type: "error",
         title: "Error",
-        text: `No se ha podido actualizar la ${moduleName}`,
+        text: `No se ha podido actualizar el ${moduleName}`,
       });
     }
   }

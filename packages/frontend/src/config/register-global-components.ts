@@ -17,6 +17,13 @@ import {
   File02Icon,
 } from "@components/basic/icons";
 
+import SubsidiaryList from "../app/features/contracts/components/SubsidiaryList.vue";
+import CostCenterList from "../app/features/contracts/components/CostCenterList.vue";
+import PositionsList from "../app/features/contracts/components/PositionsList.vue";
+import MedicalExamTypes from "../app/features/contracts/components/MedicalExamTypes.vue";
+import ServicesList from "../app/features/contracts/components/ServicesList.vue";
+import UserList from "../app/features/contracts/components/UserList.vue";
+
 export function registerGlobalComponents(app: App) {
   app.component("LoginLayout", Login);
   app.component("HomeLayout", Home);
@@ -32,4 +39,11 @@ export function registerGlobalComponents(app: App) {
   app.component("Mail01Icon", Mail01Icon);
   app.component("User01Icon", User01Icon);
   app.component("File02Icon", File02Icon);
+  // //contracts
+  app.component("ContractSubsidiaryList", SubsidiaryList);
+  app.component("ContractCostCenterList", CostCenterList);
+  app.component("ContractPositionsList", PositionsList);
+  app.component("ContractMedicalExamTypes", MedicalExamTypes);
+  app.component("ContractServicesList", ServicesList);
+  app.component("ContractUserList", UserList);
 }

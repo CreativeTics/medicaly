@@ -26,5 +26,8 @@ export const useAuthStore = defineStore("auth", {
       };
       return username == "admin" && password == "admin";
     },
+    async logout(): Promise<boolean> {
+      return true;
+    },
   },
 });
