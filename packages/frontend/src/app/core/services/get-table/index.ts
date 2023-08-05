@@ -34,6 +34,15 @@ export async function getSelectData<T>(
     return permissions as T;
   }
 
+  if (params) {
+    localQuery.where = {
+      ...localQuery.where,
+      ...Object.fromEntries(params.entries()),
+    };
+  }
+
+  console.log("where", localQuery.where);
+
   let data = (await getData<T>(localQuery)) as T[];
   console.log(data);
 

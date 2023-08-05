@@ -5,18 +5,13 @@ import ModuleListBasic from "../../../components/ModuleListBasic.vue";
 import { getList } from "../services";
 
 const router = useRouter();
-const moduleName = "Ciudad";
-const modulePath = "cities";
+const moduleName = "Depatamento";
+const modulePath = "departments";
 
 const columns = [
   {
     key: "countryName",
     title: "Pais",
-    align: "left",
-  },
-  {
-    key: "departmentName",
-    title: "Departamento",
     align: "left",
   },
   {
@@ -56,8 +51,8 @@ onMounted(async () => {
 
 <template>
   <ModuleListBasic
-    :title="`${moduleName}es`"
-    :subtitle="`Gestión de ${moduleName}es`"
+    :title="`${moduleName}s`"
+    :subtitle="`Gestión de ${moduleName}s`"
     :columns="columns"
     :rows="data"
     :actions="['edit', 'delete', 'create']"

@@ -5,6 +5,7 @@ import { employeesRoutes } from "@features/employees";
 import { positionsRoutes } from "@features/positions";
 import { laboratoriesRoutes } from "@features/laboratories";
 import { countriesRoutes } from "@features/countries";
+import { departmentsRoutes } from "@features/departments";
 import { citiesRoutes } from "@features/cities";
 import { identificationTypesRoutes } from "@features/identification-types";
 import { entitiesRoutes } from "@features/entities";
@@ -29,6 +30,7 @@ export const routes: RouteRecordRaw[] = [
   ...positionsRoutes,
   ...laboratoriesRoutes,
   ...countriesRoutes,
+  ...departmentsRoutes,
   ...citiesRoutes,
   ...identificationTypesRoutes,
   ...entitiesRoutes,

@@ -7,8 +7,8 @@ import { useNotificationsStore } from "@/store/notifications";
 import { create, getEntity, edit } from "../services";
 
 const notifications = useNotificationsStore();
-const moduleName = "Ciudad";
-const modulePath = "cities";
+const moduleName = "Departamento";
+const modulePath = "departments";
 
 const route = useRoute();
 const router = useRouter();
@@ -33,50 +33,31 @@ const form: Form = {
               props: {
                 required: true,
               },
+              rules: ["required"],
               editingProps: {
                 disabled: true,
               },
-              rules: ["required"],
               query: {
                 entity: "general:countries",
                 fields: ["id", "name"],
               },
             },
             {
-              name: "department",
-              label: "Departamento",
-              type: "select",
-              props: {
-                required: true,
-              },
-              editingProps: {
-                disabled: true,
-              },
-              rules: ["required"],
-              query: {
-                entity: "general:departments",
-                fields: ["id", "name"],
-              },
-              dependsOn: {
-                field: "country",
-              },
-            },
-            {
               name: "code",
-              label: "Codigo de la Ciudad",
+              label: "Codigo del departamento",
               type: "text",
               props: {
-                placeholder: "Codigo de la Ciudad",
+                placeholder: "Codigo del departamento",
                 required: true,
               },
               rules: ["required", "upper", "minlength:3", "maxlength:50"],
             },
             {
               name: "name",
-              label: "Nombre de la Ciudad",
+              label: "Nombre del departamento",
               type: "text",
               props: {
-                placeholder: "Nombre del Pais",
+                placeholder: "Nombre del departamento",
                 required: true,
               },
               rules: ["required", "minlength:3", "maxlength:50"],

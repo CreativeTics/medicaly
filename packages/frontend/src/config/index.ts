@@ -43,6 +43,11 @@ export const menu = [
             permission: "countries:list",
           },
           {
+            name: "Departamentos",
+            route: "/departments",
+            permission: "departments:list",
+          },
+          {
             name: "Ciudades",
             route: "/cities",
             permission: "cities:list",
