@@ -121,6 +121,22 @@ const form: Form = {
               rules: ["required", "integer", "minlength:6", "maxlength:20"],
             },
             {
+              name: "department",
+              label: "Departamento",
+              type: "select",
+              props: {
+                required: true,
+              },
+              rules: ["required"],
+              query: {
+                entity: "general:departments",
+                fields: ["id", "name"],
+                where: {
+                  countryName: "Colombia",
+                },
+              },
+            },
+            {
               name: "city",
               label: "Ciudad",
               type: "select",
@@ -131,6 +147,9 @@ const form: Form = {
               query: {
                 entity: "general:cities",
                 fields: ["id", "name"],
+              },
+              dependsOn: {
+                field: "department",
               },
             },
             {
