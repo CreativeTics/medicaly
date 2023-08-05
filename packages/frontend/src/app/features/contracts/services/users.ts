@@ -10,7 +10,15 @@ const doctype = "users";
 export async function getList(contractId: string) {
   const data = await getData<any[]>({
     entity: `${DB.AUTH}:${doctype}`,
-    fields: ["id", "name", "username", "roleName", "subsidiaries", "updatedAt"],
+    fields: [
+      "id",
+      "name",
+      "username",
+      "tempPassword",
+      "roleName",
+      "subsidiaries",
+      "updatedAt",
+    ],
     where: {
       contractId: contractId,
     },
@@ -22,6 +30,7 @@ export async function getList(contractId: string) {
       name: doc.name,
       role: doc.roleName,
       username: doc.username,
+      tempPassword: doc.tempPassword,
       subsidiaries: doc.subsidiaries.length,
       updatedAt: doc.updatedAt,
     };

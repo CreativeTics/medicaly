@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   db:
-    image: couchdb:latest
+    image: couchdb:3.3.2
     volumes:
       - db_data:/var/lib/couchdb
     restart: unless-stopped
@@ -24,24 +24,24 @@ services:
       POSTGRES_PASSWORD: 4dm1n-p4ssw0rd!!
       POSTGRES_DB: medicaly
 
-  redis:
-    image: redis:latest
-    restart: unless-stopped
-    ports:
-      - 6379:6379
+  # redis:
+  #   image: redis:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - 6379:6379
 
-  minio:
-    image: minio/minio:latest
-    restart: unless-stopped
-    volumes:
-      - minio_data:/data
-    ports:
-      - 9000:9000
-    environment:
-      MINIO_ACCESS_KEY: 4dm1n-us3r
-      MINIO_SECRET_KEY: 4dm1n-p4ssw0rd!!
+  # minio:
+  #   image: minio/minio:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - minio_data:/data
+  #   ports:
+  #     - 9000:9000
+  #   environment:
+  #     MINIO_ACCESS_KEY: 4dm1n-us3r
+  #     MINIO_SECRET_KEY: 4dm1n-p4ssw0rd!!
 
 volumes:
   db_data:
   warehouse_data:
-  minio_data:
+  # minio_data:

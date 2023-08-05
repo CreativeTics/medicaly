@@ -41,6 +41,20 @@ const form: Form = {
               rules: ["required"],
             },
             {
+              name: "documentType",
+              label: "Tipo de Documento",
+              type: "select",
+              props: {
+                class: "lg:col-span-1 xl:col-span-1",
+                required: true,
+              },
+              query: {
+                entity: "general:identification-types",
+                fields: ["id", "name"],
+              },
+              rules: ["required"],
+            },
+            {
               name: "documentNumber",
               label: "No. Documento",
               type: "text",
@@ -187,7 +201,7 @@ const form: Form = {
       ],
     },
     {
-      name: "Cargos",
+      name: "Profesiograma",
       groups: [
         {
           name: "Cargos",

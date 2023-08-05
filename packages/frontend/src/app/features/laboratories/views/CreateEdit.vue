@@ -46,7 +46,7 @@ const form: Form = {
               },
               rules: ["required-array"],
               query: {
-                entity: "permissions",
+                entity: "medical:exams",
                 fields: ["id", "name"],
               },
             },

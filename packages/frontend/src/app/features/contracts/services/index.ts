@@ -41,6 +41,7 @@ export async function getEntity(id: string): Promise<any> {
   const doc = await pouch.use(DB.GENERAL).get(id);
   return {
     id: doc.id,
+    documentType: doc.documentType,
     documentNumber: doc.documentNumber,
     name: doc.name,
     email: doc.email,

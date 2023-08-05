@@ -60,11 +60,10 @@ const form: Form = {
             },
             {
               name: "tempPassword",
-              label: "Contraneña temporal",
+              label: "Contraseña temporal",
               type: "text",
               props: {
                 placeholder: "********",
-                type: "password",
                 class: "lg:col-span-6 xl:col-span-6",
                 required: true,
               },
@@ -116,6 +115,10 @@ const columns = [
   {
     key: "username",
     title: "Nombre de usuario",
+  },
+  {
+    key: "tempPassword",
+    title: "Contraseña temporal",
   },
 
   {

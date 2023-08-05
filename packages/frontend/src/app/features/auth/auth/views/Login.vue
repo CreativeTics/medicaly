@@ -62,9 +62,10 @@ const login = async () => {
         label="Usuario"
         type="text"
         :error="errors.userName"
-        placeholder="Ingresa tu "
+        placeholder="Ingresa tu nombre de usuario "
         :required="true"
         v-model="dataLogin.userName"
+        @keydown.enter="login"
       />
     </div>
     <div class="grid relative mb-3">
@@ -75,6 +76,7 @@ const login = async () => {
         placeholder="Ingresa tu contraseña"
         :required="true"
         v-model="dataLogin.userPassword"
+        @keydown.enter="login"
       />
       <div class="absolute right-3 top-8 z-50">
         <EyeIcon
