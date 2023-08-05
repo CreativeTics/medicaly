@@ -4,6 +4,8 @@ import { PouchService, DB } from "../../../services/pouch";
 import sha256 from "crypto-js/sha256";
 import Base64 from "crypto-js/enc-base64";
 
+import { UserType } from "@/app/core/types/user-types";
+
 const pouch = new PouchService();
 const doctype = "users";
 
@@ -63,7 +65,7 @@ export async function create(
     doctype,
     ...entity,
     roleName: role.name,
-    type: "contract-user",
+    type: UserType.contract,
     contractId: contractId,
     encodedPassword,
   });
@@ -88,7 +90,7 @@ export async function edit(
     id,
     ...entity,
     roleName: role.name,
-    type: "contract-user",
+    type: UserType.contract,
     contractId: contractId,
   });
   console.log("edit", response);
