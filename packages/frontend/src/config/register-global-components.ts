@@ -15,6 +15,7 @@ import {
   Mail01Icon,
   User01Icon,
   File02Icon,
+  Ticket01Icon,
 } from "@components/basic/icons";
 
 import SubsidiaryList from "../app/features/contracts/components/SubsidiaryList.vue";
@@ -39,6 +40,7 @@ export function registerGlobalComponents(app: App) {
   app.component("Mail01Icon", Mail01Icon);
   app.component("User01Icon", User01Icon);
   app.component("File02Icon", File02Icon);
+  app.component("Ticket01Icon", Ticket01Icon);
   // //contracts
   app.component("ContractSubsidiaryList", SubsidiaryList);
   app.component("ContractCostCenterList", CostCenterList);

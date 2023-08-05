@@ -19,6 +19,17 @@ export const menu = [
     route: "/home",
   },
   {
+    name: "Ordenes de servicio",
+    icon: "Ticket01Icon",
+    children: [
+      {
+        name: "Crear Orden de servicio",
+        route: "/service-orders/create",
+        permission: "service-orders:create",
+      },
+    ],
+  },
+  {
     name: "Contratos",
     icon: "File02Icon",
     children: [
@@ -29,6 +40,7 @@ export const menu = [
       },
     ],
   },
+
   {
     name: "Tablas Basicas",
     icon: "Tool02Icon",
@@ -102,6 +114,11 @@ export const menu = [
     name: "Administración",
     icon: "Shield02Icon",
     children: [
+      {
+        name: "Sedes de atención",
+        route: "/subsidiaries",
+        permission: "subsidiaries",
+      },
       {
         name: "Cargos",
         route: "/positions",

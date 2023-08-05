@@ -14,6 +14,7 @@ import { recommendationsRoutes } from "@features/recommendations";
 import { cie10Routes } from "@features/cie10";
 import { examsRoutes } from "@features/exams";
 import { contractsRoutes } from "@features/contracts";
+import { subsidiariesRoutes } from "@features/subsidiaries";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -39,4 +40,5 @@ export const routes: RouteRecordRaw[] = [
   ...cie10Routes,
   ...examsRoutes,
   ...contractsRoutes,
+  ...subsidiariesRoutes,
 ];
