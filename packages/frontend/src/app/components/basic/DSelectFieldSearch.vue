@@ -5,7 +5,7 @@ import { ChevronDownIcon, Loading02Icon } from "./icons";
 const optionShow = ref(false);
 const showLabel = ref(true);
 const showInput = ref(false);
-const input = ref(null);
+const input = ref("");
 
 const props = withDefaults(
   defineProps<{
@@ -19,6 +19,7 @@ const props = withDefaults(
     error?: string;
     required?: boolean;
     placeholder?: string;
+    localSearch?: boolean;
   }>(),
   {
     modelValue: "",
@@ -31,18 +32,31 @@ const props = withDefaults(
     error: "",
     required: false,
     placeholder: "Seleccione",
+    localSearch: true,
   }
 );
 
 const emit = defineEmits(["update:modelValue", "filter", "focus", "change"]);
 
-const emitUpdate = (val) => {
+const emitUpdate = (val: any) => {
   emit("update:modelValue", val);
 };
 
-const emitFilter = (filter) => emit("filter", filter);
+const filteredOptions = computed(() => {
+  return props.options.filter((item) => {
+    console.log(item[props.showKey]?.toLowerCase(), input.value?.toLowerCase());
+    return (
+      !props.localSearch ||
+      item[props.showKey]
+        ?.toLowerCase()
+        .indexOf(input.value?.toLowerCase() || "") > -1
+    );
+  });
+});
+
+const emitFilter = (filter: any) => emit("filter", filter);
 const emitFocus = () => emit("focus");
-const emitChange = (event) => emit("change", event);
+const emitChange = (event: any) => emit("change", event);
 
 const nameValue = computed(() => {
   return (
@@ -55,7 +69,6 @@ const nameValue = computed(() => {
 const showOptions = () => {
   if (!props.disabled) {
     optionShow.value = true;
-    focusSearch();
   }
 };
 
@@ -66,7 +79,7 @@ const exit = () => {
   emitFilter("");
 };
 
-const selectOption = (option) => {
+const selectOption = (option: any) => {
   optionShow.value = false;
   showLabel.value = true;
   showInput.value = false;
@@ -79,12 +92,6 @@ const selectOption = (option) => {
     emitUpdate("");
     emitChange("");
   }
-};
-
-const focusSearch = () => {
-  setTimeout(() => {
-    input.value.focus();
-  }, 1);
 };
 </script>
 <template>
@@ -101,26 +108,25 @@ const focusSearch = () => {
       ]"
       @click="showOptions"
     >
-      <span v-if="options.length > 0" class="text-sm truncate ...">
+      <span v-if="filteredOptions.length > 0" class="text-sm truncate ...">
         {{ `${nameValue}` }}
       </span>
       <span v-else class="text-gray-400 text-sm truncate ...">
         {{ `Esperando datos...` }}
       </span>
       <ChevronDownIcon
-        v-if="options.length > 0"
+        v-if="filteredOptions.length > 0"
         class="ml-2 w-4 h-4 text-black font-black"
       />
       <Loading02Icon v-else class="rotate text-gray-400" />
     </label>
     <input
-      ref="input"
       v-if="optionShow"
       class="mt-1 block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm cursor-pointer"
       :class="[{ error }, { 'bg-gray-300': disabled }]"
-      @input="($event: any) => emitFilter($event.target.value)"
+      v-model="input"
       @blur="exit()"
-      @focusout="($event: any) => emitFocus()"
+      @focusout="() => emitFocus()"
       @change="emitChange($event)"
       :disabled="disabled"
       :placeholder="placeholder"
@@ -137,7 +143,7 @@ const focusSearch = () => {
             [props.showKey]: `${props.placeholder}`,
             [props.valueKey]: null,
           },
-          ...options,
+          ...filteredOptions,
         ]"
         :key="index"
       >

@@ -23,9 +23,9 @@ export const menu = [
     icon: "Ticket01Icon",
     children: [
       {
-        name: "Crear Orden de servicio",
-        route: "/service-orders/create",
-        permission: "service-orders:create",
+        name: "Ordenes de servicio",
+        route: "/service-orders",
+        permission: "service-orders:list",
       },
     ],
   },

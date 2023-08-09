@@ -81,19 +81,21 @@ defineExpose({
 <template>
   <div class="h-full w-full">
     <div class="flex justify-between w-full">
-      <div class="py-3 flex sm:mb-0 max-w-2xl sm:w-2/3 md:w-1/2 lg:w-5/12">
-        <DTextField
-          placeholder="Buscar..."
-          :icon="'SearchLgIcon'"
-          class="mr-2 w-full"
-          v-model="searchText"
-          @keyup.enter="search(searchText)"
-        />
-        <DBtn @click.prevent="search(searchText)">Buscar</DBtn>
-      </div>
-      <div class="py-3">
-        <slot name="newAction"></slot>
-      </div>
+      <slot name="header" :searchText="searchText" :search="search">
+        <div class="py-3 flex sm:mb-0 max-w-2xl sm:w-2/3 md:w-1/2 lg:w-5/12">
+          <DTextField
+            placeholder="Buscar..."
+            :icon="'SearchLgIcon'"
+            class="mr-2 w-full"
+            v-model="searchText"
+            @keyup.enter="search(searchText)"
+          />
+          <DBtn @click.prevent="search(searchText)">Buscar</DBtn>
+        </div>
+        <div class="py-3">
+          <slot name="newAction"></slot>
+        </div>
+      </slot>
     </div>
     <div
       class="w-full h-auto overflow-y-auto scroll shadow-lg rounded-lg"

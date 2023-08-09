@@ -24,6 +24,8 @@ import PositionsList from "../app/features/contracts/components/PositionsList.vu
 import MedicalExamTypes from "../app/features/contracts/components/MedicalExamTypes.vue";
 import ServicesList from "../app/features/contracts/components/ServicesList.vue";
 import UserList from "../app/features/contracts/components/UserList.vue";
+import ServiceOrdersList from "../app/features/service-orders/components/ServicesList.vue";
+import ServiceOrderPatients from "../app/features/service-orders/components/Patients.vue";
 
 export function registerGlobalComponents(app: App) {
   app.component("LoginLayout", Login);
@@ -48,4 +50,8 @@ export function registerGlobalComponents(app: App) {
   app.component("ContractMedicalExamTypes", MedicalExamTypes);
   app.component("ContractServicesList", ServicesList);
   app.component("ContractUserList", UserList);
+
+  // service orders
+  app.component("ServiceOrdersList", ServiceOrdersList);
+  app.component("ServiceOrderPatients", ServiceOrderPatients);
 }

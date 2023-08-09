@@ -2,9 +2,10 @@ import { TableDataQuery } from "@/app/core/services/get-table/index";
 
 export interface Field {
   name: string;
-  label: string;
+  label?: string;
   type: string;
   props?: any;
+  if?: string;
   editingProps?: any;
   rules?: string[];
   query?: TableDataQuery;

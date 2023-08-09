@@ -216,6 +216,8 @@ defineExpose<{
     <div class="p-5 bg-white shadow-md h-24 rounded-br-md rounded-bl-md">
       <hr class="pb-5" />
       <div class="flex items-center justify-end">
+        {{ model }}
+
         <div>
           <DBtn
             type="button"
