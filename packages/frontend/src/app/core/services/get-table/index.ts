@@ -13,6 +13,7 @@ export async function getData<T>(query: TableDataQuery): Promise<T> {
     fields: query.fields,
     selector: { doctype: tableName, ...query.where },
     sort: query.sort,
+    limit: 1000,
   });
 
   return docs as T;

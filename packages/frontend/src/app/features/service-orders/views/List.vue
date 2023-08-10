@@ -2,6 +2,7 @@
 import { ref, onMounted, reactive } from "vue";
 import {
   Edit03Icon,
+  SearchMdIcon,
   DBtn,
   DTextField,
   DSelectFieldSearch,
@@ -143,6 +144,20 @@ onMounted(async () => {
               />
 
               <div class="max-w-xs flex justify-end" v-else>
+                <Popper
+                  arrow
+                  offsetDistance="12"
+                  content="Ver detalle"
+                  :hover="true"
+                  placement="top"
+                  class="tooltip"
+                >
+                  <div class="bg-gray-50 rounded-md py-2">
+                    <SearchMdIcon
+                      class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
+                    />
+                  </div>
+                </Popper>
                 <Popper
                   arrow
                   offsetDistance="12"
