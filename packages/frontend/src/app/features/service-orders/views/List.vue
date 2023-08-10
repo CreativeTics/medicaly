@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive } from "vue";
 import {
-  DLoading,
   Edit03Icon,
   DBtn,
   DTextField,
@@ -15,7 +14,6 @@ import { getList, getContractsList } from "../services";
 import OrderStatus from "../components/OrderStatus.vue";
 
 const router = useRouter();
-const moduleName = "Orden de Servicio";
 const modulePath = "service-orders";
 
 const actionsColumn = {
@@ -51,7 +49,7 @@ const columns = [
   },
 ];
 
-const contractList = ref([]);
+const contractList = ref<{ id: any; name: any }[]>([]);
 const searchOptions = reactive({
   contract: "",
   orderCode: "",
@@ -67,10 +65,11 @@ const goToCreate = () => {
   console.log("Create");
   router.push({ name: `${modulePath}.create` });
 };
-const goToEdit = (id: string) => {
-  console.log("Edit", id);
-  router.push({ name: `${modulePath}.edit`, params: { id } });
-};
+
+// const goToEdit = (id: string) => {
+//   console.log("Edit", id);
+//   router.push({ name: `${modulePath}.edit`, params: { id } });
+// };
 
 onMounted(async () => {
   data.value = await getList(searchOptions);
@@ -152,10 +151,7 @@ onMounted(async () => {
                   placement="top"
                   class="tooltip"
                 >
-                  <div
-                    class="bg-gray-50 rounded-md py-2"
-                    @click="emitEdit(rowProps.row['id'])"
-                  >
+                  <div class="bg-gray-50 rounded-md py-2">
                     <Edit03Icon
                       class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                     />

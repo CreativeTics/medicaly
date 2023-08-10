@@ -29,7 +29,7 @@ defineProps<{
 
     <span
       class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
-      v-else-if="status === OrderStatus.inProgress"
+      v-else-if="status === OrderStatus.inprogress"
     >
       {{ status }}
     </span>

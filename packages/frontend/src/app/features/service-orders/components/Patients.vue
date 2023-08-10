@@ -69,7 +69,7 @@ const removeRow = (index: number) => {
   patients.value.splice(index, 1);
 };
 
-const searchPatientByDocument = async (patient: string, index: number) => {
+const searchPatientByDocument = async (patient: Patient, index: number) => {
   if (patient.doctype !== "" && patient.document !== "") {
     const patientOld = await searchPatient(patient.doctype, patient.document);
     if (patientOld.length > 0) {

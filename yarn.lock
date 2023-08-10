@@ -2666,6 +2666,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-cron@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "node-cron@npm:3.0.2"
+  dependencies:
+    uuid: 8.3.2
+  checksum: dd21585c0d4069a0752022dad9b8380a4393c4783ec78355ffa99ff32b018c3743a35d4ebf9d7c7863949e94e302b440f58c884eb4960e71c7260d817e2d3f25
+  languageName: node
+  linkType: hard
+
 "node-fetch@npm:2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
@@ -3905,6 +3914,17 @@ __metadata:
   checksum: 47c9586c735e7d9cbbc1029f3ff422108212f7cc42e06d5cc9fff7901e659c948143c790e0d0d41b1b5f89f1d1200bdd200c7b72ad34f42f9edbeb32ea49e8b7
   languageName: node
   linkType: hard
+
+"ticket-codes@workspace:packages/backend/ticket-codes":
+  version: 0.0.0-use.local
+  resolution: "ticket-codes@workspace:packages/backend/ticket-codes"
+  dependencies:
+    axios: ^1.4.0
+    chalk: ^5.3.0
+    dotenv: ^16.3.1
+    node-cron: ^3.0.2
+  languageName: unknown
+  linkType: soft
 
 "tiny-case@npm:^1.0.3":
   version: 1.0.3

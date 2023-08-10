@@ -24,6 +24,17 @@ services:
       POSTGRES_PASSWORD: 4dm1n-p4ssw0rd!!
       POSTGRES_DB: medicaly
 
+  encode-orders:
+    build: ../../packages/backend/ticket-codes
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      COUCHDB_URL: http://db:5984
+      COUCHDB_USER: 4dm1n-us3r
+      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      CRON_JOB_EXPRESSION: "30 * * * * *"
+
   # redis:
   #   image: redis:latest
   #   restart: unless-stopped
