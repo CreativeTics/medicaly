@@ -1,10 +1,9 @@
 #!/bin/sh
-BLUE='\033[0;34m'
-WHITE= '\033[0;37m' 
-RED= '\033[0;31m'
 YELLOW=`tput setaf 3`
 GREEN=`tput setaf 2`
-chmod +x infrastructure/docker/docker-compose.dev.yaml
+chmod +x stop.sh
+chmod +x restart.sh
+
 
 
 # Start the service

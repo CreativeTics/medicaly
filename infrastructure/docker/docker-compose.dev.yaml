@@ -5,6 +5,7 @@ services:
     image: couchdb:3.3.2
     volumes:
       - db_data:/var/lib/couchdb
+      - config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
     restart: unless-stopped
     environment:
       COUCHDB_USER: 4dm1n-us3r
