@@ -32,7 +32,7 @@ services:
       - db
     environment:
       COUCHDB_URL: http://db:5984
-      COUCHDB_USER: 4dm1n-us3r
+      COUCHDB_USERNAME: 4dm1n-us3r
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
       CRON_JOB_EXPRESSION: "30 * * * * *"
 

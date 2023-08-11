@@ -1170,3 +1170,5 @@ export { default as ZapSquareIcon } from "./ZapSquareIcon.vue";
 export { default as ZapIcon } from "./ZapIcon.vue";
 export { default as ZoomInIcon } from "./ZoomInIcon.vue";
 export { default as ZoomOutIcon } from "./ZoomOutIcon.vue";
+
+export const Zoom = () => import("./ZoomOutIcon.vue");

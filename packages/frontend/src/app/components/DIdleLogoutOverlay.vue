@@ -33,7 +33,7 @@ import { useIdle } from "@/app/core/composable";
 const store = useAuthStore();
 const router = useRouter();
 
-const { display, isRemind } = useIdle(900, 120, onIdle);
+const { display, isRemind } = useIdle(900, 700, onIdle);
 
 function onIdle() {
   store.logout();
