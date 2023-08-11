@@ -1,22 +1,23 @@
 <script lang="ts" setup>
-const props = withDefaults(
+withDefaults(
   defineProps<{
-    title: string
-    description: string
-    header: boolean
-    footer: boolean
+    title: string;
+    description: string;
+    header: boolean;
+    footer: boolean;
   }>(),
   {
-    title: '',
-    description: '',
+    title: "",
+    description: "",
     header: false,
-    footer: false
+    footer: false,
   }
-)
+);
 </script>
 <template>
   <div
-    class="flex flex-col justify-between border-2 sm:w-full rounded-lg bg-white h-auto min-h-0">
+    class="flex flex-col justify-between border-2 sm:w-full rounded-lg bg-white h-auto min-h-0"
+  >
     <header class="bg-gray-100 py-3 rounded-t-lg px-5" v-if="header">
       <slot name="header"></slot>
     </header>

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import PaginatedTable from "../../../components/PaginatedTable.vue";
 import { File02Icon } from "../../../components/basic";
 
 import { getList } from "../services/services";
-import { Form, DynamicForm } from "../../dynamic-form";
 import { onMounted, ref, watch } from "vue";
 
 const props = defineProps<{
@@ -22,8 +20,6 @@ watch(
 );
 
 const emit = defineEmits(["update:modelValue"]);
-
-const model = ref<any>({});
 
 const rows = ref<any[]>([]);
 

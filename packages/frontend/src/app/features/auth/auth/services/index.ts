@@ -1,5 +1,4 @@
-import { PouchService, DB } from "../../../services/pouch";
-import { Entity } from "@/app/core/types/entity";
+import { PouchService, DB } from "@/app/services/pouch";
 
 const pouch = new PouchService();
 
@@ -11,14 +10,14 @@ export async function login(username: string, password: string) {
     },
   });
 
-  if (result!.docs.length > 0) {
+  if (result!.length > 0) {
     return true;
   }
 
   return false;
 }
 
-export class User extends Entity {
+export class User {
   username: string;
   password: string;
   fullName: string;
@@ -30,18 +29,11 @@ export class User extends Entity {
     fullName: string,
     role: string
   ) {
-    super("users", pouch.use(DB.AUTH), pouch.use(DB.AUTH));
     this.username = username;
     this.password = password;
     this.fullName = fullName;
     this.role = role;
   }
-}
-
-export async function createUser(user: User) {
-  new User().setValues(user);
-
-  return;
 }
 
 export async function getUsers(): Promise<User[]> {

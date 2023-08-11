@@ -1765,7 +1765,6 @@ __metadata:
     tailwindcss: ^3.3.3
     typescript: ^5.0.2
     uuid: ^9.0.0
-    v-idle-3: ^0.3.14
     vite: ^4.4.0
     vue: ^3.3.4
     vue-router: 4
@@ -4110,15 +4109,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"v-idle-3@npm:^0.3.14":
-  version: 0.3.14
-  resolution: "v-idle-3@npm:0.3.14"
-  dependencies:
-    vue: ^3.2.33
-  checksum: 9b1bfbf0bb5bef5ce730324a50802daa59e5f12cec6c9f0bda1157ec1e15056c331b47c1eb66349ec0f74eb958a4f49c055dd19aad4456b9f5719d5e95e26b86
-  languageName: node
-  linkType: hard
-
 "vite@npm:^4.4.0":
   version: 4.4.4
   resolution: "vite@npm:4.4.4"
@@ -4235,7 +4225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue@npm:^3.2.33, vue@npm:^3.3.4":
+"vue@npm:^3.3.4":
   version: 3.3.4
   resolution: "vue@npm:3.3.4"
   dependencies:

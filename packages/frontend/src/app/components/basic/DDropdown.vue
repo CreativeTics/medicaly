@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { DotsVerticalIcon } from './icons'
+import { DotsVerticalIcon } from "./icons";
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
-    label: string
-    options: Array<any>
-    icon: boolean
+    label: string;
+    options: Array<any>;
+    icon: boolean;
   }>(),
   {
-    label: '',
-    icon: true
+    label: "",
+    icon: true,
   }
-)
+);
 
-const emit = defineEmits(['action'])
+defineEmits(["action"]);
 </script>
 <template>
   <div class="dropdown">
@@ -22,7 +22,7 @@ const emit = defineEmits(['action'])
       <p v-else>{{ label }}</p>
     </span>
     <ul>
-      <template v-for="(option, index) in options" v-bind:key="index">
+      <template v-for="option in options">
         <li v-if="option.view" @click="$emit('action', option.action)">
           {{ option.name }}
         </li>

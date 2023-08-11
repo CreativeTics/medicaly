@@ -6,12 +6,14 @@ const selectedTitle = ref("");
 const tabs = ref<any[]>([]);
 
 const calculateTabs = () => {
-  const rawTabs =
-    // @ts-ignore
+  if (!slots.default) return;
+
+  const rawTabs: any =
     Number(slots.default()[0].children?.length) > 0
       ? slots.default()?.[0]?.children
       : slots.default();
-  selectedTitle.value = rawTabs?.[0].props?.title ?? "";
+
+  selectedTitle.value = rawTabs?.[0]?.props?.title ?? "";
 
   tabs.value = [...(rawTabs as [])].map((tab: any) => {
     return {

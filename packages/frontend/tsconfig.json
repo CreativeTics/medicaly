@@ -10,6 +10,7 @@
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
+    "allowJs": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -20,6 +21,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "types": [],
     "paths": {
       "@components/*": ["./src/app/components/*"],
       "@features/*": ["./src/app/features/*"],
@@ -32,6 +34,6 @@
     "./src/**/*.tsx",
     "./src/**/*.vue"
   ],
-  "exclude": ["node_modules", "dist"],
+  "exclude": ["node_modules", "**/node_modules/**", "dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

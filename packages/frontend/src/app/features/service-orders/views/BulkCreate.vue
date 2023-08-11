@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, toRaw } from "vue";
+import { ref, toRaw } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Form, DynamicForm } from "../../dynamic-form";
 import { useNotificationsStore } from "@/store/notifications";
@@ -178,11 +178,10 @@ const onSubmit = async (data: any) => {
     });
     router.push({ name: `${modulePath}.list` });
   } else {
-    errors = errors ?? [];
     notifications.addNotification({
       type: "error",
       title: "Error",
-      text: `${errors.join(", ") ?? ""}`,
+      text: `${(errors ?? []).join(", ") ?? ""}`,
     });
   }
 };

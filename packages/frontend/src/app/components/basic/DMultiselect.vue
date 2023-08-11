@@ -11,7 +11,7 @@ const itemsList = ref();
 watchEffect(() => {
   itemsList.value = props.options;
 });
-const arraySelected = ref([]);
+const arraySelected = ref<any[]>([]);
 const count = ref(0);
 const selected = ref();
 const copyItems = ref();
@@ -214,7 +214,7 @@ const cancelSelection = () => {
                   Marcar Todos
                 </a>
                 <d-list
-                  v-for="(item, index) in itemsList.filter(function (x: { [x: string]: string; }) {
+                  v-for="(item, index) in itemsList.filter(function (x: any) {
                     return (
                       searchValue == '' ||
                       x[showKey]

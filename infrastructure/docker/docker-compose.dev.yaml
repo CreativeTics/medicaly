@@ -36,6 +36,12 @@ services:
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
       CRON_JOB_EXPRESSION: "30 * * * * *"
 
+  front:
+    build: ../../packages/frontend
+    restart: unless-stopped
+    ports:
+      - 80:80
+
   # redis:
   #   image: redis:latest
   #   restart: unless-stopped

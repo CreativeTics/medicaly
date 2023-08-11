@@ -1,8 +1,7 @@
 import { getData } from "../../../core/services/get-table/";
 
-import { PouchService, DB } from "../../../services/pouch";
+import { DB } from "../../../services/pouch";
 
-const pouch = new PouchService();
 const doctype = "contract-services";
 
 export async function getList(contractId: string, examType: string) {
