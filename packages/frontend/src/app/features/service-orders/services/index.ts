@@ -63,6 +63,40 @@ export async function getList(searchOptions: any) {
   });
 }
 
+export async function getOrder(id: string) {
+  const order = await pouch.use(DB.GENERAL).get(id);
+
+  // get contractSubsidiary
+  const contractSubsidiary = await pouch
+    .use(DB.GENERAL)
+    .get(order.contractSubsidiary);
+  // get contractCostCenter
+  const contractCostCenter = await pouch
+    .use(DB.GENERAL)
+    .get(order.contractCostCenter);
+  // get medicalExamType
+  const medicalExamType = await pouch
+    .use(DB.GENERAL)
+    .get(order.medicalExamType);
+
+  return {
+    ...order,
+    contractSubsidiary: {
+      id: contractSubsidiary.id,
+      name: contractSubsidiary.name,
+    },
+    contractCostCenter: {
+      id: contractCostCenter.id,
+      name: contractCostCenter.name,
+    },
+    medicalExamType: {
+      id: medicalExamType.id,
+      name: medicalExamType.name,
+      emphasis: medicalExamType.emphasis,
+    },
+  };
+}
+
 export async function create(entity: any): Promise<{
   isOk: boolean;
   errors?: any[];

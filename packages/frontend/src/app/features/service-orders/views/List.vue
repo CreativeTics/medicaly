@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive } from "vue";
 import {
-  Edit03Icon,
   SearchMdIcon,
   DBtn,
   DTextField,
@@ -71,6 +70,10 @@ const goToCreate = () => {
 //   console.log("Edit", id);
 //   router.push({ name: `${modulePath}.edit`, params: { id } });
 // };
+
+const goToView = (id: string) => {
+  router.push({ name: `${modulePath}.view`, params: { id } });
+};
 
 onMounted(async () => {
   data.value = await getList(searchOptions);
@@ -143,7 +146,7 @@ onMounted(async () => {
                 :status="rowProps.row[column.key]"
               />
 
-              <div class="max-w-xs flex justify-end" v-else>
+              <div class="max-w-xs flex justify-end gap-2" v-else>
                 <Popper
                   arrow
                   offsetDistance="12"
@@ -152,13 +155,16 @@ onMounted(async () => {
                   placement="top"
                   class="tooltip"
                 >
-                  <div class="bg-gray-50 rounded-md py-2">
+                  <div
+                    class="bg-gray-50 rounded-md py-2"
+                    @click="goToView(rowProps.row.id)"
+                  >
                     <SearchMdIcon
                       class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                     />
                   </div>
                 </Popper>
-                <Popper
+                <!-- <Popper
                   arrow
                   offsetDistance="12"
                   content="Editar"
@@ -171,7 +177,7 @@ onMounted(async () => {
                       class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                     />
                   </div>
-                </Popper>
+                </Popper> -->
               </div>
             </td>
           </template>
