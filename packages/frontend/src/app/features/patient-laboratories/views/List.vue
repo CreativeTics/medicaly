@@ -9,12 +9,11 @@ import {
 import PaginatedTable from "@/app/components/PaginatedTable.vue";
 import Popper from "vue3-popper";
 import { useRouter } from "vue-router";
-import { getList, getContractsList } from "../services";
+import { getList, getSubsidiariesList } from "../services";
 
-import OrderStatus from "../components/OrderStatus.vue";
+import OrderStatus from "../../service-orders/components/OrderStatus.vue";
 
 const router = useRouter();
-const modulePath = "service-orders";
 
 const actionsColumn = {
   key: "actions",
@@ -43,16 +42,15 @@ const columns = [
   },
 
   {
-    key: "updatedAt",
-    title: "Ultima modificación",
+    key: "createdAt",
+    title: "Fecha de creación",
     align: "left",
   },
 ];
 
-const contractList = ref<{ id: any; name: any }[]>([]);
+const subsidiaries = ref<{ id: any; name: any }[]>([]);
 const searchOptions = reactive({
-  contract: "",
-  orderCode: "",
+  subsidiary: "",
   patient: "",
 });
 const data = ref<any>([]);
@@ -61,23 +59,13 @@ const search = async () => {
   data.value = await getList(searchOptions);
 };
 
-const goToCreate = () => {
-  console.log("Create");
-  router.push({ name: `${modulePath}.create` });
-};
-
-// const goToEdit = (id: string) => {
-//   console.log("Edit", id);
-//   router.push({ name: `${modulePath}.edit`, params: { id } });
-// };
-
 const goToView = (id: string) => {
-  router.push({ name: `${modulePath}.view`, params: { id } });
+  router.push({ name: `patient-admission.admission`, params: { id } });
 };
 
 onMounted(async () => {
   data.value = await getList(searchOptions);
-  contractList.value = await getContractsList();
+  subsidiaries.value = await getSubsidiariesList();
   console.log("Mounted", data.value);
 });
 </script>
@@ -86,8 +74,10 @@ onMounted(async () => {
   <div class="h-full px-5 overflow-auto scroll">
     <div class="bg-gray-50 pb-4">
       <div class="leading-4 pt-responsive">
-        <p class="text-3xl font-semibold text-shadow">Ordenes de servicio</p>
-        <p class="text-gray-500 text-shadow">Gestión de Ordenes de servicio</p>
+        <p class="text-3xl font-semibold text-shadow">
+          Laboratorios de pacientes
+        </p>
+        <p class="text-gray-500 text-shadow"></p>
       </div>
       <div class="sm:flex justify-between pt-2">
         <PaginatedTable
@@ -96,35 +86,24 @@ onMounted(async () => {
           style="height: calc(100vh - 200px)"
         >
           <template #header>
-            <div class="py-3 flex items-end sm:mb-0 sm:w-3/4 md:w-3/4">
+            <div class="py-3 w-full flex flex-row gap-5 items-end">
               <DSelectFieldSearch
-                label="Contrato:"
-                v-model="searchOptions.contract"
-                :options="contractList"
+                label="Sede:"
+                v-model="searchOptions.subsidiary"
+                :options="subsidiaries"
                 @search="search"
-                class="mr-2 w-full"
+                class="min-w-fit w-96"
               />
 
-              <DTextField
-                label="# de orden"
-                placeholder="Digite el numero de orden"
-                :icon="'SearchLgIcon'"
-                class="mr-2 w-full"
-                v-model="searchOptions.orderCode"
-                @keyup.enter="search"
-              />
               <DTextField
                 label="Paciente"
                 placeholder="Digite el nombre o documento del paciente"
                 :icon="'SearchLgIcon'"
-                class="mr-2 w-full"
+                class="min-w-fit w-full"
                 v-model="searchOptions.patient"
                 @keyup.enter="search"
               />
               <DBtn class="h-10 w-20" @click.prevent="search">Buscar</DBtn>
-            </div>
-            <div class="py-3">
-              <DBtn @click.prevent="goToCreate">Crear Ordenes</DBtn>
             </div>
           </template>
 
@@ -164,20 +143,6 @@ onMounted(async () => {
                     />
                   </div>
                 </Popper>
-                <!-- <Popper
-                  arrow
-                  offsetDistance="12"
-                  content="Editar"
-                  :hover="true"
-                  placement="top"
-                  class="tooltip"
-                >
-                  <div class="bg-gray-50 rounded-md py-2">
-                    <Edit03Icon
-                      class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
-                    />
-                  </div>
-                </Popper> -->
               </div>
             </td>
           </template>
@@ -186,5 +151,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-attendance patient ingress

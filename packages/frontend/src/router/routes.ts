@@ -16,6 +16,9 @@ import { examsRoutes } from "@features/exams";
 import { contractsRoutes } from "@features/contracts";
 import { subsidiariesRoutes } from "@features/subsidiaries";
 import { serviceOrdersRoutes } from "@features/service-orders";
+import { patientAdmissionRoutes } from "@features/patient-admission";
+import { patientAttentionRoutes } from "@features/patient-attention";
+import { patientLaboratoryRoutes } from "@features/patient-laboratories";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -43,4 +46,7 @@ export const routes: RouteRecordRaw[] = [
   ...contractsRoutes,
   ...subsidiariesRoutes,
   ...serviceOrdersRoutes,
+  ...patientAdmissionRoutes,
+  ...patientAttentionRoutes,
+  ...patientLaboratoryRoutes,
 ];

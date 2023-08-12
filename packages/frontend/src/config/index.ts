@@ -19,6 +19,27 @@ export const menu = [
     route: "/home",
   },
   {
+    name: "Atencion",
+    icon: "ClipboardCheckIcon",
+    children: [
+      {
+        name: "Ingreso de pacientes",
+        route: "/patient-admission",
+        permission: "patient-admission:list",
+      },
+      {
+        name: "Atención de pacientes",
+        route: "/patient-attention",
+        permission: "patient-attention:list",
+      },
+      {
+        name: "Laboratorios de pacientes",
+        route: "/patient-laboratories",
+        permission: "patient-laboratories:list",
+      },
+    ],
+  },
+  {
     name: "Ordenes de servicio",
     icon: "Ticket01Icon",
     children: [
