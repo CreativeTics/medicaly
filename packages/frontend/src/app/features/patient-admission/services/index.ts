@@ -82,6 +82,9 @@ export async function getOrder(id: string) {
     .use(DB.GENERAL)
     .get(order.medicalExamType);
 
+  // get patient
+  const patient = await pouch.use(DB.MEDICAL).get(order.patientId);
+
   return {
     ...order,
     contractSubsidiary: {
@@ -97,5 +100,6 @@ export async function getOrder(id: string) {
       name: medicalExamType.name,
       emphasis: medicalExamType.emphasis,
     },
+    patient,
   };
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive } from "vue";
 import {
-  SearchMdIcon,
+  LogIn03Icon,
   DBtn,
   DTextField,
   DSelectFieldSearch,
@@ -55,7 +55,7 @@ const columns = [
 
 const subsidiaries = ref<{ id: any; name: any }[]>([]);
 const searchOptions = reactive({
-  contract: "",
+  subsidiary: "",
   orderCode: "",
   patient: "",
 });
@@ -141,7 +141,7 @@ onMounted(async () => {
                 <Popper
                   arrow
                   offsetDistance="12"
-                  content="Ver detalle"
+                  content="Ingresar paciente"
                   :hover="true"
                   placement="top"
                   class="tooltip"
@@ -150,7 +150,7 @@ onMounted(async () => {
                     class="bg-gray-50 rounded-md py-2"
                     @click="goToView(rowProps.row.id)"
                   >
-                    <SearchMdIcon
+                    <LogIn03Icon
                       class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                     />
                   </div>

@@ -5,7 +5,8 @@ import { ChevronDownIcon, Loading02Icon } from "./icons";
 const optionShow = ref(false);
 const showLabel = ref(true);
 const showInput = ref(false);
-const input = ref("");
+const inputText = ref("");
+const optionsCursor = ref(0);
 
 const props = withDefaults(
   defineProps<{
@@ -43,13 +44,22 @@ const emitUpdate = (val: any) => {
 };
 
 const filteredOptions = computed(() => {
-  return props.options.filter((item) => {
-    console.log(item[props.showKey]?.toLowerCase(), input.value?.toLowerCase());
+  return [
+    {
+      [props.valueKey]: null,
+      [props.showKey]: props.placeholder,
+    },
+    ...props.options,
+  ].filter((item) => {
+    console.log(
+      item[props.showKey]?.toLowerCase(),
+      inputText.value?.toLowerCase()
+    );
     return (
       !props.localSearch ||
       item[props.showKey]
         ?.toLowerCase()
-        .indexOf(input.value?.toLowerCase() || "") > -1
+        .indexOf(inputText.value?.toLowerCase() || "") > -1
     );
   });
 });
@@ -66,9 +76,15 @@ const nameValue = computed(() => {
   );
 });
 
+const input = ref<HTMLInputElement | null>(null);
 const showOptions = () => {
+  console.log("showOptions");
   if (!props.disabled) {
     optionShow.value = true;
+    optionsCursor.value = 0;
+    setTimeout(() => {
+      input.value?.focus();
+    }, 100);
   }
 };
 
@@ -93,19 +109,31 @@ const selectOption = (option: any) => {
     emitChange("");
   }
 };
+
+const cursorDown = () => {
+  if (optionsCursor.value < filteredOptions.value.length) {
+    optionsCursor.value++;
+  }
+};
+const cursorUp = () => {
+  if (optionsCursor.value > 0) {
+    optionsCursor.value--;
+  }
+};
 </script>
 <template>
   <div class="relative block">
     <label class="block text-sm font-medium text-gray-800 mb-1.5" v-if="label">
       {{ label }} <span v-if="required" class="text-red-500">*</span>
     </label>
-    <label
+    <button
       v-if="!optionShow"
       class="w-full flex justify-between items-center rounded-md shadow-sm border py-2 px-2 gap-2 cursor-default"
       :class="[
         disabled ? 'bg-gray-200 cursor-no-drop ' : 'bg-white',
         error === '' ? 'btn-block border-gray-300' : 'border-red-500',
       ]"
+      @focus="showOptions"
       @click="showOptions"
     >
       <span v-if="filteredOptions.length > 0" class="text-sm truncate ...">
@@ -119,15 +147,19 @@ const selectOption = (option: any) => {
         class="ml-2 w-4 h-4 text-black font-black"
       />
       <Loading02Icon v-else class="rotate text-gray-400" />
-    </label>
+    </button>
     <input
-      v-if="optionShow"
+      v-show="optionShow"
+      ref="input"
       class="mt-1 block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm cursor-pointer"
       :class="[{ error }, { 'bg-gray-300': disabled }]"
-      v-model="input"
+      v-model="inputText"
       @blur="exit()"
       @focusout="() => emitFocus()"
       @change="emitChange($event)"
+      @keydown.enter="selectOption(filteredOptions[optionsCursor])"
+      @keydown.down="cursorDown"
+      @keydown.up="cursorUp"
       :disabled="disabled"
       :placeholder="placeholder"
     />
@@ -137,14 +169,9 @@ const selectOption = (option: any) => {
     >
       <li
         class="dropdown-item rounded-md my-1 hover:bg-blue-500 hover:text-white cursor-pointer text-sm px-2 py-1"
+        :class="optionsCursor == index ? 'bg-blue-500 text-white' : ''"
         @mousedown="selectOption(option)"
-        v-for="(option, index) in [
-          {
-            [props.showKey]: `${props.placeholder}`,
-            [props.valueKey]: null,
-          },
-          ...filteredOptions,
-        ]"
+        v-for="(option, index) in [...filteredOptions]"
         :key="index"
       >
         {{ typeof option == "object" ? option[showKey] : option }}
