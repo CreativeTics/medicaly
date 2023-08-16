@@ -1,0 +1,22 @@
+{
+  "name": "ws-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "serve": "tsc &&  node dist/index",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gokaju",
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "socket.io": "^4.7.2"
+  }
+}

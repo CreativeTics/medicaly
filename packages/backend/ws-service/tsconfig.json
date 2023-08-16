@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "pretty": true,
+    "sourceMap": true,
+    "target": "ES6",
+    "outDir": "./dist",
+    "lib": ["es6"],
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "skipLibCheck": true
+  },
+  "include": ["src/*.ts", "src/**/*.ts", "src/**/*.js"],
+  "exclude": ["node_modules", "src/**/*.spec.ts", "src/**/*.spec.js"]
+}

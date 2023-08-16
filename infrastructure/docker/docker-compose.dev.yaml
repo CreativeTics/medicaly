@@ -1,4 +1,4 @@
-version: "3.7"
+version: '3.7'
 
 services:
   db:
@@ -34,7 +34,13 @@ services:
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: 4dm1n-us3r
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
-      CRON_JOB_EXPRESSION: "30 * * * * *"
+      CRON_JOB_EXPRESSION: '30 * * * * *'
+
+  ws-service:
+    build: ../../packages/backend/ws-service
+    restart: unless-stopped
+    ports:
+      - 3001:3001
 
   front:
     build: ../../packages/frontend
