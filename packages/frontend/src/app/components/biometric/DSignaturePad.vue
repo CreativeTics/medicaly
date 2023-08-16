@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { io, Socket } from 'socket.io-client'
 import DDrawPanel from './DDrawPanel.vue'
 import { DBtn, Trash03Icon } from '../basic'
@@ -29,12 +29,26 @@ const connect = () => {
     wsStatus.value = 'joined'
     autoSave()
   })
+  socket.on('error', (error) => {
+    console.error(error)
+    wsStatus.value = 'error'
+  })
+
+  socket.on('message', (message) => {
+    console.log(message)
+    if (message.type === 'lock') {
+      enabled.value = false
+      drawPanel.value?.clear()
+    } else if (message.type === 'unlock') {
+      enabled.value = true
+    }
+  })
 }
 
 onMounted(() => {
   connect()
 })
-onUnmounted(() => {
+onBeforeUnmount(() => {
   console.log('unmounted')
   socket?.disconnect()
   socket?.close()
@@ -45,11 +59,11 @@ const autoSave = () => {
     if (wsStatus.value === 'joined' && enabled.value) {
       save()
     }
-  }, 500)
+  }, 1000)
 }
 
 const save = () => {
-  const { data } = drawPanel.value.save()
+  const data = drawPanel.value.save()
   socket.emit('message', {
     type: 'signature-update',
     image: data,
@@ -58,7 +72,10 @@ const save = () => {
 }
 </script>
 <template>
-  <div class="fixed h-full w-full bg-black opacity-30 z-50"></div>
+  <div
+    v-if="!enabled"
+    class="fixed h-full w-full bg-black opacity-30 z-50"
+  ></div>
   <div
     class="h-screen w-screen p-5 flex flex-col justify-center items-center relative"
   >
