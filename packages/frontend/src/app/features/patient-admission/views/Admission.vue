@@ -6,6 +6,8 @@ import { getOrder } from "../services";
 import OrderStatus from "../../service-orders/components/OrderStatus.vue";
 import DynamicFormWithOutTabs from "@features/dynamic-form/component/DynamicFormWithOutTabs.vue";
 
+import DCameraInput from "@components/DCameraInput.vue";
+
 const route = useRoute();
 const router = useRouter();
 
@@ -73,11 +75,8 @@ const form: any = {
           name: "secondName",
           label: "Segundo Nombre",
           type: "text",
-          props: {
-            placeholder: "",
-            required: true,
-          },
-          rules: ["required", "upper", "minlength:3", "maxlength:50"],
+
+          rules: ["upper", "minlength:0", "maxlength:50"],
         },
         {
           name: "lastName",
@@ -93,11 +92,7 @@ const form: any = {
           name: "secondLastName",
           label: "Segundo Apellido",
           type: "text",
-          props: {
-            placeholder: "",
-            required: true,
-          },
-          rules: ["required", "upper", "minlength:3", "maxlength:50"],
+          rules: ["upper", "minlength:0", "maxlength:50"],
         },
         {
           name: "birthDate",
@@ -448,7 +443,7 @@ const onSubmit = async (data: any) => {
         style="height: calc(100vh - 300px)"
       >
         <div class="w-full flex flex-row h-full">
-          <div class="w-96 bg-slate-100">div 1</div>
+          <div class="w-96 bg-slate-100"><DCameraInput /></div>
           <div class="w-full overflow-y-scroll">
             <DynamicFormWithOutTabs
               v-if="!loading"

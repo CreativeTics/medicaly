@@ -2,7 +2,7 @@
 import { OrderStatus } from "@/app/core/types/order-status";
 
 defineProps<{
-  status: OrderStatus;
+  status?: OrderStatus;
 }>();
 </script>
 

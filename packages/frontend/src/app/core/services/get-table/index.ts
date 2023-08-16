@@ -22,11 +22,8 @@ export async function getData<T>(query: TableDataQuery): Promise<T> {
 export async function getSelectData<T>(
   query: TableDataQuery,
   params?: Map<string, string>,
-  selectId?: string,
-  operator: string = "="
+  selectId?: string
 ): Promise<T> {
-  console.log("getSelectData", query, params, selectId, operator);
-
   const localQuery = { ...query };
   localQuery.where = localQuery.where ?? {};
   replaceWhereTags(localQuery, selectId);

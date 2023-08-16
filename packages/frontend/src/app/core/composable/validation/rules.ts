@@ -11,7 +11,14 @@ export const globalRules = new Map<string, any>([
         .required("Este campo es requerido!"),
   ],
   ["required", () => string().required("Este campo es requerido!")],
-  ["upper", () => string().matches(/^[A-Z0-9\s]+$/, "Debe ser en mayúsculas!")],
+  [
+    "upper",
+    () =>
+      string().matches(/^[A-Z0-9\s]+$/, {
+        excludeEmptyString: true,
+        message: "Solo se permiten mayúsculas",
+      }),
+  ],
   [
     "regex",
     (regex: RegExp) =>

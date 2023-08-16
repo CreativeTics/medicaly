@@ -51,10 +51,6 @@ const filteredOptions = computed(() => {
     },
     ...props.options,
   ].filter((item) => {
-    console.log(
-      item[props.showKey]?.toLowerCase(),
-      inputText.value?.toLowerCase()
-    );
     return (
       !props.localSearch ||
       item[props.showKey]
@@ -78,7 +74,6 @@ const nameValue = computed(() => {
 
 const input = ref<HTMLInputElement | null>(null);
 const showOptions = () => {
-  console.log("showOptions");
   if (!props.disabled) {
     optionShow.value = true;
     optionsCursor.value = 0;
