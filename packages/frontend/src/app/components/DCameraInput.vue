@@ -3,6 +3,12 @@ import { onBeforeUnmount, onMounted, ref } from "vue";
 
 import { Camera03Icon, Repeat04Icon } from "./basic";
 
+const props = defineProps<{
+  modelValue: string;
+}>();
+
+const emit = defineEmits(["update:modelValue"]);
+
 const devices = ref<MediaDeviceInfo[]>([]);
 const video = ref<HTMLVideoElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
@@ -39,6 +45,7 @@ const getDevices = async () => {
 onMounted(async () => {
   navigator.mediaDevices.ondevicechange = getDevices;
   await getDevices();
+  image.value = props.modelValue;
 });
 
 const takePhoto = () => {
@@ -50,10 +57,15 @@ const takePhoto = () => {
   context.drawImage(video.value, 0, 0, resolution.width, resolution.height);
   const data = canvas.value.toDataURL("image/png");
   image.value = data;
+  emitValue();
 };
 
 const clearPhoto = () => {
   image.value = "";
+};
+
+const emitValue = () => {
+  emit("update:modelValue", image.value);
 };
 
 onBeforeUnmount(() => {
