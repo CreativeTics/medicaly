@@ -46,6 +46,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@digitalpersona/core@npm:^0.2":
+  version: 0.2.6
+  resolution: "@digitalpersona/core@npm:0.2.6"
+  dependencies:
+    tslib: ^1.9.3
+  checksum: 17c27d637704a64020ed73782ab3491ffc07c29ee264fb963b679e5818d9ffbe58573a004e731c1e25ff1e2275a833352d7e093e097d64f3a87ca75317854d5e
+  languageName: node
+  linkType: hard
+
+"@digitalpersona/devices@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "@digitalpersona/devices@npm:0.2.6"
+  dependencies:
+    "@digitalpersona/core": ^0.2
+    "@digitalpersona/services": ^0.2
+    tslib: ^1.9.3
+  checksum: d2fbc9f60b6916e9aa7350717d1700f5ec509cb9b702638c21893436d06aa4f558627959f7c508a8895fef74c0e778447a0b6da1a23700e46da5aba0606caa7a
+  languageName: node
+  linkType: hard
+
+"@digitalpersona/services@npm:^0.2":
+  version: 0.2.8
+  resolution: "@digitalpersona/services@npm:0.2.8"
+  dependencies:
+    "@digitalpersona/core": ^0.2
+    tslib: ^1.9.3
+  checksum: 688dbc5e96d3c68a3791baf2a898c1d2d6c99f35f81195d34beaf1b3868682bd0dbf9cea68c6c8318b037ddff52cd2bf672d0891c8ab0fb4e3f912fd91282dd1
+  languageName: node
+  linkType: hard
+
 "@esbuild/android-arm64@npm:0.18.13":
   version: 0.18.13
   resolution: "@esbuild/android-arm64@npm:0.18.13"
@@ -1848,6 +1878,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "frontend@workspace:packages/frontend"
   dependencies:
+    "@digitalpersona/devices": ^0.2.6
     "@types/crypto-js": ^4.1.1
     "@types/node": ^20.4.2
     "@types/pouchdb": ^6.4.0
@@ -4135,6 +4166,13 @@ __metadata:
   version: 0.1.13
   resolution: "ts-interface-checker@npm:0.1.13"
   checksum: 20c29189c2dd6067a8775e07823ddf8d59a33e2ffc47a1bd59a5cb28bb0121a2969a816d5e77eda2ed85b18171aa5d1c4005a6b88ae8499ec7cc49f78571cb5e
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^1.9.3":
+  version: 1.14.1
+  resolution: "tslib@npm:1.14.1"
+  checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
   languageName: node
   linkType: hard
 

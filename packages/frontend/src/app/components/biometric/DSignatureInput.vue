@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { io, Socket } from 'socket.io-client'
 
 import { Camera03Icon, Repeat04Icon } from '../basic'
+import { WS_URL } from '@/config'
 
 const props = defineProps<{
   modelValue: string
@@ -30,7 +31,7 @@ onMounted(() => {
 })
 
 const connect = () => {
-  socket = io('ws://localhost:3001/signature-pad')
+  socket = io(`${WS_URL}/signature-pad`)
   socket.on('connect', () => {
     console.log('Pad connected')
     wsStatus.value = 'connected'
@@ -51,7 +52,6 @@ const connect = () => {
   })
 
   socket.on('message', (message) => {
-    console.log(message)
     if (message.type === 'signature-update') {
       tempImage.value = message.image
     }
@@ -61,7 +61,7 @@ const connect = () => {
 const takePhoto = () => {
   image.value = tempImage.value
   emitValue()
-  socket.emit('message', {
+  socket?.emit('message', {
     type: 'lock',
     room: code.value,
   })
@@ -69,7 +69,7 @@ const takePhoto = () => {
 
 const clearPhoto = () => {
   image.value = ''
-  socket.emit('message', {
+  socket?.emit('message', {
     type: 'unlock',
     room: code.value,
   })
@@ -81,7 +81,7 @@ const emitValue = () => {
 
 onBeforeUnmount(() => {
   console.log('unmounted')
-  socket.emit('message', {
+  socket?.emit('message', {
     type: 'lock',
     room: code.value,
   })

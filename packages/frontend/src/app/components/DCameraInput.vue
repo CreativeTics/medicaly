@@ -1,32 +1,32 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
-import { Camera03Icon, Repeat04Icon } from "./basic";
+import { Camera03Icon, Repeat04Icon } from './basic'
 
 const props = defineProps<{
-  modelValue: string;
-}>();
+  modelValue: string
+}>()
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
-const devices = ref<MediaDeviceInfo[]>([]);
-const video = ref<HTMLVideoElement | null>(null);
-const canvas = ref<HTMLCanvasElement | null>(null);
-const selectedDevice = ref<MediaDeviceInfo | null>(null);
-const error = ref<string>("");
-const image = ref<string>("");
+const devices = ref<MediaDeviceInfo[]>([])
+const video = ref<HTMLVideoElement | null>(null)
+const canvas = ref<HTMLCanvasElement | null>(null)
+const selectedDevice = ref<MediaDeviceInfo | null>(null)
+const error = ref<string>('')
+const image = ref<string>('')
 const resolution = {
   width: 1920,
   height: 1080,
-};
+}
 
 const getDevices = async () => {
-  const allDevices = await navigator.mediaDevices.enumerateDevices();
-  devices.value = allDevices.filter((device) => device.kind === "videoinput");
-  selectedDevice.value = devices.value[0];
+  const allDevices = await navigator.mediaDevices.enumerateDevices()
+  devices.value = allDevices.filter((device) => device.kind === 'videoinput')
+  selectedDevice.value = devices.value[0]
   if (!selectedDevice.value) {
-    error.value = "No se encontro camara";
-    return;
+    error.value = 'No se encontro camara'
+    return
   }
   // set stream
   const stream = await navigator.mediaDevices.getUserMedia({
@@ -35,42 +35,46 @@ const getDevices = async () => {
       width: resolution.width,
       height: resolution.height,
     },
-  });
-  if (video.value === null) return;
+  })
+  if (video.value === null) return
 
-  video.value.srcObject = stream;
-  video.value?.play();
-};
+  video.value.srcObject = stream
+  video.value?.play()
+}
 
 onMounted(async () => {
-  navigator.mediaDevices.ondevicechange = getDevices;
-  await getDevices();
-  image.value = props.modelValue;
-});
+  if (!navigator.mediaDevices) {
+    error.value = 'No se encontro camara'
+    return
+  }
+  navigator.mediaDevices.ondevicechange = getDevices
+  await getDevices()
+  image.value = props.modelValue
+})
 
 const takePhoto = () => {
-  if (video.value === null || canvas.value === null) return;
-  canvas.value.width = resolution.width;
-  canvas.value.height = resolution.height;
+  if (video.value === null || canvas.value === null) return
+  canvas.value.width = resolution.width
+  canvas.value.height = resolution.height
 
-  const context = canvas.value?.getContext("2d") as CanvasRenderingContext2D;
-  context.drawImage(video.value, 0, 0, resolution.width, resolution.height);
-  const data = canvas.value.toDataURL("image/png");
-  image.value = data;
-  emitValue();
-};
+  const context = canvas.value?.getContext('2d') as CanvasRenderingContext2D
+  context.drawImage(video.value, 0, 0, resolution.width, resolution.height)
+  const data = canvas.value.toDataURL('image/png')
+  image.value = data
+  emitValue()
+}
 
 const clearPhoto = () => {
-  image.value = "";
-};
+  image.value = ''
+}
 
 const emitValue = () => {
-  emit("update:modelValue", image.value);
-};
+  emit('update:modelValue', image.value)
+}
 
 onBeforeUnmount(() => {
-  navigator.mediaDevices.ondevicechange = null;
-});
+  navigator.mediaDevices.ondevicechange = null
+})
 </script>
 
 <template>

@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { io, Socket } from 'socket.io-client'
 import DDrawPanel from './DDrawPanel.vue'
 import { DBtn, Trash03Icon } from '../basic'
+import { WS_URL } from '@/config'
 
 const props = defineProps<{
   code: string
@@ -14,11 +15,11 @@ const enabled = ref(false)
 let socket: Socket | null = null
 
 const connect = () => {
-  socket = io('ws://localhost:3001/signature-pad')
+  socket = io(`${WS_URL}/signature-pad`)
   socket.on('connect', () => {
     console.log('Pad connected')
     wsStatus.value = 'connected'
-    socket.emit('join', props.code)
+    socket?.emit('join', props.code)
   })
   socket.on('disconnect', () => {
     console.log('disconnected')
@@ -63,8 +64,8 @@ const autoSave = () => {
 }
 
 const save = () => {
-  const data = drawPanel.value.save()
-  socket.emit('message', {
+  const data = drawPanel.value?.save()
+  socket?.emit('message', {
     type: 'signature-update',
     image: data,
     room: props.code,
@@ -84,7 +85,7 @@ const save = () => {
     </div>
     <div class="absolute top-5 right-5">
       {{ wsStatus }}
-      <DBtn @click="drawPanel.clear()">
+      <DBtn @click="drawPanel?.clear()">
         <Trash03Icon />
       </DBtn>
     </div>

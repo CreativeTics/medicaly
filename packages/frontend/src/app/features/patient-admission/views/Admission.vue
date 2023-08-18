@@ -8,6 +8,7 @@ import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicForm
 
 import DCameraInput from '@components/DCameraInput.vue'
 import DSignatureInput from '@components/biometric/DSignatureInput.vue'
+import DFingerPrintInput from '@components/biometric/DFingerPrintInput.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -444,9 +445,10 @@ const onSubmit = async (data: any) => {
         style="height: calc(100vh - 300px)"
       >
         <div class="w-full flex flex-row h-full">
-          <div class="w-96 bg-slate-100">
+          <div class="w-96 p-2 bg-slate-100 flex flex-col gap-2">
             <DCameraInput />
             <DSignatureInput />
+            <DFingerPrintInput />
           </div>
           <div class="w-full overflow-y-scroll">
             <DynamicFormWithOutTabs
