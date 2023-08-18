@@ -6,14 +6,14 @@ import {
   DMultiselect,
   DToggleField,
   DFileUploader,
-} from "../../../components/basic";
+} from '../../../components/basic'
 
 import {
   getSelectData,
   TableDataQuery,
   SelectOption,
-} from "../../../core/services/get-table/index";
-import { computed, onMounted, ref, watch } from "vue";
+} from '../../../core/services/get-table/index'
+import { computed, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   count: { type: Number, required: false, default: () => 0 },
@@ -21,7 +21,7 @@ const props = defineProps({
   modelValue: {
     type: [String, Boolean, Number, Array],
   },
-  error: { type: String, required: false, default: () => "" },
+  error: { type: String, required: false, default: () => '' },
   allModel: { type: Object, required: true, default: () => {} },
   query: {
     type: Object,
@@ -34,23 +34,23 @@ const props = defineProps({
     required: false,
     default: () => null,
   },
-});
+})
 
-const emit = defineEmits(["update:modelValue", "update:file"]);
+const emit = defineEmits(['update:modelValue', 'update:file'])
 const components = new Map<string, any>([
-  ["text", { component: DTextField, defaultProps: { type: "string" } }],
-  ["number", { component: DTextField, defaultProps: { type: "number" } }],
-  ["check", { component: DToggleField, defaultProps: {} }],
-  ["date", { component: DTextField, defaultProps: { type: "date" } }],
-  ["select", { component: DSelectFieldSearch, defaultProps: {} }],
-  ["multiselect", { component: DMultiselect, defaultProps: {} }],
-  ["textarea", { component: DTextAreaField, defaultProps: {} }],
-  ["file", { component: DFileUploader, defaultProps: {} }],
-]);
+  ['text', { component: DTextField, defaultProps: { type: 'string' } }],
+  ['number', { component: DTextField, defaultProps: { type: 'number' } }],
+  ['check', { component: DToggleField, defaultProps: {} }],
+  ['date', { component: DTextField, defaultProps: { type: 'date' } }],
+  ['select', { component: DSelectFieldSearch, defaultProps: {} }],
+  ['multiselect', { component: DMultiselect, defaultProps: {} }],
+  ['textarea', { component: DTextAreaField, defaultProps: {} }],
+  ['file', { component: DFileUploader, defaultProps: {} }],
+])
 
-const isLoading = ref(false);
-const options = ref<SelectOption[]>([]);
-const selectSearchText = ref("");
+const isLoading = ref(false)
+const options = ref<SelectOption[]>([])
+const selectSearchText = ref('')
 
 const optionsFiltered = computed<SelectOption[]>(() =>
   options.value.filter(
@@ -59,60 +59,60 @@ const optionsFiltered = computed<SelectOption[]>(() =>
         .toLowerCase()
         .indexOf(selectSearchText.value.toString().toLowerCase()) > -1
   )
-);
+)
 
 const updateOptions = async (val: any = {}) => {
-  if (props.field.type === "select" && props.field.props?.options) {
-    options.value = props.field.props.options;
-    return;
+  if (props.field.type === 'select' && props.field.props?.options) {
+    options.value = props.field.props.options
+    return
   }
 
-  if (!props.query || props.field.type === "table") return;
-  isLoading.value = true;
-  const params = new Map<string, string>();
+  if (!props.query || props.field.type === 'table') return
+  isLoading.value = true
+  const params = new Map<string, string>()
   if (val.name && val.value) {
-    params.set(val.name, val.value);
+    params.set(val.name, val.value)
   }
   options.value = await getSelectData<SelectOption[]>(
     props.query as TableDataQuery,
     params,
-    props.modelValue as string,
-    val.operator
-  );
-  isLoading.value = false;
-};
+    props.modelValue as string
+    // val.operator
+  )
+  isLoading.value = false
+}
 
 const registerDependsOn = () => {
-  if (!props.dependsOn) return;
+  if (!props.dependsOn) return
 
-  const dependsOn = props.dependsOn;
+  const dependsOn = props.dependsOn
 
   watch(
     () => props.allModel[dependsOn.field as string],
     (newVal: string) => {
-      if (!newVal) return;
+      if (!newVal) return
 
       updateOptions({
         name: dependsOn.filterTag ?? dependsOn.field,
         value: newVal,
         operator: dependsOn.operator,
-      }).catch(console.error);
+      }).catch(console.error)
     },
     { deep: true }
-  );
-};
+  )
+}
 
 const emitUpdate = (val: any) => {
-  if (typeof val === "string") val = val.trim();
-  emit("update:modelValue", val);
-};
+  if (typeof val === 'string') val = val.trim()
+  emit('update:modelValue', val)
+}
 
 onMounted(async () => {
   if (!props.dependsOn) {
-    await updateOptions();
+    await updateOptions()
   }
-  registerDependsOn();
-});
+  registerDependsOn()
+})
 </script>
 <template>
   <component

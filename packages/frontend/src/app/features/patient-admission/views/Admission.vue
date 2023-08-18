@@ -22,6 +22,8 @@ const back = () => {
 }
 let model = ref<any>({})
 
+const imagesModel = ref<any>({})
+
 onMounted(async () => {
   if (route.params.id) {
     loading.value = true
@@ -446,9 +448,9 @@ const onSubmit = async (data: any) => {
       >
         <div class="w-full flex flex-row h-full">
           <div class="w-96 p-2 bg-slate-100 flex flex-col gap-2">
-            <DCameraInput />
-            <DSignatureInput />
-            <DFingerPrintInput />
+            <DCameraInput v-model="imagesModel.photo" />
+            <DSignatureInput v-model="imagesModel.signature" />
+            <DFingerPrintInput v-model="imagesModel.fingerprint" />
           </div>
           <div class="w-full overflow-y-scroll">
             <DynamicFormWithOutTabs
