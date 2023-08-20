@@ -1,57 +1,57 @@
-import { getData } from "../../../core/services/get-table/";
-import { formatDate } from "@/app/core/util/dates";
+import { getData } from '../../../core/services/get-table/'
+import { formatDate } from '@/app/core/util/dates'
 
-import { PouchService, DB } from "../../../services/pouch";
+import { PouchService, DB } from '../../../services/pouch'
 // import { useAuthStore } from "@/store/auth";
-import { OrderStatus } from "@/app/core/types/order-status";
+import { OrderStatus } from '@/app/core/types/order-status'
 
-const pouch = new PouchService();
-const doctype = "service-orders";
+const pouch = new PouchService()
+const doctype = 'service-orders'
 
 export async function getSubsidiariesList() {
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:subsidiaries`,
-    fields: ["id", "name"],
-  });
+    fields: ['id', 'name'],
+  })
 
   return data.map((doc: any) => {
     return {
       id: doc.id,
       name: doc.name,
-    };
-  });
+    }
+  })
 }
 
 export async function getList(searchOptions: any) {
   const where: any = {
     status: OrderStatus.pending,
-  };
+  }
 
   if (searchOptions.subsidiary) {
-    where["subsidiary"] = searchOptions.subsidiary;
+    where['subsidiary'] = searchOptions.subsidiary
   }
 
   if (searchOptions.orderCode) {
-    where["code"] = { $regex: `(?i).*${searchOptions.orderCode}.*` };
+    where['code'] = { $regex: `(?i).*${searchOptions.orderCode}.*` }
   }
 
   if (searchOptions.patient) {
-    where["patientName"] = { $regex: `(?i).*${searchOptions.patient}.*` };
+    where['patientName'] = { $regex: `(?i).*${searchOptions.patient}.*` }
   }
 
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:${doctype}`,
     fields: [
-      "id",
-      "code",
-      "contractName",
-      "medicalExamTypeName",
-      "patientName",
-      "status",
-      "createdAt",
+      'id',
+      'code',
+      'contractName',
+      'medicalExamTypeName',
+      'patientName',
+      'status',
+      'createdAt',
     ],
     where: where,
-  });
+  })
 
   return data.map((doc: any) => {
     return {
@@ -62,28 +62,26 @@ export async function getList(searchOptions: any) {
       patientName: doc.patientName,
       status: doc.status,
       createdAt: formatDate(doc.createdAt, true),
-    };
-  });
+    }
+  })
 }
 
 export async function getOrder(id: string) {
-  const order = await pouch.use(DB.GENERAL).get(id);
+  const order = await pouch.use(DB.GENERAL).get(id)
 
   // get contractSubsidiary
   const contractSubsidiary = await pouch
     .use(DB.GENERAL)
-    .get(order.contractSubsidiary);
+    .get(order.contractSubsidiary)
   // get contractCostCenter
   const contractCostCenter = await pouch
     .use(DB.GENERAL)
-    .get(order.contractCostCenter);
+    .get(order.contractCostCenter)
   // get medicalExamType
-  const medicalExamType = await pouch
-    .use(DB.GENERAL)
-    .get(order.medicalExamType);
+  const medicalExamType = await pouch.use(DB.GENERAL).get(order.medicalExamType)
 
   // get patient
-  const patient = await pouch.use(DB.MEDICAL).get(order.patientId);
+  const patient = await pouch.use(DB.MEDICAL).get(order.patientId)
 
   return {
     ...order,
@@ -101,5 +99,31 @@ export async function getOrder(id: string) {
       emphasis: medicalExamType.emphasis,
     },
     patient,
-  };
+  }
+}
+
+export async function admitPatientOrder(order: any, patient: any) {
+  const oldOrder = await pouch.use(DB.GENERAL).get(order.id)
+
+  const orderUpdated = {
+    ...oldOrder,
+    status: OrderStatus.inprogress,
+    patientId: patient.id,
+    patientDataId: patient.patientDataId,
+  }
+
+  await pouch.use(DB.GENERAL).update(orderUpdated)
+
+  // await pouch.use(DB.GENERAL).put(orderUpdated)
+}
+
+export async function savePatient(patient: any) {
+  const oldPatient = await pouch.use(DB.MEDICAL).get(patient.id)
+
+  const patientUpdated = {
+    ...oldPatient,
+    ...patient,
+  }
+
+  await pouch.use(DB.MEDICAL).update(patientUpdated)
 }

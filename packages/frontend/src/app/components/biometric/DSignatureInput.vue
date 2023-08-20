@@ -104,6 +104,14 @@ onBeforeUnmount(() => {
       <span v-if="error">
         {{ error }}
       </span>
+
+      <div
+        v-if="!error && !(image || tempImage) && wsStatus === 'joined'"
+        class="text-gray-500 h-20 flex items-center"
+      >
+        Esperando Firma...
+      </div>
+
       <img
         v-show="!error && (image || tempImage)"
         :src="image || tempImage"

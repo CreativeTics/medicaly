@@ -409,6 +409,9 @@ const form: any = {
           name: 'observation',
           label: 'Observaciones',
           type: 'textarea',
+          props: {
+            class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
+          },
         },
       ],
     },
@@ -428,6 +431,10 @@ const onSubmit = async (data: any) => {
           class="text-3xl flex items-center gap-5 font-semibold text-shadow text-blue-900"
         >
           Orden # {{ order.code }}
+          <span class="text-lg font-semibold"
+            >{{ order.medicalExamType?.name }} :
+            {{ order.medicalExamType?.emphasis }}
+          </span>
           <OrderStatus :status="order.status" class="text-lg" />
         </p>
       </div>
@@ -436,12 +443,6 @@ const onSubmit = async (data: any) => {
     <div
       class="w-full h-full mt-5 bg-white rounded-lg shadow-lg p-5 flex flex-col gap-3"
     >
-      <span class="text-lg font-semibold"
-        >{{ order.medicalExamType?.name }} :
-        {{ order.medicalExamType?.emphasis }}
-      </span>
-
-      <hr />
       <div
         class="flex flex-col justify-end"
         style="height: calc(100vh - 300px)"

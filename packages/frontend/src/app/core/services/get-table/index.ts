@@ -8,6 +8,7 @@ export async function getData<T>(query: TableDataQuery): Promise<T> {
   query.sort = query.sort ?? []
   const [dbName, tableName] = query.entity.split(':')
   const db = pouch.use(dbName as DB)
+  console.log('getData', query)
 
   const docs: any = await db.find({
     fields: query.fields,
@@ -26,7 +27,8 @@ export async function getSelectData<T>(
 ): Promise<T> {
   const localQuery = { ...query }
   localQuery.where = localQuery.where ?? {}
-  replaceWhereTags(localQuery, selectId)
+  selectId = selectId ?? 'id'
+  // replaceWhereTags(localQuery, selectId)
 
   if (localQuery.entity === 'permissions') {
     return permissions as T
@@ -84,10 +86,10 @@ function applyModifiers(data: any[], query: TableDataQuery) {
   return data
 }
 
-function replaceWhereTags(query: TableDataQuery, selectId?: string) {
-  query.where = query.where ?? {}
-  query.where = replacePayrollTags(JSON.stringify(query.where), true, selectId)
-}
+// function replaceWhereTags(query: TableDataQuery, selectId?: string) {
+//   // query.where = query.where ?? {}
+//   // query.where = replacePayrollTags(JSON.stringify(query.where), true, selectId)
+// }
 
 export function replacePayrollTags(
   text: string = '',

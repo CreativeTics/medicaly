@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 import { Camera03Icon, Repeat04Icon } from './basic'
 
@@ -72,8 +72,9 @@ const emitValue = () => {
   emit('update:modelValue', image.value)
 }
 
-onBeforeUnmount(() => {
-  navigator.mediaDevices.ondevicechange = null
+onUnmounted(() => {
+  if (navigator.mediaDevices?.ondevicechange)
+    navigator.mediaDevices.ondevicechange = null
 })
 </script>
 

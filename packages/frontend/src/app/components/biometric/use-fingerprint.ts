@@ -16,10 +16,14 @@ export enum DeviceStatus {
   Connected = 'connected',
   /** The device is disconnected. */
   Disconnected = 'disconnected',
+
+  GettingSamples = 'getting-samples',
 }
 
-export const useFingerprint = () => {
+export const useFingerprint = (onSampleAcquired: () => void) => {
   let reader: any = null
+  const tempSample = ref<any>(null)
+  const fingerprintImage = ref<string>('')
   const deviceStatus = ref<DeviceStatus>(DeviceStatus.Disconnected)
 
   const init = async () => {
@@ -30,7 +34,6 @@ export const useFingerprint = () => {
       reader.onDeviceConnected = function (e: any) {
         // Detects if the device is connected for which acquisition started
         console.log('onDeviceConnected', e)
-        deviceStatus.value = DeviceStatus.Connected
       }
       reader.onDeviceDisconnected = function () {
         // Detects if device gets disconnected - provides deviceUid of disconnected device
@@ -46,6 +49,14 @@ export const useFingerprint = () => {
       reader.onSamplesAcquired = function (s: any) {
         // This event is fired when fingerprint is successfully captured by the U.R.U web reader
         console.log('onSamplesAcquired', s)
+        tempSample.value = s
+
+        if (s.sampleFormat === 5 && s.samples?.length > 0) {
+          const samples = JSON.parse(s.samples)
+          fingerprintImage.value = toImagePng(samples[0])
+        }
+        if (onSampleAcquired) onSampleAcquired()
+        stopAcquisition()
       }
 
       reader.onQualityReported = function (e: any) {
@@ -58,9 +69,7 @@ export const useFingerprint = () => {
         console.log('onErrorsOccurred', e)
       }
 
-      console.log('init', reader)
-      console.log('enumerateDevices', await reader.enumerateDevices())
-      startAcquisition()
+      console.log('enumerateDevices', await enumerateDevices())
     } catch (err) {
       console.error('error', err)
     }
@@ -70,6 +79,9 @@ export const useFingerprint = () => {
     try {
       const devices = await reader.enumerateDevices()
       console.log('enumerateDevices', devices)
+      if (devices.length > 0) {
+        deviceStatus.value = DeviceStatus.Connected
+      }
     } catch (err) {
       console.error('error', err)
     }
@@ -77,7 +89,15 @@ export const useFingerprint = () => {
 
   const startAcquisition = async (format = Formats.PngImage) => {
     try {
-      await reader.startAcquisition(format)
+      await reader
+        .startAcquisition(format)
+        .then(() => {
+          console.log('Acquisition started successfully')
+          deviceStatus.value = DeviceStatus.GettingSamples
+        })
+        .catch((err: any) => {
+          console.error('error', err)
+        })
     } catch (err) {
       console.error('error', err)
     }
@@ -86,9 +106,16 @@ export const useFingerprint = () => {
   const stopAcquisition = async () => {
     try {
       await reader.stopAcquisition()
+      console.log('Acquisition stopped successfully')
+      deviceStatus.value = DeviceStatus.Connected
     } catch (err) {
       console.error('error', err)
     }
+  }
+
+  const toImagePng = (sampleStr: string): string => {
+    // @ts-ignore
+    return `data:image/png;base64, ${Fingerprint.b64UrlTo64(sampleStr)}`
   }
 
   onMounted(() => {
@@ -101,6 +128,8 @@ export const useFingerprint = () => {
 
   return {
     reader,
+    tempSample,
+    fingerprintImage,
     init,
     enumerateDevices,
     deviceStatus,
