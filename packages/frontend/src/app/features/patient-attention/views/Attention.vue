@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-import { getOrder } from "../services";
-import OrderStatus from "../components/OrderStatus.vue";
-import DBtn from "@components/basic/DBtn.vue";
+import { getOrder } from '../services'
+import OrderStatus from '../../service-orders/components/OrderStatus.vue'
+import DBtn from '@components/basic/DBtn.vue'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-const order = ref<any>({});
-const loading = ref(false);
+const order = ref<any>({})
+const loading = ref(false)
 
 const back = () => {
-  console.log("Back");
-  router.back();
-};
+  console.log('Back')
+  router.back()
+}
 
 onMounted(async () => {
   if (route.params.id) {
-    loading.value = true;
-    order.value = await getOrder(route.params.id.toString());
-    loading.value = false;
+    loading.value = true
+    order.value = await getOrder(route.params.id.toString())
+    loading.value = false
   }
-});
+})
 </script>
 
 <template>

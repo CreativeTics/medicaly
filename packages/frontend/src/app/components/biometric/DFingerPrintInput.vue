@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useFingerprint, DeviceStatus } from './use-fingerprint'
 import { Fingerprint03Icon } from '../basic'
 
@@ -27,10 +27,6 @@ onMounted(() => {
 const emitValue = () => {
   emit('update:modelValue', image.value)
 }
-
-onBeforeUnmount(() => {
-  console.log('unmounted')
-})
 </script>
 
 <template>

@@ -1,60 +1,60 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import DIcon from "./DIcon.vue";
+import { onMounted } from 'vue'
+import DIcon from './DIcon.vue'
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string | number | Array<string | number>;
-    label?: string;
-    placeholder?: string;
-    hint?: string;
-    type?: string;
-    disabled?: boolean;
-    hidden?: boolean;
-    min?: number;
-    max?: number;
-    default?: string;
-    mask?: string;
-    validation?: object;
-    error?: string;
-    step?: string;
-    required?: boolean;
-    icon?: string;
-    classInput?: string;
+    modelValue: string | number | Array<string | number>
+    label?: string
+    placeholder?: string
+    hint?: string
+    type?: string
+    disabled?: boolean
+    hidden?: boolean
+    min?: number
+    max?: number
+    default?: string
+    mask?: string
+    validation?: object
+    error?: string
+    step?: string
+    required?: boolean
+    icon?: string
+    classInput?: string
   }>(),
   {
-    modelValue: "",
-    label: "",
-    placeholder: "",
-    hint: "",
-    type: "text",
+    modelValue: '',
+    label: '',
+    placeholder: '',
+    hint: '',
+    type: 'text',
     disabled: false,
     hidden: false,
     min: 0,
     max: 999999999,
-    default: "",
-    mask: "",
-    error: "",
-    step: "any",
+    default: '',
+    mask: '',
+    error: '',
+    step: 'any',
     required: false,
-    icon: "",
-    classInput: "",
+    icon: '',
+    classInput: '',
   }
-);
+)
 
-const emit = defineEmits(["update:modelValue", "enter"]);
+const emit = defineEmits(['update:modelValue', 'enter'])
 
 const emitUpdate = (val: string) => {
-  emit("update:modelValue", val);
-};
+  emit('update:modelValue', val)
+}
 
 onMounted(() => {
   if (props.default) {
-    if (props.modelValue === "") {
-      emitUpdate(props.default);
+    if (props.modelValue === '') {
+      emitUpdate(props.default)
     }
   }
-});
+})
 </script>
 
 <template>

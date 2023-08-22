@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import { getOrder } from '../services'
+import { getOrder, admitPatientOrder } from '../services'
 import OrderStatus from '../../service-orders/components/OrderStatus.vue'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
 
@@ -413,6 +413,22 @@ const form: any = {
             class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
           },
         },
+        {
+          name: '',
+          label: '',
+          type: 'div',
+          defaultValue: false,
+          props: {
+            class: 'sm:col-span-4 lg:col-span-4 xl:col-span-4',
+          },
+        },
+        {
+          name: 'informedConsent',
+          label: 'El Paciente acepta el consentimiento informado?',
+          type: 'check',
+          defaultValue: false,
+          rules: ['required-check'],
+        },
       ],
     },
   ],
@@ -420,6 +436,16 @@ const form: any = {
 
 const onSubmit = async (data: any) => {
   console.log('Submit', data)
+
+  await admitPatientOrder(route.params.id.toString(), {
+    ...data,
+    ...imagesModel,
+  })
+
+  router.push({
+    name: 'patient-attention.attention',
+    params: { id: route.params.id },
+  })
 }
 </script>
 

@@ -40,11 +40,11 @@ export const useFingerprint = (onSampleAcquired: () => void) => {
         console.log('Device disconnected')
         deviceStatus.value = DeviceStatus.Disconnected
       }
-      reader.onCommunicationFailed = function (e: any) {
-        // Detects if there is a failure in communicating with U.R.U web reader
-        console.log('Communication Failed', e)
-        // deviceStatus.value = DeviceStatus.Disconnected
-      }
+      // reader.onCommunicationFailed = function (e: any) {
+      //   // Detects if there is a failure in communicating with U.R.U web reader
+      //   // console.log('Communication Failed', e)
+      //   // deviceStatus.value = DeviceStatus.Disconnected
+      // }
 
       reader.onSamplesAcquired = function (s: any) {
         // This event is fired when fingerprint is successfully captured by the U.R.U web reader
@@ -70,6 +70,8 @@ export const useFingerprint = (onSampleAcquired: () => void) => {
       }
 
       console.log('enumerateDevices', await enumerateDevices())
+
+      console.log('init', reader)
     } catch (err) {
       console.error('error', err)
     }
@@ -119,9 +121,12 @@ export const useFingerprint = (onSampleAcquired: () => void) => {
   }
 
   onMounted(() => {
+    console.log('Mounted useFingerprint')
     init()
   })
   onBeforeUnmount(() => {
+    console.log('Unmonted useFingerprint')
+
     stopAcquisition()
     reader = null
   })

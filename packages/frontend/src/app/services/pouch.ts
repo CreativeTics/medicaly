@@ -48,6 +48,8 @@ export class PouchService {
   }
 
   public async update(doc: any) {
+    delete doc._id
+    delete doc._rev
     const oldDoc = await this.get(doc.id)
     const user = useAuthStore().user
     doc.createdAt = oldDoc?.createdAt
@@ -100,10 +102,13 @@ export class PouchService {
   }
 
   private mapCommonFields(doc: any) {
-    return {
+    const mappedDoc = {
       id: doc._id,
       rev: doc._rev,
       ...doc,
     }
+    delete mappedDoc._id
+    delete mappedDoc._rev
+    return mappedDoc
   }
 }

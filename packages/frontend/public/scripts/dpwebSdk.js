@@ -29,7 +29,10 @@
     }
   }
   function k(n) {
-    return f(n) || (typeof n.length == 'number' && n.length >= 0 && n.length % 1 == 0)
+    return (
+      f(n) ||
+      (typeof n.length == 'number' && n.length >= 0 && n.length % 1 == 0)
+    )
   }
   function r(n, t) {
     for (var i = -1, r = n.length; ++i < r; ) t(n[i], i, n)
@@ -79,7 +82,12 @@
     return (
       (t = t == null ? n.length - 1 : +t),
       function () {
-        for (var u = Math.max(arguments.length - t, 0), r = Array(u), i = 0; i < u; i++) r[i] = arguments[i + t]
+        for (
+          var u = Math.max(arguments.length - t, 0), r = Array(u), i = 0;
+          i < u;
+          i++
+        )
+          r[i] = arguments[i + t]
         switch (t) {
           case 0:
             return n.call(this, r)
@@ -245,7 +253,8 @@
   }
   function at(t, u, e) {
     function a(t, u, e, o) {
-      if (o != null && typeof o != 'function') throw new Error('task callback must be a function')
+      if (o != null && typeof o != 'function')
+        throw new Error('task callback must be a function')
       if (((t.started = !0), f(u) || (u = [u]), u.length === 0 && t.idle()))
         return n.setImmediate(function () {
           t.drain()
@@ -299,7 +308,9 @@
           var n, i, r
           if (!o.paused && c < o.concurrency && o.tasks.length)
             while (c < o.concurrency && o.tasks.length)
-              (n = o.payload ? o.tasks.splice(0, o.payload) : o.tasks.splice(0, o.tasks.length)),
+              (n = o.payload
+                ? o.tasks.splice(0, o.payload)
+                : o.tasks.splice(0, o.tasks.length)),
                 (i = h(n, function (n) {
                   return n.data
                 })),
@@ -327,7 +338,11 @@
         resume: function () {
           var i, t
           if (o.paused !== !1)
-            for (o.paused = !1, i = Math.min(o.concurrency, o.tasks.length), t = 1; t <= i; t++)
+            for (
+              o.paused = !1, i = Math.min(o.concurrency, o.tasks.length), t = 1;
+              t <= i;
+              t++
+            )
               n.setImmediate(o.process)
         },
       }
@@ -427,7 +442,10 @@
     : function (n) {
         setTimeout(n, 0)
       }
-  n.nextTick = typeof process == 'object' && typeof process.nextTick == 'function' ? process.nextTick : nt
+  n.nextTick =
+    typeof process == 'object' && typeof process.nextTick == 'function'
+      ? process.nextTick
+      : nt
   n.setImmediate = v ? nt : n.nextTick
   n.forEach = n.each = function (t, i, r) {
     return n.eachOf(t, g(i), r)
@@ -562,7 +580,14 @@
       })
     }
     var y, c
-    if ((s || ((s = e), (e = null)), (s = o(s || i)), (y = a(u)), (c = y.length), !c)) return s(null)
+    if (
+      (s || ((s = e), (e = null)),
+      (s = o(s || i)),
+      (y = a(u)),
+      (c = y.length),
+      !c)
+    )
+      return s(null)
     e || (e = c)
     var h = {},
       l = 0,
@@ -615,7 +640,8 @@
     function c(n, t) {
       if (typeof t == 'number') n.times = parseInt(t, 10) || f
       else if (typeof t == 'object')
-        (n.times = parseInt(t.times, 10) || f), (n.interval = parseInt(t.interval, 10) || s)
+        (n.times = parseInt(t.times, 10) || f),
+          (n.interval = parseInt(t.interval, 10) || s)
       else throw new Error("Unsupported argument type for 'times': " + typeof t)
     }
     function h(t, i) {
@@ -653,7 +679,12 @@
         'Invalid arguments - must be either (task), (task, callback), (times, task) or (times, task, callback)'
       )
     else o <= 2 && typeof t == 'function' && ((r = i), (i = t))
-    return typeof t != 'function' && c(u, t), (u.callback = r), (u.task = i), u.callback ? h() : h
+    return (
+      typeof t != 'function' && c(u, t),
+      (u.callback = r),
+      (u.task = i),
+      u.callback ? h() : h
+    )
   }
   n.waterfall = function (r, u) {
     function e(n) {
@@ -667,7 +698,9 @@
       })
     }
     if (((u = o(u || i)), !f(r))) {
-      var s = new Error('First argument to waterfall must be an array of functions')
+      var s = new Error(
+        'First argument to waterfall must be an array of functions'
+      )
       return u(s)
     }
     if (!r.length) return u()
@@ -778,13 +811,18 @@
       return r
     }
     function h(t, u, e, h) {
-      if (h != null && typeof h != 'function') throw new Error('task callback must be a function')
+      if (h != null && typeof h != 'function')
+        throw new Error('task callback must be a function')
       if (((t.started = !0), f(u) || (u = [u]), u.length === 0))
         return n.setImmediate(function () {
           t.drain()
         })
       r(u, function (r) {
-        var u = { data: r, priority: e, callback: typeof h == 'function' ? h : i }
+        var u = {
+          data: r,
+          priority: e,
+          callback: typeof h == 'function' ? h : i,
+        }
         t.tasks.splice(s(t.tasks, u, o) + 1, 0, u)
         t.tasks.length === t.concurrency && t.saturated()
         n.setImmediate(t.process)
@@ -825,7 +863,12 @@
               u.concat([
                 t(function (n) {
                   var i, t, r
-                  for (e[o] = n, i = f[o], delete f[o], t = 0, r = i.length; t < r; t++) i[t].apply(null, n)
+                  for (
+                    e[o] = n, i = f[o], delete f[o], t = 0, r = i.length;
+                    t < r;
+                    t++
+                  )
+                    i[t].apply(null, n)
                 }),
               ])
             ))
@@ -921,7 +964,9 @@
 })(),
   (function (n) {
     'use strict'
-    typeof define == 'function' && define.amd ? define('sha1', [], n) : (window.sha1 = n())
+    typeof define == 'function' && define.amd
+      ? define('sha1', [], n)
+      : (window.sha1 = n())
   })(function () {
     var n = function () {
       function t(n) {
@@ -929,20 +974,48 @@
         return i
       }
       function o(n) {
-        for (var r = ((n.length + 8) >> 6) + 1, i = new Array(r * 16), t = 0; t < r * 16; t++) i[t] = 0
-        for (t = 0; t < n.length; t++) i[t >> 2] |= n.charCodeAt(t) << (24 - (t % 4) * 8)
-        return (i[t >> 2] |= 128 << (24 - (t % 4) * 8)), (i[r * 16 - 1] = n.length * 8), i
+        for (
+          var r = ((n.length + 8) >> 6) + 1, i = new Array(r * 16), t = 0;
+          t < r * 16;
+          t++
+        )
+          i[t] = 0
+        for (t = 0; t < n.length; t++)
+          i[t >> 2] |= n.charCodeAt(t) << (24 - (t % 4) * 8)
+        return (
+          (i[t >> 2] |= 128 << (24 - (t % 4) * 8)),
+          (i[r * 16 - 1] = n.length * 8),
+          i
+        )
       }
       function s(n) {
-        for (var r = (n.length + 1) >> 1, u = ((r + 8) >> 6) + 1, i = new Array(u * 16), t = 0; t < u * 16; t++)
+        for (
+          var r = (n.length + 1) >> 1,
+            u = ((r + 8) >> 6) + 1,
+            i = new Array(u * 16),
+            t = 0;
+          t < u * 16;
+          t++
+        )
           i[t] = 0
-        for (t = 0; t < r; t++) i[t >> 2] |= parseInt(n.substr(2 * t, 2), 16) << (24 - (t % 4) * 8)
-        return (i[t >> 2] |= 128 << (24 - (t % 4) * 8)), (i[u * 16 - 1] = r * 8), i
+        for (t = 0; t < r; t++)
+          i[t >> 2] |= parseInt(n.substr(2 * t, 2), 16) << (24 - (t % 4) * 8)
+        return (
+          (i[t >> 2] |= 128 << (24 - (t % 4) * 8)), (i[u * 16 - 1] = r * 8), i
+        )
       }
       function u(n, t, i) {
-        for (var f = ((i + 8) >> 6) + 1, u = new Array(f * 16), r = 0; r < f * 16; r++) u[r] = 0
-        for (r = 0; r < i; r++) u[r >> 2] |= (n[t + r] & 255) << (24 - (r % 4) * 8)
-        return (u[r >> 2] |= 128 << (24 - (r % 4) * 8)), (u[f * 16 - 1] = i * 8), u
+        for (
+          var f = ((i + 8) >> 6) + 1, u = new Array(f * 16), r = 0;
+          r < f * 16;
+          r++
+        )
+          u[r] = 0
+        for (r = 0; r < i; r++)
+          u[r >> 2] |= (n[t + r] & 255) << (24 - (r % 4) * 8)
+        return (
+          (u[r >> 2] |= 128 << (24 - (r % 4) * 8)), (u[f * 16 - 1] = i * 8), u
+        )
       }
       function n(n, t) {
         var i = (n & 65535) + (t & 65535),
@@ -953,10 +1026,22 @@
         return (n << t) | (n >>> (32 - t))
       }
       function h(n, t, i, r) {
-        return n < 20 ? (t & i) | (~t & r) : n < 40 ? t ^ i ^ r : n < 60 ? (t & i) | (t & r) | (i & r) : t ^ i ^ r
+        return n < 20
+          ? (t & i) | (~t & r)
+          : n < 40
+          ? t ^ i ^ r
+          : n < 60
+          ? (t & i) | (t & r) | (i & r)
+          : t ^ i ^ r
       }
       function c(n) {
-        return n < 20 ? 1518500249 : n < 40 ? 1859775393 : n < 60 ? -1894007588 : -899497514
+        return n < 20
+          ? 1518500249
+          : n < 40
+          ? 1859775393
+          : n < 60
+          ? -1894007588
+          : -899497514
       }
       function l(n) {
         return i(o(n))
@@ -994,7 +1079,10 @@
             b = o,
             k = l
           for (i = 0; i < 80; i++)
-            (s[i] = i < 16 ? t[a + i] : r(s[i - 3] ^ s[i - 8] ^ s[i - 14] ^ s[i - 16], 1)),
+            (s[i] =
+              i < 16
+                ? t[a + i]
+                : r(s[i - 3] ^ s[i - 8] ^ s[i - 14] ^ s[i - 16], 1)),
               (v = n(n(r(u, 5), h(i, f, e, o)), n(n(l, s[i]), c(i)))),
               (l = o),
               (o = e),
@@ -1016,7 +1104,9 @@
   }),
   (function (n) {
     'use strict'
-    typeof define == 'function' && define.amd ? define('sjcl', [], n) : (window.sjcl = n())
+    typeof define == 'function' && define.amd
+      ? define('sjcl', [], n)
+      : (window.sjcl = n())
   })(function () {
     function t(n) {
       throw n
@@ -1042,17 +1132,41 @@
         y = e[3],
         p = e[4]
       for (c = 0; c < d; c++)
-        (e = i[o >>> 24] ^ a[(s >> 16) & 255] ^ v[(h >> 8) & 255] ^ y[r & 255] ^ f[l]),
-          (w = i[s >>> 24] ^ a[(h >> 16) & 255] ^ v[(r >> 8) & 255] ^ y[o & 255] ^ f[l + 1]),
-          (b = i[h >>> 24] ^ a[(r >> 16) & 255] ^ v[(o >> 8) & 255] ^ y[s & 255] ^ f[l + 2]),
-          (r = i[r >>> 24] ^ a[(o >> 16) & 255] ^ v[(s >> 8) & 255] ^ y[h & 255] ^ f[l + 3]),
+        (e =
+          i[o >>> 24] ^
+          a[(s >> 16) & 255] ^
+          v[(h >> 8) & 255] ^
+          y[r & 255] ^
+          f[l]),
+          (w =
+            i[s >>> 24] ^
+            a[(h >> 16) & 255] ^
+            v[(r >> 8) & 255] ^
+            y[o & 255] ^
+            f[l + 1]),
+          (b =
+            i[h >>> 24] ^
+            a[(r >> 16) & 255] ^
+            v[(o >> 8) & 255] ^
+            y[s & 255] ^
+            f[l + 2]),
+          (r =
+            i[r >>> 24] ^
+            a[(o >> 16) & 255] ^
+            v[(s >> 8) & 255] ^
+            y[h & 255] ^
+            f[l + 3]),
           (l += 4),
           (o = e),
           (s = w),
           (h = b)
       for (c = 0; 4 > c; c++)
         (k[u ? 3 & -c : c] =
-          (p[o >>> 24] << 24) ^ (p[(s >> 16) & 255] << 16) ^ (p[(h >> 8) & 255] << 8) ^ p[r & 255] ^ f[l++]),
+          (p[o >>> 24] << 24) ^
+          (p[(s >> 16) & 255] << 16) ^
+          (p[(h >> 8) & 255] << 8) ^
+          p[r & 255] ^
+          f[l++]),
           (e = o),
           (o = s),
           (s = h),
@@ -1092,7 +1206,12 @@
           (r =
             r +
             y +
-            ((e >>> 6) ^ (e >>> 11) ^ (e >>> 25) ^ (e << 26) ^ (e << 21) ^ (e << 7)) +
+            ((e >>> 6) ^
+              (e >>> 11) ^
+              (e >>> 25) ^
+              (e << 26) ^
+              (e << 21) ^
+              (e << 7)) +
             (c ^ (e & (a ^ c))) +
             p[u]),
           (y = c),
@@ -1105,7 +1224,12 @@
           (v =
             (r +
               ((f & h) ^ (l & (f ^ h))) +
-              ((f >>> 2) ^ (f >>> 13) ^ (f >>> 22) ^ (f << 30) ^ (f << 19) ^ (f << 10))) |
+              ((f >>> 2) ^
+                (f >>> 13) ^
+                (f >>> 22) ^
+                (f << 30) ^
+                (f << 19) ^
+                (f << 10))) |
             0)
       i[0] = (i[0] + v) | 0
       i[1] = (i[1] + f) | 0
@@ -1177,7 +1301,10 @@
           o = this.j[1],
           r = i.length,
           s = 1,
-          4 !== r && 6 !== r && 8 !== r && t(new n.exception.invalid('invalid aes key size')),
+          4 !== r &&
+            6 !== r &&
+            8 !== r &&
+            t(new n.exception.invalid('invalid aes key size')),
           this.a = [(e = i.slice(0)), (h = [])],
           i = r;
         i < 4 * r + 28;
@@ -1185,15 +1312,24 @@
       )
         (u = e[i - 1]),
           (0 == i % r || (8 === r && 4 == i % r)) &&
-            ((u = (f[u >>> 24] << 24) ^ (f[(u >> 16) & 255] << 16) ^ (f[(u >> 8) & 255] << 8) ^ f[u & 255]),
-            0 == i % r && ((u = (u << 8) ^ (u >>> 24) ^ (s << 24)), (s = (s << 1) ^ (283 * (s >> 7))))),
+            ((u =
+              (f[u >>> 24] << 24) ^
+              (f[(u >> 16) & 255] << 16) ^
+              (f[(u >> 8) & 255] << 8) ^
+              f[u & 255]),
+            0 == i % r &&
+              ((u = (u << 8) ^ (u >>> 24) ^ (s << 24)),
+              (s = (s << 1) ^ (283 * (s >> 7))))),
           (e[i] = e[i - r] ^ u)
       for (r = 0; i; r++, i--)
         (u = e[r & 3 ? i : i - 4]),
           (h[r] =
             4 >= i || 4 > r
               ? u
-              : o[0][f[u >>> 24]] ^ o[1][f[(u >> 16) & 255]] ^ o[2][f[(u >> 8) & 255]] ^ o[3][f[u & 255]])
+              : o[0][f[u >>> 24]] ^
+                o[1][f[(u >> 16) & 255]] ^
+                o[2][f[(u >> 8) & 255]] ^
+                o[3][f[u & 255]])
     }
     n.cipher.aes.prototype = {
       encrypt: function (n) {
@@ -1208,7 +1344,19 @@
       ],
       D: function () {
         for (
-          var e = this.j[0], o = this.j[1], c = e[4], a = o[4], i, r, f = [], l = [], h, u, t, s, n = 0;
+          var e = this.j[0],
+            o = this.j[1],
+            c = e[4],
+            a = o[4],
+            i,
+            r,
+            f = [],
+            l = [],
+            h,
+            u,
+            t,
+            s,
+            n = 0;
           256 > n;
           n++
         )
@@ -1226,13 +1374,17 @@
             4 > n;
             n++
           )
-            (e[n][i] = u = (u << 24) ^ (u >>> 8)), (o[n][t] = s = (s << 24) ^ (s >>> 8))
+            (e[n][i] = u = (u << 24) ^ (u >>> 8)),
+              (o[n][t] = s = (s << 24) ^ (s >>> 8))
         for (n = 0; 5 > n; n++) (e[n] = e[n].slice(0)), (o[n] = o[n].slice(0))
       },
     }
     n.bitArray = {
       bitSlice: function (t, r, u) {
-        return (t = n.bitArray.O(t.slice(r / 32), 32 - (r & 31)).slice(1)), u === i ? t : n.bitArray.clamp(t, u - r)
+        return (
+          (t = n.bitArray.O(t.slice(r / 32), 32 - (r & 31)).slice(1)),
+          u === i ? t : n.bitArray.clamp(t, u - r)
+        )
       },
       extract: function (n, t, i) {
         var r = Math.floor((-t - i) & 31)
@@ -1247,7 +1399,9 @@
         if (0 === t.length || 0 === i.length) return t.concat(i)
         var r = t[t.length - 1],
           u = n.bitArray.getPartial(r)
-        return 32 === u ? t.concat(i) : n.bitArray.O(i, u, r | 0, t.slice(0, t.length - 1))
+        return 32 === u
+          ? t.concat(i)
+          : n.bitArray.O(i, u, r | 0, t.slice(0, t.length - 1))
       },
       bitLength: function (t) {
         var i = t.length
@@ -1257,7 +1411,17 @@
         if (32 * t.length < i) return t
         t = t.slice(0, Math.ceil(i / 32))
         var r = t.length
-        return (i &= 31), 0 < r && i && (t[r - 1] = n.bitArray.partial(i, t[r - 1] & (2147483648 >> (i - 1)), 1)), t
+        return (
+          (i &= 31),
+          0 < r &&
+            i &&
+            (t[r - 1] = n.bitArray.partial(
+              i,
+              t[r - 1] & (2147483648 >> (i - 1)),
+              1
+            )),
+          t
+        )
       },
       partial: function (n, t, i) {
         return 32 === n ? t : (i ? t | 0 : t << (32 - n)) + 1099511627776 * n
@@ -1274,7 +1438,8 @@
         var e
         for (e = 0, f === i && (f = []); 32 <= r; r -= 32) f.push(u), (u = 0)
         if (0 === r) return f.concat(t)
-        for (e = 0; e < t.length; e++) f.push(u | (t[e] >>> r)), (u = t[e] << (32 - r))
+        for (e = 0; e < t.length; e++)
+          f.push(u | (t[e] >>> r)), (u = t[e] << (32 - r))
         return (
           (e = t.length ? t[t.length - 1] : 0),
           (t = n.bitArray.getPartial(e)),
@@ -1289,7 +1454,9 @@
     n.codec.utf8String = {
       fromBits: function (t) {
         for (var u = '', f = n.bitArray.bitLength(t), r, i = 0; i < f / 8; i++)
-          0 == (i & 3) && (r = t[i / 4]), (u += String.fromCharCode(r >>> 24)), (r <<= 8)
+          0 == (i & 3) && (r = t[i / 4]),
+            (u += String.fromCharCode(r >>> 24)),
+            (r <<= 8)
         return decodeURIComponent(escape(u))
       },
       toBits: function (t) {
@@ -1301,14 +1468,19 @@
     }
     n.codec.hex = {
       fromBits: function (t) {
-        for (var r = '', i = 0; i < t.length; i++) r += ((t[i] | 0) + 0xf00000000000).toString(16).substr(4)
+        for (var r = '', i = 0; i < t.length; i++)
+          r += ((t[i] | 0) + 0xf00000000000).toString(16).substr(4)
         return r.substr(0, n.bitArray.bitLength(t) / 4)
       },
       toBits: function (t) {
         var i,
           r = [],
           u
-        for (t = t.replace(/\s|0x/g, ''), u = t.length, t += '00000000', i = 0; i < t.length; i += 8)
+        for (
+          t = t.replace(/\s|0x/g, ''), u = t.length, t += '00000000', i = 0;
+          i < t.length;
+          i += 8
+        )
           r.push(parseInt(t.substr(i, 8), 16) ^ 0)
         return n.bitArray.clamp(r, 4 * u)
       },
@@ -1323,7 +1495,9 @@
           s = n.bitArray.bitLength(t)
         for (r && (e = e.substr(0, 62) + '-_'), r = 0; 6 * u.length < s; )
           (u += e.charAt((o ^ (t[r] >>> f)) >>> 26)),
-            6 > f ? ((o = t[r] << (6 - f)), (f += 26), r++) : ((o <<= 6), (f -= 6))
+            6 > f
+              ? ((o = t[r] << (6 - f)), (f += 26), r++)
+              : ((o <<= 6), (f -= 6))
         for (; u.length & 3 && !i; ) u += '='
         return u
       },
@@ -1338,7 +1512,9 @@
         for (r && (h = h.substr(0, 62) + '-_'), e = 0; e < i.length; e++)
           (f = h.indexOf(i.charAt(e))),
             0 > f && t(new n.exception.invalid("this isn't base64!")),
-            26 < u ? ((u -= 26), s.push(o ^ (f >>> u)), (o = f << (32 - u))) : ((u += 6), (o ^= f << (32 - u)))
+            26 < u
+              ? ((u -= 26), s.push(o ^ (f >>> u)), (o = f << (32 - u)))
+              : ((u += 6), (o ^= f << (32 - u)))
         return u & 56 && s.push(n.bitArray.partial(u & 56, o, 1)), s
       },
     }
@@ -1352,7 +1528,9 @@
     }
     n.hash.sha256 = function (n) {
       this.a[0] || this.D()
-      n ? ((this.q = n.q.slice(0)), (this.m = n.m.slice(0)), (this.g = n.g)) : this.reset()
+      n
+        ? ((this.q = n.q.slice(0)), (this.m = n.m.slice(0)), (this.g = n.g))
+        : this.reset()
     }
     n.hash.sha256.hash = function (t) {
       return new n.hash.sha256().update(t).finalize()
@@ -1366,18 +1544,32 @@
         'string' == typeof t && (t = n.codec.utf8String.toBits(t))
         var i,
           r = (this.m = n.bitArray.concat(this.m, t))
-        for (i = this.g, t = this.g = i + n.bitArray.bitLength(t), i = (512 + i) & -512; i <= t; i += 512)
+        for (
+          i = this.g,
+            t = this.g = i + n.bitArray.bitLength(t),
+            i = (512 + i) & -512;
+          i <= t;
+          i += 512
+        )
           o(this, r.splice(0, 16))
         return this
       },
       finalize: function () {
         for (
-          var t = this.m, r = this.q, t = n.bitArray.concat(t, [n.bitArray.partial(1, 1)]), i = t.length + 2;
+          var t = this.m,
+            r = this.q,
+            t = n.bitArray.concat(t, [n.bitArray.partial(1, 1)]),
+            i = t.length + 2;
           i & 15;
           i++
         )
           t.push(0)
-        for (t.push(Math.floor(this.g / 4294967296)), t.push(this.g | 0); t.length; ) o(this, t.splice(0, 16))
+        for (
+          t.push(Math.floor(this.g / 4294967296)), t.push(this.g | 0);
+          t.length;
+
+        )
+          o(this, t.splice(0, 16))
         return this.reset(), r
       },
       M: [],
@@ -1406,7 +1598,11 @@
           c = h.bitLength(u) / 8,
           l = h.bitLength(s) / 8
         for (
-          e = e || 64, f = f || [], 7 > c && t(new n.exception.invalid('ccm: iv must be at least 7 bytes')), o = 2;
+          e = e || 64,
+            f = f || [],
+            7 > c &&
+              t(new n.exception.invalid('ccm: iv must be at least 7 bytes')),
+            o = 2;
           4 > o && l >>> (8 * o);
           o++
         );
@@ -1428,7 +1624,9 @@
           l = o.bitSlice(r, h - e),
           h = (h - e) / 8
         for (
-          7 > c && t(new n.exception.invalid('ccm: iv must be at least 7 bytes')), r = 2;
+          7 > c &&
+            t(new n.exception.invalid('ccm: iv must be at least 7 bytes')),
+            r = 2;
           4 > r && h >>> (8 * r);
           r++
         );
@@ -1437,7 +1635,8 @@
           (u = o.clamp(u, 8 * (15 - r))),
           (s = n.mode.ccm.n(i, s, u, l, e, r)),
           (i = n.mode.ccm.K(i, s.data, u, f, e, r)),
-          o.equal(s.tag, i) || t(new n.exception.corrupt("ccm: tag doesn't match")),
+          o.equal(s.tag, i) ||
+            t(new n.exception.corrupt("ccm: tag doesn't match")),
           s.data
         )
       },
@@ -1447,7 +1646,8 @@
           c = s.k
         if (
           ((e /= 8),
-          (e % 2 || 4 > e || 16 < e) && t(new n.exception.invalid('ccm: invalid tag length')),
+          (e % 2 || 4 > e || 16 < e) &&
+            t(new n.exception.invalid('ccm: invalid tag length')),
           (4294967295 < f.length || 4294967295 < r.length) &&
             t(new n.exception.bug("ccm: can't deal with 4GiB or more data")),
           (o = [s.partial(8, (f.length ? 64 : 0) | ((e - 2) << 2) | (o - 1))]),
@@ -1458,14 +1658,18 @@
         )
           for (
             u = s.bitLength(f) / 8,
-              65279 >= u ? (h = [s.partial(16, u)]) : 4294967295 >= u && (h = s.concat([s.partial(16, 65534)], [u])),
+              65279 >= u
+                ? (h = [s.partial(16, u)])
+                : 4294967295 >= u &&
+                  (h = s.concat([s.partial(16, 65534)], [u])),
               h = s.concat(h, f),
               f = 0;
             f < h.length;
             f += 4
           )
             o = i.encrypt(c(o, h.slice(f, f + 4).concat([0, 0, 0])))
-        for (f = 0; f < r.length; f += 4) o = i.encrypt(c(o, r.slice(f, f + 4).concat([0, 0, 0])))
+        for (f = 0; f < r.length; f += 4)
+          o = i.encrypt(c(o, r.slice(f, f + 4).concat([0, 0, 0])))
         return s.clamp(o, 8 * e)
       },
       n: function (t, i, r, u, f, e) {
@@ -1486,7 +1690,12 @@
         )
           return { tag: u, data: [] }
         for (o = 0; o < h; o += 4)
-          r[3]++, (f = t.encrypt(r)), (i[o] ^= f[0]), (i[o + 1] ^= f[1]), (i[o + 2] ^= f[2]), (i[o + 3] ^= f[3])
+          r[3]++,
+            (f = t.encrypt(r)),
+            (i[o] ^= f[0]),
+            (i[o + 1] ^= f[1]),
+            (i[o + 2] ^= f[2]),
+            (i[o + 3] ^= f[3])
         return { tag: u, data: s.clamp(i, c) }
       },
     }
@@ -1494,14 +1703,22 @@
       name: 'ocb2',
       encrypt: function (i, r, u, f, e, o) {
         var l, v
-        128 !== n.bitArray.bitLength(u) && t(new n.exception.invalid('ocb iv must be 128 bits'))
+        128 !== n.bitArray.bitLength(u) &&
+          t(new n.exception.invalid('ocb iv must be 128 bits'))
         var h,
           y = n.mode.ocb2.G,
           a = n.bitArray,
           s = a.k,
           c = [0, 0, 0, 0]
-        for (u = y(i.encrypt(u)), v = [], f = f || [], e = e || 64, h = 0; h + 4 < r.length; h += 4)
-          (l = r.slice(h, h + 4)), (c = s(c, l)), (v = v.concat(s(u, i.encrypt(s(u, l))))), (u = y(u))
+        for (
+          u = y(i.encrypt(u)), v = [], f = f || [], e = e || 64, h = 0;
+          h + 4 < r.length;
+          h += 4
+        )
+          (l = r.slice(h, h + 4)),
+            (c = s(c, l)),
+            (v = v.concat(s(u, i.encrypt(s(u, l))))),
+            (u = y(u))
         return (
           (l = r.slice(h)),
           (r = a.bitLength(l)),
@@ -1514,7 +1731,8 @@
         )
       },
       decrypt: function (i, r, u, f, e, o) {
-        128 !== n.bitArray.bitLength(u) && t(new n.exception.invalid('ocb iv must be 128 bits'))
+        128 !== n.bitArray.bitLength(u) &&
+          t(new n.exception.invalid('ocb iv must be 128 bits'))
         e = e || 64
         var y = n.mode.ocb2.G,
           a = n.bitArray,
@@ -1526,7 +1744,10 @@
           p = n.bitArray.bitLength(r) - e,
           w = []
         for (f = f || [], u = 0; u + 4 < p / 32; u += 4)
-          (c = s(l, i.decrypt(s(l, r.slice(u, u + 4))))), (h = s(h, c)), (w = w.concat(c)), (l = y(l))
+          (c = s(l, i.decrypt(s(l, r.slice(u, u + 4))))),
+            (h = s(h, c)),
+            (w = w.concat(c)),
+            (l = y(l))
         return (
           (v = p - 32 * u),
           (c = i.encrypt(s(l, [0, 0, 0, v]))),
@@ -1534,7 +1755,8 @@
           (h = s(h, c)),
           (h = i.encrypt(s(h, s(l, y(l))))),
           f.length && (h = s(h, o ? f : n.mode.ocb2.pmac(i, f))),
-          a.equal(a.clamp(h, e), a.bitSlice(r, p)) || t(new n.exception.corrupt("ocb: tag doesn't match")),
+          a.equal(a.clamp(h, e), a.bitSlice(r, p)) ||
+            t(new n.exception.corrupt("ocb: tag doesn't match")),
           w.concat(a.clamp(c, v))
         )
       },
@@ -1553,7 +1775,8 @@
           (u = e(u)), (o = f(o, t.encrypt(f(u, i.slice(r, r + 4)))))
         return (
           (r = i.slice(r)),
-          128 > s.bitLength(r) && ((u = f(u, e(u))), (r = s.concat(r, [-2147483648, 0, 0, 0]))),
+          128 > s.bitLength(r) &&
+            ((u = f(u, e(u))), (r = s.concat(r, [-2147483648, 0, 0, 0]))),
           (o = f(o, r)),
           t.encrypt(f(e(f(u, e(u))), o))
         )
@@ -1571,7 +1794,12 @@
       name: 'gcm',
       encrypt: function (t, i, r, u, f) {
         var e = i.slice(0)
-        return (i = n.bitArray), (u = u || []), (t = n.mode.gcm.n(!0, t, e, u, r, f || 128)), i.concat(t.data, t.tag)
+        return (
+          (i = n.bitArray),
+          (u = u || []),
+          (t = n.mode.gcm.n(!0, t, e, u, r, f || 128)),
+          i.concat(t.data, t.tag)
+        )
       },
       decrypt: function (i, u, f, e, o) {
         var s = u.slice(0),
@@ -1580,9 +1808,12 @@
         return (
           (o = o || 128),
           (e = e || []),
-          o <= c ? ((u = h.bitSlice(s, c - o)), (s = h.bitSlice(s, 0, c - o))) : ((u = s), (s = [])),
+          o <= c
+            ? ((u = h.bitSlice(s, c - o)), (s = h.bitSlice(s, 0, c - o)))
+            : ((u = s), (s = [])),
           (i = n.mode.gcm.n(r, i, s, e, f, o)),
-          h.equal(i.tag, u) || t(new n.exception.corrupt("gcm: tag doesn't match")),
+          h.equal(i.tag, u) ||
+            t(new n.exception.corrupt("gcm: tag doesn't match")),
           i.data
         )
       },
@@ -1595,7 +1826,10 @@
           s = n.bitArray.k
         for (e = [0, 0, 0, 0], r = i.slice(0), f = 0; 128 > f; f++) {
           for (
-            (u = 0 != (t[Math.floor(f / 32)] & (1 << (31 - (f % 32))))) && (e = s(e, r)), o = 0 != (r[3] & 1), u = 3;
+            (u = 0 != (t[Math.floor(f / 32)] & (1 << (31 - (f % 32))))) &&
+              (e = s(e, r)),
+              o = 0 != (r[3] & 1),
+              u = 3;
             0 < u;
             u--
           )
@@ -1635,7 +1869,12 @@
             96 === s
               ? ((f = f.slice(0)), (f = l.concat(f, [1])))
               : ((f = n.mode.gcm.f(h, [0, 0, 0, 0], f)),
-                (f = n.mode.gcm.f(h, f, [0, 0, Math.floor(s / 4294967296), s & 4294967295]))),
+                (f = n.mode.gcm.f(h, f, [
+                  0,
+                  0,
+                  Math.floor(s / 4294967296),
+                  s & 4294967295,
+                ]))),
             s = n.mode.gcm.f(h, [0, 0, 0, 0], u),
             v = f.slice(0),
             u = s.slice(0),
@@ -1644,11 +1883,21 @@
           c < p;
           c += 4
         )
-          v[3]++, (o = i.encrypt(v)), (r[c] ^= o[0]), (r[c + 1] ^= o[1]), (r[c + 2] ^= o[2]), (r[c + 3] ^= o[3])
+          v[3]++,
+            (o = i.encrypt(v)),
+            (r[c] ^= o[0]),
+            (r[c + 1] ^= o[1]),
+            (r[c + 2] ^= o[2]),
+            (r[c + 3] ^= o[3])
         return (
           (r = l.clamp(r, a)),
           t && (u = n.mode.gcm.f(h, s, r)),
-          (t = [Math.floor(y / 4294967296), y & 4294967295, Math.floor(a / 4294967296), a & 4294967295]),
+          (t = [
+            Math.floor(y / 4294967296),
+            y & 4294967295,
+            Math.floor(a / 4294967296),
+            a & 4294967295,
+          ]),
           (u = n.mode.gcm.f(h, u, t)),
           (o = i.encrypt(f)),
           (u[0] ^= o[0]),
@@ -1664,13 +1913,20 @@
       var u = [[], []],
         r,
         f = i.prototype.blockSize / 32
-      for (this.o = [new i(), new i()], t.length > f && (t = i.hash(t)), r = 0; r < f; r++)
+      for (
+        this.o = [new i(), new i()], t.length > f && (t = i.hash(t)), r = 0;
+        r < f;
+        r++
+      )
         (u[0][r] = t[r] ^ 909522486), (u[1][r] = t[r] ^ 1549556828)
       this.o[0].update(u[0])
       this.o[1].update(u[1])
     }
     n.misc.hmac.prototype.encrypt = n.misc.hmac.prototype.mac = function (n) {
-      return (n = new this.L(this.o[0]).update(n).finalize()), new this.L(this.o[1]).update(n).finalize()
+      return (
+        (n = new this.L(this.o[0]).update(n).finalize()),
+        new this.L(this.o[1]).update(n).finalize()
+      )
     }
     n.misc.pbkdf2 = function (i, r, u, f, e) {
       u = u || 1e3
@@ -1678,7 +1934,11 @@
       'string' == typeof i && (i = n.codec.utf8String.toBits(i))
       e = e || n.misc.hmac
       i = new e(i)
-      for (var s, c, h, o = [], a = n.bitArray, l = 1; 32 * o.length < (f || 1); l++) {
+      for (
+        var s, c, h, o = [], a = n.bitArray, l = 1;
+        32 * o.length < (f || 1);
+        l++
+      ) {
         for (e = s = i.encrypt(a.concat(r, [l])), c = 1; c < u; c++)
           for (s = i.encrypt(s), h = 0; h < s.length; h++) e[h] ^= s[h]
         o = o.concat(e)
@@ -1715,18 +1975,32 @@
           s,
           o
         if (
-          ((f = this.isReady(r)), f === this.l && t(new n.exception.notReady("generator isn't seeded")), f & this.w)
+          ((f = this.isReady(r)),
+          f === this.l && t(new n.exception.notReady("generator isn't seeded")),
+          f & this.w)
         ) {
-          for (f = !(f & this.u), e = [], s = 0, this.N = e[0] = new Date().valueOf() + this.R, o = 0; 16 > o; o++)
+          for (
+            f = !(f & this.u),
+              e = [],
+              s = 0,
+              this.N = e[0] = new Date().valueOf() + this.R,
+              o = 0;
+            16 > o;
+            o++
+          )
             e.push((4294967296 * Math.random()) | 0)
           for (
             o = 0;
             o < this.b.length &&
-            !((e = e.concat(this.b[o].finalize())), (s += this.h[o]), (this.h[o] = 0), !f && this.F & (1 << o));
+            !((e = e.concat(this.b[o].finalize())),
+            (s += this.h[o]),
+            (this.h[o] = 0),
+            !f && this.F & (1 << o));
             o++
           );
           for (
-            this.F >= 1 << this.b.length && (this.b.push(new n.hash.sha256()), this.h.push(0)),
+            this.F >= 1 << this.b.length &&
+              (this.b.push(new n.hash.sha256()), this.h.push(0)),
               this.c -= s,
               s > this.i && (this.i = s),
               this.F++,
@@ -1737,7 +2011,10 @@
             f++
           );
         }
-        for (f = 0; f < i; f += 4) 0 == (f + 1) % this.Q && h(this), (e = u(this)), c.push(e[0], e[1], e[2], e[3])
+        for (f = 0; f < i; f += 4)
+          0 == (f + 1) % this.Q && h(this),
+            (e = u(this)),
+            c.push(e[0], e[1], e[2], e[3])
         return h(this), c.slice(0, i)
       },
       setDefaultParanoia: function (n) {
@@ -1761,13 +2038,23 @@
             this.b[e].update([o, this.C++, 1, u, l, 1, r | 0])
             break
           case 'object':
-            if (((f = Object.prototype.toString.call(r)), '[object Uint32Array]' === f)) {
+            if (
+              ((f = Object.prototype.toString.call(r)),
+              '[object Uint32Array]' === f)
+            ) {
               for (h = [], f = 0; f < r.length; f++) h.push(r[f])
               r = h
             } else
-              for ('[object Array]' !== f && (c = 1), f = 0; f < r.length && !c; f++) 'number' != typeof r[f] && (c = 1)
+              for (
+                '[object Array]' !== f && (c = 1), f = 0;
+                f < r.length && !c;
+                f++
+              )
+                'number' != typeof r[f] && (c = 1)
             if (!c) {
-              if (u === i) for (f = u = 0; f < r.length; f++) for (h = r[f]; 0 < h; ) u++, (h >>>= 1)
+              if (u === i)
+                for (f = u = 0; f < r.length; f++)
+                  for (h = r[f]; 0 < h; ) u++, (h >>>= 1)
               this.b[e].update([o, this.C++, 2, u, l, r.length].concat(r))
             }
             break
@@ -1779,11 +2066,17 @@
           default:
             c = 1
         }
-        c && t(new n.exception.bug('random: addEntropy only supports number, array of numbers or string'))
+        c &&
+          t(
+            new n.exception.bug(
+              'random: addEntropy only supports number, array of numbers or string'
+            )
+          )
         this.h[e] += u
         this.c += u
         a === this.l &&
-          (this.isReady() !== this.l && s('seeded', Math.max(this.i, this.c)), s('progress', this.getProgress()))
+          (this.isReady() !== this.l && s('seeded', Math.max(this.i, this.c)),
+          s('progress', this.getProgress()))
       },
       isReady: function (n) {
         return (
@@ -1798,22 +2091,30 @@
         )
       },
       getProgress: function (n) {
-        return (n = this.H[n ? n : this.B]), this.i >= n ? 1 : this.c > n ? 1 : this.c / n
+        return (
+          (n = this.H[n ? n : this.B]),
+          this.i >= n ? 1 : this.c > n ? 1 : this.c / n
+        )
       },
       startCollectors: function () {
         this.p ||
           (window.addEventListener
-            ? (window.addEventListener('load', this.r, r), window.addEventListener('mousemove', this.s, r))
+            ? (window.addEventListener('load', this.r, r),
+              window.addEventListener('mousemove', this.s, r))
             : document.attachEvent
-            ? (document.attachEvent('onload', this.r), document.attachEvent('onmousemove', this.s))
+            ? (document.attachEvent('onload', this.r),
+              document.attachEvent('onmousemove', this.s))
             : t(new n.exception.bug("can't attach event")),
           (this.p = !0))
       },
       stopCollectors: function () {
         this.p &&
           (window.removeEventListener
-            ? (window.removeEventListener('load', this.r, r), window.removeEventListener('mousemove', this.s, r))
-            : window.detachEvent && (window.detachEvent('onload', this.r), window.detachEvent('onmousemove', this.s)),
+            ? (window.removeEventListener('load', this.r, r),
+              window.removeEventListener('mousemove', this.s, r))
+            : window.detachEvent &&
+              (window.detachEvent('onload', this.r),
+              window.detachEvent('onmousemove', this.s)),
           (this.p = r))
       },
       addEventListener: function (n, t) {
@@ -1828,7 +2129,14 @@
         for (r = 0; r < f.length; r++) (i = f[r]), delete u[i]
       },
       s: function (t) {
-        n.random.addEntropy([t.x || t.clientX || t.offsetX || 0, t.y || t.clientY || t.offsetY || 0], 2, 'mouse')
+        n.random.addEntropy(
+          [
+            t.x || t.clientX || t.offsetX || 0,
+            t.y || t.clientY || t.offsetY || 0,
+          ],
+          2,
+          'mouse'
+        )
       },
       r: function () {
         n.random.addEntropy(new Date().valueOf(), 2, 'loadtime')
@@ -1842,7 +2150,15 @@
     } catch (c) {}
     return (
       (n.json = {
-        defaults: { v: 1, iter: 1e3, ks: 128, ts: 64, mode: 'ccm', adata: '', cipher: 'aes' },
+        defaults: {
+          v: 1,
+          iter: 1e3,
+          ks: 128,
+          ts: 64,
+          mode: 'ccm',
+          adata: '',
+          cipher: 'aes',
+        },
         encrypt: function (i, r, u, f) {
           u = u || {}
           f = f || {}
@@ -1852,7 +2168,8 @@
           return (
             s.d(e, u),
             (u = e.adata),
-            'string' == typeof e.salt && (e.salt = n.codec.base64.toBits(e.salt)),
+            'string' == typeof e.salt &&
+              (e.salt = n.codec.base64.toBits(e.salt)),
             'string' == typeof e.iv && (e.iv = n.codec.base64.toBits(e.iv)),
             (!n.mode[e.mode] ||
               !n.cipher[e.cipher] ||
@@ -1863,10 +2180,14 @@
               4 < e.iv.length) &&
               t(new n.exception.invalid('json encrypt: invalid parameters')),
             'string' == typeof i
-              ? ((o = n.misc.cachedPbkdf2(i, e)), (i = o.key.slice(0, e.ks / 32)), (e.salt = o.salt))
+              ? ((o = n.misc.cachedPbkdf2(i, e)),
+                (i = o.key.slice(0, e.ks / 32)),
+                (e.salt = o.salt))
               : n.ecc &&
                 i instanceof n.ecc.elGamal.publicKey &&
-                ((o = i.kem()), (e.kemtag = o.tag), (i = o.key.slice(0, e.ks / 32))),
+                ((o = i.kem()),
+                (e.kemtag = o.tag),
+                (i = o.key.slice(0, e.ks / 32))),
             'string' == typeof r && (r = n.codec.utf8String.toBits(r)),
             'string' == typeof u && (u = n.codec.utf8String.toBits(u)),
             (o = new n.cipher[e.cipher](i)),
@@ -1884,7 +2205,8 @@
             (e = n.json),
             (r = e.d(e.d(e.d({}, e.defaults), e.decode(r)), u, !0)),
             (u = r.adata),
-            'string' == typeof r.salt && (r.salt = n.codec.base64.toBits(r.salt)),
+            'string' == typeof r.salt &&
+              (r.salt = n.codec.base64.toBits(r.salt)),
             'string' == typeof r.iv && (r.iv = n.codec.base64.toBits(r.iv)),
             (!n.mode[r.mode] ||
               !n.cipher[r.cipher] ||
@@ -1896,10 +2218,14 @@
               4 < r.iv.length) &&
               t(new n.exception.invalid('json decrypt: invalid parameters')),
             'string' == typeof i
-              ? ((o = n.misc.cachedPbkdf2(i, r)), (i = o.key.slice(0, r.ks / 32)), (r.salt = o.salt))
+              ? ((o = n.misc.cachedPbkdf2(i, r)),
+                (i = o.key.slice(0, r.ks / 32)),
+                (r.salt = o.salt))
               : n.ecc &&
                 i instanceof n.ecc.elGamal.secretKey &&
-                (i = i.unkem(n.codec.base64.toBits(r.kemtag)).slice(0, r.ks / 32)),
+                (i = i
+                  .unkem(n.codec.base64.toBits(r.kemtag))
+                  .slice(0, r.ks / 32)),
             'string' == typeof u && (u = n.codec.utf8String.toBits(u)),
             (o = new n.cipher[r.cipher](i)),
             (u = n.mode[r.mode].decrypt(o, r.ct, r.iv, u, r.ts)),
@@ -1915,7 +2241,12 @@
           for (r in i)
             if (i.hasOwnProperty(r))
               switch (
-                (r.match(/^[a-z0-9]+$/i) || t(new n.exception.invalid('json encode: invalid property name')),
+                (r.match(/^[a-z0-9]+$/i) ||
+                  t(
+                    new n.exception.invalid(
+                      'json encode: invalid property name'
+                    )
+                  ),
                 (u += f + '"' + r + '":'),
                 (f = ','),
                 typeof i[r])
@@ -1937,11 +2268,13 @@
         },
         decode: function (i) {
           i = i.replace(/\s/g, '')
-          i.match(/^\{.*\}$/) || t(new n.exception.invalid("json decode: this isn't json!"))
+          i.match(/^\{.*\}$/) ||
+            t(new n.exception.invalid("json decode: this isn't json!"))
           i = i.replace(/^\{|\}$/g, '').split(/,/)
           for (var f = {}, r, u = 0; u < i.length; u++)
-            (r = i[u].match(/^(?:(["']?)([a-z][a-z0-9]*)\1):(?:(\d+)|"([a-z0-9+\/%*_.@=\-]*)")$/i)) ||
-              t(new n.exception.invalid("json decode: this isn't json!")),
+            (r = i[u].match(
+              /^(?:(["']?)([a-z][a-z0-9]*)\1):(?:(\d+)|"([a-z0-9+\/%*_.@=\-]*)")$/i
+            )) || t(new n.exception.invalid("json decode: this isn't json!")),
               (f[r[2]] = r[3]
                 ? parseInt(r[3], 10)
                 : r[2].match(/^(ct|salt|iv)$/)
@@ -1953,7 +2286,10 @@
           if ((r === i && (r = {}), u === i)) return r
           for (var e in u)
             u.hasOwnProperty(e) &&
-              (f && r[e] !== i && r[e] !== u[e] && t(new n.exception.invalid('required parameter overridden')),
+              (f &&
+                r[e] !== i &&
+                r[e] !== u[e] &&
+                t(new n.exception.invalid('required parameter overridden')),
               (r[e] = u[e]))
           return r
         },
@@ -1963,7 +2299,8 @@
           return r
         },
         W: function (n, t) {
-          for (var u = {}, r = 0; r < t.length; r++) n[t[r]] !== i && (u[t[r]] = n[t[r]])
+          for (var u = {}, r = 0; r < t.length; r++)
+            n[t[r]] !== i && (u[t[r]] = n[t[r]])
           return u
         },
       }),
@@ -1977,7 +2314,13 @@
           (r = r || {}),
           (f = r.iter || 1e3),
           (u = u[t] = u[t] || {}),
-          (f = u[f] = u[f] || { firstSalt: r.salt && r.salt.length ? r.salt.slice(0) : n.random.randomWords(2, 0) }),
+          (f = u[f] =
+            u[f] || {
+              firstSalt:
+                r.salt && r.salt.length
+                  ? r.salt.slice(0)
+                  : n.random.randomWords(2, 0),
+            }),
           (u = r.salt === i ? f.firstSalt : r.salt),
           (f[u] = f[u] || n.misc.pbkdf2(t, u, r.iter)),
           { key: f[u].slice(0), salt: u.slice(0) }
@@ -1988,7 +2331,9 @@
   }),
   (function (n) {
     'use strict'
-    typeof define == 'function' && define.amd ? define('BigInteger', [], n) : (window.BigInteger = n())
+    typeof define == 'function' && define.amd
+      ? define('BigInteger', [], n)
+      : (window.BigInteger = n())
   })(function () {
     function n(n, t, i) {
       n != null &&
@@ -2075,17 +2420,22 @@
         r == 0
           ? (this[this.t++] = f)
           : r + u > this.DB
-          ? ((this[this.t - 1] |= (f & ((1 << (this.DB - r)) - 1)) << r), (this[this.t++] = f >> (this.DB - r)))
+          ? ((this[this.t - 1] |= (f & ((1 << (this.DB - r)) - 1)) << r),
+            (this[this.t++] = f >> (this.DB - r)))
           : (this[this.t - 1] |= f << r)
         r += u
         r >= this.DB && (r -= this.DB)
       }
-      u == 8 && (t[0] & 128) != 0 && ((this.s = -1), r > 0 && (this[this.t - 1] |= ((1 << (this.DB - r)) - 1) << r))
+      u == 8 &&
+        (t[0] & 128) != 0 &&
+        ((this.s = -1),
+        r > 0 && (this[this.t - 1] |= ((1 << (this.DB - r)) - 1) << r))
       this.clamp()
       o && n.ZERO.subTo(this, this)
     }
     function st() {
-      for (var n = this.s & this.DM; this.t > 0 && this[this.t - 1] == n; ) --this.t
+      for (var n = this.s & this.DM; this.t > 0 && this[this.t - 1] == n; )
+        --this.t
     }
     function ht(n) {
       var t
@@ -2103,10 +2453,17 @@
         r = this.t,
         i = this.DB - ((r * this.DB) % t)
       if (r-- > 0)
-        for (i < this.DB && (u = this[r] >> i) > 0 && ((f = !0), (e = b(u))); r >= 0; )
+        for (
+          i < this.DB && (u = this[r] >> i) > 0 && ((f = !0), (e = b(u)));
+          r >= 0;
+
+        )
           i < t
-            ? (u = ((this[r] & ((1 << i) - 1)) << (t - i)) | (this[--r] >> (i += this.DB - t)))
-            : ((u = (this[r] >> (i -= t)) & o), i <= 0 && ((i += this.DB), --r)),
+            ? (u =
+                ((this[r] & ((1 << i) - 1)) << (t - i)) |
+                (this[--r] >> (i += this.DB - t)))
+            : ((u = (this[r] >> (i -= t)) & o),
+              i <= 0 && ((i += this.DB), --r)),
             u > 0 && (f = !0),
             f && (e += b(u))
       return f ? e : '0'
@@ -2139,7 +2496,9 @@
       )
     }
     function vt() {
-      return this.t <= 0 ? 0 : this.DB * (this.t - 1) + v(this[this.t - 1] ^ (this.s & this.DM))
+      return this.t <= 0
+        ? 0
+        : this.DB * (this.t - 1) + v(this[this.t - 1] ^ (this.s & this.DM))
     }
     function yt(n, t) {
       for (var i = this.t - 1; i >= 0; --i) t[i + n] = this[i]
@@ -2189,10 +2548,12 @@
       for (var r = 0, i = 0, u = Math.min(n.t, this.t); r < u; )
         (i += this[r] - n[r]), (t[r++] = i & this.DM), (i >>= this.DB)
       if (n.t < this.t) {
-        for (i -= n.s; r < this.t; ) (i += this[r]), (t[r++] = i & this.DM), (i >>= this.DB)
+        for (i -= n.s; r < this.t; )
+          (i += this[r]), (t[r++] = i & this.DM), (i >>= this.DB)
         i += this.s
       } else {
-        for (i += this.s; r < n.t; ) (i -= n[r]), (t[r++] = i & this.DM), (i >>= this.DB)
+        for (i += this.s; r < n.t; )
+          (i -= n[r]), (t[r++] = i & this.DM), (i >>= this.DB)
         i -= n.s
       }
       t.s = i < 0 ? -1 : 0
@@ -2214,8 +2575,8 @@
       for (var i = this.abs(), t = (n.t = 2 * i.t), r; --t >= 0; ) n[t] = 0
       for (t = 0; t < i.t - 1; ++t)
         (r = i.am(t, i[t], n, 2 * t, 0, 1)),
-          (n[t + i.t] += i.am(t + 1, 2 * i[t], n, 2 * t + 1, r, i.t - t - 1)) >= i.DV &&
-            ((n[t + i.t] -= i.DV), (n[t + i.t + 1] = 1))
+          (n[t + i.t] += i.am(t + 1, 2 * i[t], n, 2 * t + 1, r, i.t - t - 1)) >=
+            i.DV && ((n[t + i.t] -= i.DV), (n[t + i.t + 1] = 1))
       n.t > 0 && (n[n.t - 1] += i.am(t, i[t], n, 2 * t, 0, 1))
       n.s = 0
       n.clamp()
@@ -2238,7 +2599,12 @@
           k = i.s,
           c = this.DB - v(s[s.t - 1])
         if (
-          (c > 0 ? (s.lShiftTo(c, f), l.lShiftTo(c, u)) : (s.copyTo(f), l.copyTo(u)), (e = f.t), (a = f[e - 1]), a != 0)
+          (c > 0
+            ? (s.lShiftTo(c, f), l.lShiftTo(c, u))
+            : (s.copyTo(f), l.copyTo(u)),
+          (e = f.t),
+          (a = f[e - 1]),
+          a != 0)
         ) {
           var b = a * (1 << this.F1) + (e > 1 ? f[e - 2] >> this.F2 : 0),
             d = this.FV / b,
@@ -2258,7 +2624,10 @@
             f[f.t++] = 0
           while (--y >= 0)
             if (
-              ((p = u[--h] == a ? this.DM : Math.floor(u[h] * d + (u[h - 1] + nt) * g)),
+              ((p =
+                u[--h] == a
+                  ? this.DM
+                  : Math.floor(u[h] * d + (u[h - 1] + nt) * g)),
               (u[h] += f.am(0, p, u, y, 0, e)) < p)
             )
               for (f.dlShiftTo(y, o), u.subTo(o, u); u[h] < --p; ) u.subTo(o, u)
@@ -2272,7 +2641,11 @@
     }
     function ti(i) {
       var r = t()
-      return this.abs().divRemTo(i, null, r), this.s < 0 && r.compareTo(n.ZERO) > 0 && i.subTo(r, r), r
+      return (
+        this.abs().divRemTo(i, null, r),
+        this.s < 0 && r.compareTo(n.ZERO) > 0 && i.subTo(r, r),
+        r
+      )
     }
     function e(n) {
       this.m = n
@@ -2333,7 +2706,10 @@
       for (i = 0; i < this.m.t; ++i)
         for (
           t = n[i] & 32767,
-            r = (t * this.mpl + (((t * this.mph + (n[i] >> 15) * this.mpl) & this.um) << 15)) & n.DM,
+            r =
+              (t * this.mpl +
+                (((t * this.mph + (n[i] >> 15) * this.mpl) & this.um) << 15)) &
+              n.DM,
             t = i + this.m.t,
             n[t] += this.m.am(0, r, n, i, 0, this.m.t);
           n[t] >= n.DV;
@@ -2362,7 +2738,9 @@
         f = t(),
         e = r.convert(this),
         o = v(i) - 1
-      for (e.copyTo(u); --o >= 0; ) r.sqrTo(u, f), (i & (1 << o)) > 0 ? r.mulTo(f, e, u) : ((s = u), (u = f), (f = s))
+      for (e.copyTo(u); --o >= 0; )
+        r.sqrTo(u, f),
+          (i & (1 << o)) > 0 ? r.mulTo(f, e, u) : ((s = u), (u = f), (f = s))
       return r.revert(u)
     }
     function pi(n, t) {
@@ -2393,10 +2771,15 @@
       return Math.floor((Math.LN2 * this.DB) / Math.log(n))
     }
     function nr() {
-      return this.s < 0 ? -1 : this.t <= 0 || (this.t == 1 && this[0] <= 0) ? 0 : 1
+      return this.s < 0
+        ? -1
+        : this.t <= 0 || (this.t == 1 && this[0] <= 0)
+        ? 0
+        : 1
     }
     function tr(n) {
-      if ((n == null && (n = 10), this.signum() == 0 || n < 2 || n > 36)) return '0'
+      if ((n == null && (n = 10), this.signum() == 0 || n < 2 || n > 36))
+        return '0'
       var s = this.chunkSize(n),
         e = Math.pow(n, s),
         o = f(e),
@@ -2433,12 +2816,14 @@
         else
           for (
             this.fromNumber(t, r),
-              this.testBit(t - 1) || this.bitwiseTo(n.ONE.shiftLeft(t - 1), y, this),
+              this.testBit(t - 1) ||
+                this.bitwiseTo(n.ONE.shiftLeft(t - 1), y, this),
               this.isEven() && this.dAddOffset(1, 0);
             !this.isProbablePrime(i);
 
           )
-            this.dAddOffset(2, 0), this.bitLength() > t && this.subTo(n.ONE.shiftLeft(t - 1), this)
+            this.dAddOffset(2, 0),
+              this.bitLength() > t && this.subTo(n.ONE.shiftLeft(t - 1), this)
       else {
         var u = [],
           f = t & 7
@@ -2454,15 +2839,22 @@
         n,
         t,
         r
-      if (((u[0] = this.s), (n = this.DB - ((i * this.DB) % 8)), (r = 0), i-- > 0))
+      if (
+        ((u[0] = this.s), (n = this.DB - ((i * this.DB) % 8)), (r = 0), i-- > 0)
+      )
         for (
-          n < this.DB && (t = this[i] >> n) != (this.s & this.DM) >> n && (u[r++] = t | (this.s << (this.DB - n)));
+          n < this.DB &&
+          (t = this[i] >> n) != (this.s & this.DM) >> n &&
+          (u[r++] = t | (this.s << (this.DB - n)));
           i >= 0;
 
         )
           n < 8
-            ? (t = ((this[i] & ((1 << n) - 1)) << (8 - n)) | (this[--i] >> (n += this.DB - 8)))
-            : ((t = (this[i] >> (n -= 8)) & 255), n <= 0 && ((n += this.DB), --i)),
+            ? (t =
+                ((this[i] & ((1 << n) - 1)) << (8 - n)) |
+                (this[--i] >> (n += this.DB - 8)))
+            : ((t = (this[i] >> (n -= 8)) & 255),
+              n <= 0 && ((n += this.DB), --i)),
             (t & 128) != 0 && (t |= -256),
             r == 0 && (this.s & 128) != (t & 128) && ++r,
             (r > 0 || t != this.s) && (u[r++] = t)
@@ -2478,7 +2870,8 @@
       return this.compareTo(n) > 0 ? this : n
     }
     function sr(n, t, i) {
-      for (var u, f = Math.min(n.t, this.t), r = 0; r < f; ++r) i[r] = t(this[r], n[r])
+      for (var u, f = Math.min(n.t, this.t), r = 0; r < f; ++r)
+        i[r] = t(this[r], n[r])
       if (n.t < this.t) {
         for (u = n.s & this.DM, r = f; r < this.t; ++r) i[r] = t(this[r], u)
         i.t = this.t
@@ -2542,7 +2935,8 @@
       )
     }
     function kr() {
-      for (var n = 0; n < this.t; ++n) if (this[n] != 0) return n * this.DB + br(this[n])
+      for (var n = 0; n < this.t; ++n)
+        if (this[n] != 0) return n * this.DB + br(this[n])
       return this.s < 0 ? this.t * this.DB : -1
     }
     function dr(n) {
@@ -2550,7 +2944,8 @@
       return t
     }
     function gr() {
-      for (var t = 0, i = this.s & this.DM, n = 0; n < this.t; ++n) t += dr(this[n] ^ i)
+      for (var t = 0, i = this.s & this.DM, n = 0; n < this.t; ++n)
+        t += dr(this[n] ^ i)
       return t
     }
     function nu(n) {
@@ -2574,10 +2969,12 @@
       for (var r = 0, i = 0, u = Math.min(n.t, this.t); r < u; )
         (i += this[r] + n[r]), (t[r++] = i & this.DM), (i >>= this.DB)
       if (n.t < this.t) {
-        for (i += n.s; r < this.t; ) (i += this[r]), (t[r++] = i & this.DM), (i >>= this.DB)
+        for (i += n.s; r < this.t; )
+          (i += this[r]), (t[r++] = i & this.DM), (i >>= this.DB)
         i += this.s
       } else {
-        for (i += this.s; r < n.t; ) (i += n[r]), (t[r++] = i & this.DM), (i >>= this.DB)
+        for (i += this.s; r < n.t; )
+          (i += n[r]), (t[r++] = i & this.DM), (i >>= this.DB)
         i += n.s
       }
       t.s = i < 0 ? -1 : 0
@@ -2622,7 +3019,8 @@
     function yu(n, t) {
       if (n != 0) {
         while (this.t <= t) this[this.t++] = 0
-        for (this[t] += n; this[t] >= this.DV; ) (this[t] -= this.DV), ++t >= this.t && (this[this.t++] = 0), ++this[t]
+        for (this[t] += n; this[t] >= this.DV; )
+          (this[t] -= this.DV), ++t >= this.t && (this[this.t++] = 0), ++this[t]
       }
     }
     function l() {}
@@ -2642,7 +3040,8 @@
       var r = Math.min(this.t + n.t, t),
         u
       for (i.s = 0, i.t = r; r > 0; ) i[--r] = 0
-      for (u = i.t - this.t; r < u; ++r) i[r + this.t] = this.am(0, n[r], i, r, 0, this.t)
+      for (u = i.t - this.t; r < u; ++r)
+        i[r + this.t] = this.am(0, n[r], i, r, 0, this.t)
       for (u = Math.min(n.t, t); r < u; ++r) this.am(0, n[r], i, r, 0, t - r)
       i.clamp()
     }
@@ -2650,7 +3049,8 @@
       --t
       var r = (i.t = this.t + n.t - t)
       for (i.s = 0; --r >= 0; ) i[r] = 0
-      for (r = Math.max(t - this.t, 0); r < n.t; ++r) i[this.t + r - t] = this.am(t - r, n[r], i, 0, 0, this.t + r - t)
+      for (r = Math.max(t - this.t, 0); r < n.t; ++r)
+        i[this.t + r - t] = this.am(t - r, n[r], i, 0, 0, this.t + r - t)
       i.clamp()
       i.drShiftTo(1, i)
     }
@@ -2704,7 +3104,8 @@
         b = w - 1,
         g = (1 << w) - 1
       if (((y[1] = c.convert(this)), w > 1))
-        for (d = t(), c.sqrTo(y[1], d); s <= g; ) (y[s] = t()), c.mulTo(d, y[s - 2], y[s]), (s += 2)
+        for (d = t(), c.sqrTo(y[1], d); s <= g; )
+          (y[s] = t()), c.mulTo(d, y[s - 2], y[s]), (s += 2)
       var l = n.t - 1,
         p,
         nt = !0,
@@ -2714,20 +3115,26 @@
         for (
           r >= b
             ? (p = (n[l] >> (r - b)) & g)
-            : ((p = (n[l] & ((1 << (r + 1)) - 1)) << (b - r)), l > 0 && (p |= n[l - 1] >> (this.DB + r - b))),
+            : ((p = (n[l] & ((1 << (r + 1)) - 1)) << (b - r)),
+              l > 0 && (p |= n[l - 1] >> (this.DB + r - b))),
             s = w;
           (p & 1) == 0;
 
         )
           (p >>= 1), --s
-        if (((r -= s) < 0 && ((r += this.DB), --l), nt)) y[p].copyTo(u), (nt = !1)
+        if (((r -= s) < 0 && ((r += this.DB), --l), nt))
+          y[p].copyTo(u), (nt = !1)
         else {
           while (s > 1) c.sqrTo(u, a), c.sqrTo(a, u), (s -= 2)
           s > 0 ? c.sqrTo(u, a) : ((k = u), (u = a), (a = k))
           c.mulTo(a, y[p], u)
         }
         while (l >= 0 && (n[l] & (1 << r)) == 0)
-          c.sqrTo(u, a), (k = u), (u = a), (a = k), --r < 0 && ((r = this.DB - 1), --l)
+          c.sqrTo(u, a),
+            (k = u),
+            (u = a),
+            (a = k),
+            --r < 0 && ((r = this.DB - 1), --l)
       }
       return c.revert(u)
     }
@@ -2738,13 +3145,22 @@
         u,
         r
       if (
-        (i.compareTo(t) < 0 && ((f = i), (i = t), (t = f)), (u = i.getLowestSetBit()), (r = t.getLowestSetBit()), r < 0)
+        (i.compareTo(t) < 0 && ((f = i), (i = t), (t = f)),
+        (u = i.getLowestSetBit()),
+        (r = t.getLowestSetBit()),
+        r < 0)
       )
         return i
-      for (u < r && (r = u), r > 0 && (i.rShiftTo(r, i), t.rShiftTo(r, t)); i.signum() > 0; )
+      for (
+        u < r && (r = u), r > 0 && (i.rShiftTo(r, i), t.rShiftTo(r, t));
+        i.signum() > 0;
+
+      )
         (u = i.getLowestSetBit()) > 0 && i.rShiftTo(u, i),
           (u = t.getLowestSetBit()) > 0 && t.rShiftTo(u, t),
-          i.compareTo(t) >= 0 ? (i.subTo(t, i), i.rShiftTo(1, i)) : (t.subTo(i, t), t.rShiftTo(1, t))
+          i.compareTo(t) >= 0
+            ? (i.subTo(t, i), i.rShiftTo(1, i))
+            : (t.subTo(i, t), t.rShiftTo(1, t))
       return r > 0 && t.lShiftTo(r, t), t
     }
     function of(n) {
@@ -2758,17 +3174,30 @@
     function sf(t) {
       var h = t.isEven()
       if ((this.isEven() && h) || t.signum() == 0) return n.ZERO
-      for (var u = t.clone(), e = this.clone(), o = f(1), r = f(0), s = f(0), i = f(1); u.signum() != 0; ) {
+      for (
+        var u = t.clone(),
+          e = this.clone(),
+          o = f(1),
+          r = f(0),
+          s = f(0),
+          i = f(1);
+        u.signum() != 0;
+
+      ) {
         while (u.isEven())
           u.rShiftTo(1, u),
             h
-              ? ((o.isEven() && r.isEven()) || (o.addTo(this, o), r.subTo(t, r)), o.rShiftTo(1, o))
+              ? ((o.isEven() && r.isEven()) ||
+                  (o.addTo(this, o), r.subTo(t, r)),
+                o.rShiftTo(1, o))
               : r.isEven() || r.subTo(t, r),
             r.rShiftTo(1, r)
         while (e.isEven())
           e.rShiftTo(1, e),
             h
-              ? ((s.isEven() && i.isEven()) || (s.addTo(this, s), i.subTo(t, i)), s.rShiftTo(1, s))
+              ? ((s.isEven() && i.isEven()) ||
+                  (s.addTo(this, s), i.subTo(t, i)),
+                s.rShiftTo(1, s))
               : i.isEven() || i.subTo(t, i),
             i.rShiftTo(1, i)
         u.compareTo(e) >= 0
@@ -2806,7 +3235,15 @@
         u,
         c
       if (e <= 0) return !1
-      for (h = f.shiftRight(e), r = (r + 1) >> 1, r > i.length && (r = i.length), o = t(), s = 0; s < r; ++s)
+      for (
+        h = f.shiftRight(e),
+          r = (r + 1) >> 1,
+          r > i.length && (r = i.length),
+          o = t(),
+          s = 0;
+        s < r;
+        ++s
+      )
         if (
           (o.fromInt(i[Math.floor(Math.random() * i.length)]),
           (u = o.modPow(h, this)),
@@ -2895,13 +3332,17 @@
       (h.prototype.mulTo = uf),
       (h.prototype.sqrTo = rf),
       (i = [
-        2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107,
-        109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229,
-        233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359,
-        367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491,
-        499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641,
-        643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787,
-        797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941,
+        2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67,
+        71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139,
+        149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223,
+        227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293,
+        307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383,
+        389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463,
+        467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569,
+        571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647,
+        653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743,
+        751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839,
+        853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941,
         947, 953, 967, 971, 977, 983, 991, 997,
       ]),
       (tt = 67108864 / i[i.length - 1]),
@@ -2994,7 +3435,10 @@
           return i.join('')
         },
         hexToBytes: function (n) {
-          if (n.length % 2 == 1) throw new Error("hexToBytes can't have a string with an odd number of characters.")
+          if (n.length % 2 == 1)
+            throw new Error(
+              "hexToBytes can't have a string with an odd number of characters."
+            )
           return (
             n.indexOf('0x') === 0 && (n = n.slice(2)),
             n.match(/../g).map(function (n) {
@@ -3007,7 +3451,8 @@
           return i
         },
         bytesToString: function (n) {
-          for (var i = '', t = 0; t < n.length; t++) i += String.fromCharCode(n[t])
+          for (var i = '', t = 0; t < n.length; t++)
+            i += String.fromCharCode(n[t])
           return i
         },
         k: function () {
@@ -3017,7 +3462,8 @@
         calculateX: function (t) {
           var u
           if (!t) throw 'Missing parameter.'
-          if (!this.username || !this.password) throw 'Username and password cannot be empty.'
+          if (!this.username || !this.password)
+            throw 'Username and password cannot be empty.'
           var f = this.stringToBytes(this.username),
             e = this.hexToBytes(this.password),
             o = f.concat([58]).concat(e),
@@ -3027,7 +3473,9 @@
             l = c.concat(h),
             a = n.calcSHA1(this.bytesToString(l)),
             i = new r(a, 16)
-          return i.compareTo(this.N) < 0 ? i : ((u = new r(1, 16)), i.mod(this.N.subtract(u)))
+          return i.compareTo(this.N) < 0
+            ? i
+            : ((u = new r(1, 16)), i.mod(this.N.subtract(u)))
         },
         calculateV: function (n) {
           if (!n) throw 'Missing parameter.'
@@ -3036,7 +3484,11 @@
         },
         calculateU: function (n, t) {
           if (!n || !t) throw 'Missing parameter(s).'
-          if (n.mod(this.N).toString() == '0' || t.mod(this.N).toString() == '0') throw 'ABORT: illegal_parameter'
+          if (
+            n.mod(this.N).toString() == '0' ||
+            t.mod(this.N).toString() == '0'
+          )
+            throw 'ABORT: illegal_parameter'
           var i = [this.toHexString(n), this.toHexString(t)]
           return this.paddedHash(i)
         },
@@ -3046,7 +3498,8 @@
         },
         calculateA: function (n) {
           if (!n) throw 'Missing parameter.'
-          if (!this.canCalculateA(n)) throw 'Client key length is less than 256 bits.'
+          if (!this.canCalculateA(n))
+            throw 'Client key length is less than 256 bits.'
           var t = this.g.modPow(n, this.N)
           if (t.mod(this.N).toString() == '0') throw 'ABORT: illegal_parameter'
           return t
@@ -3054,7 +3507,11 @@
         calculateM1: function (n, t, i, u) {
           var f, e
           if (!n || !t || !i || !u) throw 'Missing parameter(s).'
-          if (n.mod(this.N).toString() == '0' || t.mod(this.N).toString() == '0') throw 'ABORT: illegal_parameter'
+          if (
+            n.mod(this.N).toString() == '0' ||
+            t.mod(this.N).toString() == '0'
+          )
+            throw 'ABORT: illegal_parameter'
           var l = this.hexHash(this.toHexString(this.N)),
             a = this.hexHash(this.toHexString(this.g)),
             v = this.hash(this.username),
@@ -3073,7 +3530,11 @@
         calculateM2: function (n, t, i) {
           var u
           if (!n || !t || !i) throw 'Missing parameter(s).'
-          if (n.mod(this.N).toString() == '0' || t.mod(this.N).toString() == '0') throw 'ABORT: illegal_parameter'
+          if (
+            n.mod(this.N).toString() == '0' ||
+            t.mod(this.N).toString() == '0'
+          )
+            throw 'ABORT: illegal_parameter'
           var o = this.toHexString(n),
             s = this.toHexString(t),
             f = [o, s, i],
@@ -3086,7 +3547,10 @@
           if (n.mod(this.N).toString() == '0') throw 'ABORT: illegal_parameter'
           var u = this.calculateX(t),
             f = this.g.modPow(u, this.N),
-            e = n.add(this.N.multiply(this.k)).subtract(f.multiply(this.k)).mod(this.N)
+            e = n
+              .add(this.N.multiply(this.k))
+              .subtract(f.multiply(this.k))
+              .mod(this.N)
           return e.modPow(u.multiply(i).add(r), this.N)
         },
         calculateK: function (n) {
@@ -3109,7 +3573,14 @@
           return t.codec.hex.fromBits(n)
         },
         paddedHash: function (n) {
-          for (var u, f = 2 * ((this.toHexString(this.N).length * 4 + 7) >> 3), i = '', t = 0; t < n.length; t++)
+          for (
+            var u,
+              f = 2 * ((this.toHexString(this.N).length * 4 + 7) >> 3),
+              i = '',
+              t = 0;
+            t < n.length;
+            t++
+          )
             i += this.nZeros(f - n[t].length) + n[t]
           return (u = new r(this.hexHash(i), 16)), u.mod(this.N)
         },
@@ -3126,7 +3597,9 @@
         hexHash: function (n) {
           switch (this.hashFn.toLowerCase()) {
             case 'sha-256':
-              var i = t.codec.hex.fromBits(t.hash.sha256.hash(t.codec.hex.toBits(n)))
+              var i = t.codec.hex.fromBits(
+                t.hash.sha256.hash(t.codec.hex.toBits(n))
+              )
               return this.nZeros(64 - i.length) + i
             case 'sha-1':
             default:
@@ -3134,8 +3607,14 @@
           }
         },
         pack: function (n) {
-          for (n.length % 2 != 0 && (n = '0' + n), i = 0, ascii = ''; i < n.length / 2; )
-            (ascii = ascii + String.fromCharCode(parseInt(n.substr(i * 2, 2), 16))), i++
+          for (
+            n.length % 2 != 0 && (n = '0' + n), i = 0, ascii = '';
+            i < n.length / 2;
+
+          )
+            (ascii =
+              ascii + String.fromCharCode(parseInt(n.substr(i * 2, 2), 16))),
+              i++
           return ascii
         },
         nZeros: function (n) {
@@ -3180,7 +3659,11 @@
         },
         calculateServerS: function (n, t, i, r) {
           if (!n || !t || !i || !r) throw 'Missing parameters.'
-          if (n.mod(this.N).toString() == '0' || r.mod(this.N).toString() == '0') throw 'ABORT: illegal_parameter'
+          if (
+            n.mod(this.N).toString() == '0' ||
+            r.mod(this.N).toString() == '0'
+          )
+            throw 'ABORT: illegal_parameter'
           return t.modPow(i, this.N).multiply(n).mod(this.N).modPow(r, this.N)
         },
       }),
@@ -3209,10 +3692,25 @@
           var i, r, n, u, e, t, f
           return (
             (i = function () {
-              return (((1 + Math.random()) * 65536) | 0).toString(16).substring(1)
+              return (((1 + Math.random()) * 65536) | 0)
+                .toString(16)
+                .substring(1)
             }),
             (e = function () {
-              return i() + i() + '-' + i() + '-' + i() + '-' + i() + '-' + i() + i() + i()
+              return (
+                i() +
+                i() +
+                '-' +
+                i() +
+                '-' +
+                i() +
+                '-' +
+                i() +
+                '-' +
+                i() +
+                i() +
+                i()
+              )
             }),
             (t = {}),
             (n = '__ceGUID'),
@@ -3228,7 +3726,8 @@
             (u = function (i, r, u) {
               var s, f, h, e, o
               if (i[n] && t[i[n]] && t[i[n]][r]) {
-                for (e = t[i[n]][r], o = [], f = 0, h = e.length; f < h; f++) (s = e[f]), o.push(s(u || {}))
+                for (e = t[i[n]][r], o = [], f = 0, h = e.length; f < h; f++)
+                  (s = e[f]), o.push(s(u || {}))
                 return o
               }
             }),
@@ -3270,7 +3769,9 @@
           var r
           return i.createEventObject
             ? n.fireEvent('on' + t, r)
-            : ((r = i.createEvent('HTMLEvents')), r.initEvent(t, !0, !0), !n.dispatchEvent(r))
+            : ((r = i.createEvent('HTMLEvents')),
+              r.initEvent(t, !0, !0),
+              !n.dispatchEvent(r))
         }),
         (l = (function () {
           var r, u, t, f, n
@@ -3280,7 +3781,11 @@
               t = i.createElement('div'),
               r = t.getElementsByTagName('i'),
               u = function () {
-                return (t.innerHTML = '<!--[if gt IE ' + ++n + ']><i></i><![endif]-->'), r[0]
+                return (
+                  (t.innerHTML =
+                    '<!--[if gt IE ' + ++n + ']><i></i><![endif]-->'),
+                  r[0]
+                )
               };
             u();
 
@@ -3296,7 +3801,8 @@
           ? ((f = 'mozHidden'), (o = 'mozvisibilitychange'))
           : typeof i.msHidden != 'undefined'
           ? ((f = 'msHidden'), (o = 'msvisibilitychange'))
-          : typeof i.webkitHidden != 'undefined' && ((f = 'webkitHidden'), (o = 'webkitvisibilitychange')),
+          : typeof i.webkitHidden != 'undefined' &&
+            ((f = 'webkitHidden'), (o = 'webkitvisibilitychange')),
         (a = function () {
           var f, t
           return (
@@ -3356,7 +3862,10 @@
               (i = +new Date()),
               (t = {}),
               n === 'idle'
-                ? ((t.isIdle = !0), (t.idleFor = i - s), (t.timeLeft = 0), (t.timeLeftPer = 100))
+                ? ((t.isIdle = !0),
+                  (t.idleFor = i - s),
+                  (t.timeLeft = 0),
+                  (t.timeLeftPer = 100))
                 : ((t.isIdle = !1),
                   (t.idleFor = i - s),
                   (t.timeLeft = s + e - i),
@@ -3383,12 +3892,16 @@
           idle: function (i) {
             return typeof i == 'function'
               ? this.on('idle', i)
-              : ((n = 'idle'), t.fire(this, 'idle'), t.fire(this, 'statusChanged', { status: n }))
+              : ((n = 'idle'),
+                t.fire(this, 'idle'),
+                t.fire(this, 'statusChanged', { status: n }))
           },
           wakeup: function (i) {
             return typeof i == 'function'
               ? this.on('wakeup', i)
-              : ((n = 'active'), t.fire(this, 'wakeup'), t.fire(this, 'statusChanged', { status: n }))
+              : ((n = 'active'),
+                t.fire(this, 'wakeup'),
+                t.fire(this, 'statusChanged', { status: n }))
           },
           on: function (n, i) {
             return h(), t.add(this, n, i)
@@ -3430,7 +3943,11 @@
   (function (n) {
     'use strict'
     typeof define == 'function' && define.amd
-      ? define('WebSdk', ['async', 'sjcl', 'BigInteger', 'SRPClient', 'ifvisible'], n)
+      ? define(
+          'WebSdk',
+          ['async', 'sjcl', 'BigInteger', 'SRPClient', 'ifvisible'],
+          n
+        )
       : (window.WebSdk = n(async, sjcl, BigInteger, SRPClient, ifvisible))
   })(function (n, t, i, r, u) {
     function o(n, t) {
@@ -3452,7 +3969,8 @@
               if (this.status === 200) {
                 var n
                 n =
-                  this.responseType === '' && typeof this.responseText == 'string'
+                  this.responseType === '' &&
+                  typeof this.responseText == 'string'
                     ? JSON.parse(this.responseText)
                     : this.response
                 r(n)
@@ -3462,10 +3980,15 @@
         ) {
           e = ''
           o = []
-          for (s in i) o.push(encodeURIComponent(s) + '=' + encodeURIComponent(i[s]))
+          for (s in i)
+            o.push(encodeURIComponent(s) + '=' + encodeURIComponent(i[s]))
           e = o.join('&').replace(/%20/g, '+')
           f.send(e)
-        } else f.send()
+        } else {
+          try {
+            f.send()
+          } catch (c) {}
+        }
       })
     }
     function c(n) {
@@ -3481,7 +4004,10 @@
       return this instanceof s ? c(this) : c(Object.create(s.prototype))
     }
     function f() {
-      e.Debug && (console.log.apply ? console.log.apply(console, [].slice.call(arguments)) : console.log(arguments[0]))
+      e.Debug &&
+        (console.log.apply
+          ? console.log.apply(console, [].slice.call(arguments))
+          : console.log(arguments[0]))
     }
     function v(n) {
       if (!n) return null
@@ -3533,12 +4059,16 @@
             configurable: !0,
           }),
           (n.prototype.ensureLoaded = function (n) {
-            if ((f('Configurator: ensureLoaded'), !!this.url && !!this.srp)) return n(null)
+            if ((f('Configurator: ensureLoaded'), !!this.url && !!this.srp))
+              return n(null)
+
             var t = this
             h('get', 'https://127.0.0.1:52181/get_connection')
               .then(function (i) {
                 f('Configurator: findConfiguration -> ', i)
-                i && i.endpoint && t.tryParse(i.endpoint) ? n(null) : n(new Error('Cannot load configuration'))
+                i && i.endpoint && t.tryParse(i.endpoint)
+                  ? n(null)
+                  : n(new Error('Cannot load configuration'))
               })
               .catch(function (t) {
                 f('Configurator: findConfiguration -> ERROR ', t)
@@ -3564,7 +4094,12 @@
                 (this.m_srp = { p1: u, p2: e, salt: s }),
                 sessionStorage.setItem(
                   this.m_key,
-                  JSON.stringify({ port: this.m_port, host: this.m_host, isSecure: this.m_isSecure, srp: this.m_srp })
+                  JSON.stringify({
+                    port: this.m_port,
+                    host: this.m_host,
+                    isSecure: this.m_isSecure,
+                    srp: this.m_srp,
+                  })
                 ),
                 !0)
           }),
@@ -3593,11 +4128,19 @@
           }),
           (n.prototype.trimHead = function () {
             this.m_items.length <= this.m_maxSize ||
-              Array.prototype.splice.call(this.m_items, 0, this.m_items.length - this.m_maxSize)
+              Array.prototype.splice.call(
+                this.m_items,
+                0,
+                this.m_items.length - this.m_maxSize
+              )
           }),
           (n.prototype.trimTail = function () {
             this.m_items.length <= this.m_maxSize ||
-              Array.prototype.splice.call(this.m_items, this.m_maxSize, this.m_items.length - this.m_maxSize)
+              Array.prototype.splice.call(
+                this.m_items,
+                this.m_maxSize,
+                this.m_items.length - this.m_maxSize
+              )
           }),
           (n.prototype.push = function () {
             var n = Array.prototype.push.apply(this.m_items, arguments)
@@ -3650,7 +4193,10 @@
       })(),
       w = (function () {
         function o(n) {
-          if ((typeof e.Promise == 'function' && (window.Promise = e.Promise), typeof Promise != 'function'))
+          if (
+            (typeof e.Promise == 'function' && (window.Promise = e.Promise),
+            typeof Promise != 'function')
+          )
             throw 'Promise implementation not found'
           if (!n) throw new Error('clientPath cannot be empty')
           this.clientPath = n
@@ -3702,7 +4248,8 @@
             }
           }),
           (o.prototype.resetReconnectTimer = function () {
-            this.reconnectTimer && (clearInterval(this.reconnectTimer), (this.reconnectTimer = null))
+            this.reconnectTimer &&
+              (clearInterval(this.reconnectTimer), (this.reconnectTimer = null))
           }),
           (o.prototype.setReconnectTimer = function () {
             this.resetReconnectTimer()
@@ -3715,7 +4262,10 @@
             f('WebChannelClientImpl: wsconnect ' + n)
             var t = this,
               i = s()
-            if (this.webSocket && this.webSocket.readyState !== WebSocket.CLOSED)
+            if (
+              this.webSocket &&
+              this.webSocket.readyState !== WebSocket.CLOSED
+            )
               throw new Error('wsdisconnect has not been called')
             return (
               (this.webSocket = new WebSocket(n)),
@@ -3729,7 +4279,8 @@
               }),
               (this.webSocket.onerror = function () {
                 return (
-                  f('WebChannelClientImpl: wsonerror ' + arguments), i.reject(new Error('WebSocket connection failed.'))
+                  f('WebChannelClientImpl: wsonerror ' + arguments),
+                  i.reject(new Error('WebSocket connection failed.'))
                 )
               }),
               (this.webSocket.onmessage = function (n) {
@@ -3762,7 +4313,9 @@
             n && this.fireConnectionFailed()
           }),
           (o.prototype.wsonmessage = function (n) {
-            typeof n.data == 'string' ? this.fireDataReceivedTxt(n.data) : this.fireDataReceivedBin(n.data)
+            typeof n.data == 'string'
+              ? this.fireDataReceivedTxt(n.data)
+              : this.fireDataReceivedBin(n.data)
           }),
           (o.prototype.wssend = function (n) {
             return this.isConnected()
@@ -3776,12 +4329,16 @@
               t,
               f,
               e
-            if (!u.p1 || !u.p2 || !u.salt) return n(new Error('No data available for authentication'))
+            if (!u.p1 || !u.p2 || !u.salt)
+              return n(new Error('No data available for authentication'))
             t = new r(u.p1, u.p2)
             do f = t.srpRandom()
             while (!t.canCalculateA(f))
             e = t.calculateA(f)
-            h('post', this.configurator.url + '/connect', { username: u.p1, A: t.toHexString(e) })
+            h('post', this.configurator.url + '/connect', {
+              username: u.p1,
+              A: t.toHexString(e),
+            })
               .then(function (r) {
                 var o = new i(r.B, 16),
                   s = t.calculateU(e, o),
@@ -3811,7 +4368,9 @@
                     '&M1=' +
                     n
                   r.configurator.sessionId ||
-                    (r.configurator.sessionId = t.codec.hex.fromBits(t.random.randomWords(2, 0)))
+                    (r.configurator.sessionId = t.codec.hex.fromBits(
+                      t.random.randomWords(2, 0)
+                    ))
                   u += '&sessionId=' + r.configurator.sessionId
                   u += '&version=' + a.toString()
                   r.wsconnect(u)
@@ -3828,13 +4387,16 @@
             )
           }),
           (o.prototype.isConnected = function () {
-            return !!this.webSocket && this.webSocket.readyState === WebSocket.OPEN
+            return (
+              !!this.webSocket && this.webSocket.readyState === WebSocket.OPEN
+            )
           }),
           (o.prototype.sendData = function (n) {
             this.wssend(n) || this.queue.push(n)
           }),
           (o.prototype.deactivateBufferCheck = function () {
-            this.queueInterval && (clearInterval(this.queueInterval), (this.queueInterval = null))
+            this.queueInterval &&
+              (clearInterval(this.queueInterval), (this.queueInterval = null))
           }),
           (o.prototype.activateBufferCheck = function () {
             if (!this.queueInterval) {
@@ -3846,7 +4408,12 @@
             }
           }),
           (o.prototype.processMessageQueue = function () {
-            if ((f('WebChannelClientImpl: processMessageQueue ' + this.queue.length), this.queue.length !== 0))
+            if (
+              (f(
+                'WebChannelClientImpl: processMessageQueue ' + this.queue.length
+              ),
+              this.queue.length !== 0)
+            )
               for (var n = 0; n < this.queue.length; ) {
                 if (!this.wssend(this.queue.items[n])) break
                 this.queue.splice(n, 1)

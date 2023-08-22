@@ -1,26 +1,28 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    modelValue?: boolean;
-    disabled?: boolean;
-    hidden?: boolean;
-    label?: string;
-    color?: string;
+    modelValue?: boolean
+    disabled?: boolean
+    hidden?: boolean
+    label?: string
+    color?: string
+    error?: string
   }>(),
   {
     modelValue: false,
     disabled: false,
     hidden: false,
-    label: "",
-    color: "rgb(37 99 235)",
+    label: '',
+    color: 'rgb(37 99 235)',
+    error: '',
   }
-);
+)
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
 const emitChange = (e: any) => {
-  emit("update:modelValue", e.target.checked);
-};
+  emit('update:modelValue', e.target.checked)
+}
 </script>
 <template>
   <label
@@ -46,7 +48,10 @@ const emitChange = (e: any) => {
       ></div>
     </div>
     <!-- label -->
-    <div class="ml-2 text-sm font-medium text-gray-700">{{ label }}</div>
+    <div class="ml-2 text-sm font-medium text-gray-700 flex flex-col">
+      {{ label }}
+      <span v-if="error" class="text-xs text-red-500">{{ error }}</span>
+    </div>
   </label>
 </template>
 <style scoped>

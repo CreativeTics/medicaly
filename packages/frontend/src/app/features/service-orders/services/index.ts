@@ -1,55 +1,55 @@
-import { getData } from "../../../core/services/get-table/";
+import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from "../../../services/pouch";
-import { useAuthStore } from "@/store/auth";
-import { OrderStatus } from "@/app/core/types/order-status";
+import { PouchService, DB } from '../../../services/pouch'
+import { useAuthStore } from '@/store/auth'
+import { OrderStatus } from '@/app/core/types/order-status'
 
-const pouch = new PouchService();
-const doctype = "service-orders";
+const pouch = new PouchService()
+const doctype = 'service-orders'
 
 export async function getContractsList() {
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:contracts`,
-    fields: ["id", "name"],
-  });
+    fields: ['id', 'name'],
+  })
 
   return data.map((doc: any) => {
     return {
       id: doc.id,
       name: doc.name,
-    };
-  });
+    }
+  })
 }
 
 export async function getList(searchOptions: any) {
-  console.log("getList", searchOptions);
+  console.log('getList', searchOptions)
 
-  const where: any = {};
+  const where: any = {}
 
   if (searchOptions.contract) {
-    where["contract"] = searchOptions.contract;
+    where['contract'] = searchOptions.contract
   }
 
   if (searchOptions.orderCode) {
-    where["code"] = { $regex: `(?i).*${searchOptions.orderCode}.*` };
+    where['code'] = { $regex: `(?i).*${searchOptions.orderCode}.*` }
   }
 
   if (searchOptions.patient) {
-    where["patientName"] = { $regex: `(?i).*${searchOptions.patient}.*` };
+    where['patientName'] = { $regex: `(?i).*${searchOptions.patient}.*` }
   }
 
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:${doctype}`,
     fields: [
-      "id",
-      "code",
-      "medicalExamTypeName",
-      "patientName",
-      "status",
-      "updatedAt",
+      'id',
+      'code',
+      'medicalExamTypeName',
+      'patientName',
+      'status',
+      'updatedAt',
     ],
     where: where,
-  });
+  })
 
   return data.map((doc: any) => {
     return {
@@ -59,25 +59,23 @@ export async function getList(searchOptions: any) {
       patientName: doc.patientName,
       status: doc.status,
       updatedAt: doc.updatedAt,
-    };
-  });
+    }
+  })
 }
 
 export async function getOrder(id: string) {
-  const order = await pouch.use(DB.GENERAL).get(id);
+  const order = await pouch.use(DB.GENERAL).get(id)
 
   // get contractSubsidiary
   const contractSubsidiary = await pouch
     .use(DB.GENERAL)
-    .get(order.contractSubsidiary);
+    .get(order.contractSubsidiary)
   // get contractCostCenter
   const contractCostCenter = await pouch
     .use(DB.GENERAL)
-    .get(order.contractCostCenter);
+    .get(order.contractCostCenter)
   // get medicalExamType
-  const medicalExamType = await pouch
-    .use(DB.GENERAL)
-    .get(order.medicalExamType);
+  const medicalExamType = await pouch.use(DB.GENERAL).get(order.medicalExamType)
 
   return {
     ...order,
@@ -94,57 +92,57 @@ export async function getOrder(id: string) {
       name: medicalExamType.name,
       emphasis: medicalExamType.emphasis,
     },
-  };
+  }
 }
 
 export async function create(entity: any): Promise<{
-  isOk: boolean;
-  errors?: any[];
+  isOk: boolean
+  errors?: any[]
 }> {
-  console.log("create", entity);
+  console.log('create', entity)
   // validate Patients
-  const patientErrors = validatePatients(entity.patients);
+  const patientErrors = validatePatients(entity.patients)
   if (patientErrors.length > 0) {
     return {
       isOk: false,
       errors: patientErrors,
-    };
+    }
   }
 
   // crear service order for each patient
 
   entity.patients.forEach(async (patient: any) => {
     const patientEntity = {
-      doctype: "patients",
-      id: patient.id ?? "",
+      doctype: 'patients',
+      id: patient.id ?? '',
       documentType: patient.doctype,
       documentNumber: patient.document,
       fullName: `${patient.name.toUpperCase().trim()} ${patient.lastName
         .toUpperCase()
         .trim()}`,
-      name: patient.name.toUpperCase().trim().split(" ")[0],
-      secondName: patient.name.toUpperCase().trim().split(" ")?.[1] ?? "",
-      lastName: patient.lastName.toUpperCase().trim().split(" ")[0],
-      secondLastName: patient.lastName.toUpperCase().trim().split(" ")[1] ?? "",
-    };
+      name: patient.name.toUpperCase().trim().split(' ')[0],
+      secondName: patient.name.toUpperCase().trim().split(' ')?.[1] ?? '',
+      lastName: patient.lastName.toUpperCase().trim().split(' ')[0],
+      secondLastName: patient.lastName.toUpperCase().trim().split(' ')[1] ?? '',
+    }
 
     if (!patient.isOld) {
-      const response = await pouch.use(DB.MEDICAL).create(patientEntity);
+      const response = await pouch.use(DB.MEDICAL).create(patientEntity)
 
-      console.log("create patient", response);
+      console.log('create patient', response)
 
-      patientEntity.id = response?.id ?? "";
+      patientEntity.id = response?.id ?? ''
     }
-    const user = useAuthStore().user;
+    const user = useAuthStore().user
 
-    const contract = await pouch.use(DB.GENERAL).get(entity.contract);
+    const contract = await pouch.use(DB.GENERAL).get(entity.contract)
     const medicalExamType = await pouch
       .use(DB.GENERAL)
-      .get(entity.medicalExamType);
+      .get(entity.medicalExamType)
 
     const serviceOrder = {
       doctype,
-      code: "Por generar",
+      code: 'Por generar',
       status: OrderStatus.pending,
       contract: entity.contract,
       contractName: contract.name,
@@ -155,7 +153,7 @@ export async function create(entity: any): Promise<{
           code: service.code,
           cost: service.amount,
           status: OrderStatus.pending,
-        };
+        }
       }),
 
       medicalExamType: entity.medicalExamType,
@@ -170,40 +168,48 @@ export async function create(entity: any): Promise<{
       patientName: `${patientEntity.documentNumber} - ${patientEntity.fullName}`,
       patientDocumentNumber: patientEntity.documentNumber,
       patientIsNew: !patient.isOld,
-      createdBy: user?.id ?? "",
-    };
-    await pouch.use(DB.GENERAL).create(serviceOrder);
-  });
+      createdBy: user?.id ?? '',
+      orderCycle: [
+        {
+          type: 'created',
+          user: user?.id ?? '',
+          status: OrderStatus.pending,
+          at: new Date().toISOString(),
+        },
+      ],
+    }
+    await pouch.use(DB.GENERAL).create(serviceOrder)
+  })
 
   return {
     isOk: true,
-  };
+  }
 }
 
 function validatePatients(patients: any[]) {
-  const errors: any[] = [];
+  const errors: any[] = []
   patients.forEach((patient: any, index: number) => {
     if (!patient.doctype) {
       errors.push(
         `El tipo de documento es requerido en el paciente ${index + 1}`
-      );
+      )
     }
     if (!patient.document) {
-      errors.push(`El documento es requerido en el paciente ${index + 1}`);
+      errors.push(`El documento es requerido en el paciente ${index + 1}`)
     }
 
     if (!patient.name) {
-      errors.push(`El nombre es requerido en el paciente ${index + 1}`);
+      errors.push(`El nombre es requerido en el paciente ${index + 1}`)
     }
 
     if (!patient.lastName) {
-      errors.push(`El apellido es requerido en el paciente ${index + 1}`);
+      errors.push(`El apellido es requerido en el paciente ${index + 1}`)
     }
 
     if (!patient.position) {
-      errors.push(`El cargo es requerido en el paciente ${index + 1}`);
+      errors.push(`El cargo es requerido en el paciente ${index + 1}`)
     }
-  });
+  })
 
-  return errors;
+  return errors
 }
