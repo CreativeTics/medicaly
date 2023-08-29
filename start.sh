@@ -12,4 +12,18 @@ docker-compose -f infrastructure/docker/docker-compose.dev.yaml --project-name m
 
 echo "${GREEN}**** Service started ****"
 
+# run migrations
+
+export DATABASE_URL=postgres://postgres:pgp4ssw0rd@localhost:5432/medicaly
+
+echo "${YELLOW}**** Running migrations ****"
+
+yarn workspace data-migration install
+
+yarn workspace data-migration migrate up
+
+echo "${GREEN}**** Migrations completed ****"
+
+
+
 

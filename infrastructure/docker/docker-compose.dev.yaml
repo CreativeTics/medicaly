@@ -21,8 +21,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: 4dm1n-us3r
-      POSTGRES_PASSWORD: 4dm1n-p4ssw0rd!!
+      POSTGRES_PASSWORD: pgp4ssw0rd
       POSTGRES_DB: medicaly
 
   encode-orders:
