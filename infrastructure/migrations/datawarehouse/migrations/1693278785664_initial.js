@@ -12,11 +12,15 @@ exports.up = (pgm) => {
       primaryKey: true,
       default: pgm.func('uuid_generate_v4()'),
     },
-    lastCompletedSync: {
+    database: {
       type: 'text',
       notNull: true,
     },
-    createdAt: {
+    last_completed_sync: {
+      type: 'text',
+      notNull: true,
+    },
+    created_at: {
       type: 'timestamp',
       notNull: true,
       default: pgm.func('current_timestamp'),
@@ -38,15 +42,15 @@ exports.up = (pgm) => {
       type: 'text',
       notNull: true,
     },
-    contractName: {
+    contract_name: {
       type: 'text',
       notNull: true,
     },
-    contractCostCenter: {
+    contract_cost_center: {
       type: 'text',
       notNull: true,
     },
-    contractSubsidiary: {
+    contract_subsidiary: {
       type: 'text',
       notNull: true,
     },
@@ -62,198 +66,201 @@ exports.up = (pgm) => {
       type: 'text',
       notNull: true,
     },
-    patientId: {
+    patient_id: {
       type: 'text',
       notNull: true,
     },
-    patientDataId: {
+    patient_data_id: {
       type: 'text',
       notNull: true,
     },
-    patientIsNew: {
+    patient_is_new: {
       type: 'boolean',
       notNull: true,
     },
-    orderCycle: {
+    order_cycle: {
       type: 'jsonb',
     },
     services: {
       type: 'jsonb',
     },
-    isDeleted: {
+    is_deleted: {
       type: 'boolean',
       notNull: true,
     },
+    created_at: {
+      type: 'timestamp',
+    },
   })
 
-  pgm.createTable('patient', {
+  pgm.createTable('patients', {
     id: {
       type: 'text',
       notNull: true,
       primaryKey: true,
       default: pgm.func('uuid_generate_v4()'),
     },
-    isDeleted: {
+    is_deleted: {
       type: 'boolean',
     },
-    documentType: {
+    document_type: {
       type: 'text',
     },
-    documentNumber: {
+    document_number: {
       type: 'text',
     },
-    fullName: {
+    full_name: {
       type: 'text',
     },
     name: {
       type: 'text',
     },
-    secondName: {
+    second_name: {
       type: 'text',
     },
-    lastName: {
+    last_name: {
       type: 'text',
     },
-    secondLastName: {
+    second_last_name: {
       type: 'text',
     },
-    createdAt: {
+    created_at: {
       type: 'timestamp',
       notNull: true,
     },
   })
 
-  pgm.createTable('patient_data', {
+  pgm.createTable('patients_data', {
     id: {
       type: 'text',
       notNull: true,
       primaryKey: true,
       default: pgm.func('uuid_generate_v4()'),
     },
-    isDeleted: {
+    is_deleted: {
       type: 'boolean',
       notNull: true,
     },
-    birthDate: {
+    birth_date: {
       type: 'text',
     },
-    maritalStatus: {
+    marital_status: {
       type: 'text',
     },
-    bloodType: {
+    blood_type: {
       type: 'text',
     },
     eps: {
       type: 'text',
     },
-    epsAffiliationType: {
+    eps_affiliation_type: {
       type: 'text',
     },
     arl: {
       type: 'text',
     },
-    schoolLevel: {
+    school_level: {
       type: 'text',
     },
-    biologicalSex: {
+    biological_sex: {
       type: 'text',
     },
     gender: {
       type: 'text',
     },
-    applyPosition: {
+    apply_position: {
       type: 'text',
     },
-    precedenceCity: {
+    precedence_city: {
       type: 'text',
     },
-    residenceCity: {
+    residence_city: {
       type: 'text',
     },
-    residenceType: {
+    residence_type: {
       type: 'text',
     },
-    residenceAddress: {
+    residence_address: {
       type: 'text',
     },
-    residencePhone: {
+    residence_phone: {
       type: 'text',
     },
-    accompanyingName: {
+    accompanying_name: {
       type: 'text',
     },
-    accompanyingParent: {
+    accompanying_parent: {
       type: 'text',
     },
-    accompanyingAddress: {
+    accompanying_address: {
       type: 'text',
     },
-    responsibleName: {
+    responsible_name: {
       type: 'text',
     },
-    responsibleParent: {
+    responsible_parent: {
       type: 'text',
     },
-    responsibleAddress: {
+    responsible_address: {
       type: 'text',
     },
-    signatureUrl: {
+    signature_url: {
       type: 'text',
     },
-    fingerprintUrl: {
+    fingerprint_url: {
       type: 'text',
     },
-    photoUrl: {
+    photo_url: {
       type: 'text',
     },
     observation: {
       type: 'text',
     },
-    createdAt: {
+    created_at: {
       type: 'timestamp',
       notNull: true,
     },
   })
 
-  pgm.createTable('annotation', {
+  pgm.createTable('annotations', {
     id: {
       type: 'text',
       notNull: true,
       primaryKey: true,
       default: pgm.func('uuid_generate_v4()'),
     },
-    isDeleted: {
+    is_deleted: {
       type: 'boolean',
       notNull: true,
     },
-    ticketId: {
+    ticket_id: {
       type: 'text',
       notNull: true,
     },
-    serviceCode: {
+    service_code: {
       type: 'text',
     },
-    serviceDescription: {
+    service_description: {
       type: 'text',
     },
-    examCode: {
+    exam_code: {
       type: 'text',
     },
-    examDescription: {
+    exam_description: {
       type: 'text',
     },
-    examVersion: {
+    exam_version: {
       type: 'text',
     },
-    patientId: {
-      type: 'text',
-      notNull: true,
-    },
-    patientDataId: {
+    patient_id: {
       type: 'text',
       notNull: true,
     },
-    createAt: {
+    patient_data_id: {
+      type: 'text',
+      notNull: true,
+    },
+    create_at: {
       type: 'timestamp',
       notNull: true,
     },
@@ -266,17 +273,17 @@ exports.up = (pgm) => {
       primaryKey: true,
       default: pgm.func('uuid_generate_v4()'),
     },
-    annotationId: {
+    annotation_id: {
       type: 'text',
       notNull: true,
     },
     answer: {
       type: 'text',
     },
-    fieldCode: {
+    field_code: {
       type: 'text',
     },
-    fieldLabel: {
+    field_label: {
       type: 'text',
     },
   })
@@ -285,8 +292,8 @@ exports.up = (pgm) => {
 exports.down = (pgm) => {
   pgm.dropTable('sync_control', { ifExists: true })
   pgm.dropTable('tickets', { ifExists: true })
-  pgm.dropTable('patient', { ifExists: true })
-  pgm.dropTable('patient_data', { ifExists: true })
-  pgm.dropTable('annotation', { ifExists: true })
+  pgm.dropTable('patients', { ifExists: true })
+  pgm.dropTable('patients_data', { ifExists: true })
+  pgm.dropTable('annotations', { ifExists: true })
   pgm.dropTable('annotation_answers', { ifExists: true })
 }

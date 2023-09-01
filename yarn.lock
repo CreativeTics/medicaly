@@ -396,6 +396,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node-cron@npm:^3.0.8":
+  version: 3.0.8
+  resolution: "@types/node-cron@npm:3.0.8"
+  checksum: e45f3fb8e0f3ed57bb6bc7b365a3fd50a93e64c0751381bb6db5d8e758f8b54b6af61bf68c72fc5be3b550c01f06b16dca56c05e9507cd3f345c39f44f250ec2
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*, @types/node@npm:>=10.0.0, @types/node@npm:^20.5.0":
   version: 20.5.0
   resolution: "@types/node@npm:20.5.0"
@@ -1308,10 +1315,12 @@ __metadata:
   resolution: "data-warehouse-sync@workspace:packages/backend/datawarehouse-sync"
   dependencies:
     "@types/node": ^20.5.0
+    "@types/node-cron": ^3.0.8
     axios: ^1.5.0
     chalk: ^5.3.0
     dotenv: ^16.3.1
     node-cron: ^3.0.2
+    pg: ^8.11.3
     typescript: ^5.1.6
   languageName: unknown
   linkType: soft

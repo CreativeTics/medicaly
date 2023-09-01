@@ -35,6 +35,19 @@ services:
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
       CRON_JOB_EXPRESSION: '30 * * * * *'
 
+  datawarehouse-sync:
+    build: ../../packages/backend/datawarehouse-sync
+    restart: unless-stopped
+    depends_on:
+      - db
+      - datawarehouse
+    environment:
+      COUCHDB_URL: http://db:5984
+      COUCHDB_USERNAME: 4dm1n-us3r
+      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      CRON_JOB_EXPRESSION: '30 * * * * *'
+      WAREHOUSE_DB_URL: postgres://postgres:pgp4ssw0rd@datawarehouse:5432/medicaly
+
   ws-service:
     build: ../../packages/backend/ws-service
     restart: unless-stopped
@@ -46,6 +59,22 @@ services:
     restart: unless-stopped
     ports:
       - 80:80
+
+  superset:
+    image: apache/superset:2.1.1
+    restart: unless-stopped
+    init: true
+    depends_on:
+      - datawarehouse
+    volumes:
+      - ./config/superset_config.py:/app/pythonpath/superset_config.py
+    environment:
+      - SUPERSET_LOAD_EXAMPLES=false
+      # - SUPERSET_DATABASE_URI=postgresql://postgres:pgp4ssw0rd@datawarehouse:5432/medicaly
+      - SUPERSET_FEATURE_EMBEDDED_SUPERSET='true'
+      - SECRET_KEY='thisismyscretkey123dddaAswewssc'
+    ports:
+      - 8088:8088
 
   # redis:
   #   image: redis:latest
