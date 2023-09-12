@@ -32,24 +32,35 @@ function scrollTo(id: string) {
 </script>
 
 <template>
-  <div class="w-full h-full px-5">
-    <div class="bg-gray-50 pb-4">
-      <div class="leading-4 pt-responsive">
-        <p
-          class="text-3xl flex items-center gap-5 font-semibold text-shadow text-blue-900"
-        >
-          Orden # {{ order.code }}
+  <div class="w-full h-full px-5 flex flex-col">
+    <!-- header -->
+    <div class="bg-gray-50 flex justify-between">
+      <p
+        class="text-3xl flex items-center gap-5 font-semibold text-shadow text-blue-900"
+      >
+        Orden # {{ order.code }}
 
-          <span class="text-lg font-semibold"
-            >{{ order.medicalExamType?.name }} :
-            {{ order.medicalExamType?.emphasis }}
-          </span>
-        </p>
+        <span class="text-lg font-semibold"
+          >{{ order.medicalExamType?.name }} :
+          {{ order.medicalExamType?.emphasis }}
+        </span>
+      </p>
+      <div class="flex">
+        <div
+          class="text-lg font-semibold text-gray-900 p-3 flex flex-col items-end"
+        >
+          {{ order.patientName }}
+          <span class="text-sm font-normal text-gray-500">
+            23 años 14 dias</span
+          >
+          <span class="text-sm font-normal text-gray-500"> Masculino</span>
+        </div>
+        <div class="rounded-full h-24 w-24 bg-white"></div>
       </div>
     </div>
-
-    <div class="w-full flex items-center">
-      <div class="w-28">
+    <!-- services -->
+    <div class="w-full flex-grow flex overflow-y-hidden">
+      <div class="w-28 flex flex-col justify-center items-center">
         <div
           v-for="service in order.services"
           class="bg-white w-28 rounded-lg shadow-xl shadow-cyan-400 flex justify-center items-center h-10 mb-2 cursor-pointer"
@@ -59,25 +70,27 @@ function scrollTo(id: string) {
         </div>
       </div>
       <div
-        class="w-full mt-5 bg-white rounded-lg shadow-lg p-5 flex flex-col gap-3 overflow-y-scroll relative"
-        style="height: calc(100vh - 100px)"
+        class="flex-grow h-full rounded-xl bg-white shadow-lg p-5 flex flex-col overflow-y-scroll"
       >
-        <div v-for="service in order.services" class="" :id="service.id">
-          <Suspense>
-            <ServiceAttention :orderId="order.id" :serviceId="service.id" />
-          </Suspense>
-        </div>
+        <ServiceAttention
+          v-for="service in order.services"
+          :id="service.id"
+          :orderId="order.id"
+          :patientDataId="order.patientDataId"
+          :serviceId="service.id"
+        />
 
         <hr />
-        <div class="pt-5 flex justify-end">
-          <DBtn @click="back" class="bg-gray-300 hover:bg-gray-400">Atras</DBtn>
-        </div>
       </div>
       <div
         class="absolute right-0 top-96 bg-white w-28 rounded-lg shadow-lg shadow-blue-800"
       >
-        <a href="#17fe4e80ba0df8dc3f0ac1c142008767"> otras anotaciones </a>
+        otras anotaciones anteriores
       </div>
+    </div>
+    <!-- footer -->
+    <div class="w-full h-14 flex items-center bg-white">
+      <DBtn @click="back" class="bg-gray-300 hover:bg-gray-400">Atras</DBtn>
     </div>
   </div>
 </template>

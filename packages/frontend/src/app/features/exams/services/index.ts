@@ -1,27 +1,27 @@
-import { getData } from "../../../core/services/get-table/";
+import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from "../../../services/pouch";
+import { PouchService, DB } from '../../../services/pouch'
 
-const pouch = new PouchService();
-const doctype = "exams";
+const pouch = new PouchService()
+const doctype = 'exams'
 
 export async function getList() {
   const data = await getData<any[]>({
     entity: `${DB.MEDICAL}:${doctype}`,
-    fields: ["id", "type", "code", "name", "version", "updatedAt"],
-  });
+    fields: ['id', 'type', 'code', 'name', 'version', 'updatedAt'],
+  })
 
   const uniques = data.reduce((acc: Map<string, any>, curr: any) => {
     if (acc.has(curr.code)) {
-      const prev = acc.get(curr.code).version;
+      const prev = acc.get(curr.code).version
       if (prev < curr.version) {
-        acc.set(curr.code, curr);
+        acc.set(curr.code, curr)
       }
-      return acc;
+      return acc
     }
-    acc.set(curr.code, curr);
-    return acc;
-  }, new Map<string, any>());
+    acc.set(curr.code, curr)
+    return acc
+  }, new Map<string, any>())
 
   return Array.from(uniques).map(([, doc]) => {
     return {
@@ -31,39 +31,39 @@ export async function getList() {
       code: doc.code,
       version: doc.version,
       updatedAt: doc.updatedAt,
-    };
-  });
+    }
+  })
 }
 
 export async function getEntity(id: string): Promise<any> {
-  const doc = await pouch.use(DB.MEDICAL).get(id);
+  const doc = await pouch.use(DB.MEDICAL).get(id)
   return {
     type: doc.type,
     name: doc.name,
     code: doc.code,
     form: doc.form,
     version: doc.version,
-  };
+  }
 }
 
 export async function create(entity: any): Promise<boolean> {
-  entity.version = 1;
+  entity.version = 1
   const response = await pouch.use(DB.MEDICAL).create({
     doctype,
     ...entity,
-  });
-  console.log("create", response);
-  return true;
+  })
+  console.log('create', response)
+  return true
 }
 
 export async function edit(id: string, entity: any): Promise<boolean> {
-  entity.version = Number(entity.version ?? 0) + 1;
+  entity.version = Number(entity.version ?? 0) + 1
   const response = await pouch.use(DB.MEDICAL).create({
     doctype,
     id,
     ...entity,
-  });
-  console.log("edit", response);
+  })
+  console.log('edit', response)
 
-  return true;
+  return true
 }
