@@ -76,6 +76,14 @@ services:
     ports:
       - 8088:8088
 
+  metabase:
+    image: metabase/metabase
+    restart: unless-stopped
+    depends_on:
+      - datawarehouse
+    ports:
+      - 3000:3000
+
   # redis:
   #   image: redis:latest
   #   restart: unless-stopped

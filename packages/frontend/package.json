@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@digitalpersona/devices": "^0.2.6",
+    "@superset-ui/embedded-sdk": "^0.1.0-alpha.10",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.9",
     "events": "^3.3.0",
@@ -29,6 +30,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@types/crypto-js": "^4.1.1",
     "@types/node": "^20.4.2",
     "@types/pouchdb": "^6.4.0",

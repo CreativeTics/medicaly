@@ -76,6 +76,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@esbuild-plugins/node-globals-polyfill@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "@esbuild-plugins/node-globals-polyfill@npm:0.2.3"
+  peerDependencies:
+    esbuild: "*"
+  checksum: f83eeaa382680b26a3b1cf6c396450332c41d2dc0f9fd935d3f4bacf5412bef7383d2aeb4246a858781435b7c005a570dadc81051f8a038f1ef2111f17d3d8b0
+  languageName: node
+  linkType: hard
+
 "@esbuild/android-arm64@npm:0.18.13":
   version: 0.18.13
   resolution: "@esbuild/android-arm64@npm:0.18.13"
@@ -347,6 +356,22 @@ __metadata:
   version: 3.1.0
   resolution: "@socket.io/component-emitter@npm:3.1.0"
   checksum: db069d95425b419de1514dffe945cc439795f6a8ef5b9465715acf5b8b50798e2c91b8719cbf5434b3fe7de179d6cdcd503c277b7871cb3dd03febb69bdd50fa
+  languageName: node
+  linkType: hard
+
+"@superset-ui/embedded-sdk@npm:^0.1.0-alpha.10":
+  version: 0.1.0-test-embedded-curation.1
+  resolution: "@superset-ui/embedded-sdk@npm:0.1.0-test-embedded-curation.1"
+  dependencies:
+    "@superset-ui/switchboard": ^0.18.26-0
+  checksum: 0b9c534a0cba7efa3a2463daea4e009d8ea498140546210ba58661b80c71098a98f9893d08f3498751a9bb48696f09fa36025bd8770ba85b1ec6614e5188f820
+  languageName: node
+  linkType: hard
+
+"@superset-ui/switchboard@npm:^0.18.26-0":
+  version: 0.18.26-2
+  resolution: "@superset-ui/switchboard@npm:0.18.26-2"
+  checksum: 5f8094ffa7e4ad3cddeeac73f2f7e6c08f3b0fdc67c7753c2fb1c5e0ffb4f1462be5c3b05d783678510129d107a07853948b0af05176bc8e5e51527d2adb17fa
   languageName: node
   linkType: hard
 
@@ -1740,6 +1765,8 @@ __metadata:
   resolution: "frontend@workspace:packages/frontend"
   dependencies:
     "@digitalpersona/devices": ^0.2.6
+    "@esbuild-plugins/node-globals-polyfill": ^0.2.3
+    "@superset-ui/embedded-sdk": ^0.1.0-alpha.10
     "@types/crypto-js": ^4.1.1
     "@types/node": ^20.4.2
     "@types/pouchdb": ^6.4.0
