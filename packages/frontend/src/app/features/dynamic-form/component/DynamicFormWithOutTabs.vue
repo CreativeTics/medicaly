@@ -150,9 +150,9 @@ defineExpose<{
     <div v-for="(group, index) in groups" :key="index" :class="gridClass">
       <div
         v-if="group.if ? !!model[group.if] : true"
-        class="col-span-8 sm:col-span-3 lg:col-span-2 flex flex-col pb-2 sm:pb-0"
+        class="col-span-8 flex gap-4 items-center py-3"
       >
-        <span class="text-base font-semibold text-gray-700 pb-2">
+        <span class="text-base font-semibold text-gray-700">
           {{ group.name }}
         </span>
         <span class="text-xs font-light text-gray-400">
