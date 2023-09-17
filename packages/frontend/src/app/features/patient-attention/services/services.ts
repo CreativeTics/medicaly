@@ -32,7 +32,10 @@ export async function getService(id: string) {
   }
 }
 
-export async function getLastExam(examCode: string, annotation: any) {
+export async function getLastExamOrAnnotationExam(
+  examCode: string,
+  annotation: any
+) {
   if (annotation.examId) {
     return await pouch.use(DB.MEDICAL).get(annotation.examId)
   }
@@ -45,7 +48,6 @@ export async function getLastExam(examCode: string, annotation: any) {
     },
   })
 
-  console.log('getLastExam', examCode, annotation)
   if (!exams.length) {
     return {}
   }
@@ -53,12 +55,23 @@ export async function getLastExam(examCode: string, annotation: any) {
   // get last version
   const lastVersion = exams.reduce((acc: any, curr: any) => {
     if (acc.version < curr.version) {
-      return curr.id
+      return curr
     }
     return acc
   })
 
-  return await pouch.use(DB.MEDICAL).get(lastVersion)
+  const exam = await pouch.use(DB.MEDICAL).get(lastVersion.id)
+
+  try {
+    exam.form = JSON.parse(exam.form) || {}
+    exam.formIsValid = true
+  } catch (error) {
+    exam.form = {}
+    exam.formIsValid = false
+    console.error('getLastExam', error)
+  }
+
+  return exam
 }
 
 export async function getPatient(patientDataId: string) {
@@ -66,19 +79,19 @@ export async function getPatient(patientDataId: string) {
   return patientData
 }
 
-export async function getAnnotation(orderId: string, examId: string) {
+export async function getAnnotation(orderId: string, examCode: string) {
   const annotations = await getData<any[]>({
     entity: `${DB.GENERAL}:annotations`,
     fields: ['id'],
     where: {
       orderId,
-      examId,
+      examCode,
     },
   })
   if (!annotations.length) {
     // get from cache
     const cacheAnnotation = localStorage.getItem(
-      `annotation:${orderId}${examId}`
+      `annotation:${orderId}${examCode}`
     )
     if (cacheAnnotation) {
       return JSON.parse(cacheAnnotation)
@@ -92,11 +105,11 @@ export async function getAnnotation(orderId: string, examId: string) {
 
 export async function cacheAnnotation(
   orderId: string,
-  examId: string,
+  examCode: string,
   annotation: any
 ) {
   localStorage.setItem(
-    `annotation:${orderId}${examId}`,
+    `annotation:${orderId}${examCode}`,
     JSON.stringify(annotation)
   )
 }

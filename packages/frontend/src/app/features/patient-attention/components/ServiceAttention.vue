@@ -15,8 +15,8 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div class="w-full">
-    <span class="text-lg text-indigo-800 font-semibold">
+  <div class="w-full p-5">
+    <span class="text-xl text-indigo-800 font-semibold">
       {{ service.name }}
     </span>
 
