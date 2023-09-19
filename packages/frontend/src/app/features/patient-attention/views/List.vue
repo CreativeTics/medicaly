@@ -12,6 +12,7 @@ import { useRouter } from 'vue-router'
 import { getList, getSubsidiariesList } from '../services'
 
 import OrderStatus from '../../service-orders/components/OrderStatus.vue'
+import ServiceStatus from '../../service-orders/components/ServiceStatus.vue'
 
 const router = useRouter()
 
@@ -40,6 +41,10 @@ const columns = [
   {
     key: 'status',
     title: 'Estado de atención',
+  },
+  {
+    key: 'services',
+    title: 'Servicios',
   },
   {
     key: 'createdAt',
@@ -122,7 +127,11 @@ onMounted(async () => {
             >
               <div
                 class="w-full"
-                v-if="column.key !== 'actions' && column.key !== 'status'"
+                v-if="
+                  column.key !== 'actions' &&
+                  column.key !== 'status' &&
+                  column.key !== 'services'
+                "
               >
                 {{ rowProps.row[column.key] }}
               </div>
@@ -131,6 +140,18 @@ onMounted(async () => {
                 v-else-if="column.key === 'status'"
                 :status="rowProps.row[column.key]"
               />
+
+              <div v-else-if="column.key === 'services'">
+                <div
+                  v-for="service in rowProps.row[column.key]"
+                  :key="service.id"
+                >
+                  <ServiceStatus
+                    :status="service.status"
+                    :text="service.name"
+                  />
+                </div>
+              </div>
 
               <div class="max-w-xs flex justify-end gap-2" v-else>
                 <Popper

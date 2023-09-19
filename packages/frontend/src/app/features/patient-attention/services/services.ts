@@ -1,5 +1,6 @@
 import { PouchService, DB } from '../../../services/pouch'
 import { getData } from '../../../core/services/get-table/'
+import { OrderStatus } from '@/app/core/types/order-status'
 
 const pouch = new PouchService()
 
@@ -36,31 +37,33 @@ export async function getLastExamOrAnnotationExam(
   examCode: string,
   annotation: any
 ) {
+  let exam: any = {}
+
   if (annotation.examId) {
-    return await pouch.use(DB.MEDICAL).get(annotation.examId)
-  }
+    exam = await pouch.use(DB.MEDICAL).get(annotation.examId)
+  } else {
+    const exams = await getData<any[]>({
+      entity: `${DB.MEDICAL}:exams`,
+      fields: ['id', 'version'],
+      where: {
+        code: examCode,
+      },
+    })
 
-  const exams = await getData<any[]>({
-    entity: `${DB.MEDICAL}:exams`,
-    fields: ['id', 'version'],
-    where: {
-      code: examCode,
-    },
-  })
-
-  if (!exams.length) {
-    return {}
-  }
-
-  // get last version
-  const lastVersion = exams.reduce((acc: any, curr: any) => {
-    if (acc.version < curr.version) {
-      return curr
+    if (!exams.length) {
+      return exam
     }
-    return acc
-  })
 
-  const exam = await pouch.use(DB.MEDICAL).get(lastVersion.id)
+    // get last version
+    const lastVersion = exams.reduce((acc: any, curr: any) => {
+      if (acc.version < curr.version) {
+        return curr
+      }
+      return acc
+    })
+
+    exam = await pouch.use(DB.MEDICAL).get(lastVersion.id)
+  }
 
   try {
     exam.form = JSON.parse(exam.form) || {}
@@ -81,13 +84,14 @@ export async function getPatient(patientDataId: string) {
 
 export async function getAnnotation(orderId: string, examCode: string) {
   const annotations = await getData<any[]>({
-    entity: `${DB.GENERAL}:annotations`,
+    entity: `${DB.MEDICAL}:annotations`,
     fields: ['id'],
     where: {
       orderId,
       examCode,
     },
   })
+  console.log('annotations', annotations)
   if (!annotations.length) {
     // get from cache
     const cacheAnnotation = localStorage.getItem(
@@ -99,8 +103,7 @@ export async function getAnnotation(orderId: string, examCode: string) {
 
     return {}
   }
-
-  return await pouch.use(DB.GENERAL).get(annotations[0].id)
+  return await pouch.use(DB.MEDICAL).get(annotations[0].id)
 }
 
 export async function cacheAnnotation(
@@ -117,23 +120,79 @@ export async function cacheAnnotation(
 export async function saveAnnotation(
   orderId: string,
   serviceId: string,
-  examVersion: string,
   examId: string,
+  examCode: string,
+  examVersion: string,
   annotation: any
 ) {
-  annotation.orderId = orderId
-  annotation.serviceId = serviceId
-  annotation.examVersion = examVersion
-  annotation.examId = examId
   annotation.saveBy = 'patient'
   annotation.saveAt = new Date().toISOString()
 
   if (!annotation.id) {
+    annotation.orderId = orderId
+    annotation.serviceId = serviceId
+    annotation.examId = examId
+    annotation.examCode = examCode
+    annotation.examVersion = examVersion
+
     const newAnnotation = await pouch.use(DB.MEDICAL).create({
       doctype: 'annotations',
+      _id: `${new Date().getFullYear()}:${orderId}:${examId}`,
       ...annotation,
     })
+    console.log('newAnnotation', newAnnotation)
+    if (newAnnotation) {
+      // update order
+      await updateOrder(orderId, serviceId, newAnnotation.id)
+    }
+    //  clear cache
+    localStorage.removeItem(`annotation:${orderId}${examCode}`)
 
     return newAnnotation
   }
+
+  const updatedAnnotation = await pouch.use(DB.MEDICAL).update({
+    doctype: 'annotations',
+    ...annotation,
+  })
+  return updatedAnnotation
 }
+
+async function updateOrder(
+  orderId: string,
+  serviceId: string,
+  annotationId: string
+) {
+  const oldOrder = await pouch.use(DB.GENERAL).get(orderId)
+
+  const service = oldOrder.services.find(
+    (service: any) => service.id === serviceId
+  )
+
+  if (service) {
+    service.annotations = service.annotations || []
+    service.annotations.push(annotationId)
+    // validate if annotations is complete
+    const serviceAll = await getService(serviceId)
+    if (service.annotations.length === serviceAll.exams.length) {
+      service.status = OrderStatus.completed
+    }
+  }
+
+  const orderCycle: any[] = oldOrder.orderCycle || []
+  orderCycle.push({
+    type: 'attention',
+    user: 'user',
+    status: OrderStatus.inprogress,
+    at: new Date().toISOString(),
+  })
+
+  const orderUpdated = {
+    ...oldOrder,
+    orderCycle,
+  }
+
+  await pouch.use(DB.GENERAL).update(orderUpdated)
+}
+
+// [{"id":"17fe4e80ba0df8dc3f0ac1c142008767","name":"Servicio 1","code":"001","cost":"20000","status":"PENDIENTE"}]

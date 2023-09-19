@@ -44,6 +44,7 @@ export async function getList(searchOptions: any) {
     fields: [
       'id',
       'code',
+      'services',
       'contractName',
       'medicalExamTypeName',
       'patientName',
@@ -57,6 +58,7 @@ export async function getList(searchOptions: any) {
     return {
       id: doc.id,
       code: doc.code,
+      services: doc.services,
       contractName: doc.contractName,
       type: doc.medicalExamTypeName,
       patientName: doc.patientName,
