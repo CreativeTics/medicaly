@@ -17,7 +17,7 @@ const props = defineProps({
     required: false,
     default: 'grid grid-cols-8 px-6 py-4',
   },
-  hideTabs: { type: Boolean, required: false, default: false },
+  hideCancelButton: { type: Boolean, required: false, default: false },
 })
 
 const emit = defineEmits([
@@ -193,6 +193,7 @@ defineExpose<{
       <div class="flex items-center justify-end">
         <div>
           <DBtn
+            v-if="!hideCancelButton"
             type="button"
             class="font-semibold py-1 text-base mr-3"
             color="secondary"

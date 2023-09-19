@@ -56,11 +56,10 @@ export async function create(entity: any): Promise<boolean> {
   return true
 }
 
-export async function edit(id: string, entity: any): Promise<boolean> {
+export async function edit(entity: any): Promise<boolean> {
   entity.version = Number(entity.version ?? 0) + 1
   const response = await pouch.use(DB.MEDICAL).create({
     doctype,
-    id,
     ...entity,
   })
   console.log('edit', response)

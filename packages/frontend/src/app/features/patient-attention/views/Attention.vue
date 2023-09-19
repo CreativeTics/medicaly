@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getOrder } from '../services'
 import DBtn from '@components/basic/DBtn.vue'
 import ServiceAttention from '../components/ServiceAttention.vue'
+import ServiceStatus from '@features/service-orders/components/ServiceStatus.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -63,10 +64,10 @@ function scrollTo(id: string) {
       <div class="w-28 flex flex-col justify-center items-center">
         <div
           v-for="service in order.services"
-          class="bg-white w-28 rounded-lg shadow-xl shadow-cyan-400 flex justify-center items-center h-10 mb-2 cursor-pointer"
+          class="bg-white w-28 rounded-lg shadow-xl shadow-cyan-400 flex flex-col justify-center items-center h-10 mb-2 cursor-pointer"
           @click="scrollTo(service.id)"
         >
-          {{ service.name }}
+          <ServiceStatus :status="service.status" :text="service.name" />
         </div>
       </div>
       <div
@@ -85,7 +86,7 @@ function scrollTo(id: string) {
       <div
         class="absolute right-0 top-96 bg-white w-28 rounded-lg shadow-lg shadow-blue-800"
       >
-        otras anotaciones anteriores
+        otras anotaciones
       </div>
     </div>
     <!-- footer -->
