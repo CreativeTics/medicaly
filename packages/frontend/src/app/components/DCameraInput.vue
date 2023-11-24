@@ -20,6 +20,8 @@ const resolution = {
   height: 1080,
 }
 
+let stream: MediaStream | null = null
+
 const getDevices = async () => {
   const allDevices = await navigator.mediaDevices.enumerateDevices()
   devices.value = allDevices.filter((device) => device.kind === 'videoinput')
@@ -29,7 +31,7 @@ const getDevices = async () => {
     return
   }
   // set stream
-  const stream = await navigator.mediaDevices.getUserMedia({
+  stream = await navigator.mediaDevices.getUserMedia({
     video: {
       deviceId: selectedDevice.value.deviceId,
       width: resolution.width,
@@ -73,6 +75,9 @@ const emitValue = () => {
 }
 
 onUnmounted(() => {
+  if (stream) {
+    stream.getTracks().forEach((track) => track.stop())
+  }
   if (navigator.mediaDevices?.ondevicechange)
     navigator.mediaDevices.ondevicechange = null
 })
