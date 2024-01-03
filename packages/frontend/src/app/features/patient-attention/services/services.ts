@@ -195,4 +195,40 @@ async function updateOrder(
   await pouch.use(DB.GENERAL).update(orderUpdated)
 }
 
-// [{"id":"17fe4e80ba0df8dc3f0ac1c142008767","name":"Servicio 1","code":"001","cost":"20000","status":"PENDIENTE"}]
+export async function finalizeOrder(orderId: string): Promise<boolean> {
+  const oldOrder = await pouch.use(DB.GENERAL).get(orderId)
+  // validate if order is in progress
+  if (oldOrder.status !== OrderStatus.inprogress) {
+    throw new Error('Order is not in progress')
+  }
+
+  // validate if order is complete
+  const services = oldOrder.services || []
+  const servicesComplete = services.filter(
+    (service: any) => service.status === OrderStatus.completed
+  )
+  if (servicesComplete.length !== services.length) {
+    throw new Error('Order is not complete')
+  }
+  // TODO: validate if medic is same of initial annotation
+
+  // update order status
+
+  const orderCycle: any[] = oldOrder.orderCycle || []
+  orderCycle.push({
+    type: 'finalize',
+    user: 'user', // TODO: get user
+    status: OrderStatus.completed,
+    at: new Date().toISOString(),
+  })
+
+  const orderUpdated = {
+    ...oldOrder,
+    orderCycle,
+    status: OrderStatus.completed,
+  }
+
+  await pouch.use(DB.GENERAL).update(orderUpdated)
+
+  return true
+}

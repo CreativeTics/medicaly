@@ -79,6 +79,10 @@ export class PouchService {
     return await this.db?.put(oldDoc)
   }
 
+  createIndex(index: PouchDB.Find.CreateIndexOptions) {
+    return this.db?.createIndex(index)
+  }
+
   public read() {
     return this.db?.allDocs({ include_docs: true })
   }

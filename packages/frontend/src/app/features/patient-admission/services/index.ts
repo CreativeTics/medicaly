@@ -96,6 +96,32 @@ export async function getOrder(id: string) {
       ...patient,
       ...patientData,
     }
+  } else {
+    // get last patient data
+
+    const patientData = await getData<any[]>(
+      {
+        entity: `${DB.MEDICAL}:patients-data`,
+        fields: ['id', 'patientId', 'createdAt'],
+        where: {
+          patientId: order.patientId,
+        },
+        sort: [{ createdAt: 'desc' }],
+      },
+      {
+        name: 'sort-by-created-at',
+        fields: ['createdAt'],
+      }
+    )
+
+    if (patientData.length) {
+      const lastPatientData = await pouch.use(DB.MEDICAL).get(patientData[0].id)
+      delete lastPatientData.id
+      patient = {
+        ...patient,
+        ...lastPatientData,
+      }
+    }
   }
 
   return {
@@ -141,6 +167,7 @@ export async function admitPatientOrder(orderId: string, patient: any) {
     status: OrderStatus.inprogress,
     patientId: patientUpdate.id,
     patientDataId: patientUpdate.dataId,
+    patientName: `${patient.name} ${patient.secondName} ${patient.lastName} ${patient.secondLastName}`,
     orderCycle,
   }
 

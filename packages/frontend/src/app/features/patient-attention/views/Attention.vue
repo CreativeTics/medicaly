@@ -3,15 +3,24 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { getOrder } from '../services'
+import { finalizeOrder } from '../services/services'
 import DBtn from '@components/basic/DBtn.vue'
+import DModal from '@components/basic/DModal.vue'
 import ServiceAttention from '../components/ServiceAttention.vue'
 import ServiceStatus from '@features/service-orders/components/ServiceStatus.vue'
+import Popper from 'vue3-popper'
+import { useNotificationsStore } from '@/store/notifications'
+
+import { CheckCircleIcon } from '@components/basic'
 
 const route = useRoute()
 const router = useRouter()
 
+const notifications = useNotificationsStore()
+
 const order = ref<any>({})
 const loading = ref(false)
+const modalIsOpen = ref(false)
 
 const back = () => {
   console.log('Back')
@@ -29,6 +38,29 @@ onMounted(async () => {
 function scrollTo(id: string) {
   const element = document.getElementById(id) as HTMLDivElement
   element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+async function finalize(id: string) {
+  loading.value = true
+  try {
+    await finalizeOrder(id)
+    notifications.addNotification({
+      title: 'Orden finalizada',
+      text: 'La orden ha sido finalizada con exito',
+      type: 'success',
+      time: 5000,
+    })
+    router.back()
+  } catch (err: any) {
+    notifications.addNotification({
+      title: 'Error',
+      text: err.message,
+      type: 'error',
+      time: 5000,
+    })
+  }
+  modalIsOpen.value = false
+  loading.value = false
 }
 </script>
 
@@ -83,15 +115,41 @@ function scrollTo(id: string) {
 
         <hr />
       </div>
-      <div
-        class="absolute right-0 top-96 bg-white w-28 rounded-lg shadow-lg shadow-blue-800"
-      >
-        otras anotaciones
+      <div class="absolute right-0 top-96 flex flex-col items-center gap-5">
+        <div class="bg-white w-12 rounded-lg shadow-lg shadow-blue-800">
+          otras anotaciones
+        </div>
+        <Popper
+          arrow
+          offsetDistance="0"
+          content="Finalizar orden"
+          :hover="true"
+          placement="left"
+          class="tooltip"
+        >
+          <div
+            class="bg-green-50 p-3 rounded-full shadow-lg flex items-center justify-center cursor-pointer"
+            @click="modalIsOpen = true"
+          >
+            <CheckCircleIcon class="w-8 h-8 text-green-500" />
+          </div>
+        </Popper>
       </div>
     </div>
     <!-- footer -->
     <div class="w-full h-14 flex items-center bg-white">
       <DBtn @click="back" class="bg-gray-300 hover:bg-gray-400">Atras</DBtn>
     </div>
+
+    <DModal
+      :open="modalIsOpen"
+      @closeModal="modalIsOpen = false"
+      :title="`Finalizar orden #${order.code}`"
+      typeAlert="question"
+      :description="`¿Esta seguro que desea finalizar la orden #${order.code}?`"
+      :nameButtonClose="`Cancelar`"
+      :nameButtonAccept="`Finalizar`"
+      @otherMethod="finalize(order.id)"
+    />
   </div>
 </template>

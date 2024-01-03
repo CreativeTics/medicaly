@@ -3,14 +3,28 @@ import { PouchService, DB } from '@/app/services/pouch'
 
 const pouch = new PouchService()
 
-export async function getData<T>(query: TableDataQuery): Promise<T> {
+export async function getData<T>(
+  query: TableDataQuery,
+  index?: getDataIndex
+): Promise<T> {
   query.where = query.where ?? {}
   query.sort = query.sort ?? []
   const [dbName, tableName] = query.entity.split(':')
   const db = pouch.use(dbName as DB)
   console.log('getData', query)
 
+  if (index) {
+    await db.createIndex({
+      index: {
+        fields: index.fields,
+        name: index.name,
+        partial_filter_selector: index.selector,
+      },
+    })
+  }
+
   const docs: any = await db.find({
+    use_index: index?.name,
     fields: query.fields,
     selector: { doctype: tableName, ...query.where },
     sort: query.sort,
@@ -109,7 +123,7 @@ export interface TableDataQuery {
   entity: string
   fields: string[]
   where?: any
-  sort?: string[]
+  sort?: Array<string | { [propName: string]: 'asc' | 'desc' }> | undefined
   modifier?: {
     concat?: string[]
   }
@@ -118,4 +132,14 @@ export interface TableDataQuery {
 export interface SelectOption {
   id: string | number | null
   name: string
+}
+
+export interface getDataIndex {
+  fields: string[]
+
+  /** Name of the index, auto-generated if you don't include it */
+  name?: string | undefined
+
+  /** The same syntax as the selector you’d pass to find(), and only documents matching the selector will be included in the index. */
+  selector?: PouchDB.Find.Selector | undefined
 }

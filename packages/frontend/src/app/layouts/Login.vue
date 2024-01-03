@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import DToastStack from "@components/DToastStack.vue";
+import DToastStack from '@components/DToastStack.vue'
 </script>
 <template>
   <DToastStack class="left-0" />
@@ -25,7 +25,7 @@ import DToastStack from "@components/DToastStack.vue";
 </template>
 <style>
 .wallpaper-login {
-  background-image: url(/src/assets/login.jpg);
+  background-image: url(/src/assets/login2.jpg);
   background-size: cover;
   background-position: left;
   height: calc(100vh - 8rem);

@@ -7,7 +7,7 @@ const props = withDefaults(
   defineProps<{
     title?: string
     description?: string
-    typeAlert?: string
+    typeAlert?: 'question' | 'success' | 'error' | ''
     open?: boolean
     acceptQuestion?: string
     nameButtonClose?: string
@@ -24,7 +24,7 @@ const props = withDefaults(
     nameButtonClose: 'Cerrar',
     time: 0,
     size: 'w-full md:w-2/3 2xl:w-1/3',
-    form: false
+    form: false,
   }
 )
 
@@ -62,10 +62,15 @@ onMounted(() => {
     aria-labelledby="modal-title"
     role="dialog"
     aria-modal="true"
-    v-show="open">
+    v-show="open"
+  >
     <div
-      class="w-screen h-full flex pt-10 justify-start flex-col items-center relative align-bottom rounded-lg overflow-hidden shadow-2xl transform transition-all px-3">
-      <div class="card overflow-hidden rounded-lg bg-white relative" :class="size">
+      class="w-screen h-full flex pt-10 justify-start flex-col items-center relative align-bottom rounded-lg overflow-hidden shadow-2xl transform transition-all px-3"
+    >
+      <div
+        class="card overflow-hidden rounded-lg bg-white relative"
+        :class="size"
+      >
         <div class="content-modal flex flex-col items-center py-6 px-4">
           <template v-if="!form">
             <!------Logo----->
@@ -74,22 +79,28 @@ onMounted(() => {
               :class="[
                 {
                   'bg-gray-50 ': typeAlert === 'question',
-                  hidden: typeAlert === ''
-                }
-              ]">
+                  hidden: typeAlert === '',
+                },
+              ]"
+            >
               <AnnotationQuestionIcon
                 v-if="typeAlert === 'question'"
-                class="h-20 w-20 text-yellow-300" />
+                class="h-20 w-20 text-yellow-300"
+              />
             </div>
             <!----Content------>
             <div class="flex flex-col pt-6 gap-3 items-center">
               <h3
                 class="text-2xl text-center leading-6 font-medium text-gray-900"
-                v-if="title">
+                v-if="title"
+              >
                 {{ title }}
               </h3>
               <slot name="title"></slot>
-              <p class="text-center text-medium text-gray-500" v-if="description">
+              <p
+                class="text-center text-medium text-gray-500"
+                v-if="description"
+              >
                 {{ description }}
               </p>
               <div class="text-center max-h-full overflow-y-auto">
@@ -103,19 +114,25 @@ onMounted(() => {
           <slot name="actions">
             <footer
               v-if="typeAlert != 'question' && !form"
-              class="sticky inset-x-0 bottom-0 bg-gray-100 w-full flex justify-center items-center sm:justify-end h-16">
-              <div class="absolute top-0 w-full bg-gray-300 h-1" v-if="time > 0">
+              class="sticky inset-x-0 bottom-0 bg-gray-100 w-full flex justify-center items-center sm:justify-end h-16"
+            >
+              <div
+                class="absolute top-0 w-full bg-gray-300 h-1"
+                v-if="time > 0"
+              >
                 <div
                   class="h-1"
                   :style="{ width: `${percent}%` }"
-                  :class="'bg-blue-500'"></div>
+                  :class="'bg-blue-500'"
+                ></div>
               </div>
               <div>
                 <DBtn
                   type="button"
                   color="secondary"
                   class="mx-5"
-                  @click="$emit('closeModal')">
+                  @click="$emit('closeModal')"
+                >
                   {{ nameButtonClose }}
                 </DBtn>
               </div>
@@ -123,13 +140,15 @@ onMounted(() => {
             <footer
               v-if="typeAlert == 'question' || form"
               class="sticky inset-x-0 bottom-0 bg-gray-100 w-full flex items-center pt-5 pb-5 h-17"
-              :class="[form ? 'justify-end' : 'justify-center']">
+              :class="[form ? 'justify-end' : 'justify-center']"
+            >
               <div>
                 <DBtn
                   type="button"
                   color="secondary"
                   class="py-2 px-8 mx-2"
-                  @click="$emit('closeModal')">
+                  @click="$emit('closeModal')"
+                >
                   Cancelar
                 </DBtn>
               </div>
@@ -137,7 +156,8 @@ onMounted(() => {
                 <DBtn
                   :color="form ? '' : 'danger'"
                   class="py-2 px-8 mx-2"
-                  @click="$emit('otherMethod')">
+                  @click="$emit('otherMethod')"
+                >
                   {{ acceptQuestion }}
                 </DBtn>
               </div>

@@ -60,22 +60,6 @@ services:
     ports:
       - 80:80
 
-  # superset:
-  #   image: apache/superset:2.1.1
-  #   restart: unless-stopped
-  #   init: true
-  #   depends_on:
-  #     - datawarehouse
-  #   volumes:
-  #     - ./config/superset_config.py:/app/pythonpath/superset_config.py
-  #   environment:
-  #     - SUPERSET_LOAD_EXAMPLES=false
-  #     # - SUPERSET_DATABASE_URI=postgresql://postgres:pgp4ssw0rd@datawarehouse:5432/medicaly
-  #     - SUPERSET_FEATURE_EMBEDDED_SUPERSET='true'
-  #     - SECRET_KEY='thisismyscretkey123dddaAswewssc'
-  #   ports:
-  #     - 8088:8088
-
   metabase:
     image: metabase/metabase
     restart: unless-stopped
@@ -100,6 +84,22 @@ services:
   #   environment:
   #     MINIO_ACCESS_KEY: 4dm1n-us3r
   #     MINIO_SECRET_KEY: 4dm1n-p4ssw0rd!!
+
+  pdf-engine:
+    image: thecodingmachine/gotenberg:6
+    restart: unless-stopped
+    ports:
+      - 30000:30000
+
+  pdf-service:
+    build: ../../packages/backend/pdf-service
+    restart: unless-stopped
+    depends_on:
+      - pdf-engine
+    ports:
+      - 3002:3002
+    environment:
+      API_GOTENBERG: http://pdf-engine:30000
 
 volumes:
   db_data:

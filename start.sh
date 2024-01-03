@@ -25,5 +25,3 @@ yarn workspace data-migration migrate up
 echo "${GREEN}**** Migrations completed ****"
 
 
-
-
