@@ -1,48 +1,44 @@
-import {
-  pipe,
-  gotenberg,
-  convert,
-  html,
-  please,
-  adjust,
-  set,
-  merge,
-} from 'gotenberg-js-client'
-import constants from '../config'
-
+import { HtmlConverter } from 'chromiumly'
 export interface PrintPdfDto {
   index: string
   header: string
   footer: string
+  properties?: PageProperties
 }
 
 export class GotenbergService {
-  async build(data: PrintPdfDto, params: any): Promise<NodeJS.ReadableStream> {
-    const toPDF = pipe(
-      gotenberg(constants().API_GOTENBERG),
-      convert,
-      html,
-      adjust({
-        fields: {
-          printBackground: true,
-          marginTop: 1,
-          marginBottom: 1,
-          marginLeft: 0.2,
-          marginRight: 0.2,
-          ...params,
-        } as any,
-      }),
-      set({
-        waitTimeout: 1000,
-        googleChromeRpccBufferSize: 104857600,
-      }),
-      please
-    )
+  async build(data: PrintPdfDto): Promise<string> {
+    const htmlConverter = new HtmlConverter()
 
-    return await toPDF({
-      'index.html': data.index,
-      'header.html': data.header,
-      'footer.html': data.footer,
+    const buffer = await htmlConverter.convert({
+      header: Buffer.from(data.header),
+      html: Buffer.from(data.index),
+      footer: Buffer.from(data.footer),
+      properties: {
+        printBackground: true,
+        ...data?.properties,
+      },
     })
+
+    return buffer.toString('base64')
   }
+}
+
+type PageProperties = {
+  size?: {
+    width: number // Paper width, in inches (default 8.5)
+    height: number //Paper height, in inches (default 11)
+  }
+  margins?: {
+    top: number // Top margin, in inches (default 0.39)
+    bottom: number // Bottom margin, in inches (default 0.39)
+    left: number // Left margin, in inches (default 0.39)
+    right: number // Right margin, in inches (default 0.39)
+  }
+  preferCssPageSize?: boolean // Define whether to prefer page size as defined by CSS (default false)
+  printBackground?: boolean // Print the background graphics (default false)
+  omitBackground?: boolean // Hide the default white background and allow generating PDFs with transparency (default false)
+  landscape?: boolean // Set the paper orientation to landscape (default false)
+  scale?: number // The scale of the page rendering (default 1.0)
+  nativePageRanges?: { from: number; to: number } // Page ranges to print
 }

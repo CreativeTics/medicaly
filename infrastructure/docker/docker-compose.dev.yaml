@@ -86,13 +86,13 @@ services:
   #     MINIO_SECRET_KEY: 4dm1n-p4ssw0rd!!
 
   pdf-engine:
-    image: thecodingmachine/gotenberg:6
+    image: gotenberg/gotenberg:8
     restart: unless-stopped
     ports:
-      - 30000:30000
+      - 30000:3000
 
-  pdf-service:
-    build: ../../packages/backend/pdf-service
+  certificates:
+    build: ../../packages/backend/certificates
     restart: unless-stopped
     depends_on:
       - pdf-engine

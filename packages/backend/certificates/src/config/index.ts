@@ -4,5 +4,4 @@ export default () => ({
     USERNAME: process.env.COUCHDB_USERNAME || '4dm1n-us3r',
     PASSWORD: process.env.COUCHDB_PASSWORD || '4dm1n-p4ssw0rd!!',
   },
-  API_GOTENBERG: process.env.API_GOTENBERG || 'http://localhost:30000',
 })
