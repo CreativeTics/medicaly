@@ -1,29 +1,39 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-import { getOrder } from "../services";
-import OrderStatus from "../components/OrderStatus.vue";
-import DBtn from "@components/basic/DBtn.vue";
+import { getInformedConsentUrl, getOrder } from '../services'
+import OrderStatus from '../components/OrderStatus.vue'
+import DBtn from '@components/basic/DBtn.vue'
+import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-const order = ref<any>({});
-const loading = ref(false);
+const order = ref<any>({})
+const loading = ref(false)
+const consentIsLoading = ref(false)
 
 const back = () => {
-  console.log("Back");
-  router.back();
-};
+  console.log('Back')
+  router.back()
+}
+
+const downloadConsent = async (id: string) => {
+  consentIsLoading.value = true
+  console.log('Download consent', id)
+  const url = await getInformedConsentUrl(id)
+  window.open(url, '_blank')
+  consentIsLoading.value = false
+}
 
 onMounted(async () => {
   if (route.params.id) {
-    loading.value = true;
-    order.value = await getOrder(route.params.id.toString());
-    loading.value = false;
+    loading.value = true
+    order.value = await getOrder(route.params.id.toString())
+    loading.value = false
   }
-});
+})
 </script>
 
 <template>
@@ -40,8 +50,8 @@ onMounted(async () => {
         </p>
       </div>
     </div>
-    <div class="w-full bg-white rounded-lg shadow-lg p-5 flex flex-col gap-5">
-      <div class="flex items-center gap-5">
+    <div class="w-full bg-white rounded-lg shadow-lg p-5 flex gap-5">
+      <div class="flex items-center gap-5 w-1/3">
         <div class="flex flex-col">
           <span class="font-semibold">Contrato </span>
           <span class="font-semibold">Sede </span>
@@ -59,8 +69,9 @@ onMounted(async () => {
           </span>
         </div>
       </div>
-      <span class="text-lg font-semibold">Paciente</span>
       <div class="w-full">
+        <span class="text-lg font-semibold">Paciente</span>
+
         <div class="flex items-center gap-5">
           <div class="w-20 h-20 bg-gray-200 rounded-full"></div>
           <div class="flex flex-col">
@@ -70,11 +81,17 @@ onMounted(async () => {
           </div>
           <div class="flex flex-col">
             <span class="text-lg font-semibold">
-              {{ order?.patientName?.split("-")?.[1] }}
+              {{ order?.patientFullName?.split('-')?.[1] }} xxx
             </span>
             <span class="text-sm">{{ order.patientDocumentNumber }}</span>
             <span class="text-sm">
-              <a href="" class="text-blue-800">Consentimiento informado</a>
+              <span
+                href=""
+                class="text-blue-800 flex gap-2 cursor-pointer"
+                @click="downloadConsent(order?.id)"
+                >Consentimiento informado
+                <DLoadingIcon v-show="consentIsLoading" class="animate-spin"
+              /></span>
             </span>
           </div>
         </div>

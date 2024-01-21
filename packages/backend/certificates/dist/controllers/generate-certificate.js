@@ -42,9 +42,11 @@ class GenerateCertificateController {
                 const certificate = yield this.createPdf(templates);
                 console.log('certificate');
                 //4. Save  in files database
-                const fileId = yield this.savePdf(orderId, certificate);
+                const id = yield this.savePdf(orderId, certificate);
                 // 5. Return file id
-                return fileId;
+                return {
+                    id,
+                };
             }
             catch (error) {
                 console.log('Error generating certificate', error);
@@ -146,7 +148,7 @@ class GenerateCertificateController {
                 type: 'certificates',
                 orderId,
                 _attachments: {
-                    certificate: {
+                    'certificate.pdf': {
                         content_type: 'application/pdf',
                         data: base64Certificate,
                     },

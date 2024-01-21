@@ -1,4 +1,5 @@
 import { getData } from '../../../core/services/get-table/'
+import { generateInformedConsent } from '../../../core/services/generate-cert/'
 
 import { PouchService, DB } from '../../../services/pouch'
 import { useAuthStore } from '@/store/auth'
@@ -212,4 +213,26 @@ function validatePatients(patients: any[]) {
   })
 
   return errors
+}
+
+export async function getInformedConsentUrl(orderId: string): Promise<string> {
+  // get order
+  const order = await pouch.use(DB.GENERAL).get(orderId)
+  let informedConsentId = order.informedConsentFile
+  // validate if not has informed consent
+  if (!informedConsentId) {
+    // generate informed consent
+    const informedConsent = await generateInformedConsent(orderId)
+    // save new informed consent in order
+
+    const updatedOrder = {
+      ...order,
+      informedConsentFile: informedConsent.id,
+    }
+    await pouch.use(DB.GENERAL).update(updatedOrder)
+    informedConsentId = informedConsent.id
+  }
+
+  // get informed consent Url
+  return `http://localhost:3005/api/files/${informedConsentId}`
 }

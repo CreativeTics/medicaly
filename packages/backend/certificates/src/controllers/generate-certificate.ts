@@ -4,7 +4,12 @@ import { couchHttp } from '../util/http'
 import { PrintPdfDto, GotenbergService } from '../services/gotenberg.service'
 
 export class GenerateCertificateController {
-  async execute(orderId: string, code: string): Promise<string> {
+  async execute(
+    orderId: string,
+    code: string
+  ): Promise<{
+    id: string
+  }> {
     console.log('Received request to generate certificate', orderId, code)
 
     try {
@@ -36,10 +41,12 @@ export class GenerateCertificateController {
 
       //4. Save  in files database
 
-      const fileId = await this.savePdf(orderId, certificate)
+      const id = await this.savePdf(orderId, certificate)
 
       // 5. Return file id
-      return fileId
+      return {
+        id,
+      }
     } catch (error) {
       console.log('Error generating certificate', error)
     }
@@ -159,7 +166,7 @@ export class GenerateCertificateController {
       type: 'certificates',
       orderId,
       _attachments: {
-        certificate: {
+        'certificate.pdf': {
           content_type: 'application/pdf',
           data: base64Certificate,
         },
