@@ -13,6 +13,8 @@ import { useNotificationsStore } from '@/store/notifications'
 
 import { CheckCircleIcon } from '@components/basic'
 
+import PatientHeader from '../components/PatientHeader.vue'
+
 const route = useRoute()
 const router = useRouter()
 
@@ -71,25 +73,18 @@ async function finalize(id: string) {
       <p
         class="text-3xl flex items-center gap-5 font-semibold text-shadow text-blue-900"
       >
-        Orden # {{ order.code }}
+        {{ order.code }}
 
         <span class="text-lg font-semibold"
           >{{ order.medicalExamType?.name }} :
           {{ order.medicalExamType?.emphasis }}
         </span>
       </p>
-      <div class="flex">
-        <div
-          class="text-lg font-semibold text-gray-900 p-3 flex flex-col items-end"
-        >
-          {{ order.patientName }}
-          <span class="text-sm font-normal text-gray-500">
-            23 años 14 dias</span
-          >
-          <span class="text-sm font-normal text-gray-500"> Masculino</span>
-        </div>
-        <div class="rounded-full h-24 w-24 bg-white"></div>
-      </div>
+      <PatientHeader
+        v-if="order.patientDataId"
+        :patientDataId="order.patientDataId"
+        :patientName="order.patientName"
+      />
     </div>
     <!-- services -->
     <div class="w-full flex-grow flex overflow-y-hidden">

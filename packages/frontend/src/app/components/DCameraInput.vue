@@ -94,6 +94,9 @@ onUnmounted(() => {
       <video v-show="!error && !image" autoplay ref="video" id="video"></video>
       <img v-show="!error && image" :src="image" alt="" />
     </div>
+    <div
+      class="flex flex-col justify-center absolute border-2 border-gray-50 rounded-full h-32 w-32 opacity-50"
+    ></div>
     <div v-if="!error" class="flex flex-col justify-center absolute right-0">
       <div
         v-if="!image"

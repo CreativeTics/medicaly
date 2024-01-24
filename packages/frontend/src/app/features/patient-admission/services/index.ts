@@ -1,5 +1,5 @@
 import { getData } from '../../../core/services/get-table/'
-import { formatDate } from '@/app/core/util/dates'
+import { formatDate, calculateAgeFromBirthDate } from '@/app/core/util/dates'
 
 import { PouchService, DB } from '../../../services/pouch'
 // import { useAuthStore } from "@/store/auth";
@@ -144,8 +144,6 @@ export async function getOrder(id: string) {
 }
 
 export async function admitPatientOrder(orderId: string, patient: any) {
-  // TODO: save patient images
-
   const oldOrder = await pouch.use(DB.GENERAL).get(orderId)
 
   const patientUpdate = await savePatientData({
@@ -169,6 +167,7 @@ export async function admitPatientOrder(orderId: string, patient: any) {
     patientDataId: patientUpdate.dataId,
     patientName: `${patient.name} ${patient.secondName} ${patient.lastName} ${patient.secondLastName}`,
     orderCycle,
+    informedConsent: patient.informedConsent,
   }
 
   await pouch.use(DB.GENERAL).update(orderUpdated)
@@ -204,6 +203,7 @@ export async function savePatientData(patient: any): Promise<{
     id: patient.patientDataId,
     patientId: patient.id,
     birthDate: patient.birthDate,
+    age: calculateAgeFromBirthDate(patient.birthDate),
     maritalStatus: patient.maritalStatus,
     bloodType: patient.bloodType,
     eps: patient.eps,
@@ -227,6 +227,9 @@ export async function savePatientData(patient: any): Promise<{
     responsibleAddress: patient.responsibleAddress,
     responsiblePhone: patient.responsiblePhone,
     observation: patient.observation,
+    photoId: patient.photoId,
+    signatureId: patient.signatureId,
+    fingerprintId: patient.fingerprintId,
   }
 
   if (patient.patientDataId) {
@@ -243,7 +246,7 @@ export async function savePatientData(patient: any): Promise<{
   const response = await pouch.use(DB.MEDICAL).create(patientData)
   return {
     id: patient.id,
-    dataId: response?.id || '',
+    dataId: response?.id ?? '',
   }
 }
 
@@ -252,6 +255,11 @@ interface PatientData {
   id: string
   patientId: string
   birthDate?: string
+  age: {
+    years: number
+    months: number
+    days: number
+  }
   maritalStatus?: string
   bloodType?: string
   eps?: string
@@ -275,4 +283,7 @@ interface PatientData {
   responsibleAddress?: string
   responsiblePhone?: string
   observation?: string
+  photoId?: string
+  signatureId?: string
+  fingerprintId?: string
 }

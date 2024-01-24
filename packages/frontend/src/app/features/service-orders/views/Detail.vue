@@ -77,7 +77,9 @@ onMounted(async () => {
           <div class="flex flex-col">
             <span class="text-lg font-semibold">Nombre </span>
             <span class="text-sm">Cédula</span>
-            <span class="text-sm">Consentimiento</span>
+            <span class="text-sm"
+              >Consentimiento {{ order?.informedConsent }}</span
+            >
           </div>
           <div class="flex flex-col">
             <span class="text-lg font-semibold">
@@ -86,6 +88,7 @@ onMounted(async () => {
             <span class="text-sm">{{ order.patientDocumentNumber }}</span>
             <span class="text-sm">
               <span
+                v-if="order?.informedConsent"
                 href=""
                 class="text-blue-800 flex gap-2 cursor-pointer"
                 @click="downloadConsent(order?.id)"

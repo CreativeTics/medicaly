@@ -20,7 +20,7 @@ const tempImage = ref<string>('')
 
 onMounted(() => {
   image.value = props.modelValue
-  code.value = localStorage.getItem('signature-pad-code') || '12345'
+  code.value = localStorage.getItem('signature-pad-code') || getNewCode()
   connect()
   if (!props.modelValue) {
     socket?.emit('message', {
@@ -29,6 +29,12 @@ onMounted(() => {
     })
   }
 })
+
+const getNewCode = () => {
+  code.value = Math.floor(Math.random() * 999999).toString()
+  localStorage.setItem('signature-pad-code', code.value)
+  return code.value
+}
 
 const connect = () => {
   socket = io(`${WS_URL}/signature-pad`)
@@ -109,7 +115,7 @@ onBeforeUnmount(() => {
         v-if="!error && !(image || tempImage) && wsStatus === 'joined'"
         class="text-gray-500 h-20 flex items-center"
       >
-        Esperando Firma...
+        Esperando Firma [{{ code }}]...
       </div>
 
       <img
@@ -141,4 +147,5 @@ onBeforeUnmount(() => {
       </div>
     </div>
   </div>
+  {{ modelValue.length }}
 </template>

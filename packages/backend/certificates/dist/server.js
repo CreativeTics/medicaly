@@ -40,7 +40,6 @@ app.get('/api/files/:id', (req, res) => __awaiter(void 0, void 0, void 0, functi
     console.log('Received request to get file', req.params.id);
     const certificate = yield new get_file_1.GetFileController().execute(req.params.id);
     res.setHeader('Content-Disposition', `inline; filename=${certificate.fileName}`);
-    // get file type from file name
     res.setHeader('Content-Type', certificate.fileType);
     res.send(certificate.data);
     res.end();

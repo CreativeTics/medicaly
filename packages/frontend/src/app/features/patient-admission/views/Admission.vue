@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useImageFile } from '@/app/core/composable/useImageFile'
 import { getOrder, admitPatientOrder } from '../services'
 import OrderStatus from '../../service-orders/components/OrderStatus.vue'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
@@ -24,6 +25,9 @@ let model = ref<any>({})
 
 const imagesModel = ref<any>({})
 
+const photo = useImageFile('patientPhoto.png')
+const signature = useImageFile('patientSignature.png')
+
 onMounted(async () => {
   if (route.params.id) {
     loading.value = true
@@ -32,6 +36,9 @@ onMounted(async () => {
       ...order.value.patient,
       applyPosition: order.value.position,
     }
+    photo.loadImageFromId(order.value.patient?.photoId)
+    signature.loadImageFromId(order.value.patient?.signatureId)
+
     loading.value = false
   }
 })
@@ -436,11 +443,17 @@ const form: any = {
 
 const onSubmit = async (data: any) => {
   console.log('Submit', data)
+  loading.value = true
 
   await admitPatientOrder(route.params.id.toString(), {
     ...data,
-    ...imagesModel,
+    ...{
+      photoId: await photo.saveImage(),
+      signatureId: await signature.saveImage(),
+      fingerprintId: imagesModel.fingerprint,
+    },
   })
+  loading.value = false
 
   router.push({
     name: 'patient-attention.attention',
@@ -471,12 +484,19 @@ const onSubmit = async (data: any) => {
     >
       <div
         class="flex flex-col justify-end"
-        style="height: calc(100vh - 300px)"
+        style="height: calc(100vh - 200px)"
       >
         <div class="w-full flex flex-row h-full">
           <div class="w-96 p-2 bg-slate-100 flex flex-col gap-2">
-            <DCameraInput v-model="imagesModel.photo" />
-            <DSignatureInput v-model="imagesModel.signature" />
+            <DCameraInput
+              :model-value="photo.imageBase64.value"
+              @update:model-value="photo.setImage"
+            />
+            <DSignatureInput
+              :model-value="signature.imageBase64.value"
+              @update:model-value="signature.setImage"
+            />
+            {{ signature.unsaved }}
             <DFingerPrintInput v-model="imagesModel.fingerprint" />
           </div>
           <div class="w-full overflow-y-scroll">

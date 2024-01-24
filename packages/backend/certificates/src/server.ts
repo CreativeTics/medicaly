@@ -41,8 +41,6 @@ app.get('/api/files/:id', async (req, res) => {
     'Content-Disposition',
     `inline; filename=${certificate.fileName}`
   )
-  // get file type from file name
-
   res.setHeader('Content-Type', certificate.fileType)
   res.send(certificate.data)
   res.end()
