@@ -7,7 +7,7 @@ import {
   DToggleField,
   DFileUploader,
 } from '../../../components/basic'
-
+import JsonEditorVue from 'json-editor-vue'
 import {
   getSelectData,
   TableDataQuery,
@@ -46,6 +46,7 @@ const components = new Map<string, any>([
   ['multiselect', { component: DMultiselect, defaultProps: {} }],
   ['textarea', { component: DTextAreaField, defaultProps: {} }],
   ['file', { component: DFileUploader, defaultProps: {} }],
+  ['json', { component: JsonEditorVue, defaultProps: {} }],
 ])
 
 const isLoading = ref(false)
@@ -62,7 +63,10 @@ const optionsFiltered = computed<SelectOption[]>(() =>
 )
 
 const updateOptions = async (val: any = {}) => {
-  if (props.field.type === 'select' && props.field.props?.options) {
+  if (
+    ['text', 'select', 'multiselect'].includes(props.field.type) &&
+    props.field.props?.options
+  ) {
     options.value = props.field.props.options
     return
   }

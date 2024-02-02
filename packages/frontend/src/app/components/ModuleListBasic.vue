@@ -1,43 +1,48 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import { DLoading, Edit03Icon, DBtn } from "@/app/components/basic";
-import PaginatedTable from "./PaginatedTable.vue";
-import Popper from "vue3-popper";
+import {
+  DLoading,
+  Edit03Icon,
+  DBtn,
+  FileSearch01Icon,
+} from '@/app/components/basic'
+import PaginatedTable from './PaginatedTable.vue'
+import Popper from 'vue3-popper'
 
 withDefaults(
   defineProps<{
-    title: string;
-    subtitle: string;
-    columns: any[];
-    rows: any[];
-    actions: string[];
+    title: string
+    subtitle: string
+    columns: any[]
+    rows: any[]
+    actions: string[]
   }>(),
   {
-    title: () => "Title",
-    subtitle: () => "Subtitle",
+    title: () => 'Title',
+    subtitle: () => 'Subtitle',
     columns: () => [],
     rows: () => [],
     actions: () => [],
   }
-);
+)
 
-const emit = defineEmits(["edit", "create", "delete"]);
+const emit = defineEmits(['edit', 'create', 'delete', 'preview'])
 
 const emitEdit = (id: string) => {
-  emit("edit", id);
-};
+  emit('edit', id)
+}
 
 const emitCreate = () => {
-  emit("create");
-};
+  emit('create')
+}
 
 const actionsColumn = {
-  key: "actions",
-  title: "",
-};
+  key: 'actions',
+  title: '',
+}
 
-const loading = ref(false);
+const loading = ref(false)
 </script>
 <template>
   <DLoading v-show="loading" message="Cargando datos..." />
@@ -75,6 +80,24 @@ const loading = ref(false);
               </div>
 
               <div class="max-w-xs flex justify-end" v-else>
+                <Popper
+                  v-if="actions.includes('preview')"
+                  arrow
+                  offsetDistance="12"
+                  content="Preview"
+                  :hover="true"
+                  placement="top"
+                  class="tooltip"
+                >
+                  <div
+                    class="bg-gray-50 rounded-md py-2"
+                    @click="emit('preview', rowProps.row['id'])"
+                  >
+                    <FileSearch01Icon
+                      class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
+                    />
+                  </div>
+                </Popper>
                 <Popper
                   v-if="actions.includes('edit')"
                   arrow

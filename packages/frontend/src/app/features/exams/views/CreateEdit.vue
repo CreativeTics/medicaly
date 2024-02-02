@@ -72,9 +72,19 @@ const form: Form = {
               props: {
                 placeholder: 'Nombre',
                 required: true,
-                class: 'lg:col-span-6 xl:col-span-6',
+                class: 'lg:col-span-4 xl:col-span-4',
               },
               rules: ['required', 'minlength:3', 'maxlength:100'],
+            },
+            {
+              name: 'printTemplate',
+              label: 'Plantilla de impresión',
+              type: 'select',
+
+              query: {
+                entity: 'general:templates',
+                fields: ['id', 'code', 'name'],
+              },
             },
             {
               name: 'form',
@@ -86,7 +96,7 @@ const form: Form = {
                 required: true,
                 class: 'lg:col-span-6 xl:col-span-6',
               },
-              rules: ['required', 'minlength:3', 'maxlength:3000'],
+              rules: ['required', 'minlength:3'],
             },
           ],
         },

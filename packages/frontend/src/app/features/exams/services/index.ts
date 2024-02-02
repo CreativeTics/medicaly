@@ -41,6 +41,7 @@ export async function getEntity(id: string): Promise<any> {
     type: doc.type,
     name: doc.name,
     code: doc.code,
+    printTemplate: doc.printTemplate,
     form: doc.form,
     version: doc.version,
   }

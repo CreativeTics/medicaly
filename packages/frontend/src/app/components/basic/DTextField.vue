@@ -21,6 +21,7 @@ const props = withDefaults(
     required?: boolean
     icon?: string
     classInput?: string
+    options?: Array<{ name: string; id: string | number }>
   }>(),
   {
     modelValue: '',
@@ -77,6 +78,7 @@ onMounted(() => {
       :min="min"
       :max="max"
       :step="step"
+      list="datalist"
       @input="($event: any) => emitUpdate($event.target.value)"
       @keyup.enter="emit('enter')"
       :class="[
@@ -86,6 +88,13 @@ onMounted(() => {
         classInput,
       ]"
     />
+    <datalist v-if="options" id="datalist">
+      <option
+        v-for="item in options"
+        :key="item.id"
+        :value="item.name"
+      ></option>
+    </datalist>
     <label v-if="hint">
       <span class="text-xs text-red-500">{{ hint }}</span>
     </label>

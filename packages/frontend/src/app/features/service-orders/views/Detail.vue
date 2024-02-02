@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useImageFile } from '@/app/core/composable/useImageFile'
 
 import { getInformedConsentUrl, getOrder } from '../services'
 import OrderStatus from '../components/OrderStatus.vue'
 import DBtn from '@components/basic/DBtn.vue'
 import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
+import ExamIcon from '@components/basic/icons/FileAttachment01Icon.vue'
+import { getPatient } from '../services/patients'
 
 const route = useRoute()
 const router = useRouter()
+const photo = useImageFile()
 
 const order = ref<any>({})
 const loading = ref(false)
@@ -31,6 +35,8 @@ onMounted(async () => {
   if (route.params.id) {
     loading.value = true
     order.value = await getOrder(route.params.id.toString())
+    const patientData = await getPatient(order.value.patientDataId)
+    photo.loadImageFromId(patientData.photoId)
     loading.value = false
   }
 })
@@ -70,20 +76,24 @@ onMounted(async () => {
         </div>
       </div>
       <div class="w-full">
-        <span class="text-lg font-semibold">Paciente</span>
-
         <div class="flex items-center gap-5">
-          <div class="w-20 h-20 bg-gray-200 rounded-full"></div>
+          <div class="rounded-full h-24 w-24 bg-white">
+            <img
+              class="rounded-full object-cover h-full w-full"
+              :src="photo.imageBase64.value"
+              alt="Foto del paciente"
+            />
+          </div>
           <div class="flex flex-col">
-            <span class="text-lg font-semibold">Nombre </span>
-            <span class="text-sm">Cédula</span>
-            <span class="text-sm"
+            <span class="font-semibold">Nombre </span>
+            <span class="font-semibold">Documento</span>
+            <span class="font-semibold"
               >Consentimiento {{ order?.informedConsent }}</span
             >
           </div>
           <div class="flex flex-col">
             <span class="text-lg font-semibold">
-              {{ order?.patientFullName?.split('-')?.[1] }} xxx
+              {{ order?.patientName }}
             </span>
             <span class="text-sm">{{ order.patientDocumentNumber }}</span>
             <span class="text-sm">
@@ -103,8 +113,9 @@ onMounted(async () => {
     <div
       class="w-full mt-5 bg-white rounded-lg shadow-lg p-5 flex flex-col gap-3"
     >
-      <span class="text-lg font-semibold"
-        >{{ order.medicalExamType?.name }} :
+      <span class="text-lg font-semibold flex gap-4">
+        <ExamIcon />
+        {{ order.medicalExamType?.name }} :
         {{ order.medicalExamType?.emphasis }}
       </span>
 
@@ -136,7 +147,9 @@ onMounted(async () => {
                 /></span>
               </td>
               <td>
-                <span class="text-sm">result</span>
+                <span class="text-sm">
+                  {{ service }}
+                </span>
               </td>
             </tr>
           </tbody>

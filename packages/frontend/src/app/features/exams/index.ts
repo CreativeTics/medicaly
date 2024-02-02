@@ -1,32 +1,42 @@
-import ExamsList from "./views/List.vue";
-import ExamsCreate from "./views/CreateEdit.vue";
+import ExamsList from './views/List.vue'
+import ExamsCreate from './views/CreateEdit.vue'
+import ExamsPreview from './views/Preview.vue'
 
 export const examsRoutes = [
   {
-    path: "/exams",
-    name: "exams.list",
+    path: '/exams',
+    name: 'exams.list',
     component: ExamsList,
     meta: {
       auth: true,
-      layout: "home",
+      layout: 'home',
     },
   },
   {
-    path: "/exams/create",
-    name: "exams.create",
+    path: '/exams/create',
+    name: 'exams.create',
     component: ExamsCreate,
     meta: {
       auth: true,
-      layout: "home",
+      layout: 'home',
     },
   },
   {
-    path: "/exams/edit/:id",
-    name: "exams.edit",
+    path: '/exams/edit/:id',
+    name: 'exams.edit',
     component: ExamsCreate,
     meta: {
       auth: true,
-      layout: "home",
+      layout: 'home',
     },
   },
-];
+  {
+    path: '/exams/preview/:id',
+    name: 'exams.preview',
+    component: ExamsPreview,
+    meta: {
+      auth: true,
+      layout: 'home',
+    },
+  },
+]

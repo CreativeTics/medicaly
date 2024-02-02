@@ -18,6 +18,7 @@ const props = defineProps({
     default: 'grid grid-cols-8 px-6 py-4',
   },
   hideCancelButton: { type: Boolean, required: false, default: false },
+  hideSubmitButton: { type: Boolean, required: false, default: false },
 })
 
 const emit = defineEmits([
@@ -202,7 +203,7 @@ defineExpose<{
             {{ getData ? 'Volver' : 'Cancelar' }}
           </DBtn>
           <DBtn
-            v-if="!getData && !readonly"
+            v-if="!getData && !readonly && !hideSubmitButton"
             class="font-semibold py-1 text-base"
             @click.prevent="onHandleSubmit"
           >
