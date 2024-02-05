@@ -70,7 +70,8 @@ const loading = ref(false)
             <td
               v-for="column in rowProps.columns"
               v-bind:key="column.key"
-              class="px-3"
+              class="px-3 bg-white"
+              :class="column.key === 'actions' ? 'sticky right-0' : ''"
             >
               <div
                 class="max-w-xs overflow-hidden whitespace-nowrap text-ellipsis"
@@ -79,7 +80,7 @@ const loading = ref(false)
                 {{ rowProps.row[column.key] }}
               </div>
 
-              <div class="max-w-xs flex justify-end" v-else>
+              <div class="max-w-xs flex justify-end gap-2" v-else>
                 <Popper
                   v-if="actions.includes('preview')"
                   arrow

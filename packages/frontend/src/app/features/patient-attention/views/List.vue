@@ -123,7 +123,8 @@ onMounted(async () => {
             <td
               v-for="column in rowProps.columns"
               v-bind:key="column.key"
-              class="px-3"
+              class="px-3 bg-white"
+              :class="column.key === 'actions' ? 'sticky right-0' : ''"
             >
               <div
                 class="w-full"

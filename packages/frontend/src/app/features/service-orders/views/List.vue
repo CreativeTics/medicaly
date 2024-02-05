@@ -1,70 +1,70 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive } from 'vue'
 import {
   SearchMdIcon,
   DBtn,
   DTextField,
   DSelectFieldSearch,
-} from "@/app/components/basic";
-import PaginatedTable from "@/app/components/PaginatedTable.vue";
-import Popper from "vue3-popper";
-import { useRouter } from "vue-router";
-import { getList, getContractsList } from "../services";
+} from '@/app/components/basic'
+import PaginatedTable from '@/app/components/PaginatedTable.vue'
+import Popper from 'vue3-popper'
+import { useRouter } from 'vue-router'
+import { getList, getContractsList } from '../services'
 
-import OrderStatus from "../components/OrderStatus.vue";
+import OrderStatus from '../components/OrderStatus.vue'
 
-const router = useRouter();
-const modulePath = "service-orders";
+const router = useRouter()
+const modulePath = 'service-orders'
 
 const actionsColumn = {
-  key: "actions",
-  title: "",
-};
+  key: 'actions',
+  title: '',
+}
 
 const columns = [
   {
-    key: "code",
-    title: "# Orden",
-    align: "left",
+    key: 'code',
+    title: '# Orden',
+    align: 'left',
   },
   {
-    key: "type",
-    title: "Tipo",
-    align: "left",
+    key: 'type',
+    title: 'Tipo',
+    align: 'left',
   },
   {
-    key: "patientName",
-    title: "Paciente",
-    align: "left",
+    key: 'patientName',
+    title: 'Paciente',
+    align: 'left',
   },
   {
-    key: "status",
-    title: "Estado de atención",
+    key: 'status',
+    title: 'Estado de atención',
   },
 
   {
-    key: "updatedAt",
-    title: "Ultima modificación",
-    align: "left",
+    key: 'updatedAt',
+    title: 'Ultima modificación',
+    align: 'left',
   },
-];
+]
 
-const contractList = ref<{ id: any; name: any }[]>([]);
+const contractList = ref<{ id: any; name: any }[]>([])
 const searchOptions = reactive({
-  contract: "",
-  orderCode: "",
-  patient: "",
-});
-const data = ref<any>([]);
+  contract: '',
+  orderCode: '',
+  patient: '',
+})
+const data = ref<any>([])
 
 const search = async () => {
-  data.value = await getList(searchOptions);
-};
+  data.value = await getList(searchOptions)
+}
 
 const goToCreate = () => {
-  console.log("Create");
-  router.push({ name: `${modulePath}.create` });
-};
+  console.log('Create')
+  router.push({ name: `${modulePath}.create` })
+}
 
 // const goToEdit = (id: string) => {
 //   console.log("Edit", id);
@@ -72,14 +72,14 @@ const goToCreate = () => {
 // };
 
 const goToView = (id: string) => {
-  router.push({ name: `${modulePath}.view`, params: { id } });
-};
+  router.push({ name: `${modulePath}.view`, params: { id } })
+}
 
 onMounted(async () => {
-  data.value = await getList(searchOptions);
-  contractList.value = await getContractsList();
-  console.log("Mounted", data.value);
-});
+  data.value = await getList(searchOptions)
+  contractList.value = await getContractsList()
+  console.log('Mounted', data.value)
+})
 </script>
 
 <template>
@@ -132,7 +132,8 @@ onMounted(async () => {
             <td
               v-for="column in rowProps.columns"
               v-bind:key="column.key"
-              class="px-3"
+              class="px-3 bg-white"
+              :class="column.key === 'actions' ? 'sticky right-0' : ''"
             >
               <div
                 class="w-full"
