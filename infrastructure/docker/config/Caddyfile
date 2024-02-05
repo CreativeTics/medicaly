@@ -1,0 +1,39 @@
+
+# :443 {
+#     reverse_proxy / host.docker.internal:5173
+# #    reverse_proxy /api/v1/certificates certificates:3002
+#     tls internal
+# }
+
+:80 {
+
+    handle /api/files/* {
+		reverse_proxy certificates:3002
+	}
+
+	handle_path /db/* {
+		reverse_proxy db:5984
+	}
+
+    @websockets {
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+
+    handle /socket.io/* {
+		uri strip_prefix /path
+		rewrite * /socket.io{path}
+		reverse_proxy  @websockets ws-service:3001 {
+            header_up Host {host}
+            header_up X-Real-IP {remote}
+		}
+	}
+
+
+    handle {
+		reverse_proxy host.docker.internal:5173
+	}
+}
+
+
+ 

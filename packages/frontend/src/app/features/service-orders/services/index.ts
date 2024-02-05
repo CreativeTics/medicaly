@@ -234,5 +234,5 @@ export async function getInformedConsentUrl(orderId: string): Promise<string> {
   }
 
   // get informed consent Url
-  return `http://localhost:3005/api/files/${informedConsentId}`
+  return `/api/files/${informedConsentId}`
 }

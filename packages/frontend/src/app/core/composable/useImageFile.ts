@@ -20,12 +20,9 @@ export function useImageFile(imageName: string = 'image.png') {
   }
 
   const getImageFromFileId = async (fileId: string) => {
-    const response = await axios.get(
-      `http://localhost:3005/api/files/${fileId}`,
-      {
-        responseType: 'arraybuffer',
-      }
-    )
+    const response = await axios.get(`/api/files/${fileId}`, {
+      responseType: 'arraybuffer',
+    })
     const base64 = Buffer.from(response.data, 'binary').toString('base64')
     return `data:image/png;base64,${base64}`
   }

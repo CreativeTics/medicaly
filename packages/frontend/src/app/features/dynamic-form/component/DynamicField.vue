@@ -6,7 +6,10 @@ import {
   DMultiselect,
   DToggleField,
   DFileUploader,
+  DSubtitle,
 } from '../../../components/basic'
+import IMCField from '../../../components/medical/IMCField.vue'
+import CIE10Field from '../../../components/medical/CIE10Field.vue'
 import JsonEditorVue from 'json-editor-vue'
 import {
   getSelectData,
@@ -47,6 +50,9 @@ const components = new Map<string, any>([
   ['textarea', { component: DTextAreaField, defaultProps: {} }],
   ['file', { component: DFileUploader, defaultProps: {} }],
   ['json', { component: JsonEditorVue, defaultProps: {} }],
+  ['subtitle', { component: DSubtitle, defaultProps: {} }],
+  ['imc', { component: IMCField, defaultProps: {} }],
+  ['cie10', { component: CIE10Field, defaultProps: {} }],
 ])
 
 const isLoading = ref(false)

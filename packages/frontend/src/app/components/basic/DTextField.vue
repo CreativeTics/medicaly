@@ -45,6 +45,8 @@ const props = withDefaults(
 
 const emit = defineEmits(['update:modelValue', 'enter'])
 
+const datalistId = 'datalist' + Math.random().toString(36).substring(7)
+
 const emitUpdate = (val: string) => {
   emit('update:modelValue', val)
 }
@@ -78,7 +80,7 @@ onMounted(() => {
       :min="min"
       :max="max"
       :step="step"
-      list="datalist"
+      :list="datalistId"
       @input="($event: any) => emitUpdate($event.target.value)"
       @keyup.enter="emit('enter')"
       :class="[
@@ -88,7 +90,7 @@ onMounted(() => {
         classInput,
       ]"
     />
-    <datalist v-if="options" id="datalist">
+    <datalist v-if="options" :id="datalistId">
       <option
         v-for="item in options"
         :key="item.id"

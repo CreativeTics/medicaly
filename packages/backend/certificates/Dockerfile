@@ -4,13 +4,12 @@ COPY package.json ./
 COPY tsconfig.json ./
 COPY src ./src
 RUN ls -a
-RUN npm install
+RUN npm install 
 RUN npm run build
 ## this is stage two , where the app actually runs
 FROM node:19-alpine AS app
 WORKDIR /usr
 COPY package.json ./
-RUN npm install --only=production
+RUN npm install --production
 COPY --from=0 /usr/dist .
-RUN npm install pm2 -g
-CMD ["pm2-runtime","index.js"]
+CMD ["node","server.js"]

@@ -1,6 +1,15 @@
 version: '3.7'
-
 services:
+  proxy:
+    image: caddy:2.4.5
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./config/Caddyfile:/etc/caddy/Caddyfile
+      - ./config/certs:/data/caddy
+
   db:
     image: couchdb:3.3.2
     volumes:
@@ -10,8 +19,8 @@ services:
     environment:
       COUCHDB_USER: 4dm1n-us3r
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
-    ports:
-      - 5984:5984
+    # ports:
+    #   - 5984:5984
 
   datawarehouse:
     image: postgres:latest
@@ -57,8 +66,8 @@ services:
   front:
     build: ../../packages/frontend
     restart: unless-stopped
-    ports:
-      - 80:80
+    # ports:
+    #   - 80:80
 
   metabase:
     image: metabase/metabase
@@ -99,7 +108,11 @@ services:
     ports:
       - 3002:3002
     environment:
-      API_GOTENBERG: http://pdf-engine:30000
+      API_GOTENBERG: http://pdf-engine:3000
+      COUCHDB_URL: http://db:5984
+      COUCHDB_USERNAME: 4dm1n-us3r
+      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      PORT: 3002
 
 volumes:
   db_data:
