@@ -9,7 +9,7 @@ import {
   DSubtitle,
 } from '../../../components/basic'
 import IMCField from '../../../components/medical/IMCField.vue'
-import CIE10Field from '../../../components/medical/CIE10Field.vue'
+import MultiSelectSearch from '../../../components/medical/MultiSelectSearch.vue'
 import JsonEditorVue from 'json-editor-vue'
 import {
   getSelectData,
@@ -52,7 +52,7 @@ const components = new Map<string, any>([
   ['json', { component: JsonEditorVue, defaultProps: {} }],
   ['subtitle', { component: DSubtitle, defaultProps: {} }],
   ['imc', { component: IMCField, defaultProps: {} }],
-  ['cie10', { component: CIE10Field, defaultProps: {} }],
+  ['multiselect_search', { component: MultiSelectSearch, defaultProps: {} }],
 ])
 
 const isLoading = ref(false)
@@ -70,7 +70,9 @@ const optionsFiltered = computed<SelectOption[]>(() =>
 
 const updateOptions = async (val: any = {}) => {
   if (
-    ['text', 'select', 'multiselect'].includes(props.field.type) &&
+    ['text', 'select', 'multiselect', 'multiselect_search'].includes(
+      props.field.type
+    ) &&
     props.field.props?.options
   ) {
     options.value = props.field.props.options

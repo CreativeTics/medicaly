@@ -15,6 +15,9 @@ const props = withDefaults(
     required?: boolean
     default?: string[]
     allowAddSearch?: boolean
+    options?: string[]
+    valueKey?: string
+    searchInternal?: boolean
   }>(),
   {
     label: '',
@@ -24,6 +27,9 @@ const props = withDefaults(
     sizeModel: '',
     weightModel: '',
     required: false,
+    allowAddSearch: true,
+    valueKey: 'concat',
+    searchInternal: true,
   }
 )
 
@@ -46,31 +52,38 @@ onMounted(() => {
 })
 
 const search = () => {
-  if (searchElements.value.length > 0) {
-    add(searchElements.value[searchActiveItem.value])
-    return
-  }
+  // if (searchText.value === '') {
+  //   searchElements.value = []
+  //   return
+  // }
 
-  if (searchText.value === '') {
-    searchElements.value = []
-    return
-  }
+  const data =
+    props.options
+      ?.map((_: any) => _[props.valueKey])
+      .filter((_: any) =>
+        _?.toLowerCase().includes(searchText.value.toLowerCase())
+      ) || []
 
-  const data = Array.from(
-    { length: 10 },
-    (_, i) => `Z100${i} - Examen de salud ocupacional`
-  )
-
-  if (props.allowAddSearch) data.push(searchText.value)
+  if (props.allowAddSearch && searchText.value) data.push(searchText.value)
 
   searchActiveItem.value = 0
   searchElements.value = data
 }
 
-const add = (item: string) => {
+const add = (index?: number) => {
+  if (index !== undefined) {
+    searchActiveItem.value = index
+  }
+
+  if (searchElements.value.length == 0 && !searchActiveItem.value) {
+    return
+  }
+  const data = [
+    ...props.modelValue,
+    searchElements.value[searchActiveItem.value],
+  ]
   searchElements.value = []
   searchText.value = ''
-  const data = [...props.modelValue, item]
   emitUpdate(data)
 }
 
@@ -140,16 +153,17 @@ const fixSearchItemScroll = () => {
         'busca por código o descripción y presiona enter para buscar...'
       "
       class="focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-transparent block w-full shadow-sm text-sm border rounded-md py-2 px-2 mt-2"
-      @keyup.enter="search"
+      @keyup.enter="add()"
       @keyup.up.prevent="searchUp"
       @keyup.down.prevent="searchDown"
       @keyup.esc="searchElements = []"
+      @input="search"
       @blur="searchText = ''"
     />
 
     <div
       v-if="searchElements.length > 0"
-      class="absolute z-10 bg-white w-full h-64 overflow-y-scroll border border-gray-300 rounded-md shadow-lg mt-1 p-4"
+      class="absolute z-10 bg-white w-full max-h-64 overflow-y-scroll border border-gray-300 rounded-md shadow-lg mt-1 p-4"
       @click="searchInput?.focus()"
     >
       <ul>
@@ -159,7 +173,7 @@ const fixSearchItemScroll = () => {
           :key="i"
           class="p-1 cursor-pointer hover:bg-blue-500 hover:text-white transition-all duration-200 ease-in-out rounded-md mb-1"
           :class="searchActiveItem === i ? 'bg-blue-500 text-white' : ''"
-          @click="add(item)"
+          @click="add(i)"
         >
           {{ item }}
         </li>

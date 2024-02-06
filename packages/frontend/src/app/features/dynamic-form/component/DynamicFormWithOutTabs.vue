@@ -166,7 +166,18 @@ defineExpose<{
       >
         <DynamicField
           v-for="(field, index) in group.fields as any []"
-          class="col-span-6 sm:col-span-6 lg:col-span-3 xl:col-span-2"
+          class="col-span-6"
+          :class="[
+            !field.class?.includes('sm:col-span')
+              ? 'sm:col-span-3'
+              : field.class,
+            !field.class?.includes('lg:col-span')
+              ? 'lg:col-span-3'
+              : field.class,
+            !field.class?.includes('xl:col-span')
+              ? 'xl:col-span-2'
+              : field.class,
+          ]"
           :count="index"
           :key="index"
           :field="field"
