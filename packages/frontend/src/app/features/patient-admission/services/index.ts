@@ -58,6 +58,8 @@ export async function getList(searchOptions: any) {
       'createdAt',
     ],
     where: where,
+    sort: [{ createdAt: 'desc' }],
+    limit: 50,
   })
 
   return data.map((doc: any) => {
@@ -165,7 +167,7 @@ export async function admitPatientOrder(orderId: string, patient: any) {
     status: OrderStatus.inprogress,
     patientId: patientUpdate.id,
     patientDataId: patientUpdate.dataId,
-    patientName: `${patient.name} ${patient.secondName} ${patient.lastName} ${patient.secondLastName}`,
+    patientName: `${patient.documentNumber} - ${patient.name} ${patient.secondName} ${patient.lastName} ${patient.secondLastName}`,
     orderCycle,
     informedConsent: patient.informedConsent,
   }

@@ -4,6 +4,7 @@ import { generateInformedConsent } from '../../../core/services/generate-cert/'
 import { PouchService, DB } from '../../../services/pouch'
 import { useAuthStore } from '@/store/auth'
 import { OrderStatus } from '@/app/core/types/order-status'
+import { formatDate } from '@/app/core/util/dates'
 
 const pouch = new PouchService()
 const doctype = 'service-orders'
@@ -47,9 +48,12 @@ export async function getList(searchOptions: any) {
       'medicalExamTypeName',
       'patientName',
       'status',
+      'createdAt',
       'updatedAt',
     ],
     where: where,
+    sort: [{ createdAt: 'desc' }],
+    limit: 50,
   })
 
   return data.map((doc: any) => {
@@ -59,7 +63,7 @@ export async function getList(searchOptions: any) {
       type: doc.medicalExamTypeName,
       patientName: doc.patientName,
       status: doc.status,
-      updatedAt: doc.updatedAt,
+      updatedAt: formatDate(doc.updatedAt, true),
     }
   })
 }

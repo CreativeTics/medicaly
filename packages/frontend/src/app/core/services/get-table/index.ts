@@ -28,7 +28,7 @@ export async function getData<T>(
     fields: query.fields,
     selector: { doctype: tableName, ...query.where },
     sort: query.sort,
-    limit: 1000,
+    limit: query.limit || 1000,
   })
 
   return docs as T
@@ -127,6 +127,7 @@ export interface TableDataQuery {
   modifier?: {
     concat?: string[]
   }
+  limit?: number
 }
 
 export interface SelectOption {

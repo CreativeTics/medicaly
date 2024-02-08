@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, onBeforeUnmount } from 'vue'
 import {
   SearchMdIcon,
   DBtn,
@@ -75,10 +75,21 @@ const goToView = (id: string) => {
   router.push({ name: `${modulePath}.view`, params: { id } })
 }
 
+let interval: number = 0
+
 onMounted(async () => {
-  data.value = await getList(searchOptions)
   contractList.value = await getContractsList()
-  console.log('Mounted', data.value)
+  data.value = await getList(searchOptions)
+
+  interval = setInterval(async () => {
+    data.value = await getList(searchOptions)
+  }, 5000)
+})
+
+onBeforeUnmount(() => {
+  data.value = []
+  contractList.value = []
+  if (interval) clearInterval(interval)
 })
 </script>
 

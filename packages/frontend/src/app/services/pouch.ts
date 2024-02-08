@@ -107,9 +107,9 @@ export class PouchService {
 
   private mapCommonFields(doc: any) {
     const mappedDoc = {
+      ...doc,
       id: doc._id,
       rev: doc._rev,
-      ...doc,
     }
     delete mappedDoc._id
     delete mappedDoc._rev
