@@ -11,6 +11,11 @@
 		reverse_proxy certificates:3002
 	}
 
+	handle /api/certificates/* {
+		reverse_proxy certificates:3002
+	}
+	
+
 	handle_path /db/* {
 		reverse_proxy db:5984
 	}
