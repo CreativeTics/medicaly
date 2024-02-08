@@ -1,30 +1,31 @@
-import { getData } from "../../../core/services/get-table/";
+import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from "../../../services/pouch";
-import sha256 from "crypto-js/sha256";
-import Base64 from "crypto-js/enc-base64";
+import { PouchService, DB } from '../../../services/pouch'
+import sha256 from 'crypto-js/sha256'
+import Base64 from 'crypto-js/enc-base64'
 
-import { UserType } from "@/app/core/types/user-types";
+import { UserType } from '@/app/core/types/user-types'
 
-const pouch = new PouchService();
-const doctype = "users";
+const pouch = new PouchService()
+const doctype = 'users'
 
 export async function getList(contractId: string) {
+  if (!contractId) return []
   const data = await getData<any[]>({
     entity: `${DB.AUTH}:${doctype}`,
     fields: [
-      "id",
-      "name",
-      "username",
-      "tempPassword",
-      "roleName",
-      "subsidiaries",
-      "updatedAt",
+      'id',
+      'name',
+      'username',
+      'tempPassword',
+      'roleName',
+      'subsidiaries',
+      'updatedAt',
     ],
     where: {
       contractId: contractId,
     },
-  });
+  })
 
   return data.map((doc: any) => {
     return {
@@ -35,12 +36,12 @@ export async function getList(contractId: string) {
       tempPassword: doc.tempPassword,
       subsidiaries: doc.subsidiaries.length,
       updatedAt: doc.updatedAt,
-    };
-  });
+    }
+  })
 }
 
 export async function getEntity(id: string): Promise<any> {
-  const doc = await pouch.use(DB.AUTH).get(id);
+  const doc = await pouch.use(DB.AUTH).get(id)
   return {
     id: doc.id,
     name: doc.name,
@@ -50,16 +51,16 @@ export async function getEntity(id: string): Promise<any> {
     role: doc.role,
     subsidiaries: doc.subsidiaries,
     contractId: doc.contractId,
-  };
+  }
 }
 
 export async function create(
   contractId: string,
   entity: any
 ): Promise<boolean> {
-  const role = await pouch.use(DB.AUTH).get(entity.role);
+  const role = await pouch.use(DB.AUTH).get(entity.role)
 
-  const encodedPassword = Base64.stringify(sha256(entity.tempPassword));
+  const encodedPassword = Base64.stringify(sha256(entity.tempPassword))
 
   const response = await pouch.use(DB.AUTH).create({
     doctype,
@@ -68,9 +69,9 @@ export async function create(
     type: UserType.contract,
     contractId: contractId,
     encodedPassword,
-  });
-  console.log("create", response);
-  return true;
+  })
+  console.log('create', response)
+  return true
 }
 
 export async function edit(
@@ -78,11 +79,11 @@ export async function edit(
   id: string,
   entity: any
 ): Promise<boolean> {
-  const role = await pouch.use(DB.AUTH).get(entity.role);
-  const oldUser = await pouch.use(DB.AUTH).get(id);
+  const role = await pouch.use(DB.AUTH).get(entity.role)
+  const oldUser = await pouch.use(DB.AUTH).get(id)
 
   if (oldUser.tempPassword !== entity.tempPassword) {
-    entity.encodedPassword = Base64.stringify(sha256(entity.tempPassword));
+    entity.encodedPassword = Base64.stringify(sha256(entity.tempPassword))
   }
 
   const response = await pouch.use(DB.AUTH).update({
@@ -92,13 +93,13 @@ export async function edit(
     roleName: role.name,
     type: UserType.contract,
     contractId: contractId,
-  });
-  console.log("edit", response);
-  return true;
+  })
+  console.log('edit', response)
+  return true
 }
 
 export async function deleteEntity(id: string): Promise<boolean> {
-  await pouch.use(DB.AUTH).delete(id);
+  await pouch.use(DB.AUTH).delete(id)
 
-  return true;
+  return true
 }

@@ -42,10 +42,17 @@ const form: Form = {
               type: 'text',
               props: {
                 placeholder: 'Codigo del Servicio',
-                class: 'lg:col-span-6 xl:col-span-6',
+                class: 'lg:col-span-2 xl:col-span-2',
                 required: true,
               },
               rules: ['required', 'integer', 'minlength:3', 'maxlength:50'],
+            },
+            {
+              name: 'showForContract',
+              label: 'Visible para el contrato?',
+              type: 'check',
+
+              default: false,
             },
             {
               name: 'name',
@@ -58,6 +65,7 @@ const form: Form = {
               },
               rules: ['required', 'minlength:3', 'maxlength:50'],
             },
+
             {
               name: 'amount',
               label: 'Precio',
@@ -130,6 +138,10 @@ const columns = [
   {
     key: 'name',
     title: 'Nombre',
+  },
+  {
+    key: 'showForContract',
+    title: 'Visible',
   },
 
   {

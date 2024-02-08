@@ -1,28 +1,28 @@
-import { getData } from "../../../core/services/get-table/";
+import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from "../../../services/pouch";
+import { PouchService, DB } from '../../../services/pouch'
 
-const pouch = new PouchService();
-const doctype = "contracts";
+const pouch = new PouchService()
+const doctype = 'contracts'
 
 enum Status {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
 }
 
 export async function getList() {
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:${doctype}`,
     fields: [
-      "id",
-      "documentNumber",
-      "name",
-      "email",
-      "phone",
-      "status",
-      "updatedAt",
+      'id',
+      'documentNumber',
+      'name',
+      'email',
+      'phone',
+      'status',
+      'updatedAt',
     ],
-  });
+  })
 
   return data.map((doc: any) => {
     return {
@@ -31,14 +31,14 @@ export async function getList() {
       name: doc.name,
       email: doc.email,
       phone: doc.phone,
-      status: doc.status === Status.ACTIVE ? "Activo" : "Inactivo",
+      status: doc.status === Status.ACTIVE ? 'Activo' : 'Inactivo',
       updatedAt: doc.updatedAt,
-    };
-  });
+    }
+  })
 }
 
 export async function getEntity(id: string): Promise<any> {
-  const doc = await pouch.use(DB.GENERAL).get(id);
+  const doc = await pouch.use(DB.GENERAL).get(id)
   return {
     id: doc.id,
     documentType: doc.documentType,
@@ -49,10 +49,11 @@ export async function getEntity(id: string): Promise<any> {
     status: doc.status,
     billingCode: doc.billingCode,
     legalRepresentative: doc.legalRepresentative,
+    department: doc.department,
     city: doc.city,
     address: doc.address,
     observations: doc.observations,
-  };
+  }
 }
 
 export async function create(entity: any): Promise<boolean> {
@@ -60,9 +61,9 @@ export async function create(entity: any): Promise<boolean> {
     doctype,
     ...entity,
     status: entity.status ?? Status.ACTIVE,
-  });
-  console.log("create", response);
-  return true;
+  })
+  console.log('create', response)
+  return true
 }
 
 export async function edit(id: string, entity: any): Promise<boolean> {
@@ -71,8 +72,8 @@ export async function edit(id: string, entity: any): Promise<boolean> {
     id,
     ...entity,
     status: entity.status ?? Status.ACTIVE,
-  });
-  console.log("edit", response);
+  })
+  console.log('edit', response)
 
-  return true;
+  return true
 }
