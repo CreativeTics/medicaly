@@ -87,7 +87,7 @@ const loading = ref(false)
                   offsetDistance="12"
                   content="Preview"
                   :hover="true"
-                  placement="top"
+                  placement="left"
                   class="tooltip"
                 >
                   <div
@@ -105,7 +105,7 @@ const loading = ref(false)
                   offsetDistance="12"
                   content="Editar"
                   :hover="true"
-                  placement="top"
+                  placement="left"
                   class="tooltip"
                 >
                   <div

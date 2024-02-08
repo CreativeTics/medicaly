@@ -144,7 +144,7 @@ onMounted(async () => {
                   offsetDistance="12"
                   content="Ingresar paciente"
                   :hover="true"
-                  placement="top"
+                  placement="left"
                   class="tooltip"
                 >
                   <div

@@ -160,7 +160,7 @@ onMounted(async () => {
                   offsetDistance="12"
                   content="Ver detalle"
                   :hover="true"
-                  placement="top"
+                  placement="left"
                   class="tooltip"
                 >
                   <div

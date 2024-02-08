@@ -9,7 +9,7 @@ import {
   DSubtitle,
 } from '../../../components/basic'
 import IMCField from '../../../components/medical/IMCField.vue'
-import MultiSelectSearch from '../../../components/medical/MultiSelectSearch.vue'
+import MultiSelectSearch from '../../../components/basic/MultiSelectSearch.vue'
 import JsonEditorVue from 'json-editor-vue'
 import {
   getSelectData,

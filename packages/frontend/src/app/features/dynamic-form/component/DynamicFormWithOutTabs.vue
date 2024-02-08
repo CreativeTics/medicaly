@@ -86,6 +86,7 @@ const setFieldsRules = () => {
         defaultValue = field.type === 'check' ? false : defaultValue
         defaultValue = field.type === 'multiselect' ? [] : defaultValue
         defaultValue = field.type === 'number' ? undefined : defaultValue
+        defaultValue = field.type === 'multiselect_search' ? [] : defaultValue
 
         defaultValues.value[field.name] = defaultValue
       }

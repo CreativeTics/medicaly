@@ -153,7 +153,7 @@ onMounted(async () => {
                   offsetDistance="12"
                   content="Ver detalle"
                   :hover="true"
-                  placement="top"
+                  placement="left"
                   class="tooltip"
                 >
                   <div
@@ -170,7 +170,7 @@ onMounted(async () => {
                   offsetDistance="12"
                   content="Editar"
                   :hover="true"
-                  placement="top"
+                  placement="left"
                   class="tooltip"
                 >
                   <div class="bg-gray-50 rounded-md py-2">

@@ -1,73 +1,73 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive } from 'vue'
 import {
   SearchMdIcon,
   DBtn,
   DTextField,
   DSelectFieldSearch,
-} from "@/app/components/basic";
-import PaginatedTable from "@/app/components/PaginatedTable.vue";
-import Popper from "vue3-popper";
-import { useRouter } from "vue-router";
-import { getList, getSubsidiariesList } from "../services";
+} from '@/app/components/basic'
+import PaginatedTable from '@/app/components/PaginatedTable.vue'
+import Popper from 'vue3-popper'
+import { useRouter } from 'vue-router'
+import { getList, getSubsidiariesList } from '../services'
 
-import OrderStatus from "../../service-orders/components/OrderStatus.vue";
+import OrderStatus from '../../service-orders/components/OrderStatus.vue'
 
-const router = useRouter();
+const router = useRouter()
 
 const actionsColumn = {
-  key: "actions",
-  title: "",
-};
+  key: 'actions',
+  title: '',
+}
 
 const columns = [
   {
-    key: "code",
-    title: "# Orden",
-    align: "left",
+    key: 'code',
+    title: '# Orden',
+    align: 'left',
   },
   {
-    key: "type",
-    title: "Tipo",
-    align: "left",
+    key: 'type',
+    title: 'Tipo',
+    align: 'left',
   },
   {
-    key: "patientName",
-    title: "Paciente",
-    align: "left",
+    key: 'patientName',
+    title: 'Paciente',
+    align: 'left',
   },
   {
-    key: "status",
-    title: "Estado de atención",
+    key: 'status',
+    title: 'Estado de atención',
   },
 
   {
-    key: "createdAt",
-    title: "Fecha de creación",
-    align: "left",
+    key: 'createdAt',
+    title: 'Fecha de creación',
+    align: 'left',
   },
-];
+]
 
-const subsidiaries = ref<{ id: any; name: any }[]>([]);
+const subsidiaries = ref<{ id: any; name: any }[]>([])
 const searchOptions = reactive({
-  subsidiary: "",
-  patient: "",
-});
-const data = ref<any>([]);
+  subsidiary: '',
+  patient: '',
+})
+const data = ref<any>([])
 
 const search = async () => {
-  data.value = await getList(searchOptions);
-};
+  data.value = await getList(searchOptions)
+}
 
 const goToView = (id: string) => {
-  router.push({ name: `patient-admission.admission`, params: { id } });
-};
+  router.push({ name: `patient-admission.admission`, params: { id } })
+}
 
 onMounted(async () => {
-  data.value = await getList(searchOptions);
-  subsidiaries.value = await getSubsidiariesList();
-  console.log("Mounted", data.value);
-});
+  data.value = await getList(searchOptions)
+  subsidiaries.value = await getSubsidiariesList()
+  console.log('Mounted', data.value)
+})
 </script>
 
 <template>
@@ -131,7 +131,7 @@ onMounted(async () => {
                   offsetDistance="12"
                   content="Ver detalle"
                   :hover="true"
-                  placement="top"
+                  placement="left"
                   class="tooltip"
                 >
                   <div

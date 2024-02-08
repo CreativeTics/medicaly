@@ -196,7 +196,7 @@ onMounted(async () => {
                 offsetDistance="12"
                 content="Editar"
                 :hover="true"
-                placement="top"
+                placement="left"
                 class="tooltip"
               >
                 <div
@@ -213,7 +213,7 @@ onMounted(async () => {
                 offsetDistance="12"
                 content="Eliminar"
                 :hover="true"
-                placement="top"
+                placement="left"
                 class="tooltip"
               >
                 <div

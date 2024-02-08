@@ -4,88 +4,88 @@ import {
   DSelectFieldSearch,
   DTextField,
   Trash03Icon,
-} from "../../../components/basic";
-import Popper from "vue3-popper";
+} from '../../../components/basic'
+import Popper from 'vue3-popper'
 
 import {
   getDocumentTypes,
   searchPatient,
   getContractPositions,
-} from "../services/patients";
-import { onMounted, ref, watch } from "vue";
+} from '../services/patients'
+import { onMounted, ref, watch } from 'vue'
 interface Patient {
-  id?: string;
-  doctype: string;
-  document: string;
-  name: string;
-  lastName: string;
-  position: string;
-  observation: string;
-  isOld?: boolean;
+  id?: string
+  doctype: string
+  document: string
+  name: string
+  lastName: string
+  position: string
+  observation: string
+  isOld?: boolean
 }
 
 const props = defineProps<{
-  allModel: any;
-  modelValue: any[];
-  error?: string;
-}>();
+  allModel: any
+  modelValue: any[]
+  error?: string
+}>()
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
-const patients = ref<Patient[]>([]);
-const documentTypes = ref<any[]>([]);
-const positions = ref<any[]>([]);
-const errors = ref<any>({});
+const patients = ref<Patient[]>([])
+const documentTypes = ref<any[]>([])
+const positions = ref<any[]>([])
+const errors = ref<any>({})
 
 watch(
   () => props.allModel?.contract,
   async (value) => {
     if (value) {
-      positions.value = await getContractPositions(value);
+      positions.value = await getContractPositions(value)
     }
   }
-);
+)
 
 watch(
   () => patients.value,
   async (value) => {
-    emit("update:modelValue", value);
+    emit('update:modelValue', value)
   }
-);
+)
 
 const addRow = () => {
   patients.value.push({
-    doctype: "",
-    document: "",
-    name: "",
-    lastName: "",
-    position: "",
-    observation: "",
+    doctype: '',
+    document: '',
+    name: '',
+    lastName: '',
+    position: '',
+    observation: '',
     isOld: false,
-  });
-};
+  })
+}
 
 const removeRow = (index: number) => {
-  patients.value.splice(index, 1);
-};
+  patients.value.splice(index, 1)
+}
 
 const searchPatientByDocument = async (patient: Patient, index: number) => {
-  if (patient.doctype !== "" && patient.document !== "") {
-    const patientOld = await searchPatient(patient.doctype, patient.document);
+  if (patient.doctype !== '' && patient.document !== '') {
+    const patientOld = await searchPatient(patient.doctype, patient.document)
     if (patientOld.length > 0) {
-      patients.value[index].id = patientOld[0].id;
-      patients.value[index].name = patientOld[0].name;
-      patients.value[index].lastName = patientOld[0].lastName;
-      patients.value[index].isOld = true;
+      patients.value[index].id = patientOld[0].id
+      patients.value[index].name = patientOld[0].name
+      patients.value[index].lastName = patientOld[0].lastName
+      patients.value[index].isOld = true
     }
   }
-};
+}
 
 onMounted(async () => {
-  patients.value = [];
-  documentTypes.value = await getDocumentTypes();
-  positions.value = await getContractPositions(props.allModel?.contract);
-});
+  patients.value = []
+  documentTypes.value = await getDocumentTypes()
+  positions.value = await getContractPositions(props.allModel?.contract)
+})
 </script>
 <template>
   <div class="w-full">
@@ -178,7 +178,7 @@ onMounted(async () => {
                 offsetDistance="12"
                 content="Remover"
                 :hover="true"
-                placement="top"
+                placement="left"
                 class="tooltip"
               >
                 <div
@@ -203,7 +203,7 @@ onMounted(async () => {
                 offsetDistance="12"
                 content="Agregar paciente"
                 :hover="true"
-                placement="top"
+                placement="left"
                 class="tooltip"
               >
                 <DBtn class="bg-indigo-500 rounded-md mt-2" @click="addRow">
