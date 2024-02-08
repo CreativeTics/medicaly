@@ -158,6 +158,7 @@ export async function create(entity: any): Promise<{
           code: service.code,
           cost: service.amount,
           status: OrderStatus.pending,
+          showForContract: service.showForContract,
         }
       }),
 
