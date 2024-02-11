@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useNotificationsStore } from '@/store/notifications'
 import { useImageFile } from '@/app/core/composable/useImageFile'
 import { getOrder, admitPatientOrder } from '../services'
 import OrderStatus from '../../service-orders/components/OrderStatus.vue'
@@ -13,6 +14,7 @@ import DFingerPrintInput from '@components/biometric/DFingerPrintInput.vue'
 
 const route = useRoute()
 const router = useRouter()
+const notifications = useNotificationsStore()
 
 const order = ref<any>({})
 const loading = ref(false)
@@ -445,7 +447,7 @@ const onSubmit = async (data: any) => {
   console.log('Submit', data)
   loading.value = true
 
-  await admitPatientOrder(route.params.id.toString(), {
+  const result = await admitPatientOrder(route.params.id.toString(), {
     ...data,
     ...{
       photoId: await photo.saveImage(),
@@ -454,6 +456,15 @@ const onSubmit = async (data: any) => {
     },
   })
   loading.value = false
+
+  if (!result.success) {
+    notifications.addNotification({
+      title: 'Error',
+      text: result.errorMessage,
+      type: 'error',
+    })
+    return
+  }
 
   router.push({
     name: 'patient-attention.attention',

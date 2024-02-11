@@ -145,7 +145,36 @@ export async function getOrder(id: string) {
   }
 }
 
-export async function admitPatientOrder(orderId: string, patient: any) {
+export async function admitPatientOrder(
+  orderId: string,
+  patient: any
+): Promise<{
+  success: boolean
+  errorMessage?: string
+}> {
+  // validate patient images
+
+  if (!patient.photoId) {
+    return {
+      success: false,
+      errorMessage: 'La foto del paciente es requerida',
+    }
+  }
+
+  if (!patient.signatureId) {
+    return {
+      success: false,
+      errorMessage: 'La firma del paciente es requerida',
+    }
+  }
+
+  if (!patient.fingerprintId) {
+    return {
+      success: false,
+      errorMessage: 'La huella del paciente es requerida',
+    }
+  }
+
   const oldOrder = await pouch.use(DB.GENERAL).get(orderId)
 
   const patientUpdate = await savePatientData({
@@ -173,6 +202,10 @@ export async function admitPatientOrder(orderId: string, patient: any) {
   }
 
   await pouch.use(DB.GENERAL).update(orderUpdated)
+
+  return {
+    success: true,
+  }
 }
 
 export async function savePatientData(patient: any): Promise<{
