@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "type": "node-terminal",
+      "name": "debug: datawarehouse-sync",
+      "request": "launch",
+      "command": "yarn workspace data-warehouse-sync  serve",
+      "cwd": "${workspaceFolder}/"
+    }
+  ]
+}

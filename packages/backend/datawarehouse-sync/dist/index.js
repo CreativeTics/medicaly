@@ -15,11 +15,13 @@ const dotenv_1 = require("dotenv");
 const config_1 = require("./config");
 const sync_general_1 = require("./services/sync-general");
 const sync_medical_1 = require("./services/sync-medical");
+const sync_medical_annotations_1 = require("./services/sync-medical-annotations");
 const CronJobExpression = (0, config_1.default)().CRON_EXPRESSION;
 (0, node_cron_1.schedule)(CronJobExpression, () => __awaiter(void 0, void 0, void 0, function* () {
     console.log(`Cron job started ... at ${CronJobExpression}`);
     (0, sync_general_1.syncGeneral)();
     (0, sync_medical_1.syncMedical)();
+    (0, sync_medical_annotations_1.syncMedicalAnnotations)();
 }));
 console.log(`Cron job started ... at ${CronJobExpression}`);
 //# sourceMappingURL=index.js.map

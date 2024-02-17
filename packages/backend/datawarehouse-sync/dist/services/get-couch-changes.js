@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDoc = exports.getChanges = void 0;
+exports.searchDocs = exports.getDoc = exports.getChanges = void 0;
 const http_1 = require("../util/http");
 function getChanges(database, lastSeq) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,4 +28,11 @@ function getDoc(database, id) {
     });
 }
 exports.getDoc = getDoc;
+function searchDocs(database, selector) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const response = yield http_1.couchHttp.post(`/${database}/_find`, { selector });
+        return response.data.docs || [];
+    });
+}
+exports.searchDocs = searchDocs;
 //# sourceMappingURL=get-couch-changes.js.map
