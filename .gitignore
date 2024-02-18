@@ -13,6 +13,10 @@
 
 node_modules
 **/node_modules
-packages/backend/ticket-codes/.env
+.env
+.env.local
+
 
 infrastructure/docker/config/certs/*
+**/dist/
+packages/**/dist/*

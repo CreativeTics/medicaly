@@ -58,7 +58,6 @@ async function upsertAnnotation(annotation: any) {
   `
   )
 
-  // create annotation responses  in postgresql
   const formFields = await getFormFieldsFromExam(annotation.examId)
 
   for (const field of formFields) {
