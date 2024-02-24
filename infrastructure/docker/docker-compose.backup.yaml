@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  db:
+    image: couchdb:3.3.3
+    volumes:
+      - db_data:/opt/couchdb/data # this is for couchdb data
+      # - db_data:/var/lib/couchdb
+      - ./config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
+    restart: unless-stopped
+    environment:
+      COUCHDB_USER: 4dm1n-us3r
+      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+    ports:
+      - 5984:5984
+
+volumes:
+  db_data:

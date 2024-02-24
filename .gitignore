@@ -20,3 +20,5 @@ node_modules
 infrastructure/docker/config/certs/*
 **/dist/
 packages/**/dist/*
+
+backups

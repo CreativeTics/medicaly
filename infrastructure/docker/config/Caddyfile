@@ -19,6 +19,10 @@
 		reverse_proxy db:5984
 	}
 
+	handle /_session {
+		reverse_proxy db:5984
+	}
+
     handle /socket.io/*  {
        reverse_proxy  ws-service:3001
 	}
