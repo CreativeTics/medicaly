@@ -5,8 +5,8 @@ export const DB_AUTH = {
   password: '4dm1n-p4ssw0rd!!',
 }
 
-export const DB_URL = `http://${location}/db`
-export const WS_URL = `ws://${location}`
+export const DB_URL = `https://${location}/db`
+export const WS_URL = `wss://${location}`
 
 export const menu = [
   {

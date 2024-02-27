@@ -25,10 +25,9 @@ const back = () => {
 }
 let model = ref<any>({})
 
-const imagesModel = ref<any>({})
-
 const photo = useImageFile('patientPhoto.png')
 const signature = useImageFile('patientSignature.png')
+const fingerprint = useImageFile('patientFingerprint.png')
 
 onMounted(async () => {
   if (route.params.id) {
@@ -40,6 +39,7 @@ onMounted(async () => {
     }
     photo.loadImageFromId(order.value.patient?.photoId)
     signature.loadImageFromId(order.value.patient?.signatureId)
+    fingerprint.loadImageFromId(order.value.patient?.fingerprintId)
 
     loading.value = false
   }
@@ -452,7 +452,7 @@ const onSubmit = async (data: any) => {
     ...{
       photoId: await photo.saveImage(),
       signatureId: await signature.saveImage(),
-      fingerprintId: imagesModel.fingerprint,
+      fingerprintId: await fingerprint.saveImage(),
     },
   })
   loading.value = false
@@ -508,7 +508,11 @@ const onSubmit = async (data: any) => {
               @update:model-value="signature.setImage"
             />
             {{ signature.unsaved }}
-            <DFingerPrintInput v-model="imagesModel.fingerprint" />
+            <DFingerPrintInput
+              :model-value="fingerprint.imageBase64.value"
+              @update:model-value="fingerprint.setImage"
+            />
+            {{ fingerprint.unsaved }}
           </div>
           <div class="w-full overflow-y-scroll">
             <DynamicFormWithOutTabs

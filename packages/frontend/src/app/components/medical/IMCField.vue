@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 
 const props = withDefaults(
   defineProps<{
     modelValue: string | number | Array<string | number>
-    allModel: object
+    allModel: any
     label?: string
     placeholder?: string
     hint?: string
@@ -21,7 +21,6 @@ const props = withDefaults(
   }>(),
   {
     modelValue: '',
-    allModel: {},
     label: '',
     placeholder: '',
     hint: '',
@@ -61,7 +60,10 @@ const IMC_RANGE = {
   OBESITY: 'Obesidad',
 }
 
-const IMCRange = computed(() => {
+const IMCRange = computed<{
+  range: string
+  color: string
+}>(() => {
   const imc = parseFloat(IMCValue.value)
   if (imc) {
     if (imc < 18.5) {
@@ -86,7 +88,10 @@ const IMCRange = computed(() => {
       }
     }
   }
-  return ''
+  return {
+    range: '',
+    color: '',
+  }
 })
 
 const emitUpdate = (val: string) => {
