@@ -1,6 +1,6 @@
-import { PouchService, DB } from "@/app/services/pouch";
+import { PouchService, DB } from '@/app/services/pouch'
 
-const pouch = new PouchService();
+const pouch = new PouchService()
 
 export async function login(username: string, password: string) {
   const result = await pouch.use(DB.AUTH).find({
@@ -8,20 +8,20 @@ export async function login(username: string, password: string) {
       username,
       password,
     },
-  });
+  })
 
   if (result!.length > 0) {
-    return true;
+    return true
   }
 
-  return false;
+  return false
 }
 
 export class User {
-  username: string;
-  password: string;
-  fullName: string;
-  role: string;
+  username: string
+  password: string
+  fullName: string
+  role: string
 
   constructor(
     username: string,
@@ -29,17 +29,17 @@ export class User {
     fullName: string,
     role: string
   ) {
-    this.username = username;
-    this.password = password;
-    this.fullName = fullName;
-    this.role = role;
+    this.username = username
+    this.password = password
+    this.fullName = fullName
+    this.role = role
   }
 }
 
 export async function getUsers(): Promise<User[]> {
   const docs: any = await pouch
     .use(DB.AUTH)
-    .find({ selector: { doctype: "users" } });
+    .find({ selector: { doctype: 'users' } })
 
   return docs.map((doc: any) => ({
     id: doc._id,
@@ -47,5 +47,5 @@ export async function getUsers(): Promise<User[]> {
     username: doc.username,
     fullName: doc.fullName,
     role: doc.role,
-  }));
+  }))
 }

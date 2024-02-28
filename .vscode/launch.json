@@ -6,6 +6,13 @@
       "request": "launch",
       "command": "yarn workspace data-warehouse-sync  serve",
       "cwd": "${workspaceFolder}/"
+    },
+    {
+      "type": "node-terminal",
+      "name": "debug: api-gateway",
+      "request": "launch",
+      "command": "yarn workspace api-gateway start",
+      "cwd": "${workspaceFolder}/"
     }
   ]
 }
