@@ -36,7 +36,7 @@ app.use(
     next()
   },
   httpProxy(process.env.COUCHDB_URL || 'http://localhost:5984', {
-    proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
+    proxyReqOptDecorator: function (proxyReqOpts) {
       const couchCredentials = `${process.env.COUCHDB_USERNAME}:${process.env.COUCHDB_PASSWORD}`
       proxyReqOpts.headers['Authorization'] =
         'Basic ' + Buffer.from(couchCredentials).toString('base64')
