@@ -1,4 +1,4 @@
-import { UserRepository } from '../../application/use-cases/login'
+import { UserRepository } from '../../domain/user-repository'
 import { Role } from '../../domain/role'
 import { User } from '../../domain/user'
 import { UserPassword } from '../../domain/user-password'
@@ -23,6 +23,30 @@ export class CouchUserRepository implements UserRepository {
         permissions: roleRow.permissions,
       }),
       type: UserType.create(userRow.type),
+      relations: userRow.relations ?? [],
+    })
+
+    return user
+  }
+
+  async getById(id: string): Promise<User | undefined> {
+    const userResponse = await couchHttp.get(`/auth/${id}`)
+    if (userResponse.status !== 200) {
+      return undefined
+    }
+    const userRow = userResponse.data
+
+    const roleRow = await this.getRoleRowById(userRow.role)
+
+    const user = User.create(userRow._id, {
+      username: Username.create(userRow.username),
+      password: UserPassword.create(userRow.encodedPassword, true),
+      role: Role.create(roleRow._id, {
+        name: RoleName.create(roleRow.name),
+        permissions: roleRow.permissions,
+      }),
+      type: UserType.create(userRow.type),
+      relations: userRow.relations ?? [],
     })
 
     return user
@@ -35,7 +59,14 @@ export class CouchUserRepository implements UserRepository {
         username,
         isDeleted: false,
       },
-      fields: ['_id', 'username', 'role', 'encodedPassword', 'type'],
+      fields: [
+        '_id',
+        'username',
+        'role',
+        'encodedPassword',
+        'type',
+        'relations',
+      ],
     })
     if (userResponse.status !== 200) {
       return
@@ -48,6 +79,7 @@ export class CouchUserRepository implements UserRepository {
       role: string
       encodedPassword: string
       type: string
+      relations: any[]
     }
   }
 

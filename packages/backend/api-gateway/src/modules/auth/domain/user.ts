@@ -5,12 +5,14 @@ import { UserPassword } from './user-password'
 import { Username } from './user-username'
 import { UserType } from './user-type'
 import { Role } from './role'
+import { UserRelation } from './user-relation'
 
 export interface UserProps {
   username: Username
   password: UserPassword
   type: UserType
   role: Role
+  relations: UserRelation[]
 }
 
 export class User {
@@ -42,6 +44,10 @@ export class User {
     }
   }
 
+  get relations() {
+    return this.props.relations.map((relation) => relation.value)
+  }
+
   passwordMatches(password: string): boolean {
     return this.props.password.compareWith(password)
   }
@@ -67,6 +73,10 @@ export class User {
 
     if (!props.role) {
       throw new Error('User role is required')
+    }
+
+    if (!props.relations) {
+      throw new Error('User relations are required')
     }
 
     return new User(id, props)

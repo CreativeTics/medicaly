@@ -4,7 +4,6 @@ import {
   InvalidUsernameOrPasswordError,
   LoginUseCase,
 } from '../../../application/use-cases/login'
-import { AuthSessions } from '../../../../../shared/infrastructure/databases/util/auth-sessions'
 
 export class LoginController {
   constructor(private loginUseCase: LoginUseCase) {}
@@ -13,8 +12,6 @@ export class LoginController {
     const { username, password } = req.body
     try {
       const token = await this.loginUseCase.execute({ username, password })
-
-      AuthSessions.instance.add(token.token, username)
 
       res.json(token)
     } catch (error) {

@@ -11,7 +11,7 @@
       "type": "node-terminal",
       "name": "debug: api-gateway",
       "request": "launch",
-      "command": "yarn workspace api-gateway start",
+      "command": "yarn workspace api-gateway serve",
       "cwd": "${workspaceFolder}/"
     }
   ]

@@ -1,7 +1,8 @@
 import { LoginDto } from './login-dto'
 import { InvalidUsernameOrPasswordError } from './login-errors'
 import { LoginResponse } from './login-response'
-import { UserRepository } from './user-repository'
+import { UserRepository } from '../../../domain/user-repository'
+import { AuthSessions } from '../../../../../shared/infrastructure/databases/util/auth-sessions'
 
 export class LoginUseCase {
   constructor(private readonly userRepository: UserRepository) {}
@@ -16,6 +17,8 @@ export class LoginUseCase {
     if (!user.passwordMatches(dto.password)) {
       throw new InvalidUsernameOrPasswordError()
     }
+    const token = user.generateToken()
+    AuthSessions.instance.add(token, user.id)
 
     return {
       token: user.generateToken(),

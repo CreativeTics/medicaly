@@ -2,7 +2,7 @@ export class AuthSessions {
   sessions = new Map<
     string,
     {
-      username: string
+      userId: string
       createdAt: Date
     }
   >()
@@ -16,9 +16,9 @@ export class AuthSessions {
     return AuthSessions.instance
   }
 
-  add(token: string, username: string): void {
+  add(token: string, userId: string): void {
     this.sessions.set(token, {
-      username,
+      userId,
       createdAt: new Date(),
     })
   }
@@ -33,6 +33,15 @@ export class AuthSessions {
       return false
     }
     return true
+  }
+
+  get(token: string): string {
+    const session = this.sessions.get(token)
+
+    if (!session) {
+      return ''
+    }
+    return session.userId
   }
 
   delete(token: string): void {
