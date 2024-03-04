@@ -14,14 +14,18 @@
 	handle /api/certificates/* {
 		reverse_proxy certificates:3002
 	}
+
+	handle /api/* {
+		reverse_proxy api-gateway:4000
+	}
 	
-	handle_path /db/* {
-		reverse_proxy db:5984
+	handle /db/* {
+		reverse_proxy api-gateway:4000
 	}
 
-	handle /_session {
-		reverse_proxy db:5984
-	}
+	# handle /_session {
+	# 	reverse_proxy db:5984
+	# }
 
     handle /socket.io/*  {
        reverse_proxy  ws-service:3001

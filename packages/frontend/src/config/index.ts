@@ -1,11 +1,7 @@
 const location = window.location.host.replace(/:[0-9]*/, '')
 
-export const DB_AUTH = {
-  username: '4dm1n-us3r',
-  password: '4dm1n-p4ssw0rd!!',
-}
-
-export const DB_URL = `http://localhost:4000/db`
+export const API_URL = `http://${location}:4000/api/v1`
+export const DB_URL = `http://${location}:4000/db`
 export const WS_URL = `ws://${location}`
 
 export const menu = [

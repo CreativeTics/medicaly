@@ -1,6 +1,6 @@
 import PouchDB from 'pouchdb'
 import PouchDBFind from 'pouchdb-find'
-import { DB_AUTH, DB_URL } from '../../config'
+import { DB_URL } from '../../config'
 import { useAuthStore } from '@/store/auth'
 
 PouchDB.plugin(PouchDBFind)
@@ -21,7 +21,24 @@ export class PouchService {
     allDB.forEach((dbName) => {
       this.dbs.set(
         dbName,
-        new PouchDB(`${DB_URL}/${dbName}`, { auth: DB_AUTH })
+        new PouchDB(`${DB_URL}/${dbName}`, {
+          fetch: (url, opts) => {
+            return PouchDB.fetch(url, {
+              ...opts,
+              headers: {
+                ...opts?.headers,
+                Authorization: `${useAuthStore().token}`,
+                'Content-Type': 'application/json',
+              },
+            }).then((res) => {
+              if (!res.ok) {
+                if (res.status === 401) useAuthStore().logout()
+              }
+
+              return res
+            })
+          },
+        })
       )
     })
   }
@@ -29,6 +46,7 @@ export class PouchService {
   public use(dbName: DB): this {
     if (this.dbs.has(dbName)) {
       this.db = this.dbs.get(dbName)
+      this
     }
     return this
   }

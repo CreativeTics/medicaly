@@ -1,33 +1,51 @@
-import { defineStore } from "pinia";
+import { http } from '@/app/core/services/http'
+import { defineStore } from 'pinia'
 
 interface User {
-  id: string;
-  username: string;
-  fullName: string;
-  role: string;
-  permissions: string[];
+  id: string
+  username: string
+  type: string
+  role: {
+    id: string
+    name: string
+    permissions: string[]
+  }
+  relations: relation[]
+}
+interface relation {
+  contractId: string
+  contractName: string
+  subsidiaries: string[]
 }
 
-export const useAuthStore = defineStore("auth", {
-  state: (): { user: User } => {
+export const useAuthStore = defineStore('auth', {
+  persist: true,
+  state: () => {
     return {
-      user: {} as User,
-    };
+      user: {} as User | null,
+      token: '',
+    }
+  },
+  getters: {
+    isAuthenticated(): boolean {
+      return !!this.token
+    },
   },
 
   actions: {
-    async login(username: string, password: string): Promise<boolean> {
-      this.$state.user = {
-        id: "1",
-        username: "admin",
-        fullName: "Administrador",
-        role: "admin",
-        permissions: ["roles:create", "roles:read", "roles:edit"],
-      };
-      return username == "admin" && password == "admin";
+    async setSession(user: User, token: string): Promise<void> {
+      this.user = user
+      this.token = token
     },
+
     async logout(): Promise<boolean> {
-      return true;
+      await http.post('/auth/logout', {
+        token: this.$state.token,
+      })
+      this.user = null as any
+      this.token = ''
+
+      return true
     },
   },
-});
+})

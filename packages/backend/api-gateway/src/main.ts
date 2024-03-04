@@ -1,4 +1,9 @@
 import express, { json } from 'express'
+import { config } from 'dotenv'
+config()
+
+import cors from 'cors'
+import morgan from 'morgan'
 
 import httpProxy from 'express-http-proxy'
 
@@ -6,6 +11,14 @@ import { AuthRoutes } from './modules/auth/infrastructure/rest/routes'
 import { AuthSessions } from './shared/infrastructure/databases/util/auth-sessions'
 
 const app = express()
+
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true,
+  })
+)
+app.use(morgan('tiny'))
 
 app.use(
   json({
@@ -22,13 +35,12 @@ app.use(
     }
     next()
   },
-  httpProxy('http://localhost:5984', {
+  httpProxy(process.env.COUCHDB_URL || 'http://localhost:5984', {
     proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
-      // you can update headers
+      const couchCredentials = `${process.env.COUCHDB_USERNAME}:${process.env.COUCHDB_PASSWORD}`
       proxyReqOpts.headers['Authorization'] =
-        'Basic ' + Buffer.from('4dm1n-us3r:4dm1n-p4ssw0rd!!').toString('base64')
-      // you can change the method
-      //   proxyReqOpts.method = 'GET';
+        'Basic ' + Buffer.from(couchCredentials).toString('base64')
+
       return proxyReqOpts
     },
   })
@@ -36,6 +48,6 @@ app.use(
 
 app.use('/api/v1/auth', AuthRoutes())
 
-app.listen(4000, () => {
+app.listen(process.env.PORT || 4000, () => {
   console.log('API Gateway listening on port 4000')
 })

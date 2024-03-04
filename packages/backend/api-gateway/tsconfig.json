@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "pretty": true,
     "sourceMap": true,
@@ -8,7 +8,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "lib": ["es6"],
-    "types": ["node"],
+    // "types": ["node"],
     "typeRoots": ["./node_modules/@types", "./src/@types"],
     "skipLibCheck": true,
     "esModuleInterop": true

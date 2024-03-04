@@ -20,8 +20,20 @@ services:
     environment:
       COUCHDB_USER: 4dm1n-us3r
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
-    # ports:
-    #   - 5984:5984
+    ports:
+      - 5984:5984
+
+  api-gateway:
+    build: ../../packages/backend/api-gateway
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      COUCHDB_URL: http://db:5984
+      COUCHDB_USERNAME: 4dm1n-us3r
+      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      FRONTEND_URL: http://localhost:5173
+      PORT: 4000
 
   datawarehouse:
     image: postgres:latest

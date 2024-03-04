@@ -1,20 +1,31 @@
+import { http } from '@/app/core/services/http'
 import { PouchService, DB } from '@/app/services/pouch'
+
+import { useAuthStore } from '@/store/auth'
 
 const pouch = new PouchService()
 
-export async function login(username: string, password: string) {
-  const result = await pouch.use(DB.AUTH).find({
-    selector: {
-      username,
-      password,
+export async function login(
+  username: string,
+  password: string
+): Promise<boolean> {
+  const response = await http.post('/auth/login', {
+    username,
+    password,
+  })
+
+  if (response.status === 401) {
+    return false
+  }
+
+  const sessionUser = await http.get('/auth/session', {
+    headers: {
+      Authorization: `${response.data.token}`,
     },
   })
 
-  if (result!.length > 0) {
-    return true
-  }
-
-  return false
+  await useAuthStore().setSession(sessionUser.data, response.data.token)
+  return true
 }
 
 export class User {

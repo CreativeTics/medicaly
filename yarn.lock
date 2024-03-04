@@ -1376,9 +1376,12 @@ __metadata:
     "@types/express-http-proxy": ^1.6.6
     "@types/node": ^20.11.20
     axios: ^1.6.7
+    cors: ^2.8.5
     crypto-js: ^4.2.0
+    dotenv: ^16.4.5
     express: ^4.18.2
     express-http-proxy: ^2.0.0
+    morgan: ^1.10.0
     nodemon: ^3.1.0
     ts-node: ^10.9.2
     typescript: ^5.3.3
@@ -2188,6 +2191,13 @@ __metadata:
   version: 16.3.1
   resolution: "dotenv@npm:16.3.1"
   checksum: 15d75e7279018f4bafd0ee9706593dd14455ddb71b3bcba9c52574460b7ccaf67d5cf8b2c08a5af1a9da6db36c956a04a1192b101ee102a3e0cf8817bbcf3dfd
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.4.5":
+  version: 16.4.5
+  resolution: "dotenv@npm:16.4.5"
+  checksum: 301a12c3d44fd49888b74eb9ccf9f07a1f5df43f489e7fcb89647a2edcd84c42d6bc349dc8df099cd18f07c35c7b04685c1a4f3e6a6a9e6b30f8d48c15b7f49c
   languageName: node
   linkType: hard
 

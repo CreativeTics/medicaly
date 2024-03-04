@@ -13,6 +13,13 @@
       "request": "launch",
       "command": "yarn workspace api-gateway serve",
       "cwd": "${workspaceFolder}/"
+    },
+    {
+      "type": "node-terminal",
+      "name": "debug: frontend",
+      "request": "launch",
+      "command": "yarn workspace frontend dev",
+      "cwd": "${workspaceFolder}/"
     }
   ]
 }

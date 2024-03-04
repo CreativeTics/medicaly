@@ -1,48 +1,48 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuthStore } from "@/store/auth";
-import { useNotificationsStore } from "@/store/notifications";
-import { EyeIcon, EyeOffIcon } from "@components/basic/icons";
-import DTextField from "@components/basic/DTextField.vue";
-import DBtn from "@components/basic/DBtn.vue";
-const router = useRouter();
-const authStore = useAuthStore();
-const notificationsStore = useNotificationsStore();
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useNotificationsStore } from '@/store/notifications'
+import { EyeIcon, EyeOffIcon } from '@components/basic/icons'
+import DTextField from '@components/basic/DTextField.vue'
+import DBtn from '@components/basic/DBtn.vue'
+const router = useRouter()
+const notificationsStore = useNotificationsStore()
 
-const show = ref(true);
-const loading = ref(false);
-const wrongData = ref("");
+import { login } from '../services'
+
+const show = ref(true)
+const loading = ref(false)
+const wrongData = ref('')
 
 const dataLogin = ref({
-  userName: "",
-  userPassword: "",
-});
+  userName: '',
+  userPassword: '',
+})
 
 const errors = ref({
-  userName: "",
-  userPassword: "",
-});
+  userName: '',
+  userPassword: '',
+})
 
-const login = async () => {
-  console.log("login");
-  loading.value = true;
-  const isLogged = await authStore.login(
+const handleLogin = async () => {
+  console.log('login')
+  loading.value = true
+  const isLogged = await login(
     dataLogin.value.userName,
     dataLogin.value.userPassword
-  );
+  )
   if (isLogged) {
-    router.push({ name: "Home" });
+    router.push({ name: 'Home' })
   } else {
     notificationsStore.addNotification({
-      title: "Error",
-      text: "Usuario o contraseña incorrectos",
-      type: "error",
-    });
+      title: 'Error',
+      text: 'Usuario o contraseña incorrectos',
+      type: 'error',
+    })
   }
 
-  loading.value = false;
-};
+  loading.value = false
+}
 </script>
 <template>
   <h2 class="text-3xl xl:text-4xl font-bold">Inicio de Sesión</h2>
@@ -65,7 +65,7 @@ const login = async () => {
         placeholder="Ingresa tu nombre de usuario "
         :required="true"
         v-model="dataLogin.userName"
-        @keydown.enter="login"
+        @keydown.enter="handleLogin"
       />
     </div>
     <div class="grid relative mb-3">
@@ -76,7 +76,7 @@ const login = async () => {
         placeholder="Ingresa tu contraseña"
         :required="true"
         v-model="dataLogin.userPassword"
-        @keydown.enter="login"
+        @keydown.enter="handleLogin"
       />
       <div class="absolute right-3 top-8 z-50">
         <EyeIcon
@@ -95,7 +95,7 @@ const login = async () => {
     <DBtn
       class="font-semibold py-3 text-base"
       :loading="loading"
-      @click="login"
+      @click="handleLogin"
     >
       Iniciar sesión
     </DBtn>
