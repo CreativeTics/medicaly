@@ -1,5 +1,5 @@
 export enum UserTypeEnum {
-  EMPLOYEE = 'employee',
+  EMPLOYEE = 'employee-user',
   CONTRACT = 'contract-user',
   LABORATORY = 'laboratory-user',
 }

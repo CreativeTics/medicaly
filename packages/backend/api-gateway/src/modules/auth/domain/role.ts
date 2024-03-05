@@ -1,3 +1,4 @@
+import { EntityId } from './entity-id'
 import { RoleName } from './role-name'
 
 export interface RoleProps {
@@ -6,16 +7,16 @@ export interface RoleProps {
 }
 
 export class Role {
-  private readonly _id: string
+  private readonly _id: EntityId
   private readonly props: RoleProps
 
-  private constructor(id: string, props: RoleProps) {
+  private constructor(props: RoleProps, id: EntityId) {
     this._id = id
     this.props = props
   }
 
   get id(): string {
-    return this._id
+    return this._id.value
   }
 
   get name(): string {
@@ -26,9 +27,7 @@ export class Role {
     return this.props.permissions
   }
 
-  static create(id: string, props: RoleProps): Role {
-    // validate if props is not null or undefined
-
+  static create(props: RoleProps, id?: string): Role {
     if (!props.name) {
       throw new Error('Role name is required')
     }
@@ -37,6 +36,6 @@ export class Role {
       throw new Error('Role permissions are required')
     }
 
-    return new Role(id, props)
+    return new Role(props, EntityId.create(id))
   }
 }

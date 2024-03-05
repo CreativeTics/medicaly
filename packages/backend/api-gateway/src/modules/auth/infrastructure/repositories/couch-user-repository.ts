@@ -6,6 +6,7 @@ import { Username } from '../../domain/user-username'
 import { RoleName } from '../../domain/role-name'
 import { UserType } from '../../domain/user-type'
 import { couchHttp } from '../../../../shared/infrastructure/databases/util/http'
+import { create } from 'axios'
 
 export class CouchUserRepository implements UserRepository {
   async findByUsername(username: string): Promise<User | undefined> {
@@ -15,16 +16,22 @@ export class CouchUserRepository implements UserRepository {
     }
     const roleRow = await this.getRoleRowById(userRow.role)
 
-    const user = User.create(userRow._id, {
-      username: Username.create(userRow.username),
-      password: UserPassword.create(userRow.encodedPassword, true),
-      role: Role.create(roleRow._id, {
-        name: RoleName.create(roleRow.name),
-        permissions: roleRow.permissions,
-      }),
-      type: UserType.create(userRow.type),
-      relations: userRow.relations ?? [],
-    })
+    const user = User.create(
+      {
+        username: Username.create(userRow.username),
+        password: UserPassword.create(userRow.encodedPassword, true),
+        role: Role.create(
+          {
+            name: RoleName.create(roleRow.name),
+            permissions: roleRow.permissions,
+          },
+          roleRow._id
+        ),
+        type: UserType.create(userRow.type),
+        relations: userRow.relations ?? [],
+      },
+      userRow._id
+    )
 
     return user
   }
@@ -38,18 +45,80 @@ export class CouchUserRepository implements UserRepository {
 
     const roleRow = await this.getRoleRowById(userRow.role)
 
-    const user = User.create(userRow._id, {
-      username: Username.create(userRow.username),
-      password: UserPassword.create(userRow.encodedPassword, true),
-      role: Role.create(roleRow._id, {
-        name: RoleName.create(roleRow.name),
-        permissions: roleRow.permissions,
-      }),
-      type: UserType.create(userRow.type),
-      relations: userRow.relations ?? [],
-    })
+    const user = User.create(
+      {
+        username: Username.create(userRow.username),
+        password: UserPassword.create(userRow.encodedPassword, true),
+        role: Role.create(
+          {
+            name: RoleName.create(roleRow.name),
+            permissions: roleRow.permissions,
+          },
+          roleRow._id
+        ),
+        type: UserType.create(userRow.type),
+        relations: userRow.relations ?? [],
+      },
+      userRow._id
+    )
 
     return user
+  }
+
+  async getRoleById(roleId: string): Promise<Role | undefined> {
+    const roleRow = await this.getRoleRowById(roleId)
+    if (!roleRow) {
+      return undefined
+    }
+
+    const role = Role.create(
+      {
+        name: RoleName.create(roleRow.name),
+        permissions: roleRow.permissions,
+      },
+      roleRow._id
+    )
+
+    return role
+  }
+
+  async save(user: User): Promise<void> {
+    const userRow = {
+      _id: user.id,
+      doctype: 'users',
+      username: user.username,
+      encodedPassword: user.password,
+      role: user.role.id,
+      type: user.type,
+      relations: user.relations,
+      isDeleted: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
+    await couchHttp.put(`/auth/${user.id}`, userRow)
+  }
+
+  async update(user: User): Promise<void> {
+    const oldUserResponse = await couchHttp.get(`/auth/${user.id}`)
+    if (oldUserResponse.status !== 200) {
+      return
+    }
+    const oldUserRow = oldUserResponse.data
+
+    const userRow = {
+      _id: user.id,
+      _rev: oldUserRow._rev,
+      doctype: 'users',
+      username: user.username,
+      encodedPassword: user.password,
+      role: user.role.id,
+      type: user.type,
+      relations: user.relations,
+      isDeleted: false,
+      createdAt: oldUserRow.createdAt,
+      updatedAt: new Date().toISOString(),
+    }
+    await couchHttp.put(`/auth/${user.id}`, userRow)
   }
 
   private async getUserRowByUsername(username: string) {
@@ -84,21 +153,15 @@ export class CouchUserRepository implements UserRepository {
   }
 
   private async getRoleRowById(roleId: string) {
-    const roleResponse = await couchHttp.post('/auth/_find', {
-      selector: {
-        doctype: 'roles',
-        _id: roleId,
-        isDeleted: false,
-      },
-      fields: ['_id', 'name', 'permissions'],
-    })
+    const roleResponse = await couchHttp.get(`/auth/${roleId}`)
     if (roleResponse.status !== 200) {
       return
     }
-    const roleRow = roleResponse.data.docs[0]
+    const roleRow = roleResponse.data
 
     return roleRow as {
       _id: string
+      _rev: string
       name: string
       permissions: string[]
     }

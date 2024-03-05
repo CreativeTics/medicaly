@@ -6,6 +6,7 @@ import { Username } from './user-username'
 import { UserType } from './user-type'
 import { Role } from './role'
 import { UserRelation } from './user-relation'
+import { EntityId } from './entity-id'
 
 export interface UserProps {
   username: Username
@@ -16,20 +17,24 @@ export interface UserProps {
 }
 
 export class User {
-  private readonly _id: string
+  private readonly _id: EntityId
   private readonly props: UserProps
 
-  private constructor(id: string, props: UserProps) {
-    this._id = id
+  private constructor(props: UserProps, entityId: EntityId) {
+    this._id = entityId
     this.props = props
   }
 
   get id(): string {
-    return this._id
+    return this._id.value
   }
 
   get username(): string {
     return this.props.username.value
+  }
+
+  get password(): string {
+    return this.props.password.value
   }
 
   get type(): string {
@@ -42,6 +47,13 @@ export class User {
       name: this.props.role.name,
       permissions: this.props.role.permissions,
     }
+  }
+
+  setNewPassword(password: UserPassword) {
+    this.props.password = password
+  }
+  setNewRole(role: Role) {
+    this.props.role = role
   }
 
   get relations() {
@@ -58,7 +70,7 @@ export class User {
     )
   }
 
-  static create(id: string, props: UserProps): User {
+  static create(props: UserProps, id?: string): User {
     if (!props.username) {
       throw new Error('Username is required')
     }
@@ -79,6 +91,6 @@ export class User {
       throw new Error('User relations are required')
     }
 
-    return new User(id, props)
+    return new User(props, EntityId.create(id))
   }
 }
