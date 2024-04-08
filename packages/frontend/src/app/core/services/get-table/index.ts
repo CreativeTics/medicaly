@@ -1,4 +1,4 @@
-import { permissions } from '../permissions/'
+import { permissions, userTypes } from '../permissions/'
 import { PouchService, DB } from '@/app/services/pouch'
 
 const pouch = new PouchService()
@@ -46,6 +46,10 @@ export async function getSelectData<T>(
 
   if (localQuery.entity === 'permissions') {
     return permissions as T
+  }
+
+  if (localQuery.entity === 'userTypes') {
+    return userTypes as T
   }
 
   if (params) {

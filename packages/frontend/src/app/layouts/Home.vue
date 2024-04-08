@@ -6,7 +6,7 @@ import { useAuthStore } from '../../store/auth'
 
 import { useRouter } from 'vue-router'
 
-import { menu } from '../../config'
+import { menuFilteredByPermissions } from '../../config'
 
 const authStore = useAuthStore()
 
@@ -28,7 +28,9 @@ const handleLogout = () => {
   <DToastStack class="left-14" />
   <main class="h-screen w-screen text-gray-900 bg-gray-50 flex">
     <Sidebar
-      :menu="menu"
+      :menu="
+        menuFilteredByPermissions(useAuthStore().user?.role.permissions ?? [])
+      "
       :user="{
         email: '',
         name: authStore.user?.username || '',
@@ -42,6 +44,7 @@ const handleLogout = () => {
     </Sidebar>
     <div class="w-full h-full overflow-hidden mb-1">
       {{ useAuthStore().token }}
+      {{ useAuthStore().user?.role.permissions }}
       <div class="w-full h-full p-5 overflow-hidden">
         <slot></slot>
       </div>

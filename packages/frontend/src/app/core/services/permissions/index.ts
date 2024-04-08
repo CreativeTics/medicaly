@@ -1,28 +1,97 @@
 export const permissions = [
-  // Roles
   {
-    id: "roles:create",
-    name: "Roles:Crear",
+    id: 'patient-admission:list',
+    name: 'Admisión de Pacientes:Listar',
   },
   {
-    id: "roles:list",
-    name: "Roles:Listar",
+    id: 'patient-attention:list',
+    name: 'Atención de Pacientes:Listar',
   },
   {
-    id: "roles:edit",
-    name: "Roles:Editar",
-  },
-  // Empleados
-  {
-    id: "employees:create",
-    name: "Empleados:Crear",
+    id: 'patient-laboratories:list',
+    name: 'Laboratorios de Pacientes:Listar',
   },
   {
-    id: "employees:list",
-    name: "Empleados:Listar",
+    id: 'service-orders:list',
+    name: 'Ordenes de Servicio:Listar',
   },
   {
-    id: "employees:edit",
-    name: "Empleados:Editar",
+    id: 'contracts:list',
+    name: 'Contratos:Listar',
   },
-];
+  {
+    id: 'countries:list',
+    name: 'Configuración > Países:Listar',
+  },
+  {
+    id: 'departments:list',
+    name: 'Configuración > Departamentos:Listar',
+  },
+  {
+    id: 'cities:list',
+    name: 'Configuración > Ciudades:Listar',
+  },
+  {
+    id: 'identification-types:list',
+    name: 'Configuración > Tipos de Identificación:Listar',
+  },
+  {
+    id: 'entities:list',
+    name: 'Configuración > Entidades:Listar',
+  },
+  {
+    id: 'restrictions:list',
+    name: 'Configuración > Restricciones:Listar',
+  },
+  {
+    id: 'recommendations:list',
+    name: 'Configuración > Recomendaciones:Listar',
+  },
+  {
+    id: 'cie10:list',
+    name: 'Configuración > CIE10:Listar',
+  },
+  {
+    id: 'exams:list',
+    name: 'Configuración > Exámenes:Listar',
+  },
+  {
+    id: 'subsidiaries:list',
+    name: 'Administración > Sedes:Listar',
+  },
+  {
+    id: 'positions:list',
+    name: 'Administración > Cargos:Listar',
+  },
+  {
+    id: 'employees:list',
+    name: 'Administración > Empleados:Listar',
+  },
+  {
+    id: 'laboratories:list',
+    name: 'Administración > Laboratorios:Listar',
+  },
+  {
+    id: 'roles:list',
+    name: 'Administración > Roles:Listar',
+  },
+  {
+    id: 'users:list',
+    name: 'Administración > Usuarios:Listar',
+  },
+]
+
+export const userTypes = [
+  {
+    id: 'employee',
+    name: 'Empleado',
+  },
+  {
+    id: 'contract-user',
+    name: 'Usuario de Contrato',
+  },
+  {
+    id: 'laboratory-user',
+    name: 'Usuario de Laboratorio',
+  },
+]

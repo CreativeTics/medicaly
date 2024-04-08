@@ -100,6 +100,5 @@ export async function edit(
 
 export async function deleteEntity(id: string): Promise<boolean> {
   await pouch.use(DB.AUTH).delete(id)
-
   return true
 }

@@ -135,7 +135,7 @@ export const menu = [
       {
         name: 'Sedes de atención',
         route: '/subsidiaries',
-        permission: 'subsidiaries',
+        permission: 'subsidiaries:list',
       },
       {
         name: 'Cargos',
@@ -145,7 +145,7 @@ export const menu = [
       {
         name: 'Empleados',
         route: '/employees',
-        permission: 'roles:list',
+        permission: 'employees:list',
       },
       {
         name: 'Laboratorios',
@@ -157,6 +157,37 @@ export const menu = [
         route: '/roles',
         permission: 'roles:list',
       },
+      {
+        name: 'Usuarios',
+        route: '/users',
+        permission: 'users:list',
+      },
     ],
   },
 ]
+
+export const menuFilteredByPermissions = (permissions: string[]) => {
+  return menu
+    .map((item) => {
+      if (item.children) {
+        return {
+          ...item,
+          children: item.children.filter((child: any) => {
+            if (child.children) {
+              child.children = child.children.filter((subChild: any) => {
+                return (
+                  !subChild.permission ||
+                  permissions.includes(subChild.permission)
+                )
+              })
+              return child.children.length > 0
+            } else {
+              return !child.permission || permissions.includes(child.permission)
+            }
+          }),
+        }
+      }
+      return item
+    })
+    .filter((item) => item.children && item.children.length > 0)
+}
