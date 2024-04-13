@@ -1,29 +1,40 @@
-import { getData } from "../../../core/services/get-table/";
+import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from "../../../services/pouch";
+import { PouchService, DB } from '../../../services/pouch'
 
-const pouch = new PouchService();
-const doctype = "employees";
+const pouch = new PouchService()
+const doctype = 'employees'
 
 export async function getList() {
   const data = await getData<any[]>({
-    entity: "general:employees",
-    fields: ["id", "documentNumber", "fullName", "positionName", "updatedAt"],
-  });
+    entity: 'general:employees',
+    fields: [
+      'id',
+      'documentNumber',
+      'fullName',
+      'positionName',
+      'user',
+      'updatedAt',
+    ],
+  })
 
-  return data.map((doc: any) => {
-    return {
+  let users: any = []
+  for (const doc of data) {
+    const user = doc.user ? await pouch.use(DB.AUTH).get(doc.user) : {}
+    users.push({
       id: doc.id,
       documentNumber: doc.documentNumber,
       fullName: doc.fullName,
       position: doc.positionName,
+      user: user.name,
       updatedAt: doc.updatedAt,
-    };
-  });
+    })
+  }
+  return users
 }
 
 export async function getEntity(id: string): Promise<any> {
-  const doc = await pouch.use(DB.GENERAL).get(id);
+  const doc = await pouch.use(DB.GENERAL).get(id)
   return {
     documentNumber: doc.documentNumber,
     fullName: doc.fullName,
@@ -31,32 +42,52 @@ export async function getEntity(id: string): Promise<any> {
     licenseNumber: doc.licenseNumber,
     licenseName: doc.licenseName,
     exams: doc.exams,
-  };
+    user: doc.user,
+  }
 }
 
 export async function create(entity: any): Promise<boolean> {
-  const position = await pouch.use(DB.GENERAL).get(entity.position);
+  const position = await pouch.use(DB.GENERAL).get(entity.position)
   const response = await pouch.use(DB.GENERAL).create({
     doctype,
     ...entity,
     positionName: position.name,
-  });
-  console.log("edit", response);
-  return true;
+  })
+  await addEmployeeRelationToUser(entity.id, entity.user)
+  return !!response?.ok
 }
 
 export async function edit(id: string, entity: any): Promise<boolean> {
-  console.log("edit", id);
+  console.log('edit', id)
 
-  const position = await pouch.use(DB.GENERAL).get(entity.position);
+  const position = await pouch.use(DB.GENERAL).get(entity.position)
 
   const response = await pouch.use(DB.GENERAL).update({
     doctype,
     id,
     ...entity,
     positionName: position.name,
-  });
-  console.log("edit", response);
+  })
+  await addEmployeeRelationToUser(id, entity.user)
 
-  return true;
+  return !!response?.ok
+}
+
+async function addEmployeeRelationToUser(employeeId: string, userId: string) {
+  if (!userId) {
+    return
+  }
+
+  const user = await pouch.use(DB.AUTH).get(userId)
+
+  const oldRelations = user.relations || []
+
+  user.relations = [
+    ...oldRelations.filter((relation: any) => relation.value !== employeeId),
+    {
+      type: 'employee',
+      value: employeeId,
+    },
+  ]
+  await pouch.use(DB.AUTH).update(user)
 }

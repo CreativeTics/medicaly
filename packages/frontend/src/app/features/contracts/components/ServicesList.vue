@@ -47,20 +47,14 @@ const form: Form = {
               },
               rules: ['required', 'integer', 'minlength:3', 'maxlength:50'],
             },
-            {
-              name: 'showForContract',
-              label: 'Visible para el contrato?',
-              type: 'check',
 
-              default: false,
-            },
             {
               name: 'name',
               label: 'Nombre',
               type: 'text',
               props: {
                 placeholder: 'Nombre del Servicio',
-                class: 'lg:col-span-6 xl:col-span-6',
+                class: 'lg:col-span-4 xl:col-span-4',
                 required: true,
               },
               rules: ['required', 'minlength:3', 'maxlength:50'],
@@ -119,6 +113,28 @@ const form: Form = {
                 fields: ['id', 'code', 'name', 'version'],
               },
             },
+            {
+              name: 'showForContract',
+              label: 'Visible para el contrato?',
+              type: 'check',
+
+              default: false,
+            },
+            {
+              if: 'showForContract',
+              name: 'visibleExams',
+              label: 'Examenes Visibles',
+              type: 'multiselect',
+              props: {
+                required: true,
+                class: 'lg:col-span-4 xl:col-span-4',
+              },
+              rules: ['required-array'],
+              query: {
+                entity: 'medical:exams',
+                fields: ['id', 'code', 'name', 'version'],
+              },
+            },
           ],
         },
       ],
@@ -146,7 +162,7 @@ const columns = [
 
   {
     key: 'amount',
-    title: 'precio',
+    title: 'Precio $',
   },
   {
     key: 'exams',

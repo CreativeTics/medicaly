@@ -17,6 +17,7 @@ export async function getList(contractId: string) {
       'amount',
       'exams',
       'showForContract',
+      'visibleExams',
       'updatedAt',
     ],
     where: {
@@ -30,9 +31,16 @@ export async function getList(contractId: string) {
       examType: doc.examTypeName,
       code: doc.code,
       name: doc.name,
-      amount: doc.amount,
+      amount: Number(doc.amount).toLocaleString('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0,
+      }),
       exams: doc.exams.length,
-      showForContract: doc.showForContract == 'true' ? 'SI' : 'NO',
+      showForContract: Boolean(doc.showForContract)
+        ? `SI(${doc.visibleExams?.length})`
+        : 'NO',
+      visibleExams: doc.visibleExams,
       updatedAt: doc.updatedAt,
     }
   })
@@ -48,6 +56,7 @@ export async function getEntity(id: string): Promise<any> {
     amount: doc.amount,
     exams: doc.exams,
     showForContract: doc.showForContract,
+    visibleExams: doc.visibleExams,
     contractId: doc.contractId,
   }
 }

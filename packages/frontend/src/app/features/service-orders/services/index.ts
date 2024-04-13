@@ -145,29 +145,22 @@ export async function create(entity: any): Promise<{
       .use(DB.GENERAL)
       .get(entity.medicalExamType)
 
+    const servicesFromAttachOrder = await getServicesFromAttachOrder(
+      entity.services
+    )
+
     const serviceOrder = {
       doctype,
       code: 'Por generar',
       status: OrderStatus.pending,
       contract: entity.contract,
       contractName: contract.name,
-      services: entity.services.map((service: any) => {
-        return {
-          id: service.id,
-          name: service.name,
-          code: service.code,
-          cost: service.amount,
-          status: OrderStatus.pending,
-          showForContract: service.showForContract,
-        }
-      }),
-
+      services: servicesFromAttachOrder,
       medicalExamType: entity.medicalExamType,
       medicalExamTypeName: medicalExamType.name,
       contractCostCenter: entity.contractCostCenter,
       contractSubsidiary: entity.contractSubsidiary,
       subsidiary: entity.subsidiary,
-
       position: patient.position,
       observation: patient.observation,
       patientId: patientEntity.id,
@@ -190,6 +183,24 @@ export async function create(entity: any): Promise<{
   return {
     isOk: true,
   }
+}
+
+async function getServicesFromAttachOrder(services: any[]) {
+  const servicesFromAttachOrder = []
+  for (const service of services) {
+    const serviceFromAttachOrder = await pouch.use(DB.GENERAL).get(service.id)
+    servicesFromAttachOrder.push({
+      id: serviceFromAttachOrder.id,
+      code: serviceFromAttachOrder.code,
+      name: serviceFromAttachOrder.name,
+      amount: serviceFromAttachOrder.amount,
+      exams: serviceFromAttachOrder.exams,
+      showForContract: serviceFromAttachOrder.showForContract,
+      visibleExams: serviceFromAttachOrder.visibleExams,
+      examTypeName: serviceFromAttachOrder.examTypeName,
+    })
+  }
+  return servicesFromAttachOrder
 }
 
 function validatePatients(patients: any[]) {

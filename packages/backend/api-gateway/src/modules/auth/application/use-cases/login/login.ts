@@ -21,7 +21,7 @@ export class LoginUseCase {
     AuthSessions.instance.add(token, user.id)
 
     return {
-      token: user.generateToken(),
+      token,
     }
   }
 }

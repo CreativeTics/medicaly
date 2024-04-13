@@ -17,6 +17,7 @@ export class AuthSessions {
   }
 
   add(token: string, userId: string): void {
+    console.log('add', token, userId)
     this.sessions.set(token, {
       userId,
       createdAt: new Date(),

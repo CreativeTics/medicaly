@@ -1,54 +1,38 @@
 import { getData } from '../../../core/services/get-table/'
 
 import { PouchService, DB } from '../../../services/pouch'
-import sha256 from 'crypto-js/sha256'
-import Base64 from 'crypto-js/enc-base64'
-
-import { UserType } from '@/app/core/types/user-types'
 
 const pouch = new PouchService()
-const doctype = 'users'
+const doctype = 'contract-users'
 
 export async function getList(contractId: string) {
   if (!contractId) return []
   const data = await getData<any[]>({
-    entity: `${DB.AUTH}:${doctype}`,
-    fields: [
-      'id',
-      'name',
-      'username',
-      'tempPassword',
-      'roleName',
-      'subsidiaries',
-      'updatedAt',
-    ],
+    entity: `${DB.GENERAL}:${doctype}`,
+    fields: ['id', 'user', 'subsidiaries', 'updatedAt'],
     where: {
       contractId: contractId,
     },
   })
 
-  return data.map((doc: any) => {
-    return {
+  let dataWithUsers: any = []
+  for (const doc of data) {
+    const user = doc.user ? await pouch.use(DB.AUTH).get(doc.user) : {}
+    dataWithUsers.push({
       id: doc.id,
-      name: doc.name,
-      role: doc.roleName,
-      username: doc.username,
-      tempPassword: doc.tempPassword,
       subsidiaries: doc.subsidiaries.length,
+      user: user.name,
       updatedAt: doc.updatedAt,
-    }
-  })
+    })
+  }
+  return dataWithUsers
 }
 
 export async function getEntity(id: string): Promise<any> {
-  const doc = await pouch.use(DB.AUTH).get(id)
+  const doc = await pouch.use(DB.GENERAL).get(id)
   return {
     id: doc.id,
-    name: doc.name,
-    tempPassword: doc.tempPassword,
-    encodedPassword: doc.encodedPassword,
-    username: doc.username,
-    role: doc.role,
+    user: doc.user,
     subsidiaries: doc.subsidiaries,
     contractId: doc.contractId,
   }
@@ -58,20 +42,13 @@ export async function create(
   contractId: string,
   entity: any
 ): Promise<boolean> {
-  const role = await pouch.use(DB.AUTH).get(entity.role)
-
-  const encodedPassword = Base64.stringify(sha256(entity.tempPassword))
-
-  const response = await pouch.use(DB.AUTH).create({
+  const response = await pouch.use(DB.GENERAL).create({
     doctype,
     ...entity,
-    roleName: role.name,
-    type: UserType.contract,
-    contractId: contractId,
-    encodedPassword,
+    contractId,
   })
-  console.log('create', response)
-  return true
+  await addContractRelationToUser(contractId, entity.user)
+  return !!response?.ok
 }
 
 export async function edit(
@@ -79,26 +56,52 @@ export async function edit(
   id: string,
   entity: any
 ): Promise<boolean> {
-  const role = await pouch.use(DB.AUTH).get(entity.role)
-  const oldUser = await pouch.use(DB.AUTH).get(id)
-
-  if (oldUser.tempPassword !== entity.tempPassword) {
-    entity.encodedPassword = Base64.stringify(sha256(entity.tempPassword))
-  }
-
-  const response = await pouch.use(DB.AUTH).update({
+  const response = await pouch.use(DB.GENERAL).update({
     doctype,
     id,
     ...entity,
-    roleName: role.name,
-    type: UserType.contract,
-    contractId: contractId,
+    contractId,
   })
-  console.log('edit', response)
-  return true
+  await addContractRelationToUser(contractId, entity.user)
+  return !!response?.ok
 }
 
 export async function deleteEntity(id: string): Promise<boolean> {
-  await pouch.use(DB.AUTH).delete(id)
-  return true
+  const entity = await getEntity(id)
+  await removeContractRelationFromUser(id, entity.user)
+  const response = await pouch.use(DB.GENERAL).delete(id)
+  return !!response?.ok
+}
+
+async function addContractRelationToUser(contractId: string, userId: string) {
+  if (!userId) {
+    return
+  }
+
+  const user = await pouch.use(DB.AUTH).get(userId)
+  const oldRelations = user.relations || []
+  user.relations = [
+    ...oldRelations.filter((relation: any) => relation.value !== contractId),
+    {
+      type: 'contract',
+      value: contractId,
+    },
+  ]
+  await pouch.use(DB.AUTH).update(user)
+}
+
+async function removeContractRelationFromUser(
+  contractId: string,
+  userId: string
+) {
+  if (!userId) {
+    return
+  }
+
+  const user = await pouch.use(DB.AUTH).get(userId)
+  const oldRelations = user.relations || []
+  user.relations = oldRelations.filter(
+    (relation: any) => relation.value !== contractId
+  )
+  await pouch.use(DB.AUTH).update(user)
 }

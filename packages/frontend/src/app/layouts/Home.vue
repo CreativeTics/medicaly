@@ -29,7 +29,7 @@ const handleLogout = () => {
   <main class="h-screen w-screen text-gray-900 bg-gray-50 flex">
     <Sidebar
       :menu="
-        menuFilteredByPermissions(useAuthStore().user?.role.permissions ?? [])
+        menuFilteredByPermissions(useAuthStore().user?.role?.permissions ?? [])
       "
       :user="{
         email: '',
@@ -44,7 +44,6 @@ const handleLogout = () => {
     </Sidebar>
     <div class="w-full h-full overflow-hidden mb-1">
       {{ useAuthStore().token }}
-      {{ useAuthStore().user?.role.permissions }}
       <div class="w-full h-full p-5 overflow-hidden">
         <slot></slot>
       </div>

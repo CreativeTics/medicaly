@@ -37,50 +37,19 @@ const form: Form = {
           description: '',
           fields: [
             {
-              name: 'name',
-              label: 'Nombre',
-              type: 'text',
-              props: {
-                placeholder: 'Nombre del Servicio',
-                class: 'lg:col-span-6 xl:col-span-6',
-                required: true,
-              },
-              rules: ['required', 'minlength:3', 'maxlength:50'],
-            },
-            {
-              name: 'username',
-              label: 'Username',
-              type: 'text',
-              props: {
-                placeholder: '',
-                class: 'lg:col-span-6 xl:col-span-6',
-                required: true,
-              },
-              rules: ['required', 'minlength:3', 'maxlength:50'],
-            },
-            {
-              name: 'tempPassword',
-              label: 'Contraseña temporal',
-              type: 'text',
-              props: {
-                placeholder: '********',
-                class: 'lg:col-span-6 xl:col-span-6',
-                required: true,
-              },
-              rules: ['required', 'minlength:6', 'maxlength:50'],
-            },
-            {
-              name: 'role',
-              label: 'Rol',
+              name: 'user',
+              label: 'Usuario',
               type: 'select',
               props: {
                 required: true,
                 class: 'lg:col-span-6 xl:col-span-6',
               },
-              rules: ['required'],
               query: {
-                entity: 'auth:roles',
+                entity: 'auth:users',
                 fields: ['id', 'name'],
+                where: {
+                  type: 'contract-user',
+                },
               },
             },
             {
@@ -109,22 +78,10 @@ const form: Form = {
 
 const columns = [
   {
-    key: 'name',
-    title: 'Nombre',
-  },
-  {
-    key: 'username',
-    title: 'Nombre de usuario',
-  },
-  {
-    key: 'tempPassword',
-    title: 'Contraseña temporal',
+    key: 'user',
+    title: 'Usuario',
   },
 
-  {
-    key: 'role',
-    title: 'Rol Asignado',
-  },
   {
     key: 'subsidiaries',
     title: 'Sedes habilitadas',
@@ -165,7 +122,7 @@ const handleDelete = async (id: string) => {
   if (await deleteEntity(id)) {
     notifications.addNotification({
       type: 'success',
-      title: `${moduleName} creado`,
+      title: `${moduleName} eliminado`,
       text: `El ${moduleName} se ha eliminado correctamente`,
     })
   } else {

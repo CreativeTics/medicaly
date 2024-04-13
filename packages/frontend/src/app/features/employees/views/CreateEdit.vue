@@ -1,109 +1,128 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { Form, DynamicForm } from "../../dynamic-form";
-import { useNotificationsStore } from "@/store/notifications";
+import { onBeforeMount, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { Form, DynamicForm } from '../../dynamic-form'
+import { useNotificationsStore } from '@/store/notifications'
 
-import { create, getEntity, edit } from "../services";
+import { create, getEntity, edit } from '../services'
 
-const notifications = useNotificationsStore();
-const moduleName = "Empleado";
-const modulePath = "employees";
+const notifications = useNotificationsStore()
+const moduleName = 'Empleado'
+const modulePath = 'employees'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-let model = {};
-const loading = ref(false);
+let model = {}
+const loading = ref(false)
 
 const form: Form = {
-  entity: "employees",
+  entity: 'employees',
   tabs: [
     {
-      name: "Datos",
+      name: 'Datos',
       groups: [
         {
-          name: "Información basica",
-          description: "Información basica del empleado",
+          name: 'Información basica',
+          description: 'Información basica del empleado',
           fields: [
             {
-              name: "documentNumber",
-              label: "Numero de documento",
-              type: "text",
+              name: 'documentNumber',
+              label: 'Numero de documento',
+              type: 'text',
               props: {
                 rows: 3,
-                placeholder: "Numero de documento",
+                placeholder: 'Numero de documento',
                 required: true,
               },
-              rules: ["required", "integer", "minlength:3", "maxlength:20"],
+              rules: ['required', 'integer', 'minlength:3', 'maxlength:20'],
             },
             {
-              name: "fullName",
-              label: "Nombre completo",
-              type: "text",
+              name: 'fullName',
+              label: 'Nombre completo',
+              type: 'text',
               props: {
-                placeholder: "Nombre completo",
-                class: "lg:col-span-4 xl:col-span-4",
+                placeholder: 'Nombre completo',
+                class: 'lg:col-span-4 xl:col-span-4',
                 required: true,
               },
-              rules: ["required", "minlength:3", "maxlength:50"],
+              rules: ['required', 'minlength:3', 'maxlength:50'],
             },
             {
-              name: "position",
-              label: "Cargo",
-              type: "select",
+              name: 'position',
+              label: 'Cargo',
+              type: 'select',
               props: {
                 required: true,
               },
-              rules: ["required"],
+              rules: ['required'],
               query: {
-                entity: "general:positions",
-                fields: ["id", "name"],
+                entity: 'general:positions',
+                fields: ['id', 'name'],
               },
             },
           ],
         },
         {
-          name: "Datos de Habilitacion",
+          name: 'Datos de Habilitacion',
           fields: [
             {
-              name: "licenseNumber",
-              label: "Numero de documento Habilitado",
-              type: "text",
+              name: 'licenseNumber',
+              label: 'Numero de documento Habilitado',
+              type: 'text',
               props: {
                 rows: 3,
-                placeholder: "Documento Habilitado",
+                placeholder: 'Documento Habilitado',
               },
-              rules: ["maxlength:20"],
+              rules: ['maxlength:20'],
             },
             {
-              name: "licenseName",
-              label: "Nombre Habilitado",
-              type: "text",
+              name: 'licenseName',
+              label: 'Nombre Habilitado',
+              type: 'text',
               props: {
-                placeholder: "Nombre Habilitado",
-                class: "lg:col-span-4 xl:col-span-4",
+                placeholder: 'Nombre Habilitado',
+                class: 'lg:col-span-4 xl:col-span-4',
               },
-              rules: ["maxlength:50"],
+              rules: ['maxlength:50'],
             },
           ],
         },
         {
-          name: " Examenes Asignados",
+          name: ' Examenes Asignados',
           description:
-            "Defina aqui los examenes que este empleado puede diligenciar.",
+            'Defina aqui los examenes que este empleado puede diligenciar.',
           fields: [
             {
-              name: "exams",
-              label: "Examenes Asignados",
-              type: "multiselect",
+              name: 'exams',
+              label: 'Examenes Asignados',
+              type: 'multiselect',
               props: {
                 required: true,
               },
-              rules: ["required-array"],
+              rules: ['required-array'],
               query: {
-                entity: "medical:exams",
-                fields: ["id", "name"],
+                entity: 'medical:exams',
+                fields: ['id', 'name'],
+              },
+            },
+          ],
+        },
+        {
+          name: 'Accesos',
+          description:
+            'Selecione el usuario con el tendrá acceso  este empleado.',
+          fields: [
+            {
+              name: 'user',
+              label: 'Usuario',
+              type: 'select',
+              query: {
+                entity: 'auth:users',
+                fields: ['id', 'name'],
+                where: {
+                  type: 'employee',
+                },
               },
             },
           ],
@@ -111,60 +130,60 @@ const form: Form = {
       ],
     },
   ],
-};
+}
 
 const onSubmit = async (data: any) => {
-  console.log("Submit", data);
+  console.log('Submit', data)
 
   if (route.params.id === undefined) {
-    console.log("Create");
+    console.log('Create')
     if (await create(data)) {
       notifications.addNotification({
-        type: "success",
+        type: 'success',
         title: `${moduleName} creado`,
         text: `El ${moduleName} se ha creado correctamente`,
-      });
-      router.push({ name: `${modulePath}.list` });
+      })
+      router.push({ name: `${modulePath}.list` })
     } else {
       notifications.addNotification({
-        type: "error",
-        title: "Error",
+        type: 'error',
+        title: 'Error',
         text: `No se ha podido crear el ${moduleName}`,
-      });
+      })
     }
   } else {
     if (await edit(route.params.id as string, data)) {
       notifications.addNotification({
-        type: "success",
+        type: 'success',
         title: `${moduleName} actualizado`,
         text: `El ${moduleName} se ha actualizado correctamente`,
-      });
-      router.push({ name: `${modulePath}.list` });
+      })
+      router.push({ name: `${modulePath}.list` })
     } else {
       notifications.addNotification({
-        type: "error",
-        title: "Error",
+        type: 'error',
+        title: 'Error',
         text: `No se ha podido actualizar el ${moduleName}`,
-      });
+      })
     }
   }
-};
+}
 
 const back = () => {
-  console.log("Back");
-  router.push({ name: `${modulePath}.list` });
-};
+  console.log('Back')
+  router.push({ name: `${modulePath}.list` })
+}
 
 onBeforeMount(async () => {
-  loading.value = true;
+  loading.value = true
 
-  console.log("Mounted", route.params.id);
+  console.log('Mounted', route.params.id)
   if (route.params.id) {
-    model = await getEntity(route.params.id as string);
-    console.log("Model", model);
+    model = await getEntity(route.params.id as string)
+    console.log('Model', model)
   }
-  loading.value = false;
-});
+  loading.value = false
+})
 </script>
 
 <template>
@@ -172,7 +191,7 @@ onBeforeMount(async () => {
     <div class="bg-gray-50 pb-4">
       <div class="leading-4 pt-responsive">
         <p class="text-3xl font-semibold text-shadow text-blue-900">
-          {{ route.params.id == undefined ? "Crear" : "Editar" }}
+          {{ route.params.id == undefined ? 'Crear' : 'Editar' }}
           Empleado
         </p>
       </div>
