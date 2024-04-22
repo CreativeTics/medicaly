@@ -1,4 +1,4 @@
-import express, { json } from 'express'
+import express, { NextFunction, Request, Response, json } from 'express'
 import { config } from 'dotenv'
 config()
 
@@ -28,13 +28,7 @@ app.use(
 
 app.use(
   '/db',
-  (req, res, next) => {
-    if (!AuthSessions.instance.validate(req.headers.authorization)) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-    next()
-  },
+  validateAuth,
   httpProxy(process.env.COUCHDB_URL || 'http://localhost:5984', {
     proxyReqOptDecorator: function (proxyReqOpts) {
       const couchCredentials = `${process.env.COUCHDB_USERNAME}:${process.env.COUCHDB_PASSWORD}`
@@ -46,8 +40,25 @@ app.use(
   })
 )
 
+app.use(
+  '/api/v1/files',
+  validateAuth,
+  httpProxy(process.env.CERTIFICATES_URL || 'http://certificates:3002')
+)
+
 app.use('/api/v1/auth', AuthRoutes())
 
 app.listen(process.env.PORT || 4000, () => {
   console.log('API Gateway listening on port 4000')
 })
+
+function validateAuth(req: Request, res: Response, next: NextFunction) {
+  const token =
+    req.headers.authorization ||
+    decodeURI(req.query.h?.toString()).replace(' ', '+')
+  if (!AuthSessions.instance.validate(token)) {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
+  next()
+}

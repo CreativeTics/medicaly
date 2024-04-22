@@ -1,8 +1,9 @@
 import { ref } from 'vue'
-import axios from 'axios'
+import { http } from '../services/http'
 import { Buffer } from 'buffer'
 
 import { DB, PouchService } from '@/app/services/pouch'
+import { useAuthStore } from '@/store/auth'
 
 const pouch = new PouchService()
 
@@ -20,8 +21,11 @@ export function useImageFile(imageName: string = 'image.png') {
   }
 
   const getImageFromFileId = async (fileId: string) => {
-    const response = await axios.get(`/api/files/${fileId}`, {
+    const response = await http.get(`files/api/files/${fileId}`, {
       responseType: 'arraybuffer',
+      headers: {
+        Authorization: `${useAuthStore().token}`,
+      },
     })
     const base64 = Buffer.from(response.data, 'binary').toString('base64')
     return `data:image/png;base64,${base64}`

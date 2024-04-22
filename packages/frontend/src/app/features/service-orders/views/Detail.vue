@@ -9,6 +9,7 @@ import DBtn from '@components/basic/DBtn.vue'
 import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
 import ExamIcon from '@components/basic/icons/FileAttachment01Icon.vue'
 import { getPatient } from '../services/patients'
+import { useAuthStore } from '@/store/auth'
 
 const route = useRoute()
 const router = useRouter()

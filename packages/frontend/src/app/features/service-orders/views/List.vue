@@ -83,7 +83,7 @@ onMounted(async () => {
 
   interval = setInterval(async () => {
     data.value = await getList(searchOptions)
-  }, 5000)
+  }, 500)
 })
 
 onBeforeUnmount(() => {

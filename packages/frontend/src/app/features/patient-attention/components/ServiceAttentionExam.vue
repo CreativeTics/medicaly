@@ -9,6 +9,7 @@ import {
 } from '../services/services'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
 import { AlertCircleIcon, EyeIcon, EyeOffIcon } from '@components/basic'
+import { useNotificationsStore } from '@/store/notifications'
 
 const props = defineProps<{
   orderId: string
@@ -16,6 +17,9 @@ const props = defineProps<{
   patientDataId: string
   examCode: any
 }>()
+
+const notifications = useNotificationsStore()
+
 const isHidden = ref(true)
 const exam = ref<any>({})
 const model = ref<any>({})
@@ -58,7 +62,11 @@ const submit = async (data: any) => {
   )
 
   await getExamAndAnnotation()
-  // notify saved
+
+  notifications.addNotification({
+    title: 'Ok',
+    text: 'Examen guardado con correctamente!',
+  })
 }
 </script>
 <template>

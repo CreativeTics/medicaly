@@ -5,6 +5,7 @@ import { PouchService, DB } from '../../../services/pouch'
 import { useAuthStore } from '@/store/auth'
 import { OrderStatus } from '@/app/core/types/order-status'
 import { formatDate } from '@/app/core/util/dates'
+import { API_URL } from '@/config'
 
 const pouch = new PouchService()
 const doctype = 'service-orders'
@@ -198,6 +199,7 @@ async function getServicesFromAttachOrder(services: any[]) {
       showForContract: serviceFromAttachOrder.showForContract,
       visibleExams: serviceFromAttachOrder.visibleExams,
       examTypeName: serviceFromAttachOrder.examTypeName,
+      status: OrderStatus.pending,
     })
   }
   return servicesFromAttachOrder
@@ -250,5 +252,7 @@ export async function getInformedConsentUrl(orderId: string): Promise<string> {
   }
 
   // get informed consent Url
-  return `/api/files/${informedConsentId}`
+  return `${API_URL}/files/api/files/${informedConsentId}?h=${encodeURI(
+    useAuthStore().token
+  )}`
 }

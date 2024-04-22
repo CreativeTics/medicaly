@@ -161,19 +161,19 @@ export async function admitPatientOrder(
     }
   }
 
-  if (!patient.signatureId) {
-    return {
-      success: false,
-      errorMessage: 'La firma del paciente es requerida',
-    }
-  }
+  // if (!patient.signatureId) {
+  //   return {
+  //     success: false,
+  //     errorMessage: 'La firma del paciente es requerida',
+  //   }
+  // }
 
-  if (!patient.fingerprintId) {
-    return {
-      success: false,
-      errorMessage: 'La huella del paciente es requerida',
-    }
-  }
+  // if (!patient.fingerprintId) {
+  //   return {
+  //     success: false,
+  //     errorMessage: 'La huella del paciente es requerida',
+  //   }
+  // }
 
   const oldOrder = await pouch.use(DB.GENERAL).get(orderId)
 
