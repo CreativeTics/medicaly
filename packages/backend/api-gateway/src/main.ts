@@ -9,6 +9,7 @@ import httpProxy from 'express-http-proxy'
 
 import { AuthRoutes } from './modules/auth/infrastructure/rest/routes'
 import { AuthSessions } from './shared/infrastructure/databases/util/auth-sessions'
+import { PatientRoutes } from './modules/patients/infrastructure/rest/routes'
 
 const app = express()
 
@@ -47,6 +48,7 @@ app.use(
 )
 
 app.use('/api/v1/auth', AuthRoutes())
+app.use('/api/v1/patients', PatientRoutes())
 
 app.listen(process.env.PORT || 4000, () => {
   console.log('API Gateway listening on port 4000')

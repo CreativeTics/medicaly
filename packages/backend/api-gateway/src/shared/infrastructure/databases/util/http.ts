@@ -10,4 +10,5 @@ export const couchHttp = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  validateStatus: (status) => status < 500,
 })

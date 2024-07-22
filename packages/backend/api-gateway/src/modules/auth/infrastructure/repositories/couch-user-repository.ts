@@ -6,7 +6,6 @@ import { Username } from '../../domain/user-username'
 import { RoleName } from '../../domain/role-name'
 import { UserType } from '../../domain/user-type'
 import { couchHttp } from '../../../../shared/infrastructure/databases/util/http'
-import { create } from 'axios'
 
 export class CouchUserRepository implements UserRepository {
   async findByUsername(username: string): Promise<User | undefined> {

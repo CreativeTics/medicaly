@@ -43,7 +43,6 @@ const handleLogout = () => {
     >
     </Sidebar>
     <div class="w-full h-full overflow-hidden mb-1">
-      {{ useAuthStore().token }}
       <div class="w-full h-full p-5 overflow-hidden">
         <slot></slot>
       </div>
