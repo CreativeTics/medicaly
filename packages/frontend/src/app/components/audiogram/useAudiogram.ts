@@ -414,7 +414,7 @@ export function useAudiogram(
     ear,
     transport,
     mask,
-    audiogram,
+    audiogramConfig: audiogram,
     soundField,
     addPoint,
     removePoint,

@@ -1,6 +1,7 @@
 import ExamsList from './views/List.vue'
 import ExamsCreate from './views/CreateEdit.vue'
 import ExamsPreview from './views/Preview.vue'
+import TemplatesEdit from './views/TemplatesEdit.vue'
 
 export const examsRoutes = [
   {
@@ -34,6 +35,15 @@ export const examsRoutes = [
     path: '/exams/preview/:id',
     name: 'exams.preview',
     component: ExamsPreview,
+    meta: {
+      auth: true,
+      layout: 'home',
+    },
+  },
+  {
+    path: '/exams/template/:id',
+    name: 'templates.edit',
+    component: TemplatesEdit,
     meta: {
       auth: true,
       layout: 'home',

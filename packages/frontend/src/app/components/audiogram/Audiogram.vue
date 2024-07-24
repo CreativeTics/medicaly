@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 
 import { useAudiogram } from './useAudiogram'
 
-const { init, audiogram } = useAudiogram()
+const { init, audiogramConfig } = useAudiogram()
 
 onMounted(() => {
   const canvas = document.getElementById('canvas') as HTMLCanvasElement
