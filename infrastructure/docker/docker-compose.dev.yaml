@@ -121,7 +121,7 @@ services:
     ports:
       - 3002:3002
     environment:
-      API_GOTENBERG: http://pdf-engine:3000
+      GOTENBERG_ENDPOINT: http://pdf-engine:3000
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: 4dm1n-us3r
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!

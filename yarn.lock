@@ -1704,7 +1704,7 @@ __metadata:
     "@types/node": ^20.5.0
     axios: ^1.6.3
     chalk: ^5.3.0
-    chromiumly: ^2.5.1
+    chromiumly: 2.5.1
     cors: ^2.8.5
     dotenv: ^16.3.1
     ejs: ^3.1.9
@@ -1777,7 +1777,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromiumly@npm:^2.5.1":
+"chromiumly@npm:2.5.1":
   version: 2.5.1
   resolution: "chromiumly@npm:2.5.1"
   dependencies:

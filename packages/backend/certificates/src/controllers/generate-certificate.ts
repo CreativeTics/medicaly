@@ -28,6 +28,7 @@ export class GenerateCertificateController {
 
       // 2. render templates
       const templates = await this.renderTemplates({
+        code,
         order: orderData,
         contract: contractData,
         patient: patientData,
@@ -115,12 +116,13 @@ export class GenerateCertificateController {
   }
 
   async renderTemplates(data: {
+    code: string
     order: any
     patient: any
     contract: any
     annotations: any
   }): Promise<PrintPdfDto> {
-    const templates = await this.getTemplates('INFORMED-CONSENT')
+    const templates = await this.getTemplates(data.code)
     const ejsService = new EjsService()
     return {
       header: await ejsService.renderFile(templates.header, data),

@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { Form, DynamicForm } from '../../dynamic-form'
 import { useNotificationsStore } from '@/store/notifications'
 
-import { getEntity, edit } from '../services/templates'
+import {
+  getEntity,
+  edit,
+  getPreviewPrintTemplateUrl,
+} from '../services/templates'
+import Popper from 'vue3-popper'
+import { PrinterIcon } from '@components/basic'
 
 const notifications = useNotificationsStore()
 const moduleName = 'Templates'
 
 const route = useRoute()
 
-let model = {}
+let model = {} as any
 const loading = ref(false)
 
 const form: Form = {
@@ -79,6 +85,15 @@ const form: Form = {
               },
               rules: ['required', 'minlength:3'],
             },
+            {
+              name: 'props',
+              label: 'Propiedades de Impresión',
+              type: 'textarea',
+              props: {
+                rows: 5,
+                class: 'lg:col-span-6 xl:col-span-6',
+              },
+            },
           ],
         },
       ],
@@ -104,6 +119,15 @@ const onSubmit = async (data: any) => {
   }
 }
 
+const generatePreview = async (code: string) => {
+  console.log('Generate preview')
+  const url = await getPreviewPrintTemplateUrl(
+    code,
+    'f3a76f8b89105446f9d003e87f000a42'
+  )
+  window.open(url, '_blank')
+}
+
 onBeforeMount(async () => {
   loading.value = true
 
@@ -119,18 +143,35 @@ onBeforeMount(async () => {
 <template>
   <div class="h-full px-5">
     <div class="bg-gray-50 pb-4">
-      <div class="leading-4 pt-responsive">
+      <div class="leading-4 pt-responsive flex justify-between">
         <p class="text-3xl font-semibold text-shadow text-blue-900">
-          {{ route.params.id == undefined ? 'Crear' : 'Editar' }}
-          {{ moduleName }}
+          Editar Templates
         </p>
+
+        <span>
+          <Popper
+            arrow
+            offsetDistance="12"
+            content="Previsualizar"
+            :hover="true"
+            placement="left"
+            class="tooltip"
+          >
+            <div
+              class="bg-white rounded-md py-2"
+              @click="generatePreview(model.code)"
+            >
+              <PrinterIcon class="h-6 w-6 mx-2 cursor-pointer text-gray-600" />
+            </div>
+          </Popper>
+        </span>
       </div>
     </div>
     <DynamicForm
       v-if="form?.tabs && !loading"
       :form-schema="form"
       :initial-model="model"
-      :title-btn-save="route.params.id === undefined ? 'Guardar' : 'Actualizar'"
+      title-btn-save="Actualizar"
       @cancel=""
       @submit="onSubmit"
     />
