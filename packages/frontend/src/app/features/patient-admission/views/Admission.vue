@@ -155,6 +155,21 @@ const form: any = {
           rules: ['required'],
         },
         {
+          name: 'dominantHand',
+          label: 'Dominancia',
+          type: 'select',
+          props: {
+            class: 'lg:col-span-1 xl:col-span-1',
+            required: true,
+            options: [
+              { id: 'Diestro', name: 'Diestro' },
+              { id: 'Zurdo', name: 'Zurdo' },
+              { id: 'Ambidiestro', name: 'Ambidiestro' },
+            ],
+          },
+          rules: ['required'],
+        },
+        {
           name: 'eps',
           label: 'EPS',
           type: 'select',

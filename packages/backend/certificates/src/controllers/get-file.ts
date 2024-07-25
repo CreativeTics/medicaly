@@ -53,7 +53,7 @@ export class GetFileController {
         data: file.data,
       }
     } catch (error) {
-      console.log('Error generating certificate', error)
+      console.log('Error retrieving file', error)
     }
     return null
   }

@@ -24,7 +24,7 @@ export class GenerateCertificateController {
       console.log('patientData')
 
       const annotations = await this.getAnnotations(orderId)
-      console.log('annotations')
+      console.log('annotations', annotations)
 
       // 2. render templates
       const templates = await this.renderTemplates({
@@ -93,9 +93,9 @@ export class GenerateCertificateController {
   }
 
   async getAnnotations(orderId: string) {
-    const response = await couchHttp.post(`/general/_find`, {
+    const response = await couchHttp.post(`/medical/_find`, {
       selector: {
-        docType: 'annotations',
+        doctype: 'annotations',
         orderId,
       },
     })

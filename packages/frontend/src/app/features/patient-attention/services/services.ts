@@ -108,11 +108,12 @@ export async function getAnnotation(orderId: string, examCode: string) {
 
 export async function cacheAnnotation(
   orderId: string,
+  serviceId: string,
   examCode: string,
   annotation: any
 ) {
   localStorage.setItem(
-    `annotation:${orderId}${examCode}`,
+    `annotation:${orderId}${serviceId}${examCode}`,
     JSON.stringify(annotation)
   )
 }
@@ -137,7 +138,7 @@ export async function saveAnnotation(
 
     const newAnnotation = await pouch.use(DB.MEDICAL).create({
       doctype: 'annotations',
-      _id: `${new Date().getFullYear()}:${orderId}:${examId}`,
+      _id: `${new Date().getFullYear()}:${orderId}:${serviceId}:${examId}`,
       ...annotation,
     })
     console.log('newAnnotation', newAnnotation)
@@ -146,7 +147,7 @@ export async function saveAnnotation(
       await updateOrder(orderId, serviceId, newAnnotation.id)
     }
     //  clear cache
-    localStorage.removeItem(`annotation:${orderId}${examCode}`)
+    localStorage.removeItem(`annotation:${orderId}${serviceId}${examCode}`)
 
     return newAnnotation
   }

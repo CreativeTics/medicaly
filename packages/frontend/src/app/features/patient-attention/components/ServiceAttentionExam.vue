@@ -30,7 +30,7 @@ const saveInCache = () => {
   console.log('saveInCache')
   const data = toRaw(dynamicForm.value?.getAllModel())
   console.log('data', data)
-  cacheAnnotation(props.orderId, props.examCode, data)
+  cacheAnnotation(props.orderId, props.serviceId, props.examCode, data)
 }
 
 const getExamAndAnnotation = async () => {

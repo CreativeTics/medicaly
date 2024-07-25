@@ -97,6 +97,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  {{ code }}
   <div
     class="w-full flex justify-center items-center rounded-lg bg-amber-50 border-2 border-dashed overflow-hidden relative"
     :class="{

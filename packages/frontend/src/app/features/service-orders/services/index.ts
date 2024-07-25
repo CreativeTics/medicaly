@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/auth'
 import { OrderStatus } from '@/app/core/types/order-status'
 import { formatDate } from '@/app/core/util/dates'
 import { API_URL } from '@/config'
+import { http } from '@/app/core/services/http'
 
 const pouch = new PouchService()
 const doctype = 'service-orders'
@@ -83,6 +84,15 @@ export async function getOrder(id: string) {
   // get medicalExamType
   const medicalExamType = await pouch.use(DB.GENERAL).get(order.medicalExamType)
 
+  const servicesMapped = await Promise.all(
+    order.services.map(async (service: any) => {
+      return {
+        ...service,
+        visibleExams: await getExamsForService(service.visibleExams),
+      }
+    })
+  )
+
   return {
     ...order,
     contractSubsidiary: {
@@ -98,6 +108,7 @@ export async function getOrder(id: string) {
       name: medicalExamType.name,
       emphasis: medicalExamType.emphasis,
     },
+    services: servicesMapped,
   }
 }
 
@@ -255,4 +266,77 @@ export async function getInformedConsentUrl(orderId: string): Promise<string> {
   return `${API_URL}/files/api/files/${informedConsentId}?h=${encodeURI(
     useAuthStore().token
   )}`
+}
+
+export async function getExamUrl(
+  orderId: string,
+  serviceId: string,
+  examId: string
+): Promise<string> {
+  const exam = await pouch.use(DB.MEDICAL).get(examId)
+
+  if (!exam.printTemplate) {
+    throw new Error('No se configuro la plantilla de impresión para el examen')
+  }
+
+  const examTemplate = await pouch.use(DB.GENERAL).get(exam.printTemplate)
+  const order = await pouch.use(DB.GENERAL).get(orderId)
+
+  const annotationId = [
+    ...order.services.map((service: any) => service.annotations),
+  ]
+    .flat()
+    .find((annotation: string) => annotation.includes(`${serviceId}:${examId}`))
+
+  console.log('annotation', annotationId)
+
+  if (!annotationId) {
+    throw new Error('Examen no finalizado! ')
+  }
+
+  const examPrint = await http.post(
+    'files/api/certificates/',
+    {
+      order: orderId,
+      code: examTemplate.code,
+      params: {
+        annotation: annotationId,
+      },
+    },
+    {
+      headers: {
+        Authorization: `${useAuthStore().token}`,
+      },
+    }
+  )
+
+  return `${API_URL}/files/api/files/${examPrint.data.id}?h=${encodeURI(
+    useAuthStore().token
+  )}`
+}
+
+async function getExamsForService(examsId: string[]): Promise<any> {
+  const exams = await Promise.all(
+    examsId.map(async (examId) => {
+      return await getExam(examId)
+    })
+  )
+
+  return exams
+}
+
+async function getExam(examId: string): Promise<{
+  id: string
+  code: string
+  name: string
+  printTemplateId: string
+}> {
+  const examRaw = await pouch.use(DB.MEDICAL).get(examId)
+
+  return {
+    id: examRaw.id,
+    code: examRaw.code,
+    name: examRaw.name,
+    printTemplateId: examRaw.printTemplate,
+  }
 }

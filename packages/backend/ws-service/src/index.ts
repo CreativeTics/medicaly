@@ -5,7 +5,9 @@ import { config } from 'dotenv'
 import cnf from './config'
 config()
 const httpServer = createServer()
-const io = new Server(httpServer, { cors: { origin: '*' } })
+const io = new Server(httpServer, {
+  cors: { origin: ['localhost:5173', 'localhost'] },
+})
 
 io.of('signature-pad').on('connection', (socket: Socket) => {
   console.log('a user connected' + socket.id)

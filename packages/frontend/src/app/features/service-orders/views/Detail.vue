@@ -3,14 +3,15 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useImageFile } from '@/app/core/composable/useImageFile'
 
-import { getInformedConsentUrl, getOrder } from '../services'
+import { getExamUrl, getInformedConsentUrl, getOrder } from '../services'
 import OrderStatus from '../components/OrderStatus.vue'
 import DBtn from '@components/basic/DBtn.vue'
 import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
 import ExamIcon from '@components/basic/icons/FileAttachment01Icon.vue'
 import { getPatient } from '../services/patients'
-import { useAuthStore } from '@/store/auth'
+import { useNotificationsStore } from '@/store/notifications'
 
+const notifications = useNotificationsStore()
 const route = useRoute()
 const router = useRouter()
 const photo = useImageFile()
@@ -30,6 +31,20 @@ const downloadConsent = async (id: string) => {
   const url = await getInformedConsentUrl(id)
   window.open(url, '_blank')
   consentIsLoading.value = false
+}
+
+const downloadExam = async (serviceId: string, examId: string) => {
+  try {
+    const url = await getExamUrl(order.value.id, serviceId, examId)
+    //nueva ventana
+    window.open(url, '_blank')
+  } catch (error: Error) {
+    notifications.addNotification({
+      type: 'error',
+      title: 'No se puede mostrar el examen',
+      text: error.message,
+    })
+  }
 }
 
 onMounted(async () => {
@@ -149,7 +164,17 @@ onMounted(async () => {
               </td>
               <td>
                 <span class="text-sm">
-                  {{ service }}
+                  <ul v-if="service.showForContract">
+                    <li v-for="exam in service.visibleExams">
+                      <span
+                        href=""
+                        class="text-blue-800 flex gap-2 cursor-pointer hover:resize"
+                        @click="downloadExam(service.id, exam?.id)"
+                      >
+                        {{ exam.code }} - {{ exam.name }}
+                      </span>
+                    </li>
+                  </ul>
                 </span>
               </td>
             </tr>
