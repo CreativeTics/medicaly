@@ -34,6 +34,11 @@ export const menu = [
         route: '/patient-laboratories',
         permission: 'patient-laboratories:list',
       },
+      {
+        name: 'Historia pacientes',
+        route: '/patient-history',
+        permission: 'patient-history:list',
+      },
     ],
   },
   {

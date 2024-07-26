@@ -35,7 +35,11 @@ const saveInCache = () => {
 
 const getExamAndAnnotation = async () => {
   const patientData = await getPatient(props.patientDataId)
-  const annotation = await getAnnotation(props.orderId, props.examCode)
+  const annotation = await getAnnotation(
+    props.orderId,
+    props.serviceId,
+    props.examCode
+  )
   console.log('annotation', annotation)
   exam.value = await getLastExamOrAnnotationExam(props.examCode, annotation)
 

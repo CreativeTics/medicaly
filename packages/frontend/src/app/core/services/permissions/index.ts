@@ -12,6 +12,10 @@ export const permissions = [
     name: 'Laboratorios de Pacientes:Listar',
   },
   {
+    id: 'patient-history:list',
+    name: 'Historia de Pacientes:Listar',
+  },
+  {
     id: 'service-orders:list',
     name: 'Ordenes de Servicio:Listar',
   },

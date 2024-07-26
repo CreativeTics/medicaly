@@ -123,7 +123,7 @@ const generatePreview = async (code: string) => {
   console.log('Generate preview')
   const url = await getPreviewPrintTemplateUrl(
     code,
-    'f3a76f8b89105446f9d003e87f000a42'
+    'b79264275ddd22421f37df9854018a75'
   )
   window.open(url, '_blank')
 }

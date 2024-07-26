@@ -82,7 +82,11 @@ export async function getPatient(patientDataId: string) {
   return patientData
 }
 
-export async function getAnnotation(orderId: string, examCode: string) {
+export async function getAnnotation(
+  orderId: string,
+  serviceId: string,
+  examCode: string
+) {
   const annotations = await getData<any[]>({
     entity: `${DB.MEDICAL}:annotations`,
     fields: ['id'],
@@ -95,7 +99,7 @@ export async function getAnnotation(orderId: string, examCode: string) {
   if (!annotations.length) {
     // get from cache
     const cacheAnnotation = localStorage.getItem(
-      `annotation:${orderId}${examCode}`
+      `annotation:${orderId}${serviceId}${examCode}`
     )
     if (cacheAnnotation) {
       return JSON.parse(cacheAnnotation)
