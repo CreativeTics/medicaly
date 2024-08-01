@@ -32,6 +32,13 @@ export async function getList(searchOptions: any) {
 
   if (searchOptions.contract) {
     where['contract'] = searchOptions.contract
+  } else {
+    const user = useAuthStore().user
+    if (user && user?.type != 'employee' && user.relations.length > 0) {
+      where['contract'] = {
+        $in: user.relations.map((relation: any) => relation.contractId),
+      }
+    }
   }
 
   if (searchOptions.orderCode) {

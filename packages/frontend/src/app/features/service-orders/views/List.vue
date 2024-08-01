@@ -12,9 +12,12 @@ import { useRouter } from 'vue-router'
 import { getList, getContractsList } from '../services'
 
 import OrderStatus from '../components/OrderStatus.vue'
+import { useAuthStore } from '@/store/auth'
 
 const router = useRouter()
 const modulePath = 'service-orders'
+
+const user = useAuthStore().user
 
 const actionsColumn = {
   key: 'actions',
@@ -100,6 +103,7 @@ onBeforeUnmount(() => {
         <p class="text-3xl font-semibold text-shadow">Ordenes de servicio</p>
         <p class="text-gray-500 text-shadow">Gestión de Ordenes de servicio</p>
       </div>
+      {{ user }}
       <div class="sm:flex justify-between pt-2">
         <PaginatedTable
           :columns="[...columns, actionsColumn]"

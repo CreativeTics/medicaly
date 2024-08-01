@@ -1,8 +1,11 @@
 const location = window.location.host.replace(/:[0-9]*/, '')
 
-export const API_URL = `http://${location}:4000/api/v1`
-export const DB_URL = `http://${location}:4000/db`
-export const WS_URL = `ws://${location}`
+// export const API_URL = `http://${location}:4000/api/v1`
+// export const DB_URL = `http://${location}:4000/db`
+// export const WS_URL = `ws://${location}`
+export const API_URL = `https://${location}/api/v1`
+export const DB_URL = `https://${location}/db`
+export const WS_URL = `wss://${location}`
 
 export const menu = [
   {

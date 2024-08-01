@@ -6,5 +6,8 @@
     "packages/*",
     "packages/**/*",
     "infrastructure/migrations/**/*"
-  ]
+  ],
+  "scripts": {
+    "docker:dev": "docker-compose -p medicaly -f infrastructure/docker/docker-compose.dev.yaml"
+  }
 }
