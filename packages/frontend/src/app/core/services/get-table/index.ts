@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/store/auth'
 import { permissions, userTypes } from '../permissions/'
 import { PouchService, DB } from '@/app/services/pouch'
 
@@ -57,6 +58,12 @@ export async function getSelectData<T>(
       ...localQuery.where,
       ...Object.fromEntries(params.entries()),
     }
+  }
+
+  if (localQuery.entity === 'user-contract-subsidiaries') {
+    return (await getContractSubsidiariesForUser(
+      localQuery?.where?.contractId
+    )) as T
   }
 
   let data = (await getData<T>(localQuery)) as T[]
@@ -147,4 +154,44 @@ export interface getDataIndex {
 
   /** The same syntax as the selector you’d pass to find(), and only documents matching the selector will be included in the index. */
   selector?: PouchDB.Find.Selector | undefined
+}
+
+export async function getContractSubsidiariesForUser(
+  contractId: string
+): Promise<SelectOption[]> {
+  const user = useAuthStore().user
+  const where: any = {}
+  if (user && user?.type != 'employee' && user.relations.length > 0) {
+    where['contractId'] = contractId
+
+    // get all subsidiaries for the user
+    const data = await getData<any[]>({
+      entity: `${DB.GENERAL}:contract-users`,
+      fields: ['id', 'subsidiaries'],
+      where: {
+        user: user.id,
+        contractId: contractId,
+      },
+    })
+    const subsidiaries = data.map((_) => _.subsidiaries).flat()
+
+    if (data.length > 0) {
+      where['_id'] = {
+        $in: subsidiaries,
+      }
+    }
+  }
+
+  const data = await getData<any[]>({
+    entity: `${DB.GENERAL}:contract-subsidiaries`,
+    fields: ['id', 'name'],
+    where,
+  })
+
+  return data.map((doc: any) => {
+    return {
+      id: doc.id,
+      name: doc.name,
+    }
+  })
 }

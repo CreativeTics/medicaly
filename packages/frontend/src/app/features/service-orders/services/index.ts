@@ -11,10 +11,24 @@ import { http } from '@/app/core/services/http'
 const pouch = new PouchService()
 const doctype = 'service-orders'
 
-export async function getContractsList() {
+export interface ContractSelectResult {
+  id: string
+  name: string
+}
+
+export async function getContracts(): Promise<ContractSelectResult[]> {
+  const user = useAuthStore().user
+  const where: any = {}
+  if (user && user?.type != 'employee' && user.relations.length > 0) {
+    where['_id'] = {
+      $in: user.relations,
+    }
+  }
+
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:contracts`,
     fields: ['id', 'name'],
+    where,
   })
 
   return data.map((doc: any) => {
@@ -30,15 +44,33 @@ export async function getList(searchOptions: any) {
 
   const where: any = {}
 
-  if (searchOptions.contract) {
-    where['contract'] = searchOptions.contract
-  } else {
-    const user = useAuthStore().user
-    if (user && user?.type != 'employee' && user.relations.length > 0) {
-      where['contract'] = {
-        $in: user.relations.map((relation: any) => relation.contractId),
+  const user = useAuthStore().user
+  if (user && user?.type != 'employee' && user.relations.length > 0) {
+    // get all subsidiaries for the user
+    const data = await getData<any[]>({
+      entity: `${DB.GENERAL}:contract-users`,
+      fields: ['id', 'subsidiaries'],
+      where: {
+        user: user.id,
+        contractId: { $in: user.relations },
+      },
+    })
+    const subsidiaries = data.map((_) => _.subsidiaries).flat()
+
+    if (data.length > 0) {
+      console.log('subsidiaries', subsidiaries)
+      where['contractSubsidiary'] = {
+        $in: subsidiaries,
       }
     }
+
+    where['contract'] = {
+      $in: user.relations,
+    }
+  }
+
+  if (searchOptions.contract) {
+    where['contract'] = searchOptions.contract
   }
 
   if (searchOptions.orderCode) {

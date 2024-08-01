@@ -37,10 +37,10 @@ onMounted(async () => {
   }
 })
 
-function scrollTo(id: string) {
-  const element = document.getElementById(id) as HTMLDivElement
-  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
+// function scrollTo(id: string) {
+//   const element = document.getElementById(id) as HTMLDivElement
+//   element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+// }
 
 async function finalize(id: string) {
   loading.value = true
@@ -84,11 +84,13 @@ async function finalize(id: string) {
         v-if="order.patientDataId"
         :patientDataId="order.patientDataId"
         :patientName="order.patientName"
+        :contractName="order.contractName"
+        :positionId="order.position"
       />
     </div>
     <!-- services -->
     <div class="w-full flex-grow flex overflow-y-hidden">
-      <div class="w-28 flex flex-col justify-center items-center">
+      <!-- <div class="w-28 flex flex-col justify-center items-center">
         <div
           v-for="service in order.services"
           class="bg-white w-28 rounded-lg shadow-xl shadow-cyan-400 flex flex-col justify-center items-center h-10 mb-2 cursor-pointer"
@@ -96,7 +98,7 @@ async function finalize(id: string) {
         >
           <ServiceStatus :status="service.status" :text="service.name" />
         </div>
-      </div>
+      </div> -->
       <div
         class="flex-grow h-full rounded-xl bg-white shadow-lg p-5 flex flex-col overflow-y-scroll"
       >

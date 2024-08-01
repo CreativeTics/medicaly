@@ -66,6 +66,7 @@ const goToView = (id: string) => {
 onMounted(async () => {
   data.value = await getList(searchOptions)
   subsidiaries.value = await getSubsidiariesList()
+  searchOptions.subsidiary = localStorage.getItem('user-subsidiary') || ''
   console.log('Mounted', data.value)
 })
 </script>

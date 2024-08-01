@@ -36,6 +36,8 @@ export async function getList(searchOptions: any) {
 
   if (searchOptions.subsidiary) {
     where['subsidiary'] = searchOptions.subsidiary
+    // save in local storage
+    localStorage.setItem('user-subsidiary', searchOptions.subsidiary)
   }
 
   if (searchOptions.orderCode) {
@@ -241,6 +243,7 @@ export async function savePatientData(patient: any): Promise<{
     age: calculateAgeFromBirthDate(patient.birthDate),
     maritalStatus: patient.maritalStatus,
     bloodType: patient.bloodType,
+    dominantHand: patient.dominantHand,
     eps: patient.eps,
     epsAffiliationType: patient.epsAffiliationType,
     arl: patient.arl,
@@ -297,6 +300,7 @@ interface PatientData {
   }
   maritalStatus?: string
   bloodType?: string
+  dominantHand?: string
   eps?: string
   epsAffiliationType?: string
   arl?: string

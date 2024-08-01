@@ -27,7 +27,7 @@ const props = withDefaults(
     sizeModel: '',
     weightModel: '',
     required: false,
-    allowAddSearch: true,
+    allowAddSearch: false,
     valueKey: 'concat',
     searchInternal: true,
   }
@@ -65,8 +65,7 @@ const search = () => {
       ) || []
 
   if (props.allowAddSearch && searchText.value) data.push(searchText.value)
-
-  searchActiveItem.value = 0
+  if (data.length > 0) searchActiveItem.value = 0
   searchElements.value = data
 }
 
@@ -75,15 +74,17 @@ const add = (index?: number) => {
     searchActiveItem.value = index
   }
 
-  if (searchElements.value.length == 0 && !searchActiveItem.value) {
+  if (searchElements.value.length == 0 || searchActiveItem.value === -1) {
     return
   }
+
   const data = [
     ...props.modelValue,
     searchElements.value[searchActiveItem.value],
   ]
   searchElements.value = []
   searchText.value = ''
+  searchActiveItem.value = -1
   emitUpdate(data)
 }
 
@@ -119,6 +120,7 @@ const fixSearchItemScroll = () => {
   <div class="relative">
     <label class="block text-sm font-medium text-gray-800 mb-1.5" v-if="label">
       {{ label }} <span v-if="required" class="text-red-500">*</span>
+      {{ allowAddSearch }} - {{ searchActiveItem }}
     </label>
 
     <!-- model Value  -->

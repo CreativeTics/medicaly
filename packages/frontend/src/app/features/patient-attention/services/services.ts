@@ -237,3 +237,10 @@ export async function finalizeOrder(orderId: string): Promise<boolean> {
 
   return true
 }
+
+export async function getContractPositionNameById(
+  positionId: string
+): Promise<string> {
+  const position = await pouch.use(DB.GENERAL).get(positionId)
+  return position.name
+}

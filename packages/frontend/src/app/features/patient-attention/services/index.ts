@@ -29,6 +29,8 @@ export async function getList(searchOptions: any) {
 
   if (searchOptions.subsidiary) {
     where['subsidiary'] = searchOptions.subsidiary
+    // save in local storage
+    localStorage.setItem('user-subsidiary', searchOptions.subsidiary)
   }
 
   if (searchOptions.orderCode) {

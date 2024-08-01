@@ -9,7 +9,7 @@ import {
 import PaginatedTable from '@/app/components/PaginatedTable.vue'
 import Popper from 'vue3-popper'
 import { useRouter } from 'vue-router'
-import { getList, getContractsList } from '../services'
+import { getList, getContracts } from '../services'
 
 import OrderStatus from '../components/OrderStatus.vue'
 import { useAuthStore } from '@/store/auth'
@@ -81,7 +81,7 @@ const goToView = (id: string) => {
 let interval: number = 0
 
 onMounted(async () => {
-  contractList.value = await getContractsList()
+  contractList.value = await getContracts()
   data.value = await getList(searchOptions)
 
   interval = setInterval(async () => {
@@ -103,7 +103,6 @@ onBeforeUnmount(() => {
         <p class="text-3xl font-semibold text-shadow">Ordenes de servicio</p>
         <p class="text-gray-500 text-shadow">Gestión de Ordenes de servicio</p>
       </div>
-      {{ user }}
       <div class="sm:flex justify-between pt-2">
         <PaginatedTable
           :columns="[...columns, actionsColumn]"
