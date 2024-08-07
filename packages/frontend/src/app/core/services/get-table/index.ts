@@ -160,10 +160,10 @@ export async function getContractSubsidiariesForUser(
   contractId: string
 ): Promise<SelectOption[]> {
   const user = useAuthStore().user
-  const where: any = {}
+  const where: any = {
+    contractId,
+  }
   if (user && user?.type != 'employee' && user.relations.length > 0) {
-    where['contractId'] = contractId
-
     // get all subsidiaries for the user
     const data = await getData<any[]>({
       entity: `${DB.GENERAL}:contract-users`,
@@ -173,11 +173,11 @@ export async function getContractSubsidiariesForUser(
         contractId: contractId,
       },
     })
-    const subsidiaries = data.map((_) => _.subsidiaries).flat()
+    const subsidiaries = new Set(data.map((_) => _.subsidiaries).flat())
 
-    if (data.length > 0) {
+    if (subsidiaries.size > 0) {
       where['_id'] = {
-        $in: subsidiaries,
+        $in: Array.from(subsidiaries),
       }
     }
   }

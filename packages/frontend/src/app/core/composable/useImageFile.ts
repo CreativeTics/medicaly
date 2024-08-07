@@ -37,6 +37,7 @@ export function useImageFile(imageName: string = 'image.png') {
     }
     const response = await pouch.use(DB.FILES).create({
       doctype: 'files',
+      bucket: 'patient-images',
       createdAt: new Date(),
       name: imageName,
       _attachments: {

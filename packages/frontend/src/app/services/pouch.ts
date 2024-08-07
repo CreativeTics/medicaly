@@ -51,8 +51,11 @@ export class PouchService {
     return this
   }
 
-  public async get(docId: string): Promise<any> {
-    const result = await this.db?.get(docId)
+  public async get(
+    docId: string,
+    opts: { attachments?: boolean } = {}
+  ): Promise<any> {
+    const result = await this.db?.get(docId, opts)
     return this.mapCommonFields(result)
   }
 
@@ -81,6 +84,16 @@ export class PouchService {
     delete doc.rev
     // TODO: emit audit event
     return await this.db?.put(doc)
+  }
+
+  public async updateOnly(
+    docId: string,
+    values: {
+      [key: string]: string | number | boolean | Date
+    }
+  ) {
+    const oldDoc = await this.get(docId)
+    return this.update({ ...oldDoc, ...values })
   }
 
   public async delete(docId: string) {

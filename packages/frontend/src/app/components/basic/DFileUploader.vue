@@ -1,68 +1,68 @@
 <script setup lang="ts">
-import { UploadCloud01Icon, File06Icon } from "./icons";
-import DBtn from "./DBtn.vue";
+import { UploadCloud01Icon, File06Icon } from './icons'
+import DBtn from './DBtn.vue'
 
 const props = withDefaults(
   defineProps<{
-    label: string;
-    mode: string;
-    modelValue: string;
-    helpText: string;
-    multiple: boolean;
-    accept: string;
-    disabled: boolean;
-    error: string;
+    label: string
+    mode: string
+    modelValue: string
+    helpText: string
+    multiple: boolean
+    accept: string
+    disabled: boolean
+    error: string
   }>(),
   {
-    label: "edit",
-    mode: "",
-    modelValue: "",
-    helpText: "Carga tu archivo",
+    label: 'edit',
+    mode: '',
+    modelValue: '',
+    helpText: 'Carga tu archivo',
     multiple: false,
-    accept: "",
+    accept: '',
     disabled: false,
-    error: "",
+    error: '',
   }
-);
+)
 
-const emit = defineEmits(["update:modelValue", "file", "handleFileDownload"]);
+const emit = defineEmits(['update:modelValue', 'file', 'handleFileDownload'])
 
 const emitUpdate = (val: any) => {
-  emit("update:modelValue", val.target.value);
-};
+  emit('update:modelValue', val.target.value)
+}
 
 const inputFileChange = (e: any) => {
-  const files = e.target.files;
+  const files = e.target.files
   if (files.length > 0) {
-    const file = files[0];
+    const file = files[0]
     if (file.type.match(props.accept)) {
-      onFileChange(file);
+      onFileChange(file)
     }
   }
-};
+}
 
 const onFileChange = (file: any) => {
-  const reader = new FileReader();
-  reader.readAsArrayBuffer(file);
+  const reader = new FileReader()
+  reader.readAsArrayBuffer(file)
   reader.onload = (e) => {
-    const data = _arrayBufferToBase64(e.target?.result);
-    emit("file", { content: data, name: file.name });
-  };
-};
+    const data = _arrayBufferToBase64(e.target?.result)
+    emit('file', { content: data, name: file.name })
+  }
+}
 
 const _arrayBufferToBase64 = (buffer: any) => {
-  let binary = "";
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
+  let binary = ''
+  const bytes = new Uint8Array(buffer)
+  const len = bytes.byteLength
   for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
+    binary += String.fromCharCode(bytes[i])
   }
-  return window.btoa(binary);
-};
+  return window.btoa(binary)
+}
 
 const deleteFile = () => {
-  emit("update:modelValue", "");
-};
+  emit('update:modelValue', '')
+}
 </script>
 
 <template>
@@ -86,31 +86,31 @@ const deleteFile = () => {
         >
           <File06Icon class="h-10 w-10 text-gray-300" />
           {{
-            modelValue.indexOf("\\") >= 0
+            modelValue.indexOf('\\') >= 0
               ? modelValue
-                  .split("\\")
-                  [modelValue.split("\\").length - 1].indexOf("UpHere") >= 0
+                  .split('\\')
+                  [modelValue.split('\\').length - 1].indexOf('UpHere') >= 0
                 ? modelValue
-                    .split("\\")
-                    [modelValue.split("\\").length - 1].split("UpHere")[
+                    .split('\\')
+                    [modelValue.split('\\').length - 1].split('UpHere')[
                     modelValue
-                      .split("\\")
-                      [modelValue.split("\\").length - 1].split("UpHere")
+                      .split('\\')
+                      [modelValue.split('\\').length - 1].split('UpHere')
                       .length - 1
                   ]
-                : modelValue.split("\\")[modelValue.split("\\").length - 1]
+                : modelValue.split('\\')[modelValue.split('\\').length - 1]
               : modelValue
-                  .split("/")
-                  [modelValue.split("/").length - 1].indexOf("UpHere") >= 0
+                  .split('/')
+                  [modelValue.split('/').length - 1].indexOf('UpHere') >= 0
               ? modelValue
-                  .split("/")
-                  [modelValue.split("/").length - 1].split("UpHere")[
+                  .split('/')
+                  [modelValue.split('/').length - 1].split('UpHere')[
                   modelValue
-                    .split("/")
-                    [modelValue.split("/").length - 1].split("UpHere").length -
+                    .split('/')
+                    [modelValue.split('/').length - 1].split('UpHere').length -
                     1
                 ]
-              : modelValue.split("/")[modelValue.split("/").length - 1]
+              : modelValue.split('/')[modelValue.split('/').length - 1]
           }}
         </span>
         <span v-else class="flex flex-col justify-center items-center">

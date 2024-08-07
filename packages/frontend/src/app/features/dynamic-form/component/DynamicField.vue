@@ -5,9 +5,9 @@ import {
   DSelectFieldSearch,
   DMultiselect,
   DToggleField,
-  DFileUploader,
   DSubtitle,
 } from '../../../components/basic'
+import DFileAttachment from '../../../components/attachments/DFileAttachment.vue'
 import IMCField from '../../../components/medical/IMCField.vue'
 import MultiSelectSearch from '../../../components/basic/MultiSelectSearch.vue'
 import JsonEditorVue from 'json-editor-vue'
@@ -48,7 +48,7 @@ const components = new Map<string, any>([
   ['select', { component: DSelectFieldSearch, defaultProps: {} }],
   ['multiselect', { component: DMultiselect, defaultProps: {} }],
   ['textarea', { component: DTextAreaField, defaultProps: {} }],
-  ['file', { component: DFileUploader, defaultProps: {} }],
+  ['file', { component: DFileAttachment, defaultProps: {} }],
   ['json', { component: JsonEditorVue, defaultProps: {} }],
   ['subtitle', { component: DSubtitle, defaultProps: {} }],
   ['imc', { component: IMCField, defaultProps: {} }],

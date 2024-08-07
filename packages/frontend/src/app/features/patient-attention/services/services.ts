@@ -1,6 +1,8 @@
 import { PouchService, DB } from '../../../services/pouch'
 import { getData } from '../../../core/services/get-table/'
 import { OrderStatus } from '@/app/core/types/order-status'
+import { useAuthStore } from '@/store/auth'
+import { useFileAttachment } from '@/app/core/composable/useFileAttachment'
 
 const pouch = new PouchService()
 
@@ -130,8 +132,11 @@ export async function saveAnnotation(
   examVersion: string,
   annotation: any
 ) {
-  annotation.saveBy = 'patient'
+  annotation.saveBy = useAuthStore().user?.id
   annotation.saveAt = new Date().toISOString()
+
+  // save attachment files changing bucket
+  await updateAttachmentsBucket(annotation)
 
   if (!annotation.id) {
     annotation.orderId = orderId
@@ -161,6 +166,19 @@ export async function saveAnnotation(
     ...annotation,
   })
   return updatedAnnotation
+}
+
+async function updateAttachmentsBucket(annotation: any) {
+  const { changeBucket } = useFileAttachment()
+  const attachmentsKeys = Object.keys(annotation).filter((key) =>
+    key.startsWith('attachment')
+  )
+  await Promise.all(
+    attachmentsKeys.map(async (key) => {
+      const fileId = annotation[key]
+      return changeBucket(fileId, 'patient-annotations')
+    })
+  )
 }
 
 async function updateOrder(

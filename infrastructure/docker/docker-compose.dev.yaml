@@ -1,4 +1,3 @@
-version: '3.7'
 services:
   proxy:
     image: caddy:2.4.5
@@ -36,7 +35,7 @@ services:
       PORT: 4000
 
   datawarehouse:
-    image: postgres:latest
+    image: postgres:15
     restart: unless-stopped
     volumes:
       - warehouse_data:/var/lib/postgresql/data

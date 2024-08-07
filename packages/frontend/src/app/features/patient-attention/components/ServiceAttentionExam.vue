@@ -84,7 +84,7 @@ const submit = async (data: any) => {
         <span v-else class="text-amber-500"> (Pendiente) </span>
         <!-- TODO: if model has medical concept, show -->
         <p v-if="model.id" class="px-10 overflow-ellipsis">
-          Concepto medico: {{ model.fullName }}
+          <!-- Concepto medico: {{ model.fullName }} -->
         </p>
       </div>
       <div class="bg-gray-50 rounded-md py-2" @click="isHidden = !isHidden">
