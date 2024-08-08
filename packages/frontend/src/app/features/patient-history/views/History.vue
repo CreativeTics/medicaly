@@ -79,6 +79,10 @@ onMounted(async () => {
 
 <template>
   <div class="w-full h-full px-5 flex flex-col">
+    <div class="leading-4 pt-responsive">
+      <p class="text-3xl font-semibold text-shadow">Historia - paciente</p>
+      <p class="text-gray-500 text-shadow"></p>
+    </div>
     <div class="w-full flex-grow flex overflow-y-hidden">
       <div
         class="flex-grow h-full rounded-xl bg-white shadow-lg p-5 flex flex-col"

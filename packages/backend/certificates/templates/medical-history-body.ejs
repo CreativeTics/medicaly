@@ -1,3 +1,5 @@
+<% const FILES_API = process.env.FILES_API || 'http://localhost:3005/api/'; %>
+<% const attachments = []%>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -5,15 +7,44 @@
     <style>
       body {
         font-family: sans-serif;
-        background-color: #fff;
         margin-top: 0px;
         -webkit-print-color-adjust: exact;
+        width: 210mm;
+        height: 297mm;
+        background-color: rgb(255, 255, 255);
+      }
+
+      body:before{
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('https://localhost/src/assets/logo.svg');
+        box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.5);
+        opacity: 0.5;
+        z-index: -1;
+      }
+
+    
+      @page {
+        size: A4;
+        margin: 0;
       }
       @media print {
+        html,
+        body {
+          width: 210mm;
+          height: 297mm;
+          min-height: 297mm;
+        }
+
         .page-break {
-          page-break-after: always;
+          page-break-after: auto;
         }
       }
+
       .flex-container {
         display: flex;
         flex-direction: column;
@@ -28,7 +59,14 @@
         border-collapse: collapse;
         padding-left: 10px;
       }
+
+      .pdf-container {
+        width: 100%;
+        position: relative;
+      }
+
     </style>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
   </head>
   <body>
     <table style="width: 100%; border: 1px solid gray; font-size: 10px">
@@ -42,26 +80,49 @@
             font-size: 12px;
           "
         >
-          HISTORIA MEDICA
+          HISTORIA CLÍNICA # <%= order?.code %>
         </td>
       </tr>
       <tr>
-        <td colspan="1" style="width: 10%">
-          <strong> FECHA: </strong>
+        <td colspan="3" style="width: 10%">
+          <strong>REGISTRADO: </strong>
         </td>
-        <% const dateOfAdmission = new Date() %>
+        <% const dateOfAdmission= order.orderCycle?.find(cycle => cycle.type ==
+        "admission" )?.at%> <% const dateOfFinalization=
+        order.orderCycle?.find(cycle => cycle.type == "finalize" )?.at %>
 
-        <td colspan="9">
-          <%= dateOfAdmission?.toLocaleDateString('es-ES', { year: 'numeric',
-          month: 'numeric', day: 'numeric', hour:'2-digit', minute:'2-digit',
-          hour12:false })%>
+        <td colspan="7">
+          <%= (new Date(order.createdAt))?.toLocaleDateString('es-ES', { year:
+          'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:
+          '2-digit', second: '2-digit', hour12: true })%>
         </td>
-        <td colspan="2" rowspan="6">
+
+        <td colspan="2" rowspan="8">
           <img
-            src=""
+            src="<%= FILES_API %>files/<%=  patient?.photoId %>"
             alt=""
             style="width: 140px; height: 100px; float: right"
           />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" style="width: 10%">
+          <strong>INICIO ATENCIÓN: </strong>
+        </td>
+        <td colspan="7">
+          <%= (new Date(dateOfAdmission))?.toLocaleDateString('es-ES', { year:
+          'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:
+          '2-digit', second: '2-digit', hour12: true })%>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" style="width: 10%">
+          <strong>FIN ATENCIÓN: </strong>
+        </td>
+        <td colspan="7">
+          <%= (new Date(dateOfFinalization))?.toLocaleDateString('es-ES', {
+          year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit',
+          minute: '2-digit', second: '2-digit', hour12: true })%>
         </td>
       </tr>
       <tr>
@@ -85,7 +146,12 @@
         <td colspan="1">
           <strong> EDAD: </strong>
         </td>
-        <td colspan="7" style="text-align: left"></td>
+        <td colspan="7" style="text-align: left">
+          <span>
+            <%= patient?.age.years %> Años, <%= patient?.age.months %> Meses y
+            <%= patient?.age.days %> Días
+          </span>
+        </td>
       </tr>
       <tr>
         <td colspan="1">
@@ -97,182 +163,187 @@
         <td colspan="1">
           <strong> DOMINANCIA: </strong>
         </td>
-        <td colspan="2" style="text-align: left"></td>
+        <td colspan="2" style="text-align: left">
+          <%= patient.dominantHand %>
+        </td>
         <td colspan="1">
           <strong> EPS: </strong>
         </td>
-        <td colspan="3"></td>
+        <td colspan="3"><%= patient.eps %></td>
       </tr>
     </table>
-    <p style="font-size: 11px">
-      Declaro que asisto de manera voluntaria a la Institución Prestadora de
-      Servicios de Salud JAVAP Salud Ocupacional para la realización de un
-      Examen Médico Ocupacional y/o pruebas complementarias diagnósticas, que
-      permitan establecer mi condición de salud y aptitud para el desempeño de
-      la ocupación en una Empresa, de manera segura para mi integridad personal
-      y la de terceros.
-      <br />
-      <br />
-      La realización del Examen Médico Ocupacional y/o pruebas complementarias
-      diagnósticas, no representan en sí mismas ningún riesgo que ponga en
-      peligro mi integridad física o mental y no existe un riesgo especial
-      previsible.
-      <br />
-      <br />
-      Cada evaluador está a su disposición para ampliarle la información de la
-      prueba a realizar, por lo que le puede preguntar cualquier duda o
-      inquietud que usted tenga.
-      <br />
-      <br />
-      Por ello, al firmar se considera que usted acepta conocer y entender las
-      condiciones para someterse voluntariamente a su realización y queda
-      entendido para nosotros que, en caso de posteriormente no estar de acuerdo
-      con algún procedimiento, podrá retirar este consentimiento, para lo cual
-      deberá firmar el respectivo desistimiento, para que no se le realice.
-    </p>
-    <table style="font-size: 11px" class="table-border">
+
+    <% annotations.forEach(annotation => { %>
+
+    <table style="width: 100%; border: 1px solid gray; font-size: 10px">
       <tr>
         <td
-          class="table-border"
-          style="width: 20%; background-color: rgb(224, 234, 245)"
+          colspan="12"
+          style="
+            width: 100%;
+            text-align: center;
+            background-color: #dedddd;
+            font-size: 12px;
+            margin-bottom: 10mm;
+          "
         >
-          <strong> Descripción del servicio y procedimientos </strong>
-        </td>
-        <td class="table-border" style="width: 80%">
-          <p>
-            Diligenciamiento de historia clínica, reevaluación, valoración,
-            examen físico, control, orientación, diagnostico, solicitud de
-            exámenes paraclínicos y generación de certificado clínico de Salud
-            Ocupacional.
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td
-          class="table-border"
-          style="width: 20%; background-color: rgb(224, 234, 245)"
-        >
-          <strong> Beneficios </strong>
-        </td>
-        <td class="table-border" style="width: 80%">
-          <p>
-            Examinar, conocer, evaluar, diagnosticar el estado del paciente y
-            generar certificado de salud ocupacional.
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td
-          class="table-border"
-          style="width: 20%; background-color: rgb(224, 234, 245)"
-        >
-          <strong> Riesgos </strong>
-        </td>
-        <td class="table-border" style="width: 80%">
-          <p>
-            No previste ningún riesgo a la salud, puesto que, son exámenes
-            diagnósticos para establecer tratamientos a seguir y/o actividades
-            de promoción y prevención.
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td
-          class="table-border"
-          style="width: 20%; background-color: rgb(224, 234, 245)"
-        >
-          <strong> Riesgos de no realizarlo </strong>
-        </td>
-        <td class="table-border" style="width: 80%">
-          <p>
-            No conocer el estado de salud, enfermedad, diagnostico o tratamiento
-            que necesita, imposibilitando la atención y limitando al profesional
-            para poder ejercer lo pertinente que se requiera.
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td
-          class="table-border"
-          style="width: 20%; background-color: rgb(224, 234, 245)"
-        >
-          <strong> Alternativa de tratamiento</strong>
-        </td>
-        <td class="table-border" style="width: 80%">
-          <p>No aplica.</p>
+          <%= annotation.exam.name %>
         </td>
       </tr>
     </table>
-    <p style="font-size: 11px">
-      Acepta que los documentos de la atención tengan su foto y firma y que
-      puedan ser guardados de manera electrónica en un Formato de Historia
-      Electrónica, en la cual le garantizamos la reserva y confidencialidad de
-      mi información sensible y al empleador solo se le podrá entregar el
-      Certificado Médico de Aptitud.
-      <br />
-      <br />
-      Para que el Médico Especialista en Salud en el Trabajo pueda evaluar su
-      condición de salud y antecedentes de enfermedades, acepta informar toda la
-      verdad, sin ocultamientos ni información falsa sobre su condición de
-      salud, por lo que la información suministrada puede ser usada para
-      intervenir sobre ella buscando su mejoramiento, de acuerdo al Sistema de
-      Gestión de la Seguridad y Salud en el Trabajo de la Empresa. Además, podrá
-      ampliar al Médico lo que considere necesario.
-      <br />
-      <br />
-      <strong>AUTORIZO</strong> expresamente a
-      <strong>JAVAP Salud Ocupacional</strong>, para que informe al médico de
-      Salud ocupacional o medicina laboral de la Empresa sobre las condiciones
-      de mi estado de salud, y remita a esta última copia de la evaluación
-      médica ocupacional y/o los exámenes paraclínicos a mi realizados, de
-      conformidad con lo establecido por la legislación vigente (Res. 2346/07 y
-      Res. 1918/09 del Min. de la Protección Social)
-    </p>
-    <p style="text-align: center; font-size: 11px">
-      <strong>CONFIDENCIAL</strong> - este documento es de uso exclusivo de
-      JAVAP Salud Ocupacional, por lo que, se encuentra prohibida su divulgación
-      por cualquier medio sin autorización expresa y escrita.
-    </p>
 
-    <div
-      style="
-        width: 100%;
+      <% const form = annotation.exam.form; form.groups?.forEach(group => { %>
 
-        display: flex;
-        justify-content: space-between;
-      "
-    >
-      <div style="display: flex; flex-direction: column; align-items: center">
-        <img src="" style="width: 140px; height: 100px" />
-        <div
-          style="
-            width: 200px;
-            padding: 2px;
-            font-size: 9px;
-            font-weight: 700;
-            text-align: center;
-            border-top: 2px solid black;
-          "
-        >
-          FIRMA PACIENTE
+        <div>
+          <div
+            style="
+            background-color: #ecebeb;
+              padding: 5px;
+              font-size: 8px;
+            "
+          >
+            <strong> <%= group.name %> </strong>
+            <span><%= group.description %> </span>
+
         </div>
-      </div>
-      <div style="display: flex; flex-direction: column; align-items: center">
-        <img src="" alt="" style="width: 140px; height: 100px" />
+
         <div
-          style="
-            width: 200px;
-            padding: 2px;
-            font-size: 9px;
-            font-weight: 700;
-            text-align: center;
-            border-top: 2px solid black;
-          "
-        >
-          HUELLA PACIENTE
-        </div>
+        style="
+          display: grid;
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+          gap: 0px 0px;
+        "
+      >
+      <% group.fields?.forEach(field => {
+        //lg:col-span-6 xl:col-span-6
+        const pattern = /col-span-([0-9])/;
+        let columns = field?.props?.class?.match(pattern)?.[0]?.replace(/col-span-/, '')
+        || 2;
+
+        if(field.type === 'file') {
+          columns = 6;
+        }
+
+        %>
+      <div
+        style="
+          border: 1px solid rgb(215, 215, 215);
+          padding: 2px;
+          font-size: 8px;
+          grid-column: span <%= columns%>/ span <%= columns%>; 
+        "
+      >
+
+
+
+        <% if ( ['text',
+        'number',
+        'date',
+        'select',
+        'multiselect',
+        'textarea',
+        'json',
+        'imc',
+        'multiselect_search'
+        ].includes(field.type)) { %>
+
+        <strong> <%=field.label %> </strong>
+        <p><%= annotation[field.name] %></p>
+
+        <% } else if (
+        field.type === 'file'
+        ) { 
+          attachments.push({
+            name: field.label,
+            url: `${FILES_API}files/${annotation[field.name]}`
+          });
+          %>
+
+          <strong> <%=field.label %> </strong>
+          <p>VER ANEXO <%=attachments.length %></p>
+        <% } else if (
+        field.type === 'subtitle'
+        ) { %>
+          
+        <strong> <%=field.props?.text %> </strong>
+        <% }%>
+
       </div>
+      <% }); %> 
     </div>
+      <% }); %>
+      <div
+            style="
+
+              padding: 5px;
+              font-size: 8px;
+              display: flex;
+              justify-content: center;
+            "
+          >
+          <div style="display: flex; flex-direction: column; justify-content: center; ">
+            <strong> Atendido Por:</strong>
+            <span>Firma</span>
+          </div>
+
+    </div>
+
+    <% }); %>
+
+    <center>
+      
+      FINALIZA
+      </center>
+
     <div class="page-break"></div>
+
+    <% attachments.forEach((attachment, index) => { %>
+
+      <div class="pdf-container">
+        ANEXO <%= index + 1 %>
+        <div id="pdf-canvas-<%=index%>"></div>
+      </div>
+      <div class="page-break"></div>
+    <% }); %>
+
+    <script>
+
+    const attachments = <%- JSON.stringify(attachments) %>
+    
+    attachments.forEach((attachment, index) => {
+      const url = attachment.url;
+      pdfjsLib.getDocument(url).promise.then(pdfDoc => {
+        // get all pages
+        const pages = pdfDoc.numPages;
+
+        for (let i = 1; i <= pages; i++) {
+          pdfDoc.getPage(i).then(page => {
+            const container = document.getElementById(`pdf-canvas-${index}`);
+            const canvas = document.createElement('canvas')
+            canvas.style.width = '100%';
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            
+            const viewport = page.getViewport({ scale: 1 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width ;
+            
+            const renderContext = {
+              canvasContext: ctx,
+              viewport: viewport
+            };
+
+            page.render(renderContext);
+            // add page count layer to canvas
+            ctx.font = '10px Arial';
+            ctx.fillStyle = 'black';
+            ctx.fillText(`Página ${i} de ${pages}`, 10, 10);
+
+            
+          });
+        }
+      });
+    });
+  </script>
   </body>
 </html>

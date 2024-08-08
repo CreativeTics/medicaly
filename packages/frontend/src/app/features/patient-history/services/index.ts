@@ -139,6 +139,7 @@ export async function getOrdersForPatient(
       'orderCycle',
     ],
     where: { patientId: patientId },
+    sort: [{ createdAt: 'asc' }],
   })
 
   return data.reverse().map((doc: any) => {

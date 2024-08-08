@@ -16,6 +16,13 @@
     },
     {
       "type": "node-terminal",
+      "name": "debug: certificates",
+      "request": "launch",
+      "command": "yarn workspace certificates serve",
+      "cwd": "${workspaceFolder}/"
+    },
+    {
+      "type": "node-terminal",
       "name": "debug: frontend",
       "request": "launch",
       "command": "yarn workspace frontend dev",

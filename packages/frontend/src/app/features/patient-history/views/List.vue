@@ -71,7 +71,9 @@ onMounted(async () => {
   <div class="h-full px-5 overflow-auto scroll">
     <div class="bg-gray-50 pb-4">
       <div class="leading-4 pt-responsive">
-        <p class="text-3xl font-semibold text-shadow">Historia - pacientes</p>
+        <p class="text-3xl font-semibold text-shadow">
+          Historia - buscar paciente
+        </p>
         <p class="text-gray-500 text-shadow"></p>
       </div>
       <div class="sm:flex justify-between pt-2">

@@ -18,8 +18,9 @@ class GenerateCertificateController {
             const patientData = await this.getPatientData(orderData === null || orderData === void 0 ? void 0 : orderData.patientDataId);
             console.log('patientData');
             const annotations = await this.getAnnotations(orderId);
-            console.log('annotations');
+            console.log('annotations', annotations);
             const templates = await this.renderTemplates({
+                code,
                 order: orderData,
                 contract: contractData,
                 patient: patientData,
@@ -63,9 +64,9 @@ class GenerateCertificateController {
         return Object.assign(Object.assign({}, patient.data), response.data);
     }
     async getAnnotations(orderId) {
-        const response = await http_1.couchHttp.post(`/general/_find`, {
+        const response = await http_1.couchHttp.post(`/medical/_find`, {
             selector: {
-                docType: 'annotations',
+                doctype: 'annotations',
                 orderId,
             },
         });
@@ -80,7 +81,7 @@ class GenerateCertificateController {
         return pdf;
     }
     async renderTemplates(data) {
-        const templates = await this.getTemplates('INFORMED-CONSENT');
+        const templates = await this.getTemplates(data.code);
         const ejsService = new ejs_service_1.default();
         return {
             header: await ejsService.renderFile(templates.header, data),
