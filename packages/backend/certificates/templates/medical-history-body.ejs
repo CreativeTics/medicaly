@@ -9,36 +9,12 @@
         font-family: sans-serif;
         margin-top: 0px;
         -webkit-print-color-adjust: exact;
-        width: 210mm;
-        height: 297mm;
         background-color: rgb(255, 255, 255);
       }
 
-      body:before{
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('https://localhost/src/assets/logo.svg');
-        box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.5);
-        opacity: 0.5;
-        z-index: -1;
-      }
 
-    
-      @page {
-        size: A4;
-        margin: 0;
-      }
       @media print {
-        html,
-        body {
-          width: 210mm;
-          height: 297mm;
-          min-height: 297mm;
-        }
+       
 
         .page-break {
           page-break-after: auto;

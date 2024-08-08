@@ -7,7 +7,16 @@ export interface PrintPdfDto {
 }
 
 export class GotenbergService {
-  async build(data: PrintPdfDto): Promise<string> {
+  async build(
+    data: PrintPdfDto,
+    options: {
+      buffer?: Boolean
+      waitDelay?: string
+    } = {
+      buffer: false,
+      waitDelay: '1s',
+    }
+  ): Promise<string | Buffer> {
     const htmlConverter = new HtmlConverter()
 
     const buffer = await htmlConverter.convert({
@@ -18,9 +27,10 @@ export class GotenbergService {
         printBackground: true,
         ...data?.properties,
       },
+      waitDelay: options.waitDelay,
     })
 
-    return buffer.toString('base64')
+    return options.buffer ? buffer : buffer.toString('base64')
   }
 }
 

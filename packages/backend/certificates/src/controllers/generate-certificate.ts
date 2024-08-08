@@ -110,7 +110,7 @@ export class GenerateCertificateController {
   async createPdf(templates: PrintPdfDto): Promise<string> {
     const gotenbergService = new GotenbergService()
 
-    const pdf = await gotenbergService.build(templates)
+    const pdf = (await gotenbergService.build(templates)) as string
 
     return pdf
   }

@@ -1,12 +1,7 @@
 import { couchHttp } from '../util/http'
 
 export class GetFileController {
-  async execute(
-    fileId: string,
-    options?: {
-      transform?: string
-    }
-  ): Promise<{
+  async execute(fileId: string): Promise<{
     fileName?: string
     fileType?: string
     data: Buffer
@@ -50,14 +45,6 @@ export class GetFileController {
       })
       if (file.status !== 200) {
         throw new Error('File not found')
-      }
-
-      if (options?.transform === 'image') {
-        return {
-          fileName: '',
-          fileType: 'image/png',
-          data: file.data,
-        }
       }
 
       return {

@@ -9,48 +9,38 @@ export class GenerateMedicalHistoryController {
     orderId: string,
     code: string = 'medical-history'
   ): Promise<{
-    id: string
+    name: string
+    mimeType: string
+    data: Buffer
   }> {
-    console.log('Received request to generate certificate', orderId, code)
+    console.log('Received request to generate ', orderId, code)
 
     try {
       // 1. Get  data
-      const orderData = await this.getOrderData(orderId)
-      console.log('orderData')
-
-      const contractData = await this.getContractData(orderData?.contract)
-      console.log('contractData')
-
-      const patientData = await this.getPatientData(orderData?.patientDataId)
-      console.log('patientData')
-
-      const annotations = await this.getAnnotations(orderId)
-      console.log('annotations', annotations)
 
       // 2. render templates
-      const templates = await this.renderTemplates({
-        code,
-        order: orderData,
-        contract: contractData,
-        patient: patientData,
-        annotations,
-      })
+      const templates = await this.getTemplates('MEDICAL-HISTORY')
+      const ejsService = new EjsService()
+
       console.log('templates')
 
       // 3. Create
-      const certificate = await this.createPdf(templates)
-      console.log('certificate')
+      const document = await this.createPdf({
+        header: await ejsService.renderFile(templates.header, {}),
+        index: await this.getRenderedHtmlMedicalHistory(orderId),
+        footer: await ejsService.renderFile(templates.footer, {}),
+        properties: templates.properties,
+      })
 
-      //4. Save  in files database
+      console.log('document created')
 
-      const id = await this.savePdf(orderId, certificate)
-
-      // 5. Return file id
       return {
-        id,
+        mimeType: 'application/pdf',
+        name: 'medical-history.pdf',
+        data: document,
       }
     } catch (error) {
-      console.log('Error generating certificate', error)
+      console.log('Error generating medical history', error)
     }
     return null
   }
@@ -167,29 +157,14 @@ export class GenerateMedicalHistoryController {
     return response.data.docs
   }
 
-  async createPdf(templates: PrintPdfDto): Promise<string> {
+  async createPdf(templates: PrintPdfDto): Promise<Buffer> {
     const gotenbergService = new GotenbergService()
 
-    const pdf = await gotenbergService.build(templates)
-
+    const pdf = (await gotenbergService.build(templates, {
+      buffer: true,
+      waitDelay: '5s',
+    })) as Buffer
     return pdf
-  }
-
-  async renderTemplates(data: {
-    code: string
-    order: any
-    patient: any
-    contract: any
-    annotations: any
-  }): Promise<PrintPdfDto> {
-    const templates = await this.getTemplates(data.code)
-    const ejsService = new EjsService()
-    return {
-      header: await ejsService.renderFile(templates.header, data),
-      index: await ejsService.renderFile(templates.index, data),
-      footer: await ejsService.renderFile(templates.footer, data),
-      properties: templates.properties,
-    }
   }
 
   async getTemplates(code: string): Promise<{
@@ -226,6 +201,7 @@ export class GenerateMedicalHistoryController {
     const response = await couchHttp.post(`/files/`, {
       docType: 'files',
       type: 'certificates',
+      bucket: 'temp',
       orderId,
       _attachments: {
         'certificate.pdf': {
