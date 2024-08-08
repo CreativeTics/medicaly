@@ -86,6 +86,16 @@ const form: Form = {
               },
               rules: ['maxlength:50'],
             },
+            {
+              name: 'signature',
+              label: 'Firma',
+              type: 'file',
+              props: {
+                class: 'lg:col-span-6 xl:col-span-6',
+                accept: 'image/png',
+              },
+              rules: [],
+            },
           ],
         },
         {

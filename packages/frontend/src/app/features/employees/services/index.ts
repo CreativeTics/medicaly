@@ -1,3 +1,4 @@
+import { useFileAttachment } from '@/app/core/composable/useFileAttachment'
 import { getData } from '../../../core/services/get-table/'
 
 import { PouchService, DB } from '../../../services/pouch'
@@ -41,6 +42,7 @@ export async function getEntity(id: string): Promise<any> {
     position: doc.position,
     licenseNumber: doc.licenseNumber,
     licenseName: doc.licenseName,
+    signature: doc.signature,
     exams: doc.exams,
     user: doc.user,
   }
@@ -54,6 +56,7 @@ export async function create(entity: any): Promise<boolean> {
     positionName: position.name,
   })
   await addEmployeeRelationToUser(entity.id, entity.user)
+  await saveSignatureImage(entity)
   return !!response?.ok
 }
 
@@ -69,6 +72,7 @@ export async function edit(id: string, entity: any): Promise<boolean> {
     positionName: position.name,
   })
   await addEmployeeRelationToUser(id, entity.user)
+  await saveSignatureImage(entity)
 
   return !!response?.ok
 }
@@ -90,4 +94,11 @@ async function addEmployeeRelationToUser(employeeId: string, userId: string) {
     },
   ]
   await pouch.use(DB.AUTH).update(user)
+}
+
+async function saveSignatureImage(entity: any) {
+  if (!entity.signature) {
+    return
+  }
+  useFileAttachment().changeBucket(entity.signature, 'employees')
 }
