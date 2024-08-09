@@ -262,3 +262,19 @@ export async function getContractPositionNameById(
   const position = await pouch.use(DB.GENERAL).get(positionId)
   return position.name
 }
+
+export async function getExamsForUser(): Promise<string[]> {
+  const user = useAuthStore().user
+
+  if (!user || user.type == 'contract-user') return []
+
+  // load employees or laboratory exams
+  let availableExams: string[] = await Promise.all([
+    ...user.relations.map(async (relationId: any) => {
+      const relationRecord = await pouch.use(DB.GENERAL).get(relationId)
+      return relationRecord.exams || []
+    }),
+  ])
+
+  return availableExams?.flat() || []
+}

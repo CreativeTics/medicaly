@@ -109,11 +109,16 @@ const form: Form = {
               type: 'multiselect',
               props: {
                 required: true,
+                showKey: 'concat',
+                valueKey: 'code',
               },
               rules: ['required-array'],
               query: {
                 entity: 'medical:exams',
-                fields: ['id', 'name'],
+                fields: ['id', 'code', 'name'],
+                modifier: {
+                  concat: ['code', ' - ', 'name'],
+                },
               },
             },
           ],
