@@ -23,5 +23,3 @@ packages/**/dist/*
 
 
 backups
-packages/backend/certificates/dist/**
-packages/backend/certificates/dist/services/gotenberg.service.js.map

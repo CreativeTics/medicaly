@@ -162,7 +162,7 @@ export class GenerateMedicalHistoryController {
 
     const pdf = (await gotenbergService.build(templates, {
       buffer: true,
-      waitDelay: '5s',
+      waitDelay: '10s',
     })) as Buffer
     return pdf
   }
