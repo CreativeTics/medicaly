@@ -77,7 +77,7 @@ class GenerateCertificateController {
     }
     async createPdf(templates) {
         const gotenbergService = new gotenberg_service_1.GotenbergService();
-        const pdf = await gotenbergService.build(templates);
+        const pdf = (await gotenbergService.build(templates));
         return pdf;
     }
     async renderTemplates(data) {

@@ -31,6 +31,14 @@ app.get('/api/medical-history/:orderId', async (req, res) => {
     res.send(html);
     res.end();
 });
+app.get('/api/medical-history/:orderId/pdf', async (req, res) => {
+    console.log('Received request to generate pdf of  medical history', req.params.orderId);
+    const document = await new generate_medical_history_1.GenerateMedicalHistoryController().execute(req.params.orderId);
+    res.setHeader('Content-Disposition', `inline; filename=${document.name}`);
+    res.setHeader('Content-Type', document.mimeType);
+    res.send(document.data);
+    res.end();
+});
 app.post('/api/certificates/', async (req, res) => {
     console.log('Received request to generate certificate', req.body);
     const certificateId = await new generate_certificate_1.GenerateCertificateController().execute(req.body.order, req.body.code);
@@ -38,14 +46,8 @@ app.post('/api/certificates/', async (req, res) => {
     res.end();
 });
 app.get('/api/files/:id', async (req, res) => {
-    var _a, _b;
     console.log('Received request to get file', req.params.id);
-    const certificate = await new get_file_1.GetFileController().execute(req.params.id, {
-        transform: (_b = (_a = req.query) === null || _a === void 0 ? void 0 : _a.transform) === null || _b === void 0 ? void 0 : _b.toString(),
-    });
-    if (req.query.transform === 'image') {
-        res.setHeader('Content-Type', 'image/png');
-    }
+    const certificate = await new get_file_1.GetFileController().execute(req.params.id);
     const filename = certificate.fileName
         .replace(/[^a-z0-9]/gi, '_')
         .toLowerCase();

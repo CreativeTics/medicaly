@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetFileController = void 0;
 const http_1 = require("../util/http");
 class GetFileController {
-    async execute(fileId, options) {
+    async execute(fileId) {
         try {
             const response = await http_1.couchHttp.get(`/files/${fileId}`);
             if (response.status !== 200) {
@@ -31,13 +31,6 @@ class GetFileController {
             });
             if (file.status !== 200) {
                 throw new Error('File not found');
-            }
-            if ((options === null || options === void 0 ? void 0 : options.transform) === 'image') {
-                return {
-                    fileName: '',
-                    fileType: 'image/png',
-                    data: file.data,
-                };
             }
             return {
                 fileName,
