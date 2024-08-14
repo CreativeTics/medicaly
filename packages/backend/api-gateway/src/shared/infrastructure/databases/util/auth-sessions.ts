@@ -25,6 +25,11 @@ export class AuthSessions {
   }
   validate(token: string): boolean {
     const session = this.sessions.get(token)
+    console.log('token', token)
+    console.log(
+      'sessions',
+      Array.from(this.sessions.entries()).map(([k]) => k)
+    )
 
     if (
       !session ||

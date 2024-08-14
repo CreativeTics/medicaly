@@ -12,4 +12,6 @@ WORKDIR /usr
 COPY package.json ./
 RUN npm install --production
 COPY --from=0 /usr/dist .
+# copy templates
+COPY src/templates ./templates
 CMD ["node","server.js"]

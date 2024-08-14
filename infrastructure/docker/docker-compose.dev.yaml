@@ -124,7 +124,7 @@ services:
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: 4dm1n-us3r
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
-      FILES_API: http://certificates:3002/api/
+      FILES_API: /api/v1/files/api/
       PORT: 3002
 
 volumes:

@@ -5,6 +5,7 @@ import { PouchService, DB } from '../../../services/pouch'
 import { http } from '@/app/core/services/http'
 import { useAuthStore } from '@/store/auth'
 import { API_URL } from '@/config'
+import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
 
 const pouch = new PouchService()
 
@@ -121,7 +122,8 @@ export interface PatientOrder {
   medicalExamType: string
   status: string
   createdAt: string
-  updatedAt: string
+  admissionDate?: string
+  endAttentionDate?: string
 }
 
 export async function getOrdersForPatient(
@@ -143,36 +145,42 @@ export async function getOrdersForPatient(
   })
 
   return data.reverse().map((doc: any) => {
+    const dates = getDatesFromOrder(doc)
     return {
       id: doc.id,
       code: doc.code,
       medicalExamType: doc.medicalExamTypeName,
       status: doc.status,
       createdAt: formatDate(doc.createdAt, true),
-      updatedAt: formatDate(doc.updatedAt, true),
+      admissionDate: dates.dateOfAdmission,
+      endAttentionDate: dates.dateOfFinalization,
     }
   })
 }
 
-export async function getPrintUrl(
-  code: string,
-  orderId: string
-): Promise<string> {
-  const certificate = await http.post(
-    'files/api/certificates/',
-    {
-      order: orderId,
-      code,
-    },
-    {
-      headers: {
-        Authorization: `${useAuthStore().token}`,
-      },
-    }
-  )
+function getDatesFromOrder(order: any): {
+  dateOfAdmission: string
+  dateOfFinalization: string
+} {
+  const dateOfAdmission = order.orderCycle?.find(
+    (cycle: any) => cycle.type == OrderCycleTypes.admission
+  )?.at
+  const dateOfFinalization = order.orderCycle?.find(
+    (cycle: any) => cycle.type == OrderCycleTypes.finalized
+  )?.at
 
+  return {
+    dateOfAdmission: dateOfAdmission ? formatDate(dateOfAdmission) : '',
+    dateOfFinalization: dateOfFinalization
+      ? formatDate(dateOfFinalization)
+      : '',
+  }
+}
+
+export function getPrintUrl(orderId: string): string {
   // get informed consent Url
-  return `${API_URL}/files/api/files/${certificate.data?.id}?h=${encodeURI(
+  console.log('token', useAuthStore().token)
+  return `${API_URL}/files/api/medical-history/${orderId}?h=${encodeURI(
     useAuthStore().token
   )}`
 }

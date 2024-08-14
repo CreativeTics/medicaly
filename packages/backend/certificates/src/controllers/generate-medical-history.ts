@@ -2,18 +2,17 @@ import EjsService from '../services/ejs.service'
 import { couchHttp } from '../util/http'
 
 import { PrintPdfDto, GotenbergService } from '../services/gotenberg.service'
-import { readFileSync } from 'fs'
 
 export class GenerateMedicalHistoryController {
   async execute(
     orderId: string,
-    code: string = 'medical-history'
+    token: string
   ): Promise<{
     name: string
     mimeType: string
     data: Buffer
   }> {
-    console.log('Received request to generate ', orderId, code)
+    console.log('Received request to generate ', orderId)
 
     try {
       // 1. Get  data
@@ -27,7 +26,7 @@ export class GenerateMedicalHistoryController {
       // 3. Create
       const document = await this.createPdf({
         header: await ejsService.renderFile(templates.header, {}),
-        index: await this.getRenderedHtmlMedicalHistory(orderId),
+        index: await this.getRenderedHtmlMedicalHistory(orderId, token),
         footer: await ejsService.renderFile(templates.footer, {}),
         properties: templates.properties,
       })
@@ -45,7 +44,10 @@ export class GenerateMedicalHistoryController {
     return null
   }
 
-  async getRenderedHtmlMedicalHistory(orderId: string): Promise<string> {
+  async getRenderedHtmlMedicalHistory(
+    orderId: string,
+    token: string
+  ): Promise<string> {
     const orderData = await this.getOrderData(orderId)
     console.log('orderData')
     const annotationsOrder: string[] = orderData.services
@@ -71,13 +73,9 @@ export class GenerateMedicalHistoryController {
     const ejsService = new EjsService()
 
     const templates = await this.getTemplates('MEDICAL-HISTORY')
-    // packages/backend/certificates/templates/medical-history-body.ejs
-    const file = readFileSync(
-      `${__dirname}/../../templates/medical-history-body.ejs`,
-      'utf8'
-    )
 
-    const transpiledHtml = await ejsService.renderFile(file, {
+    const transpiledHtml = await ejsService.renderFile(templates.index, {
+      token,
       order: orderData,
       contract: contractData,
       patient: patientData,

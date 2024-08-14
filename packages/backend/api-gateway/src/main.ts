@@ -55,9 +55,7 @@ app.listen(process.env.PORT || 4000, () => {
 })
 
 function validateAuth(req: Request, res: Response, next: NextFunction) {
-  const token =
-    req.headers.authorization ||
-    decodeURI(req.query.h?.toString()).replace(' ', '+')
+  const token = req.headers.authorization || decodeURI(req.query.h?.toString())
   if (!AuthSessions.instance.validate(token)) {
     res.status(401).json({ message: 'Unauthorized' })
     return

@@ -18,6 +18,10 @@ import PatientHeader from '../components/PatientHeader.vue'
 import SearchMdIcon from '@components/basic/icons/SearchMdIcon.vue'
 import PrinterIcon from '@components/basic/icons/PrinterIcon.vue'
 
+import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
+import { DModal } from '@components/basic'
+import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
+
 const route = useRoute()
 const router = useRouter()
 
@@ -25,6 +29,7 @@ const router = useRouter()
 
 const loading = ref(false)
 const patient = ref<Patient>()
+const modalIsOpen = ref(false)
 
 const columns = [
   {
@@ -45,11 +50,16 @@ const columns = [
 
   {
     key: 'createdAt',
+    title: 'Fecha de creación',
+    align: 'left',
+  },
+  {
+    key: 'admissionDate',
     title: 'Fecha de Admisión',
     align: 'left',
   },
   {
-    key: 'updatedAt',
+    key: 'endAttentionDate',
     title: 'Fecha de Salida',
     align: 'left',
   },
@@ -61,10 +71,23 @@ const columns = [
 
 const data = ref<PatientOrder[]>([])
 
-const generatePrint = async (code: string) => {
-  console.log('Generate preview')
-  const url = await getPrintUrl(code, 'b79264275ddd22421f37df9854018a75')
-  window.open(url, '_blank')
+const selectedUrl = ref('')
+const iframe = ref<HTMLIFrameElement>()
+const printingTicket = ref('')
+const generatePrint = async (ticketId: string) => {
+  printingTicket.value = ticketId
+  console.log('Generate print', ticketId)
+  // print only iframe content
+  selectedUrl.value = getPrintUrl(ticketId)
+  await new Promise((resolve) => setTimeout(resolve, 5000))
+  if (iframe.value?.contentWindow) iframe.value?.contentWindow?.print()
+
+  printingTicket.value = ''
+}
+
+const openHistoryModal = (ticketId: string) => {
+  selectedUrl.value = getPrintUrl(ticketId)
+  modalIsOpen.value = true
 }
 
 onMounted(async () => {
@@ -116,7 +139,8 @@ onMounted(async () => {
                 </div>
 
                 <div class="max-w-xs flex justify-end gap-2" v-else>
-                  <!-- <Popper
+                  <Popper
+                    v-if="rowProps.row.status === OrderStatusEnum.completed"
                     arrow
                     offsetDistance="12"
                     content="Ver"
@@ -124,14 +148,18 @@ onMounted(async () => {
                     placement="left"
                     class="tooltip"
                   >
-                    <div class="bg-gray-50 rounded-md py-2" @click="">
+                    <div
+                      class="bg-gray-50 rounded-md py-2"
+                      @click="openHistoryModal(rowProps.row.id)"
+                    >
                       <SearchMdIcon
                         class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                       />
                     </div>
-                  </Popper> -->
+                  </Popper>
 
                   <Popper
+                    v-if="rowProps.row.status === OrderStatusEnum.completed"
                     arrow
                     offsetDistance="12"
                     content="Imprimir"
@@ -143,7 +171,12 @@ onMounted(async () => {
                       class="bg-gray-50 rounded-md py-2"
                       @click="generatePrint(rowProps.row.id)"
                     >
+                      <Loading01Icon
+                        v-if="printingTicket === rowProps.row.id"
+                        class="h-6 w-6 mx-2 cursor-pointer text-gray-600 animate-spin"
+                      />
                       <PrinterIcon
+                        v-else
                         class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                       />
                     </div>
@@ -162,4 +195,22 @@ onMounted(async () => {
       >
     </div>
   </div>
+
+  <DModal
+    :open="modalIsOpen"
+    :nameButtonClose="`Cancelar`"
+    :nameButtonAccept="`Finalizar`"
+    size="w-full"
+    @closeModal="modalIsOpen = false"
+  >
+    <template #form>
+      <iframe
+        ref="iframe"
+        :src="selectedUrl"
+        frameborder="0"
+        class="w-full h-full"
+        style="height: 75vh"
+      ></iframe>
+    </template>
+  </DModal>
 </template>

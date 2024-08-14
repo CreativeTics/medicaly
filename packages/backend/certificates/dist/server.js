@@ -27,13 +27,13 @@ app.get('/api/health', (req, res) => {
 });
 app.get('/api/medical-history/:orderId', async (req, res) => {
     console.log('Received request to get html view of  medical history', req.params.orderId);
-    const html = await new generate_medical_history_1.GenerateMedicalHistoryController().getRenderedHtmlMedicalHistory(req.params.orderId);
+    const html = await new generate_medical_history_1.GenerateMedicalHistoryController().getRenderedHtmlMedicalHistory(req.params.orderId, req.query.h);
     res.send(html);
     res.end();
 });
 app.get('/api/medical-history/:orderId/pdf', async (req, res) => {
     console.log('Received request to generate pdf of  medical history', req.params.orderId);
-    const document = await new generate_medical_history_1.GenerateMedicalHistoryController().execute(req.params.orderId);
+    const document = await new generate_medical_history_1.GenerateMedicalHistoryController().execute(req.params.orderId, req.query.h);
     res.setHeader('Content-Disposition', `inline; filename=${document.name}`);
     res.setHeader('Content-Type', document.mimeType);
     res.send(document.data);

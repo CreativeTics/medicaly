@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { query } from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
@@ -34,7 +34,8 @@ app.get('/api/medical-history/:orderId', async (req, res) => {
 
   const html =
     await new GenerateMedicalHistoryController().getRenderedHtmlMedicalHistory(
-      req.params.orderId
+      req.params.orderId,
+      req.query.h as string
     )
 
   res.send(html)
@@ -48,7 +49,8 @@ app.get('/api/medical-history/:orderId/pdf', async (req, res) => {
   )
 
   const document = await new GenerateMedicalHistoryController().execute(
-    req.params.orderId
+    req.params.orderId,
+    req.query.h as string
   )
   res.setHeader('Content-Disposition', `inline; filename=${document.name}`)
   res.setHeader('Content-Type', document.mimeType)
