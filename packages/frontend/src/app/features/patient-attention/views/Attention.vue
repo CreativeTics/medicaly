@@ -2,12 +2,11 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import { getOrder } from '../services'
+import { getOrder, getFinalizeOrderPermission } from '../services'
 import { finalizeOrder } from '../services/services'
 import DBtn from '@components/basic/DBtn.vue'
 import DModal from '@components/basic/DModal.vue'
 import ServiceAttention from '../components/ServiceAttention.vue'
-import ServiceStatus from '@features/service-orders/components/ServiceStatus.vue'
 import Popper from 'vue3-popper'
 import { useNotificationsStore } from '@/store/notifications'
 
@@ -23,6 +22,7 @@ const notifications = useNotificationsStore()
 const order = ref<any>({})
 const loading = ref(false)
 const modalIsOpen = ref(false)
+const allowFinalizeOrder = ref(false)
 
 const back = () => {
   console.log('Back')
@@ -33,16 +33,13 @@ onMounted(async () => {
   if (route.params.id) {
     loading.value = true
     order.value = await getOrder(route.params.id.toString())
+    allowFinalizeOrder.value = await getFinalizeOrderPermission()
     loading.value = false
   }
 })
 
-// function scrollTo(id: string) {
-//   const element = document.getElementById(id) as HTMLDivElement
-//   element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-// }
-
 async function finalize(id: string) {
+  if (!allowFinalizeOrder) return
   loading.value = true
   try {
     await finalizeOrder(id)
@@ -113,10 +110,11 @@ async function finalize(id: string) {
         <hr />
       </div>
       <div class="absolute right-0 top-96 flex flex-col items-center gap-5">
-        <div class="bg-white w-12 rounded-lg shadow-lg shadow-blue-800">
+        <!-- <div class="bg-white w-12 rounded-lg shadow-lg shadow-blue-800">
           otras anotaciones
-        </div>
+        </div> -->
         <Popper
+          v-if="allowFinalizeOrder"
           arrow
           offsetDistance="0"
           content="Finalizar orden"

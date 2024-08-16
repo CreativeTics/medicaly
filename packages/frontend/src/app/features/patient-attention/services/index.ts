@@ -4,6 +4,7 @@ import { formatDate } from '@/app/core/util/dates'
 import { PouchService, DB } from '../../../services/pouch'
 // import { useAuthStore } from "@/store/auth";
 import { OrderStatus } from '@/app/core/types/order-status'
+import { useAuthStore } from '@/store/auth'
 
 const pouch = new PouchService()
 const doctype = 'service-orders'
@@ -100,4 +101,16 @@ export async function getOrder(id: string) {
       emphasis: medicalExamType.emphasis,
     },
   }
+}
+
+export async function getFinalizeOrderPermission() {
+  const user = useAuthStore().user
+  if (!user || user.type !== 'employee') {
+    return false
+  }
+  const employee = await pouch.use(DB.GENERAL).get(user.relations[0])
+
+  const position = await pouch.use(DB.GENERAL).get(employee.position)
+
+  return position.allowFinishServiceOrder || false
 }

@@ -20,7 +20,7 @@ onMounted(async () => {
 <template>
   <div class="w-full p-5">
     <span class="text-xl text-indigo-800 font-semibold flex justify-between">
-      {{ service.name }} {{ availableExams }}
+      {{ service.name }}
     </span>
     <div v-for="exam in service.exams">
       <Exam
