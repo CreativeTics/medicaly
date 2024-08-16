@@ -9,7 +9,6 @@ import {
   getPatientById,
   getPrintUrl,
 } from '../services'
-// import { finalizeOrder } from '../services/services'
 import DBtn from '@components/basic/DBtn.vue'
 import OrderStatus from '@features/service-orders/components/OrderStatus.vue'
 import Popper from 'vue3-popper'
@@ -21,6 +20,8 @@ import PrinterIcon from '@components/basic/icons/PrinterIcon.vue'
 import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
 import { DModal } from '@components/basic'
 import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
+
+import { useAuthStore } from '@/store/auth'
 
 const route = useRoute()
 const router = useRouter()
@@ -104,6 +105,7 @@ onMounted(async () => {
   <div class="w-full h-full px-5 flex flex-col">
     <div class="leading-4 pt-responsive">
       <p class="text-3xl font-semibold text-shadow">Historia - paciente</p>
+      {{ useAuthStore().user?.relations }}
       <p class="text-gray-500 text-shadow"></p>
     </div>
     <div class="w-full flex-grow flex overflow-y-hidden">

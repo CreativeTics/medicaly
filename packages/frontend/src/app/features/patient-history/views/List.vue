@@ -50,11 +50,11 @@ const documentTypes = ref<DocumentType[]>([])
 const searchOptions = reactive({
   patientDocumentType: '',
   patientDocumentNumber: '',
-  patientName: '',
 })
 const data = ref<PatientSearchResult[]>([])
 
 const search = async () => {
+  data.value = []
   data.value = await searchPatients(searchOptions)
 }
 
@@ -96,14 +96,6 @@ onMounted(async () => {
                 placeholder="Digite el documento del paciente"
                 class="min-w-fit w-1/3"
                 v-model="searchOptions.patientDocumentNumber"
-                @keyup.enter="search"
-              />
-
-              <DTextField
-                label="Nombre del paciente"
-                placeholder="Digite el nombre del paciente"
-                class="min-w-fit w-full"
-                v-model="searchOptions.patientName"
                 @keyup.enter="search"
               />
               <DBtn class="h-10 w-20" @click.prevent="search">Buscar</DBtn>

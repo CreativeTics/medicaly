@@ -18,6 +18,7 @@ export class LoginController {
       if (error instanceof InvalidUsernameOrPasswordError) {
         res.status(401).json({ message: error.message })
       } else {
+        console.log(error)
         res.status(500).json({ message: 'Internal server error' })
       }
     }

@@ -18,8 +18,10 @@ export class RoleName {
       throw new Error('Role name must be at most 50 characters long')
     }
 
-    if (!/^[a-zA-Z0-9]*$/.test(value)) {
-      throw new Error('Role name must contain only letters and numbers')
+    if (!/^[a-zA-Z0-9\s]*$/.test(value)) {
+      throw new Error(
+        'Role name must contain only letters, numbers, and spaces'
+      )
     }
 
     return new RoleName(value)

@@ -2,10 +2,10 @@ import { getData } from '../../../core/services/get-table/'
 import { formatDate } from '@/app/core/util/dates'
 
 import { PouchService, DB } from '../../../services/pouch'
-import { http } from '@/app/core/services/http'
 import { useAuthStore } from '@/store/auth'
 import { API_URL } from '@/config'
 import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
+import { on } from 'pouchdb-browser'
 
 const pouch = new PouchService()
 
@@ -21,20 +21,11 @@ export interface PatientSearchResult {
 export async function searchPatients(searchOptions: {
   patientDocumentType?: string
   patientDocumentNumber?: string
-  patientName?: string
 }): Promise<PatientSearchResult[]> {
-  const where: any = {}
-
-  if (searchOptions.patientDocumentType)
-    where['documentType'] = searchOptions.patientDocumentType
-
-  if (searchOptions.patientDocumentNumber)
-    where['documentNumber'] = {
-      $regex: `(?i).*${searchOptions.patientDocumentNumber}.*`,
-    }
-
-  if (searchOptions.patientName)
-    where['fullName'] = { $regex: `(?i).*${searchOptions.patientName}.*` }
+  const where = {
+    documentType: searchOptions.patientDocumentType,
+    documentNumber: searchOptions.patientDocumentNumber,
+  }
 
   const data = await getData<any[]>({
     entity: `${DB.MEDICAL}:patients`,
@@ -71,6 +62,7 @@ export async function getDocumentTypes(): Promise<DocumentType[]> {
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:identification-types`,
     fields: ['id', 'code', 'name'],
+    sort: [{ name: 'asc' }],
   })
 
   return data.map((doc: any) => {
@@ -135,27 +127,38 @@ export async function getOrdersForPatient(
       'id',
       'code',
       'medicalExamTypeName',
+      'contract',
       'status',
       'createdAt',
       'updatedAt',
       'orderCycle',
     ],
     where: { patientId: patientId },
-    sort: [{ createdAt: 'asc' }],
+    sort: [{ createdAt: 'desc' }],
   })
+  const user = useAuthStore().user
+  const onlyContracts: string[] = []
+  if (user?.type == 'contract-user' && user?.relations) {
+    onlyContracts.push(...user.relations)
+  }
 
-  return data.reverse().map((doc: any) => {
-    const dates = getDatesFromOrder(doc)
-    return {
-      id: doc.id,
-      code: doc.code,
-      medicalExamType: doc.medicalExamTypeName,
-      status: doc.status,
-      createdAt: formatDate(doc.createdAt, true),
-      admissionDate: dates.dateOfAdmission,
-      endAttentionDate: dates.dateOfFinalization,
-    }
-  })
+  return data
+    .filter(
+      (doc: any) =>
+        onlyContracts.length == 0 || onlyContracts.includes(doc.contract)
+    )
+    .map((doc: any) => {
+      const dates = getDatesFromOrder(doc)
+      return {
+        id: doc.id,
+        code: doc.code,
+        medicalExamType: doc.medicalExamTypeName,
+        status: doc.status,
+        createdAt: formatDate(doc.createdAt, true),
+        admissionDate: dates.dateOfAdmission,
+        endAttentionDate: dates.dateOfFinalization,
+      }
+    })
 }
 
 function getDatesFromOrder(order: any): {

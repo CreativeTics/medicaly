@@ -10,7 +10,8 @@ interface User {
     name: string
     permissions: string[]
   }
-  relations: relation[]
+  relations: string[]
+  // relation[]
 }
 interface relation {
   contractId: string
