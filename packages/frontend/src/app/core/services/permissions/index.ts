@@ -83,6 +83,10 @@ export const permissions = [
     id: 'users:list',
     name: 'Administración > Usuarios:Listar',
   },
+  {
+    id: 'reports:basics',
+    name: 'Reportes > Básicos',
+  },
 ]
 
 export const userTypes = [

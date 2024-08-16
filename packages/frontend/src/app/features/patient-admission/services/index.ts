@@ -121,6 +121,9 @@ export async function getOrder(id: string) {
     if (patientData.length) {
       const lastPatientData = await pouch.use(DB.MEDICAL).get(patientData[0].id)
       delete lastPatientData.id
+      delete lastPatientData.signatureId
+      delete lastPatientData.fingerprintId
+      delete lastPatientData.photoId
       patient = {
         ...patient,
         ...lastPatientData,

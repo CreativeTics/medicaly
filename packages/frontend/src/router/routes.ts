@@ -21,6 +21,7 @@ import { patientAttentionRoutes } from '@features/patient-attention'
 import { patientLaboratoryRoutes } from '@features/patient-laboratories'
 import { signaturePadRoutes } from '@features/signature-pad'
 import { patientHistoryRoutes } from '@features/patient-history'
+import { reportsRoutes } from '@features/reports'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -53,4 +54,5 @@ export const routes: RouteRecordRaw[] = [
   ...patientLaboratoryRoutes,
   ...signaturePadRoutes,
   ...patientHistoryRoutes,
+  ...reportsRoutes,
 ]

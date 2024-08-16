@@ -38,12 +38,10 @@ const form: Form = {
               rules: ['required', 'upper', 'minlength:3', 'maxlength:50'],
             },
             {
-              name: 'isDoctor',
-              label: 'Es Medico',
+              name: 'allowFinishServiceOrder',
+              label: 'Permite finalizar ordenes de servicio?',
               type: 'check',
-              props: {
-                placeholder: 'Codigo del Cargo',
-              },
+              props: {},
               rules: [],
             },
           ],

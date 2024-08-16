@@ -84,10 +84,11 @@ async function addEmployeeRelationToUser(employeeId: string, userId: string) {
 
   const user = await pouch.use(DB.AUTH).get(userId)
 
-  const oldRelations = user.relations || []
+  if (user.relations?.[0] && user.relations[0].value !== employeeId) {
+    throw new Error('El usuario ya esta asignado a otro empleado')
+  }
 
   user.relations = [
-    ...oldRelations.filter((relation: any) => relation.value !== employeeId),
     {
       type: 'employee',
       value: employeeId,

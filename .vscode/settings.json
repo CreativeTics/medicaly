@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["COUCHDB", "medicaly"],
+  "cSpell.words": ["COUCHDB", "medicaly", "METABASE"],
   "[python]": {
     "editor.defaultFormatter": "ms-python.autopep8"
   },

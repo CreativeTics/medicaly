@@ -208,7 +208,7 @@ export async function create(entity: any): Promise<{
       contractName: contract.name,
       services: servicesFromAttachOrder,
       medicalExamType: entity.medicalExamType,
-      medicalExamTypeName: medicalExamType.name,
+      medicalExamTypeName: `${medicalExamType.name}:${medicalExamType.emphasis}`,
       contractCostCenter: entity.contractCostCenter,
       contractSubsidiary: entity.contractSubsidiary,
       subsidiary: entity.subsidiary,

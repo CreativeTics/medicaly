@@ -137,6 +137,17 @@ export const menu = [
     ],
   },
   {
+    name: 'Reportes',
+    icon: 'File07Icon',
+    children: [
+      {
+        name: 'Básicos',
+        route: '/reports/basics',
+        permission: 'reports:basics',
+      },
+    ],
+  },
+  {
     name: 'Administración',
     icon: 'Shield02Icon',
     children: [

@@ -149,38 +149,44 @@ const form: Form = {
 
 const onSubmit = async (data: any) => {
   console.log('Submit', data)
-
-  if (route.params.id === undefined) {
-    console.log('Create')
-    if (await create(data)) {
-      notifications.addNotification({
-        type: 'success',
-        title: `${moduleName} creado`,
-        text: `El ${moduleName} se ha creado correctamente`,
-      })
-      router.push({ name: `${modulePath}.list` })
+  try {
+    if (route.params.id === undefined) {
+      if (await create(data)) {
+        notifications.addNotification({
+          type: 'success',
+          title: `${moduleName} creado`,
+          text: `El ${moduleName} se ha creado correctamente`,
+        })
+        router.push({ name: `${modulePath}.list` })
+      } else {
+        notifications.addNotification({
+          type: 'error',
+          title: 'Error',
+          text: `No se ha podido crear el ${moduleName}`,
+        })
+      }
     } else {
-      notifications.addNotification({
-        type: 'error',
-        title: 'Error',
-        text: `No se ha podido crear el ${moduleName}`,
-      })
+      if (await edit(route.params.id as string, data)) {
+        notifications.addNotification({
+          type: 'success',
+          title: `${moduleName} actualizado`,
+          text: `El ${moduleName} se ha actualizado correctamente`,
+        })
+        router.push({ name: `${modulePath}.list` })
+      } else {
+        notifications.addNotification({
+          type: 'error',
+          title: 'Error',
+          text: `No se ha podido actualizar el ${moduleName}`,
+        })
+      }
     }
-  } else {
-    if (await edit(route.params.id as string, data)) {
-      notifications.addNotification({
-        type: 'success',
-        title: `${moduleName} actualizado`,
-        text: `El ${moduleName} se ha actualizado correctamente`,
-      })
-      router.push({ name: `${modulePath}.list` })
-    } else {
-      notifications.addNotification({
-        type: 'error',
-        title: 'Error',
-        text: `No se ha podido actualizar el ${moduleName}`,
-      })
-    }
+  } catch (error: any) {
+    notifications.addNotification({
+      type: 'error',
+      title: 'Error',
+      text: error.message,
+    })
   }
 }
 

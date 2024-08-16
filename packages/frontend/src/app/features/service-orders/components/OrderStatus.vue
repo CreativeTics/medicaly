@@ -9,13 +9,13 @@ defineProps<{
 <template>
   <div class="max-w-xs overflow-hidden">
     <span
-      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+      class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
       v-if="status === OrderStatus.completed"
     >
       {{ status }}
     </span>
     <span
-      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+      class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
       v-else-if="status === OrderStatus.cancelled"
     >
       {{ status }}

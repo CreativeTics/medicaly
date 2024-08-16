@@ -18,10 +18,10 @@ const props = withDefaults(
     label: string
     modelValue: string | undefined // fileId
     helpText?: string
-    accept: string // 'application/pdf'
-    disabled: boolean
-    required: boolean
-    error: string
+    accept?: string // 'application/pdf'
+    disabled?: boolean
+    required?: boolean
+    error?: string
   }>(),
   {
     label: '',
