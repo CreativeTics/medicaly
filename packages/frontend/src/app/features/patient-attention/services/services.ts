@@ -3,6 +3,7 @@ import { getData } from '../../../core/services/get-table/'
 import { OrderStatus } from '@/app/core/types/order-status'
 import { useAuthStore } from '@/store/auth'
 import { useFileAttachment } from '@/app/core/composable/useFileAttachment'
+import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
 
 const pouch = new PouchService()
 
@@ -202,10 +203,16 @@ async function updateOrder(
     }
   }
 
+  const user = useAuthStore().user
+  if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+
+  const employee = await getEmployee(user?.relations[0])
+
   const orderCycle: any[] = oldOrder.orderCycle || []
   orderCycle.push({
-    type: 'attention',
-    user: 'user',
+    type: OrderCycleTypes.attention,
+    user: user?.id,
+    employee,
     status: OrderStatus.inprogress,
     at: new Date().toISOString(),
   })
@@ -222,7 +229,7 @@ export async function finalizeOrder(orderId: string): Promise<boolean> {
   const oldOrder = await pouch.use(DB.GENERAL).get(orderId)
   // validate if order is in progress
   if (oldOrder.status !== OrderStatus.inprogress) {
-    throw new Error('Order is not in progress')
+    throw new Error('la orden no esta en progreso!')
   }
 
   // validate if order is complete
@@ -231,16 +238,23 @@ export async function finalizeOrder(orderId: string): Promise<boolean> {
     (service: any) => service.status === OrderStatus.completed
   )
   if (servicesComplete.length !== services.length) {
-    throw new Error('Order is not complete')
+    throw new Error('La orden no esta completa!')
   }
+
+  const user = useAuthStore().user
+  if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+
+  const employee = await getEmployee(user?.relations[0])
+
   // TODO: validate if medic is same of initial annotation
-
-  // update order status
-
   const orderCycle: any[] = oldOrder.orderCycle || []
+  if (!orderCycle.map((_) => _.employee?.id).includes(employee.id))
+    throw new Error('Este usuario no puede finalizar la orden!')
+
   orderCycle.push({
-    type: 'finalize',
-    user: 'user', // TODO: get user
+    type: OrderCycleTypes.finalized,
+    user: user?.id,
+    employee,
     status: OrderStatus.completed,
     at: new Date().toISOString(),
   })
@@ -249,6 +263,7 @@ export async function finalizeOrder(orderId: string): Promise<boolean> {
     ...oldOrder,
     orderCycle,
     status: OrderStatus.completed,
+    finalizedBy: employee,
   }
 
   await pouch.use(DB.GENERAL).update(orderUpdated)
@@ -277,4 +292,15 @@ export async function getExamsForUser(): Promise<string[]> {
   ])
 
   return availableExams?.flat() || []
+}
+
+async function getEmployee(id: string) {
+  const employee = await pouch.use(DB.GENERAL).get(id)
+
+  return {
+    id: employee.id as string,
+    name: employee.fullName as string,
+    position: employee.positionName as string,
+    document: employee.documentNumber as string,
+  }
 }

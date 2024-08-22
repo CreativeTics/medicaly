@@ -45,6 +45,8 @@ export interface Ticket {
   services: any
   isDeleted: boolean
   createdAt: string
+  admittedBy: object | null
+  finalizedBy: object | null
 }
 
 async function upsertTicket(ticket: Ticket) {
@@ -55,13 +57,7 @@ async function upsertTicket(ticket: Ticket) {
     await query(`DELETE FROM tickets WHERE id = '${ticket._id}'`)
   }
 
-  const costCenter = await getDoc('general', ticket.contractCostCenter || '')
-  const contractSubsidiary = await getDoc(
-    'general',
-    ticket.contractSubsidiary || ''
-  )
-  const subsidiary = await getDoc('general', ticket.subsidiary || '')
-  const position = await getDoc('general', ticket.position || '')
+  ticket = await enrichTicket(ticket)
 
   await query(
     `
@@ -80,6 +76,8 @@ async function upsertTicket(ticket: Ticket) {
       patient_is_new,
       order_cycle,
       services,
+      admitted_by,
+      finalized_by,
       is_deleted,
       created_at
     ) VALUES (
@@ -98,7 +96,9 @@ async function upsertTicket(ticket: Ticket) {
       $13,
       $14,
       $15,
-      $16
+      $16,
+      $17,
+      $18
     )
   `,
     [
@@ -106,18 +106,39 @@ async function upsertTicket(ticket: Ticket) {
       ticket.code,
       ticket.status,
       ticket.contractName,
-      `${costCenter.code} - ${costCenter.name}`,
-      `${contractSubsidiary.code} - ${contractSubsidiary.name}`,
-      `${subsidiary.code} - ${subsidiary.name}`,
-      `${position.code} - ${position.name}`,
+      ticket.contractCostCenter,
+      ticket.contractSubsidiary,
+      ticket.subsidiary,
+      ticket.position,
       ticket.observation,
       ticket.patientId || '',
       ticket.patientDataId || '',
       ticket.patientIsNew,
       JSON.stringify(ticket.orderCycle),
       JSON.stringify(ticket.services),
+      JSON.stringify(ticket.admittedBy),
+      JSON.stringify(ticket.finalizedBy),
       ticket.isDeleted,
       ticket.createdAt,
     ]
   )
+}
+
+async function enrichTicket(ticket: Ticket) {
+  const costCenter = await getDoc('general', ticket.contractCostCenter || '')
+
+  const contractSubsidiary = await getDoc(
+    'general',
+    ticket.contractSubsidiary || ''
+  )
+  const subsidiary = await getDoc('general', ticket.subsidiary || '')
+  const position = await getDoc('general', ticket.position || '')
+
+  return {
+    ...ticket,
+    contractCostCenter: `${costCenter.code} - ${costCenter.name}`,
+    contractSubsidiary: `${contractSubsidiary.code} - ${contractSubsidiary.name}`,
+    subsidiary: `${subsidiary.code} - ${subsidiary.name}`,
+    position: `${position.code} - ${position.name}`,
+  }
 }

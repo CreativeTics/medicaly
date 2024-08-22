@@ -4,6 +4,7 @@ import { formatDate, calculateAgeFromBirthDate } from '@/app/core/util/dates'
 import { PouchService, DB } from '../../../services/pouch'
 // import { useAuthStore } from "@/store/auth";
 import { OrderStatus } from '@/app/core/types/order-status'
+import { useAuthStore } from '@/store/auth'
 
 const pouch = new PouchService()
 const doctype = 'service-orders'
@@ -189,9 +190,15 @@ export async function admitPatientOrder(
   })
 
   const orderCycle: any[] = oldOrder.orderCycle || []
+  const user = useAuthStore().user
+  if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+
+  const employee = await getEmployee(user?.relations[0])
+
   orderCycle.push({
     type: 'admission',
-    user: 'user',
+    user: user?.id,
+    employee,
     status: OrderStatus.inprogress,
     at: new Date().toISOString(),
   })
@@ -204,6 +211,7 @@ export async function admitPatientOrder(
     patientName: `${patient.documentNumber} - ${patient.name} ${patient.secondName} ${patient.lastName} ${patient.secondLastName}`,
     orderCycle,
     informedConsent: patient.informedConsent,
+    admittedBy: oldOrder.employee ?? employee,
   }
 
   await pouch.use(DB.GENERAL).update(orderUpdated)
@@ -328,4 +336,15 @@ interface PatientData {
   photoId?: string
   signatureId?: string
   fingerprintId?: string
+}
+
+async function getEmployee(id: string) {
+  const employee = await pouch.use(DB.GENERAL).get(id)
+
+  return {
+    id: employee.id,
+    name: employee.fullName,
+    position: employee.positionName,
+    document: employee.documentNumber,
+  }
 }
