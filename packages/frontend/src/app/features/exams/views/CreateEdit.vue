@@ -11,7 +11,7 @@ import FileSearch01Icon from '@components/basic/icons/FileSearch01Icon.vue'
 import Popper from 'vue3-popper'
 
 const notifications = useNotificationsStore()
-const moduleName = 'Exam'
+const moduleName = 'Examen'
 const modulePath = 'exams'
 
 const route = useRoute()
