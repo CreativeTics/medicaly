@@ -6,6 +6,7 @@ import {
   Edit03Icon,
   DBtn,
   FileSearch01Icon,
+  SearchLgIcon,
 } from '@/app/components/basic'
 import PaginatedTable from './PaginatedTable.vue'
 import Popper from 'vue3-popper'
@@ -27,7 +28,7 @@ withDefaults(
   }
 )
 
-const emit = defineEmits(['edit', 'create', 'delete', 'preview'])
+const emit = defineEmits(['edit', 'create', 'delete', 'view', 'preview'])
 
 const emitEdit = (id: string) => {
   emit('edit', id)
@@ -95,6 +96,24 @@ const loading = ref(false)
                     @click="emit('preview', rowProps.row['id'])"
                   >
                     <FileSearch01Icon
+                      class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
+                    />
+                  </div>
+                </Popper>
+                <Popper
+                  v-if="actions.includes('view')"
+                  arrow
+                  offsetDistance="12"
+                  content="Ver"
+                  :hover="true"
+                  placement="left"
+                  class="tooltip"
+                >
+                  <div
+                    class="bg-gray-50 rounded-md py-2"
+                    @click="emit('view', rowProps.row['id'])"
+                  >
+                    <SearchLgIcon
                       class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                     />
                   </div>
