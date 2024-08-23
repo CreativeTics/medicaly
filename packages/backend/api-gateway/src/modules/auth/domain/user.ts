@@ -65,9 +65,11 @@ export class User {
   }
 
   generateToken(): string {
-    return Base64.stringify(
+    const token = Base64.stringify(
       sha256(`${this._id}:${this.props.username.value}-${Date.now()}`)
     )
+    const sanitizedToken = token.replace(/[^a-zA-Z0-9]/g, '')
+    return sanitizedToken
   }
 
   static create(props: UserProps, id?: string): User {

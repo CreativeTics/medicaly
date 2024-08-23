@@ -30,7 +30,7 @@ export class AuthSessions {
       'sessions',
       Array.from(this.sessions.entries()).map(([k]) => k)
     )
-
+    console.log('session', session)
     if (
       !session ||
       !session.createdAt ||
