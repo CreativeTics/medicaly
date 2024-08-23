@@ -46,9 +46,6 @@ const goToEdit = (id: string) => {
   console.log('Edit', id)
   router.push({ name: `${modulePath}.edit`, params: { id } })
 }
-const goToPreview = (id: string) => {
-  router.push({ name: `${modulePath}.preview`, params: { id } })
-}
 
 onMounted(async () => {
   data.value = await getList()
@@ -62,10 +59,9 @@ onMounted(async () => {
     :subtitle="`Gestión de ${moduleName}es`"
     :columns="columns"
     :rows="data"
-    :actions="['edit', 'delete', 'create', 'preview']"
+    :actions="['edit', 'delete', 'create']"
     @edit="goToEdit"
     @create="goToCreate"
-    @preview="goToPreview"
   >
   </ModuleListBasic>
 </template>

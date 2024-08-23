@@ -42,7 +42,7 @@ export async function getEntity(id: string): Promise<any> {
     name: doc.name,
     code: doc.code,
     printTemplate: doc.printTemplate,
-    form: doc.form,
+    form: JSON.parse(JSON.stringify(doc.form, null, 2)),
     version: doc.version,
   }
 }
