@@ -31,7 +31,7 @@ const form: Form = {
       name: 'Datos',
       groups: [
         {
-          name: 'Información basica',
+          name: 'Información básica',
           description: '',
           fields: [
             {
@@ -70,7 +70,7 @@ const form: Form = {
               type: 'text',
               props: {
                 disabled: 'true',
-                placeholder: 'Se crea automaticamente',
+                placeholder: 'Se crea automáticamente',
               },
             },
             {
