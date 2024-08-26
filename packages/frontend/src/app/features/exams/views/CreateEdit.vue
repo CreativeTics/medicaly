@@ -80,26 +80,79 @@ const form: Form = {
               props: {
                 placeholder: 'Nombre',
                 required: true,
-                class: 'lg:col-span-4 xl:col-span-4',
+                class: 'lg:col-span-6 xl:col-span-6',
               },
               rules: ['required', 'minlength:3', 'maxlength:100'],
             },
+          ],
+        },
+        {
+          name: 'Configuración de certificado',
+          description: '',
+          fields: [
             {
-              name: 'printTemplate',
-              label: 'Plantilla de impresión',
+              name: 'requireCertificate',
+              label: 'Requiere certificado',
+              type: 'check',
+              props: {
+                class: 'lg:col-span-2 xl:col-span-2',
+              },
+            },
+
+            {
+              if: 'requireCertificate',
+              name: 'certificateTemplate',
+              label: 'Plantilla de certificado',
               type: 'select',
 
               query: {
                 entity: 'general:templates',
                 fields: ['id', 'code', 'name'],
+                where: {
+                  type: 'certificates',
+                },
               },
             },
+          ],
+        },
+        {
+          name: 'Configuración de Consentimiento',
+          description: '',
+          fields: [
+            {
+              name: 'requireConsent',
+              label: 'Requiere consentimiento',
+              type: 'check',
+              props: {
+                class: 'lg:col-span-2 xl:col-span-2',
+              },
+            },
+            {
+              if: 'requireConsent',
+              name: 'consentTemplate',
+              label: 'Plantilla de consentimiento',
+              type: 'select',
+
+              query: {
+                entity: 'general:templates',
+                fields: ['id', 'code', 'name'],
+                where: {
+                  type: 'informed-consent',
+                },
+              },
+            },
+          ],
+        },
+        {
+          name: 'Formulario',
+          description: '',
+          fields: [
             {
               name: 'form',
               label: 'Formulario',
               type: 'textarea',
               props: {
-                rows: 10,
+                rows: 20,
                 placeholder: 'texto de la recomendación',
                 required: true,
                 class: 'lg:col-span-6 xl:col-span-6',
