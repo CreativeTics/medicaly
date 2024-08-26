@@ -240,14 +240,49 @@ async function getServicesFromAttachOrder(services: any[]) {
   const servicesFromAttachOrder = []
   for (const service of services) {
     const serviceFromAttachOrder = await pouch.use(DB.GENERAL).get(service.id)
+    const usedExams = [
+      ...serviceFromAttachOrder.exams,
+      ...serviceFromAttachOrder.visibleExams,
+    ]
+    const allExams = await getData<
+      {
+        id: string
+        code: string
+      }[]
+    >({
+      entity: `${DB.MEDICAL}:exams`,
+      fields: ['id', 'code'],
+      where: {
+        code: {
+          $in: usedExams,
+        },
+        isLastVersion: true,
+      },
+    })
+    console.log('allExams', allExams)
+
     servicesFromAttachOrder.push({
       id: serviceFromAttachOrder.id,
       code: serviceFromAttachOrder.code,
       name: serviceFromAttachOrder.name,
       amount: serviceFromAttachOrder.amount,
-      exams: serviceFromAttachOrder.exams,
+      exams: serviceFromAttachOrder.exams.map((examCode: string) => {
+        const exam = allExams.find((exam) => exam.code === examCode)
+        if (!exam) {
+          throw new Error('Examen no encontrado')
+        }
+        return exam.id
+      }),
       showForContract: serviceFromAttachOrder.showForContract,
-      visibleExams: serviceFromAttachOrder.visibleExams,
+      visibleExams: serviceFromAttachOrder.visibleExams.map(
+        (examCode: string) => {
+          const exam = allExams.find((exam) => exam.code === examCode)
+          if (!exam) {
+            throw new Error('Examen no encontrado')
+          }
+          return exam.id
+        }
+      ),
       examTypeName: serviceFromAttachOrder.examTypeName,
       status: OrderStatus.pending,
     })

@@ -56,6 +56,7 @@ export async function create(entity: any): Promise<boolean> {
   const response = await pouch.use(DB.MEDICAL).create({
     doctype,
     ...entity,
+    isLastVersion: true,
   })
   console.log('create', response)
   return true
@@ -63,9 +64,28 @@ export async function create(entity: any): Promise<boolean> {
 
 export async function edit(entity: any): Promise<boolean> {
   entity.version = Number(entity.version ?? 0) + 1
+
+  // set isLastVersion to false for all previous versions
+  const allVersions = await pouch.use(DB.MEDICAL).find({
+    selector: {
+      doctype,
+      code: entity.code,
+      isLastVersion: true,
+    },
+  })
+
+  if (allVersions?.length) {
+    for (const doc of allVersions) {
+      await pouch.use(DB.MEDICAL).updateOnly(doc.id, {
+        isLastVersion: false,
+      })
+    }
+  }
+
   const response = await pouch.use(DB.MEDICAL).create({
     doctype,
     ...entity,
+    isLastVersion: true,
   })
   console.log('edit', response)
 

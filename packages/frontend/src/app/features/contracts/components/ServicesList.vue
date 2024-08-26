@@ -101,11 +101,12 @@ const form: Form = {
             },
             {
               name: 'exams',
-              label: 'Examenes Asignados',
+              label: 'Exámenes Asignados',
               type: 'multiselect',
               props: {
                 required: true,
                 class: 'lg:col-span-6 xl:col-span-6',
+                valueKey: 'code',
               },
               rules: ['required-array'],
               query: {
@@ -123,11 +124,12 @@ const form: Form = {
             {
               if: 'showForContract',
               name: 'visibleExams',
-              label: 'Examenes Visibles',
+              label: 'Exámenes Visibles',
               type: 'multiselect',
               props: {
                 required: true,
                 class: 'lg:col-span-4 xl:col-span-4',
+                valueKey: 'code',
               },
               rules: ['required-array'],
               query: {
