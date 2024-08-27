@@ -49,7 +49,7 @@ async function finalize(id: string) {
       type: 'success',
       time: 5000,
     })
-    router.back()
+    router.replace('/patient-attention')
   } catch (err: any) {
     notifications.addNotification({
       title: 'Error',
@@ -105,6 +105,7 @@ async function finalize(id: string) {
           :orderId="order.id"
           :patientDataId="order.patientDataId"
           :serviceId="service.id"
+          :exams="service.exams"
         />
 
         <hr />

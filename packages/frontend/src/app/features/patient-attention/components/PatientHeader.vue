@@ -41,9 +41,12 @@ onMounted(async () => {
         {{ patient.gender }}</span
       >
     </div>
-    <div class="rounded-full h-24 w-24 bg-white">
+    <div
+      class="rounded-full h-24 w-24 min-w-min bg-white"
+      style="min-width: 6rem"
+    >
       <img
-        class="rounded-full object-cover h-full w-full"
+        class="rounded-full object-cover h-24 w-24"
         :src="photo.imageBase64.value"
         alt="Foto del paciente"
       />

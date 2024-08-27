@@ -9,11 +9,12 @@ const props = defineProps<{
   orderId: string
   patientDataId: string
   serviceId: string
+  exams: string[]
 }>()
 const service = ref<any>({})
 
 onMounted(async () => {
-  service.value = await getService(props.serviceId)
+  service.value = await getService(props.serviceId, props.exams)
   availableExams.value = await getExamsForUser()
 })
 </script>
@@ -28,6 +29,7 @@ onMounted(async () => {
         :order-id="orderId"
         :service-id="serviceId"
         :patient-data-id="patientDataId"
+        :exam-id="exam.id"
         :exam-code="exam.code"
         class="w-full mb-5"
       />

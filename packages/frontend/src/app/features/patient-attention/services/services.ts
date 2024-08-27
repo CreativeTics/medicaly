@@ -7,26 +7,21 @@ import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
 
 const pouch = new PouchService()
 
-export async function getService(id: string) {
+export async function getService(id: string, orderExams: string[] = []) {
   const service = await pouch.use(DB.GENERAL).get(id)
-  let exams = []
-
-  if (service.exams) {
-    exams = await Promise.all(
-      service.exams.map(async (exam: string) => {
-        const examDoc = await pouch.use(DB.MEDICAL).get(exam)
-
-        return {
-          id: examDoc.id,
-          code: examDoc.code,
-          name: examDoc.name,
-          type: examDoc.type,
-          version: examDoc.version,
-          form: examDoc.form,
-        }
-      })
-    )
-  }
+  const exams = await Promise.all(
+    orderExams.map(async (exam: string) => {
+      const examDoc = await pouch.use(DB.MEDICAL).get(exam)
+      return {
+        id: examDoc.id,
+        code: examDoc.code,
+        name: examDoc.name,
+        type: examDoc.type,
+        version: examDoc.version,
+        form: examDoc.form,
+      }
+    })
+  )
 
   return {
     code: service.code,
@@ -37,45 +32,19 @@ export async function getService(id: string) {
 }
 
 export async function getLastExamOrAnnotationExam(
-  examCode: string,
+  examId: string,
   annotation: any
 ) {
-  let exam: any = {}
+  let exam = null
 
   if (annotation.examId) {
     exam = await pouch.use(DB.MEDICAL).get(annotation.examId)
   } else {
-    const exams = await getData<any[]>({
-      entity: `${DB.MEDICAL}:exams`,
-      fields: ['id', 'version'],
-      where: {
-        code: examCode,
-      },
-    })
-
-    if (!exams.length) {
-      return exam
-    }
-
-    // get last version
-    const lastVersion = exams.reduce((acc: any, curr: any) => {
-      if (acc.version < curr.version) {
-        return curr
-      }
-      return acc
-    })
-
-    exam = await pouch.use(DB.MEDICAL).get(lastVersion.id)
+    exam = await pouch.use(DB.MEDICAL).get(examId)
   }
 
-  try {
-    exam.form = JSON.parse(exam.form) || {}
-    exam.formIsValid = true
-  } catch (error) {
-    exam.form = {}
-    exam.formIsValid = false
-    console.error('getLastExam', error)
-  }
+  exam.form = JSON.parse(exam.form) || {}
+  exam.formIsValid = true
 
   return exam
 }
@@ -140,6 +109,7 @@ export async function saveAnnotation(
   await updateAttachmentsBucket(annotation)
 
   if (!annotation.id) {
+    console.log('create new annotation' + orderId)
     annotation.orderId = orderId
     annotation.serviceId = serviceId
     annotation.examId = examId
@@ -155,18 +125,21 @@ export async function saveAnnotation(
     if (newAnnotation) {
       // update order
       await updateOrder(orderId, serviceId, newAnnotation.id)
-    }
-    //  clear cache
-    localStorage.removeItem(`annotation:${orderId}${serviceId}${examCode}`)
+      //  clear cache
+      localStorage.removeItem(`annotation:${orderId}${serviceId}${examCode}`)
 
-    return newAnnotation
+      return newAnnotation?.id
+    }
   }
 
   const updatedAnnotation = await pouch.use(DB.MEDICAL).update({
     doctype: 'annotations',
     ...annotation,
   })
-  return updatedAnnotation
+
+  //  clear cache
+  localStorage.removeItem(`annotation:${orderId}${serviceId}${examCode}`)
+  return updatedAnnotation?.id
 }
 
 async function updateAttachmentsBucket(annotation: any) {
@@ -196,9 +169,9 @@ async function updateOrder(
   if (service) {
     service.annotations = service.annotations || []
     service.annotations.push(annotationId)
-    // validate if annotations is complete
-    const serviceAll = await getService(serviceId)
-    if (service.annotations.length === serviceAll.exams.length) {
+
+    console.log('service', service)
+    if (service.annotations.length === service.exams.length) {
       service.status = OrderStatus.completed
     }
   }
@@ -234,6 +207,7 @@ export async function finalizeOrder(orderId: string): Promise<boolean> {
 
   // validate if order is complete
   const services = oldOrder.services || []
+  console.log('services', services)
   const servicesComplete = services.filter(
     (service: any) => service.status === OrderStatus.completed
   )

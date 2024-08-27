@@ -5,6 +5,7 @@ import { useImageFile } from '@/app/core/composable/useImageFile'
 
 import { getExamUrl, getInformedConsentUrl, getOrder } from '../services'
 import OrderStatus from '../components/OrderStatus.vue'
+import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
 import DBtn from '@components/basic/DBtn.vue'
 import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
 import ExamIcon from '@components/basic/icons/FileAttachment01Icon.vue'
@@ -95,6 +96,7 @@ onMounted(async () => {
         <div class="flex items-center gap-5">
           <div class="rounded-full h-24 w-24 bg-white">
             <img
+              v-if="photo.imageBase64.value"
               class="rounded-full object-cover h-full w-full"
               :src="photo.imageBase64.value"
               alt="Foto del paciente"
@@ -114,7 +116,10 @@ onMounted(async () => {
             <span class="text-sm">{{ order.patientDocumentNumber }}</span>
             <span class="text-sm">
               <span
-                v-if="order?.informedConsent"
+                v-if="
+                  order.status == OrderStatusEnum.completed &&
+                  order?.informedConsent
+                "
                 href=""
                 class="text-blue-800 flex gap-2 cursor-pointer"
                 @click="downloadConsent(order?.id)"
@@ -163,7 +168,10 @@ onMounted(async () => {
                 /></span>
               </td>
               <td>
-                <span class="text-sm">
+                <span
+                  class="text-sm"
+                  v-if="order.status == OrderStatusEnum.completed"
+                >
                   <ul v-if="service.showForContract">
                     <li v-for="exam in service.visibleExams">
                       <span
