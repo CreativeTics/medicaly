@@ -151,9 +151,53 @@ export async function getOrder(id: string) {
   }
 }
 
+export interface InformedConsent {
+  code: string
+  name: string
+  accepted: boolean
+}
+
+export async function getInformedConsentsForOrder(
+  orderId: string
+): Promise<InformedConsent[]> {
+  const order = await pouch.use(DB.GENERAL).get(orderId)
+
+  const informedConsents: InformedConsent[] = [
+    {
+      code: 'INFORMED-CONSENT',
+      name: 'Consentimiento Informado General',
+      accepted: false,
+    },
+  ]
+
+  await Promise.all(
+    order.services.map(async (service: any) => {
+      await Promise.all(
+        service.exams.map(async (examId: any) => {
+          const exam = await pouch.use(DB.MEDICAL).get(examId)
+          if (exam.requireConsent) {
+            const consent = await pouch
+              .use(DB.GENERAL)
+              .get(exam.consentTemplate)
+
+            informedConsents.push({
+              code: consent.code,
+              name: consent.name,
+              accepted: false,
+            })
+          }
+        })
+      )
+    })
+  )
+
+  return informedConsents
+}
+
 export async function admitPatientOrder(
   orderId: string,
-  patient: any
+  patient: any,
+  informedConsents: InformedConsent[]
 ): Promise<{
   success: boolean
   errorMessage?: string
@@ -180,6 +224,14 @@ export async function admitPatientOrder(
   //     errorMessage: 'La huella del paciente es requerida',
   //   }
   // }
+  // validate consents accepted
+
+  if (informedConsents.filter((consent) => !consent.accepted).length > 0) {
+    return {
+      success: false,
+      errorMessage: 'Todos los consentimientos deben ser aceptados!',
+    }
+  }
 
   const oldOrder = await pouch.use(DB.GENERAL).get(orderId)
 
@@ -191,7 +243,12 @@ export async function admitPatientOrder(
 
   const orderCycle: any[] = oldOrder.orderCycle || []
   const user = useAuthStore().user
-  if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+  if (!user || !user?.relations[0]) {
+    return {
+      success: false,
+      errorMessage: 'Usuario Invalido!',
+    }
+  }
 
   const employee = await getEmployee(user?.relations[0])
 
@@ -210,8 +267,8 @@ export async function admitPatientOrder(
     patientDataId: patientUpdate.dataId,
     patientName: `${patient.documentNumber} - ${patient.name} ${patient.secondName} ${patient.lastName} ${patient.secondLastName}`,
     orderCycle,
-    informedConsent: patient.informedConsent,
     admittedBy: oldOrder.employee ?? employee,
+    informedConsents, // save informed consents
   }
 
   await pouch.use(DB.GENERAL).update(orderUpdated)

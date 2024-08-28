@@ -4,13 +4,20 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { useNotificationsStore } from '@/store/notifications'
 import { useImageFile } from '@/app/core/composable/useImageFile'
-import { getOrder, admitPatientOrder } from '../services'
+import {
+  getOrder,
+  admitPatientOrder,
+  InformedConsent,
+  getInformedConsentsForOrder,
+} from '../services'
 import OrderStatus from '../../service-orders/components/OrderStatus.vue'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
+import DModal from '@components/basic/DModal.vue'
 
 import DCameraInput from '@components/DCameraInput.vue'
 import DSignatureInput from '@components/biometric/DSignatureInput.vue'
 import DFingerPrintInput from '@components/biometric/DFingerPrintInput.vue'
+import DToggleField from '@components/basic/DToggleField.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -18,21 +25,26 @@ const notifications = useNotificationsStore()
 
 const order = ref<any>({})
 const loading = ref(false)
+const modalIsOpen = ref(false)
 
 const back = () => {
   console.log('Back')
   router.back()
 }
 let model = ref<any>({})
+const dynamicForm = ref<typeof DynamicFormWithOutTabs | null>(null)
 
 const photo = useImageFile('patientPhoto.png')
 const signature = useImageFile('patientSignature.png')
 const fingerprint = useImageFile('patientFingerprint.png')
 
+const informedConsents = ref<InformedConsent[]>([])
+
 onMounted(async () => {
   if (route.params.id) {
     loading.value = true
     order.value = await getOrder(route.params.id.toString())
+    informedConsents.value = await getInformedConsentsForOrder(order.value.id)
     model.value = {
       ...order.value.patient,
       applyPosition: order.value.position,
@@ -438,39 +450,40 @@ const form: any = {
             class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
           },
         },
-        {
-          name: '',
-          label: '',
-          type: 'div',
-          defaultValue: false,
-          props: {
-            class: 'sm:col-span-4 lg:col-span-4 xl:col-span-4',
-          },
-        },
-        {
-          name: 'informedConsent',
-          label: 'El Paciente acepta el consentimiento informado?',
-          type: 'check',
-          defaultValue: false,
-          rules: ['required-check'],
-        },
       ],
     },
   ],
 }
 
-const onSubmit = async (data: any) => {
+const onSubmit = async () => {
+  if (
+    informedConsents.value.filter((consent) => !consent.accepted).length > 0
+  ) {
+    notifications.addNotification({
+      title: 'Error',
+      text: 'Debe aceptar todos los consentimientos!',
+      type: 'error',
+    })
+    return
+  }
+
+  const data = dynamicForm.value?.getAllModel()
+
   console.log('Submit', data)
   loading.value = true
 
-  const result = await admitPatientOrder(route.params.id.toString(), {
-    ...data,
-    ...{
-      photoId: await photo.saveImage(),
-      signatureId: await signature.saveImage(),
-      fingerprintId: await fingerprint.saveImage(),
+  const result = await admitPatientOrder(
+    route.params.id.toString(),
+    {
+      ...data,
+      ...{
+        photoId: await photo.saveImage(),
+        signatureId: await signature.saveImage(),
+        fingerprintId: await fingerprint.saveImage(),
+      },
     },
-  })
+    informedConsents.value
+  )
   loading.value = false
 
   if (!result.success) {
@@ -533,16 +546,42 @@ const onSubmit = async (data: any) => {
           <div class="w-full overflow-y-scroll">
             <DynamicFormWithOutTabs
               v-if="!loading"
+              ref="dynamicForm"
               :form-schema="form"
               :initial-model="model"
               title-btn-save="Ingresar paciente"
               gridClass="grid grid-cols-6 px-6 pb-5 w-full"
               @cancel="back"
-              @submit="onSubmit"
+              @submit="modalIsOpen = true"
             />
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <DModal
+    :open="modalIsOpen"
+    title="¿El paciente acepta los siguientes consentimientos?"
+    nameButtonClose="Cancelar"
+    accept-question="Continuar"
+    typeAlert="question"
+    :form="true"
+    @closeModal="modalIsOpen = false"
+    @other-method="onSubmit"
+  >
+    <template #form>
+      <div class="w-full flex flex-col gap-10 p-20">
+        <div class="flex justify-center">
+          <h3 class="text-lg font-semibold">
+            El paciente acepta los siguientes consentimientos?
+          </h3>
+        </div>
+        <div v-for="consent in informedConsents" class="flex justify-between">
+          <span class="font-normal">{{ consent.name }}</span>
+          <DToggleField v-model="consent.accepted" />
+        </div>
+      </div>
+    </template>
+  </DModal>
 </template>

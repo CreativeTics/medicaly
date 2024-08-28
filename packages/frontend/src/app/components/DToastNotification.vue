@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref } from 'vue'
 
 import {
   CheckCircleIcon,
@@ -7,92 +7,92 @@ import {
   AlertHexagonIcon,
   AnnotationInfoIcon,
   XIcon,
-} from "@components/basic/icons";
+} from '@components/basic/icons'
 
 const props = defineProps({
   title: {
     type: String,
-    default: "title",
+    default: 'title',
   },
   text: {
     type: String,
-    default: "",
+    default: '',
   },
   type: {
     type: String,
-    default: "success",
+    default: 'success',
   },
   time: {
     type: Number,
     default: 5000,
   },
-});
+})
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close'])
 
 interface Type {
-  icon: any;
-  bgColor: string;
-  textColor: string;
+  icon: any
+  bgColor: string
+  textColor: string
 }
 
 const types = new Map<string, Type>([
   [
-    "success",
+    'success',
     {
       icon: CheckCircleIcon,
-      bgColor: "bg-lime-500",
-      textColor: "text-lime-500",
+      bgColor: 'bg-lime-500',
+      textColor: 'text-lime-500',
     },
   ],
   [
-    "error",
+    'error',
     {
       icon: AlertHexagonIcon,
-      bgColor: "bg-red-500",
-      textColor: "text-red-500",
+      bgColor: 'bg-red-500',
+      textColor: 'text-red-500',
     },
   ],
   [
-    "warning",
+    'warning',
     {
       icon: AlertTriangleIcon,
-      bgColor: "bg-amber-500",
-      textColor: "text-amber-500",
+      bgColor: 'bg-amber-500',
+      textColor: 'text-amber-500',
     },
   ],
   [
-    "info",
+    'info',
     {
       icon: AnnotationInfoIcon,
-      bgColor: "bg-blue-500",
-      textColor: "text-blue-500",
+      bgColor: 'bg-blue-500',
+      textColor: 'text-blue-500',
     },
   ],
-]);
+])
 
-const percent = ref(100);
+const percent = ref(100)
 
 const onClose = () => {
-  emit("close");
-};
+  emit('close')
+}
 
 const counter = () => {
-  const total = props.time / 10;
-  let actual = total;
+  const total = props.time / 10
+  let actual = total
   const interval = setInterval(() => {
-    actual -= 1;
-    percent.value = (100 * actual) / total;
+    actual -= 1
+    percent.value = (100 * actual) / total
     if (percent.value <= 0) {
-      clearInterval(interval);
-      onClose();
+      clearInterval(interval)
+      onClose()
     }
-  }, 10);
-};
+  }, 10)
+}
 
 onMounted(() => {
-  counter();
-});
+  counter()
+})
 </script>
 <template>
   <div

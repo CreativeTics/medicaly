@@ -58,7 +58,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="fixed z-50 inset-0 overflow-hidden bg-gray-500 bg-opacity-75 transition-opacity"
+    class="fixed z-40 inset-0 overflow-hidden bg-gray-500 bg-opacity-75 transition-opacity"
     aria-labelledby="modal-title"
     role="dialog"
     aria-modal="true"
@@ -75,7 +75,7 @@ onMounted(() => {
           <template v-if="!form">
             <!------Logo----->
             <div
-              class="flex items-center justify-center rounded-full sm:mx-0 h-28 w-28"
+              class="flex items-center justify-center rounded-full sm:mx-0 h-14 w-14"
               :class="[
                 {
                   'bg-gray-50 ': typeAlert === 'question',
@@ -85,7 +85,7 @@ onMounted(() => {
             >
               <AnnotationQuestionIcon
                 v-if="typeAlert === 'question'"
-                class="h-20 w-20 text-yellow-300"
+                class="h-10 w-10 text-yellow-300"
               />
             </div>
             <!----Content------>

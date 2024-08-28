@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { useNotificationsStore } from "@/store/notifications";
-import DToastNotification from "./DToastNotification.vue";
+import { useNotificationsStore } from '@/store/notifications'
+import DToastNotification from './DToastNotification.vue'
 
-const store = useNotificationsStore();
+const store = useNotificationsStore()
 
 const onClose = (id?: string) => {
-  if (!id) return;
-  store.removeNotification(id);
-};
+  if (!id) return
+  store.removeNotification(id)
+}
 </script>
 <template>
   <div
