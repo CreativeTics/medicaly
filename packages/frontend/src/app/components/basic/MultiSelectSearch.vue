@@ -120,7 +120,6 @@ const fixSearchItemScroll = () => {
   <div class="relative">
     <label class="block text-sm font-medium text-gray-800 mb-1.5" v-if="label">
       {{ label }} <span v-if="required" class="text-red-500">*</span>
-      {{ allowAddSearch }} - {{ searchActiveItem }}
     </label>
 
     <!-- model Value  -->
@@ -132,7 +131,7 @@ const fixSearchItemScroll = () => {
           {{ i + 1 }}
         </span>
         <span
-          class="px-4 py-2 inline-flex text-sm rounded-full bg-gray-100 text-gray-800 w-full flex justify-between items-center"
+          class="px-4 py-2 text-sm rounded-full bg-gray-100 text-gray-800 w-full flex justify-between items-center"
         >
           <span>{{ item }}</span>
           <div class="flex items-center justify-center">
