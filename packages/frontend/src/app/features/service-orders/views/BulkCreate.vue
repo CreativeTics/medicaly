@@ -185,7 +185,7 @@ const onSubmit = async (data: any) => {
     notifications.addNotification({
       type: 'success',
       title: `${moduleName} creado`,
-      text: `El ${moduleName} se ha creado correctamente`,
+      text: `La(s) orden(s) se ha creado correctamente!`,
     })
     router.push({ name: `${modulePath}.list` })
   } else {

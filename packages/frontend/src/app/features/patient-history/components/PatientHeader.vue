@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useImageFile } from '@/app/core/composable/useImageFile'
-import Patients from '@features/service-orders/components/Patients.vue'
 
 interface Patient {
   id: string

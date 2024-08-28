@@ -16,6 +16,7 @@ import PaginatedTable from '@components/PaginatedTable.vue'
 import PatientHeader from '../components/PatientHeader.vue'
 import SearchMdIcon from '@components/basic/icons/SearchMdIcon.vue'
 import PrinterIcon from '@components/basic/icons/PrinterIcon.vue'
+import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
 
 import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
 import { DModal } from '@components/basic'
@@ -45,11 +46,11 @@ const columns = [
     align: 'left',
   },
 
-  {
-    key: 'createdAt',
-    title: 'Fecha de creación',
-    align: 'left',
-  },
+  // {
+  //   key: 'createdAt',
+  //   title: 'Fecha de creación',
+  //   align: 'left',
+  // },
   {
     key: 'admissionDate',
     title: 'Fecha de Admisión',
@@ -58,6 +59,11 @@ const columns = [
   {
     key: 'endAttentionDate',
     title: 'Fecha de Salida',
+    align: 'left',
+  },
+  {
+    key: 'informedConsents',
+    title: '',
     align: 'left',
   },
   {
@@ -80,6 +86,14 @@ const generatePrint = async (ticketId: string) => {
   if (iframe.value?.contentWindow) iframe.value?.contentWindow?.print()
 
   printingTicket.value = ''
+}
+
+const downloadConsent = async (orderId: string) => {
+  // consentIsLoading.value = true
+  // console.log('Download consent', id)
+  // const url = await getInformedConsentUrl(id)
+  // window.open(url, '_blank')
+  // consentIsLoading.value = false
 }
 
 const openHistoryModal = (ticketId: string) => {
@@ -126,13 +140,37 @@ onMounted(async () => {
               >
                 <div
                   class="w-full"
-                  v-if="column.key !== 'actions' && column.key !== 'status'"
+                  v-if="
+                    !['actions', 'status', 'informedConsents'].includes(
+                      column.key
+                    )
+                  "
                 >
                   {{ rowProps.row[column.key] }}
                 </div>
 
                 <div class="max-w-xs gap-2" v-else-if="column.key === 'status'">
                   <OrderStatus :status="rowProps.row.status" />
+                </div>
+                <div
+                  class="max-w-xs gap-2"
+                  v-else-if="column.key === 'informedConsents'"
+                >
+                  <ul>
+                    <li v-for="consent in rowProps.row?.informedConsents">
+                      <span
+                        v-if="
+                          rowProps.row?.status == OrderStatusEnum.completed &&
+                          consent.accepted
+                        "
+                        class="text-blue-800 flex gap-2 cursor-pointer"
+                        @click=""
+                      >
+                        {{ consent.name }}
+                        <DLoadingIcon v-show="true" class="animate-spin"
+                      /></span>
+                    </li>
+                  </ul>
                 </div>
 
                 <div class="max-w-xs flex justify-end gap-2" v-else>

@@ -162,13 +162,13 @@ export async function getInformedConsentsForOrder(
 ): Promise<InformedConsent[]> {
   const order = await pouch.use(DB.GENERAL).get(orderId)
 
-  const informedConsents: InformedConsent[] = [
-    {
-      code: 'INFORMED-CONSENT',
-      name: 'Consentimiento Informado General',
-      accepted: false,
-    },
-  ]
+  const informedConsents = new Map<string, InformedConsent>()
+
+  informedConsents.set('INFORMED-CONSENT', {
+    code: 'INFORMED-CONSENT',
+    name: 'Consentimiento Informado General',
+    accepted: false,
+  })
 
   await Promise.all(
     order.services.map(async (service: any) => {
@@ -180,7 +180,7 @@ export async function getInformedConsentsForOrder(
               .use(DB.GENERAL)
               .get(exam.consentTemplate)
 
-            informedConsents.push({
+            informedConsents.set(consent.code, {
               code: consent.code,
               name: consent.name,
               accepted: false,
@@ -191,7 +191,7 @@ export async function getInformedConsentsForOrder(
     })
   )
 
-  return informedConsents
+  return Array.from(informedConsents.values())
 }
 
 export async function admitPatientOrder(

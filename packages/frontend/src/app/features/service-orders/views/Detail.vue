@@ -7,7 +7,7 @@ import { getExamUrl, getInformedConsentUrl, getOrder } from '../services'
 import OrderStatus from '../components/OrderStatus.vue'
 import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
 import DBtn from '@components/basic/DBtn.vue'
-import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
+
 import ExamIcon from '@components/basic/icons/FileAttachment01Icon.vue'
 import { getPatient } from '../services/patients'
 import { useNotificationsStore } from '@/store/notifications'
@@ -24,14 +24,6 @@ const consentIsLoading = ref(false)
 const back = () => {
   console.log('Back')
   router.back()
-}
-
-const downloadConsent = async (id: string) => {
-  consentIsLoading.value = true
-  console.log('Download consent', id)
-  const url = await getInformedConsentUrl(id)
-  window.open(url, '_blank')
-  consentIsLoading.value = false
 }
 
 const downloadExam = async (serviceId: string, examId: string) => {
@@ -105,28 +97,12 @@ onMounted(async () => {
           <div class="flex flex-col">
             <span class="font-semibold">Nombre </span>
             <span class="font-semibold">Documento</span>
-            <span class="font-semibold"
-              >Consentimiento {{ order?.informedConsent }}</span
-            >
           </div>
           <div class="flex flex-col">
             <span class="text-lg font-semibold">
               {{ order?.patientName }}
             </span>
             <span class="text-sm">{{ order.patientDocumentNumber }}</span>
-            <span class="text-sm">
-              <span
-                v-if="
-                  order.status == OrderStatusEnum.completed &&
-                  order?.informedConsent
-                "
-                href=""
-                class="text-blue-800 flex gap-2 cursor-pointer"
-                @click="downloadConsent(order?.id)"
-                >Consentimiento informado
-                <DLoadingIcon v-show="consentIsLoading" class="animate-spin"
-              /></span>
-            </span>
           </div>
         </div>
       </div>

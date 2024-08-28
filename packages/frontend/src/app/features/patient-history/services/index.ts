@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/auth'
 import { API_URL } from '@/config'
 import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
 import { on } from 'pouchdb-browser'
+import { InformedConsent } from '@features/patient-admission/services'
 
 const pouch = new PouchService()
 
@@ -103,7 +104,7 @@ export async function getPatientById(patientId: string): Promise<Patient> {
     name: patient.fullName,
     document: patient.documentNumber,
     photoId: patient.photoId,
-    birthDate: formatDate(patient.birthDate, true),
+    birthDate: formatDate(patient.birthDate),
     gender: patient.gender,
   }
 }
@@ -116,6 +117,7 @@ export interface PatientOrder {
   createdAt: string
   admissionDate?: string
   endAttentionDate?: string
+  informedConsents?: InformedConsent[]
 }
 
 export async function getOrdersForPatient(
@@ -132,6 +134,7 @@ export async function getOrdersForPatient(
       'createdAt',
       'updatedAt',
       'orderCycle',
+      'informedConsents',
     ],
     where: { patientId: patientId },
     sort: [{ createdAt: 'desc' }],
@@ -157,6 +160,7 @@ export async function getOrdersForPatient(
         createdAt: formatDate(doc.createdAt, true),
         admissionDate: dates.dateOfAdmission,
         endAttentionDate: dates.dateOfFinalization,
+        informedConsents: doc.informedConsents || [],
       }
     })
 }
@@ -173,9 +177,9 @@ function getDatesFromOrder(order: any): {
   )?.at
 
   return {
-    dateOfAdmission: dateOfAdmission ? formatDate(dateOfAdmission) : '',
+    dateOfAdmission: dateOfAdmission ? formatDate(dateOfAdmission, true) : '',
     dateOfFinalization: dateOfFinalization
-      ? formatDate(dateOfFinalization)
+      ? formatDate(dateOfFinalization, true)
       : '',
   }
 }
