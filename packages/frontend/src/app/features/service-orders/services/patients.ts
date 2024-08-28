@@ -8,6 +8,10 @@ export async function getDocumentTypes() {
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:identification-types`,
     fields: ['id', 'code', 'name'],
+    where: {
+      type: 'Natural',
+    },
+    sort: [{ name: 'asc' }],
   })
 
   return data.map((doc: any) => {

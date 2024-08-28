@@ -27,6 +27,25 @@ const form: Form = {
           description: '',
           fields: [
             {
+              name: 'type',
+              label: 'Tipo',
+              type: 'select',
+              props: {
+                required: true,
+                options: [
+                  {
+                    id: 'Natural',
+                    name: 'Natural',
+                  },
+                  {
+                    id: 'Juridica',
+                    name: 'Jurídica',
+                  },
+                ],
+              },
+              rules: ['required'],
+            },
+            {
               name: 'code',
               label: 'Codigo',
               type: 'text',
