@@ -318,75 +318,49 @@ function validatePatients(patients: any[]) {
   return errors
 }
 
-export async function getInformedConsentUrl(orderId: string): Promise<string> {
-  // get order
-  const order = await pouch.use(DB.GENERAL).get(orderId)
-  let informedConsentId = order.informedConsentFile
-  // validate if not has informed consent
-  if (!informedConsentId) {
-    // generate informed consent
-    const informedConsent = await generateInformedConsent(orderId)
-    // save new informed consent in order
-
-    const updatedOrder = {
-      ...order,
-      informedConsentFile: informedConsent.id,
-    }
-    await pouch.use(DB.GENERAL).update(updatedOrder)
-    informedConsentId = informedConsent.id
-  }
-
-  // get informed consent Url
-  return `${API_URL}/files/api/files/${informedConsentId}?h=${encodeURI(
-    useAuthStore().token
-  )}`
-}
-
-export async function getExamUrl(
+export async function downloadExamCertificate(
   orderId: string,
   serviceId: string,
   examId: string
-): Promise<string> {
-  const exam = await pouch.use(DB.MEDICAL).get(examId)
-
-  if (!exam.printTemplate) {
-    throw new Error('No se configuro la plantilla de impresión para el examen')
-  }
-
-  const examTemplate = await pouch.use(DB.GENERAL).get(exam.printTemplate)
-  const order = await pouch.use(DB.GENERAL).get(orderId)
-
-  const annotationId = [
-    ...order.services.map((service: any) => service.annotations),
-  ]
-    .flat()
-    .find((annotation: string) => annotation.includes(`${serviceId}:${examId}`))
-
-  console.log('annotation', annotationId)
-
-  if (!annotationId) {
-    throw new Error('Examen no finalizado! ')
-  }
-
-  const examPrint = await http.post(
-    'files/api/certificates/',
-    {
-      order: orderId,
-      code: examTemplate.code,
-      params: {
-        annotation: annotationId,
+) {
+  try {
+    // get exam print blob
+    const examPrintBlob = await http.post(
+      'files/api/certificates/',
+      {
+        order: orderId,
+        serviceId,
+        examId,
       },
-    },
-    {
-      headers: {
-        Authorization: `${useAuthStore().token}`,
-      },
+      {
+        headers: {
+          Authorization: `${useAuthStore().token}`,
+        },
+        responseType: 'blob',
+      }
+    )
+
+    if (examPrintBlob.status !== 200) {
+      throw 'Error al descargar el archivo'
     }
-  )
 
-  return `${API_URL}/files/api/files/${examPrint.data.id}?h=${encodeURI(
-    useAuthStore().token
-  )}`
+    console.log(examPrintBlob.data.size) // Should be greater than 0
+    console.log(examPrintBlob.data.type) // Should be 'application/pdf'
+
+    // download file
+    const blobUrl = URL.createObjectURL(examPrintBlob.data)
+    window.open(blobUrl)
+    // const link = document.createElement('a')
+    // link.href = url
+    // link.download = examPrintBlob.headers['content-disposition'].split('=')[1] // Extract filename from headers
+
+    // document.body.appendChild(link) // Required for Firefox
+    // link.click()
+    // document.body.removeChild(link) // Cleanup
+    // URL.revokeObjectURL(url) // Free up memory
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 async function getExamsForService(examsId: string[]): Promise<any> {
@@ -403,7 +377,7 @@ async function getExam(examId: string): Promise<{
   id: string
   code: string
   name: string
-  printTemplateId: string
+  requireCertificate: boolean
 }> {
   const examRaw = await pouch.use(DB.MEDICAL).get(examId)
 
@@ -411,6 +385,6 @@ async function getExam(examId: string): Promise<{
     id: examRaw.id,
     code: examRaw.code,
     name: examRaw.name,
-    printTemplateId: examRaw.printTemplate,
+    requireCertificate: examRaw.requireCertificate,
   }
 }

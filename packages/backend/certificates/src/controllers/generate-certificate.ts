@@ -6,52 +6,118 @@ import { PrintPdfDto, GotenbergService } from '../services/gotenberg.service'
 export class GenerateCertificateController {
   async execute(
     orderId: string,
-    code: string
+    serviceId: string,
+    examId: string
   ): Promise<{
-    id: string
+    name: string
+    mimeType: string
+    data: Buffer
   }> {
-    console.log('Received request to generate certificate', orderId, code)
+    console.log(
+      'Received request to generate certificate',
+      orderId,
+      serviceId,
+      examId
+    )
 
     try {
+      const examConfig = await this.getExamConfig(examId)
+
+      if (!examConfig.requireCertificate || !examConfig.certificateTemplate) {
+        console.log('Certificate not configured for this exam')
+        return null
+      }
+
       // 1. Get  data
       const orderData = await this.getOrderData(orderId)
-      console.log('orderData')
+      console.log('load orderData')
 
       const contractData = await this.getContractData(orderData?.contract)
-      console.log('contractData')
+      console.log('load contractData')
 
       const patientData = await this.getPatientData(orderData?.patientDataId)
-      console.log('patientData')
+      console.log('load patientData')
 
       const annotations = await this.getAnnotations(orderId)
-      console.log('annotations', annotations)
+      console.log('load annotations', annotations)
+
+      const annotation = annotations.find(
+        (annotation) =>
+          annotation.examId === examId && annotation.serviceId === serviceId
+      )
+
+      if (!annotation) {
+        console.log('Annotation not found for this exam')
+        return null
+      }
+
+      // validate if attachment is  already created and return PDF
+      if (annotation.attachment_certificate) {
+        const { data: certificate, name } = await this.getAttachment(
+          annotation.attachment_certificate
+        )
+        return {
+          mimeType: 'application/pdf',
+          name,
+          data: certificate,
+        }
+      }
 
       // 2. render templates
       const templates = await this.renderTemplates({
-        code,
+        templateId: examConfig.certificateTemplate,
         order: orderData,
         contract: contractData,
         patient: patientData,
-        annotations,
+        allAnnotations: annotations,
+        annotation,
       })
-      console.log('templates')
 
+      console.log('templates')
       // 3. Create
       const certificate = await this.createPdf(templates)
+      const certificateName = `${orderData.code}_${examConfig.code}_certificate.pdf`
       console.log('certificate')
 
       //4. Save  in files database
 
-      const id = await this.savePdf(orderId, certificate)
+      await this.saveCertificateAttachmentInAnnotation(
+        patientData.id,
+        annotation._id,
+        {
+          data: certificate,
+          name: certificateName,
+        }
+      )
 
-      // 5. Return file id
+      // 5. Return file
       return {
-        id,
+        mimeType: 'application/pdf',
+        name: certificateName,
+        data: certificate,
       }
     } catch (error) {
       console.log('Error generating certificate', error)
     }
     return null
+  }
+
+  async getExamConfig(examId: string): Promise<{
+    code: string
+    requireCertificate: boolean
+    certificateTemplate: string
+  }> {
+    const response = await couchHttp.get(`/medical/${examId}`)
+
+    if (response.status !== 200) {
+      throw new Error('Exam not found')
+    }
+
+    return {
+      code: response.data.code,
+      requireCertificate: response.data.requireCertificate,
+      certificateTemplate: response.data.certificateTemplate,
+    }
   }
 
   async getOrderData(orderId: string) {
@@ -61,7 +127,10 @@ export class GenerateCertificateController {
       throw new Error('Order not found')
     }
 
-    return response.data
+    return {
+      id: response.data._id,
+      ...response.data,
+    }
   }
 
   async getContractData(contractId: string) {
@@ -71,7 +140,10 @@ export class GenerateCertificateController {
       throw new Error('Contract not found')
     }
 
-    return response.data
+    return {
+      id: response.data._id,
+      ...response.data,
+    }
   }
 
   async getPatientData(patientDataId: string) {
@@ -87,6 +159,7 @@ export class GenerateCertificateController {
     const patient = await couchHttp.get(`/medical/${response.data.patientId}`)
 
     return {
+      id: patient.data._id,
       ...patient.data,
       ...response.data,
     }
@@ -107,22 +180,25 @@ export class GenerateCertificateController {
     return response.data.docs
   }
 
-  async createPdf(templates: PrintPdfDto): Promise<string> {
+  async createPdf(templates: PrintPdfDto): Promise<Buffer> {
     const gotenbergService = new GotenbergService()
 
-    const pdf = (await gotenbergService.build(templates)) as string
-
+    const pdf = (await gotenbergService.build(templates, {
+      buffer: true,
+      waitDelay: '1s',
+    })) as Buffer
     return pdf
   }
 
   async renderTemplates(data: {
-    code: string
+    templateId: string
     order: any
     patient: any
     contract: any
-    annotations: any
+    allAnnotations: any
+    annotation: any
   }): Promise<PrintPdfDto> {
-    const templates = await this.getTemplates(data.code)
+    const templates = await this.getTemplates(data.templateId)
     const ejsService = new EjsService()
     return {
       header: await ejsService.renderFile(templates.header, data),
@@ -132,25 +208,19 @@ export class GenerateCertificateController {
     }
   }
 
-  async getTemplates(code: string): Promise<{
+  async getTemplates(templateId: string): Promise<{
     header: string
     index: string
     footer: string
     properties?: any
   }> {
-    // find template in database by code
-    const response = await couchHttp.post(`/general/_find`, {
-      selector: {
-        doctype: 'templates',
-        code,
-      },
-      fields: ['_id', 'code', 'header', 'body', 'footer', 'props'],
-    })
+    const response = await couchHttp.get(`/general/${templateId}`)
+
     if (response.status !== 200) {
       throw new Error('Template not found')
     }
 
-    const template = response.data.docs[0]
+    const template = response.data
 
     return {
       header: template.header,
@@ -160,17 +230,25 @@ export class GenerateCertificateController {
     }
   }
 
-  async savePdf(orderId: string, base64Certificate: string): Promise<string> {
+  async saveCertificateAttachmentInAnnotation(
+    patientId: string,
+    annotationId: string,
+    certificate: {
+      data: Buffer
+      name: string
+    }
+  ): Promise<void> {
     // save pdf in files database
 
     const response = await couchHttp.post(`/files/`, {
       docType: 'files',
-      type: 'certificates',
-      orderId,
+      bucket: 'patients',
+      folder: `${patientId}/certificates/`,
+      name: certificate.name,
       _attachments: {
         'certificate.pdf': {
           content_type: 'application/pdf',
-          data: base64Certificate,
+          data: certificate.data.toString('base64'),
         },
       },
       synced: false,
@@ -179,7 +257,49 @@ export class GenerateCertificateController {
       isDeleted: false,
     })
 
-    // return file id
-    return response.data.id
+    // save file id in annotation
+
+    const annotationResponse = await couchHttp.get(`/medical/${annotationId}`)
+    if (annotationResponse.status !== 200) {
+      throw new Error('Annotation not found')
+    }
+
+    const annotation = annotationResponse.data
+    annotation.attachment_certificate = response.data.id
+
+    const updateResponse = await couchHttp.put(
+      `/medical/${annotationId}`,
+      annotation
+    )
+
+    if (updateResponse.status !== 201) {
+      throw new Error('Error saving certificate in annotation')
+    }
+  }
+
+  async getAttachment(
+    attachmentId: string
+  ): Promise<{ data: Buffer; name: string }> {
+    const response = await couchHttp.get(`/files/${attachmentId}`)
+
+    if (response.status !== 200) {
+      throw new Error('File not found')
+    }
+
+    const attachment = await couchHttp.get(
+      `/files/${attachmentId}/certificate.pdf`,
+      {
+        responseType: 'arraybuffer',
+      }
+    )
+
+    if (attachment.status !== 200) {
+      throw new Error('Attachment not found')
+    }
+
+    return {
+      name: response.data.name,
+      data: attachment.data,
+    }
   }
 }

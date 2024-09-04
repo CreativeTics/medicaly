@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 // cors
-app.use((req, res, next) => {
+app.use((_, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   next()
 })
@@ -32,42 +32,32 @@ app.get('/api/medical-history/:orderId', async (req, res) => {
     req.params.orderId
   )
 
-  const html =
-    await new GenerateMedicalHistoryController().getRenderedHtmlMedicalHistory(
-      req.params.orderId,
-      req.query.h as string
-    )
-
-  res.send(html)
-  res.end()
-})
-
-app.get('/api/medical-history/:orderId/pdf', async (req, res) => {
-  console.log(
-    'Received request to generate pdf of  medical history',
-    req.params.orderId
-  )
-
-  const document = await new GenerateMedicalHistoryController().execute(
+  const html = await new GenerateMedicalHistoryController().execute(
     req.params.orderId,
     req.query.h as string
   )
-  res.setHeader('Content-Disposition', `inline; filename=${document.name}`)
-  res.setHeader('Content-Type', document.mimeType)
-  res.send(document.data)
 
+  res.send(html)
   res.end()
 })
 
 app.post('/api/certificates/', async (req, res) => {
   console.log('Received request to generate certificate', req.body)
 
-  const certificateId = await new GenerateCertificateController().execute(
+  const certificate = await new GenerateCertificateController().execute(
     req.body.order,
-    req.body.code
+    req.body.serviceId,
+    req.body.examId
   )
 
-  res.send(certificateId)
+  if (!certificate) {
+    res.status(404).send('Certificate not found')
+    res.end()
+    return
+  }
+  res.setHeader('Content-Disposition', `inline; filename=${certificate.name}`)
+  res.setHeader('Content-Type', certificate.mimeType) // 'application/pdf'
+  res.send(certificate.data)
   res.end()
 })
 

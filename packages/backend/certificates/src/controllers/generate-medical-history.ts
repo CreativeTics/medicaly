@@ -1,80 +1,35 @@
 import EjsService from '../services/ejs.service'
 import { couchHttp } from '../util/http'
 
-import { PrintPdfDto, GotenbergService } from '../services/gotenberg.service'
-
 export class GenerateMedicalHistoryController {
-  async execute(
-    orderId: string,
-    token: string
-  ): Promise<{
-    name: string
-    mimeType: string
-    data: Buffer
-  }> {
-    console.log('Received request to generate ', orderId)
-
-    try {
-      // 1. Get  data
-
-      // 2. render templates
-      const templates = await this.getTemplates('MEDICAL-HISTORY')
-      const ejsService = new EjsService()
-
-      console.log('templates')
-
-      // 3. Create
-      const document = await this.createPdf({
-        header: await ejsService.renderFile(templates.header, {}),
-        index: await this.getRenderedHtmlMedicalHistory(orderId, token),
-        footer: await ejsService.renderFile(templates.footer, {}),
-        properties: templates.properties,
-      })
-
-      console.log('document created')
-
-      return {
-        mimeType: 'application/pdf',
-        name: 'medical-history.pdf',
-        data: document,
-      }
-    } catch (error) {
-      console.log('Error generating medical history', error)
-    }
-    return null
-  }
-
-  async getRenderedHtmlMedicalHistory(
-    orderId: string,
-    token: string
-  ): Promise<string> {
+  async execute(orderId: string, token: string): Promise<string> {
     const orderData = await this.getOrderData(orderId)
-    console.log('orderData')
+
+    const contractData = await this.getContractData(orderData?.contract)
+
+    const patientData = await this.getPatientData(orderData?.patientDataId)
+
+    const annotations: any[] = await this.getAnnotations(orderId)
+
+    // sort
     const annotationsOrder: string[] = orderData.services
       .map((service) => service.exams)
       .flat()
 
-    const contractData = await this.getContractData(orderData?.contract)
-    console.log('contractData')
-
-    const patientData = await this.getPatientData(orderData?.patientDataId)
-    console.log('patientData')
-
-    const annotations: any[] = await this.getAnnotations(orderId)
-    // sort
     annotations.sort((a, b) => {
       return (
         annotationsOrder.indexOf(a.examId) - annotationsOrder.indexOf(b.examId)
       )
     })
 
-    console.log('annotations', annotations)
+    // get doctor finalize the order
+    const doctor = {}
 
     const ejsService = new EjsService()
 
-    const templates = await this.getTemplates('MEDICAL-HISTORY')
+    const template = await this.getMedicalHistoryTemplate()
 
-    const transpiledHtml = await ejsService.renderFile(templates.index, {
+    const transpiledHtml = await ejsService.renderFile(template, {
       token,
       order: orderData,
       contract: contractData,
@@ -155,65 +110,19 @@ export class GenerateMedicalHistoryController {
     return response.data.docs
   }
 
-  async createPdf(templates: PrintPdfDto): Promise<Buffer> {
-    const gotenbergService = new GotenbergService()
-
-    const pdf = (await gotenbergService.build(templates, {
-      buffer: true,
-      waitDelay: '1s',
-    })) as Buffer
-    return pdf
-  }
-
-  async getTemplates(code: string): Promise<{
-    header: string
-    index: string
-    footer: string
-    properties?: any
-  }> {
+  async getMedicalHistoryTemplate(): Promise<string> {
     // find template in database by code
     const response = await couchHttp.post(`/general/_find`, {
       selector: {
         doctype: 'templates',
-        code,
+        code: 'MEDICAL-HISTORY',
       },
-      fields: ['_id', 'code', 'header', 'body', 'footer', 'props'],
+      fields: ['_id', 'body'],
     })
     if (response.status !== 200) {
       throw new Error('Template not found')
     }
 
-    const template = response.data.docs[0]
-
-    return {
-      header: template.header,
-      index: template.body,
-      footer: template.footer,
-      properties: template.props,
-    }
-  }
-
-  async savePdf(orderId: string, base64Certificate: string): Promise<string> {
-    // save pdf in files database
-
-    const response = await couchHttp.post(`/files/`, {
-      docType: 'files',
-      type: 'certificates',
-      bucket: 'temp',
-      orderId,
-      _attachments: {
-        'certificate.pdf': {
-          content_type: 'application/pdf',
-          data: base64Certificate,
-        },
-      },
-      synced: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      isDeleted: false,
-    })
-
-    // return file id
-    return response.data.id
+    return response.data.docs[0].body
   }
 }

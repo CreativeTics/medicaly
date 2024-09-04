@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useImageFile } from '@/app/core/composable/useImageFile'
 
-import { getExamUrl, getInformedConsentUrl, getOrder } from '../services'
+import { downloadExamCertificate, getOrder } from '../services'
 import OrderStatus from '../components/OrderStatus.vue'
 import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
 import DBtn from '@components/basic/DBtn.vue'
@@ -11,6 +11,7 @@ import DBtn from '@components/basic/DBtn.vue'
 import ExamIcon from '@components/basic/icons/FileAttachment01Icon.vue'
 import { getPatient } from '../services/patients'
 import { useNotificationsStore } from '@/store/notifications'
+import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
 
 const notifications = useNotificationsStore()
 const route = useRoute()
@@ -19,25 +20,35 @@ const photo = useImageFile()
 
 const order = ref<any>({})
 const loading = ref(false)
-const consentIsLoading = ref(false)
 
 const back = () => {
   console.log('Back')
   router.back()
 }
 
-const downloadExam = async (serviceId: string, examId: string) => {
+const handleDownloadExamCertificate = async (
+  serviceId: string,
+  exam: {
+    id: string
+    loading: boolean
+  }
+) => {
+  exam.loading = true
   try {
-    const url = await getExamUrl(order.value.id, serviceId, examId)
-    //nueva ventana
-    window.open(url, '_blank')
-  } catch (error: Error) {
+    const examId = exam.id
+    // Descargar el examen
+    await downloadExamCertificate(order.value.id, serviceId, examId)
+
+    // //nueva ventana
+    // window.open(url, '_blank')
+  } catch (error: any) {
     notifications.addNotification({
       type: 'error',
       title: 'No se puede mostrar el examen',
       text: error.message,
     })
   }
+  exam.loading = false
 }
 
 onMounted(async () => {
@@ -60,8 +71,6 @@ onMounted(async () => {
         >
           Orden # {{ order.code }}
           <OrderStatus :status="order.status" class="text-lg" />
-
-          {{}}
         </p>
       </div>
     </div>
@@ -151,9 +160,21 @@ onMounted(async () => {
                   <ul v-if="service.showForContract">
                     <li v-for="exam in service.visibleExams">
                       <span
+                        v-if="exam.requireCertificate"
                         href=""
                         class="text-blue-800 flex gap-2 cursor-pointer hover:resize"
-                        @click="downloadExam(service.id, exam?.id)"
+                        @click="handleDownloadExamCertificate(service.id, exam)"
+                      >
+                        {{ exam.code }} - {{ exam.name }}
+
+                        <Loading01Icon
+                          v-if="exam.loading"
+                          class="animate-spin"
+                        />
+                      </span>
+                      <span
+                        v-else
+                        class="text-gray-500 flex gap-2 cursor-pointer hover:resize"
                       >
                         {{ exam.code }} - {{ exam.name }}
                       </span>
