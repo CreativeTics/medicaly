@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import {
@@ -19,8 +19,8 @@ import PrinterIcon from '@components/basic/icons/PrinterIcon.vue'
 import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
 
 import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
-import { DModal } from '@components/basic'
 import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
+import XIcon from '@components/basic/icons/XIcon.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -45,12 +45,6 @@ const columns = [
     title: 'Estado',
     align: 'left',
   },
-
-  // {
-  //   key: 'createdAt',
-  //   title: 'Fecha de creación',
-  //   align: 'left',
-  // },
   {
     key: 'admissionDate',
     title: 'Fecha de Admisión',
@@ -108,6 +102,20 @@ onMounted(async () => {
     data.value = await getOrdersForPatient(route.params.id.toString())
     loading.value = false
   }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modalIsOpen.value = false
+    }
+  })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modalIsOpen.value = false
+    }
+  })
 })
 </script>
 
@@ -231,21 +239,26 @@ onMounted(async () => {
     </div>
   </div>
 
-  <DModal
-    :open="modalIsOpen"
-    :nameButtonClose="`Cancelar`"
-    :nameButtonAccept="`Finalizar`"
-    size="w-full"
-    @closeModal="modalIsOpen = false"
+  <div
+    v-show="modalIsOpen"
+    class="fixed w-screen h-screen p-10 inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
   >
-    <template #form>
-      <iframe
-        ref="iframe"
-        :src="selectedUrl"
-        frameborder="0"
-        class="w-full h-full"
-        style="height: 75vh"
-      ></iframe>
-    </template>
-  </DModal>
+    <div class="relative w-full h-full bg-white rounded-2xl p-5">
+      <div
+        class="absolute -right-5 -top-5 cursor-pointer rounded-full bg-gray-50 text-gray-500 p-3"
+        @click="modalIsOpen = false"
+      >
+        <XIcon class="w-6 h-6 cursor-pointer" />
+      </div>
+      <div class="w-full h-full">
+        <iframe
+          ref="iframe"
+          :src="selectedUrl"
+          frameborder="0"
+          class="w-full h-full"
+          style="height: 80vh"
+        ></iframe>
+      </div>
+    </div>
+  </div>
 </template>

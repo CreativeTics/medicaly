@@ -18,7 +18,6 @@ import { useNotificationsStore } from '@/store/notifications'
 import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
 import XIcon from '@components/basic/icons/XIcon.vue'
 import ArrowRightIcon from '@components/basic/icons/ArrowRightIcon.vue'
-import { on } from 'pouchdb-browser'
 
 const notifications = useNotificationsStore()
 const route = useRoute()
