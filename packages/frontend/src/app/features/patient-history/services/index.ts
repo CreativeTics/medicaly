@@ -5,7 +5,6 @@ import { PouchService, DB } from '../../../services/pouch'
 import { useAuthStore } from '@/store/auth'
 import { API_URL } from '@/config'
 import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
-import { on } from 'pouchdb-browser'
 import { InformedConsent } from '@features/patient-admission/services'
 
 const pouch = new PouchService()

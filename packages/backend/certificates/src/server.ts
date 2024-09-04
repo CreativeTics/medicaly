@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import { GenerateCertificateController } from './controllers/generate-certificate'
 import { GetFileController } from './controllers/get-file'
 import { GenerateMedicalHistoryController } from './controllers/generate-medical-history'
+import { GenerateAnnotationViewController } from './controllers/generate-annotation-view'
 
 dotenv.config()
 
@@ -58,6 +59,22 @@ app.post('/api/certificates/', async (req, res) => {
   res.setHeader('Content-Disposition', `inline; filename=${certificate.name}`)
   res.setHeader('Content-Type', certificate.mimeType) // 'application/pdf'
   res.send(certificate.data)
+  res.end()
+})
+
+app.get('/api/annotations/:orderId/:annotation', async (req, res) => {
+  console.log(
+    'Received request to get html view of  medical history',
+    req.params.orderId
+  )
+
+  const html = await new GenerateAnnotationViewController().execute(
+    req.params.orderId,
+    req.params.annotation,
+    req.query.h as string
+  )
+
+  res.send(html)
   res.end()
 })
 

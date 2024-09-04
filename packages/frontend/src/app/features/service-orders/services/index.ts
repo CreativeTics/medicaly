@@ -344,23 +344,34 @@ export async function downloadExamCertificate(
       throw 'Error al descargar el archivo'
     }
 
-    console.log(examPrintBlob.data.size) // Should be greater than 0
-    console.log(examPrintBlob.data.type) // Should be 'application/pdf'
-
-    // download file
-    const blobUrl = URL.createObjectURL(examPrintBlob.data)
-    window.open(blobUrl)
-    // const link = document.createElement('a')
-    // link.href = url
-    // link.download = examPrintBlob.headers['content-disposition'].split('=')[1] // Extract filename from headers
-
-    // document.body.appendChild(link) // Required for Firefox
-    // link.click()
-    // document.body.removeChild(link) // Cleanup
-    // URL.revokeObjectURL(url) // Free up memory
+    // generate download file url
+    return URL.createObjectURL(examPrintBlob.data)
   } catch (error) {
     console.error(error)
   }
+}
+
+export async function getAnnotationUrl(
+  orderId: string,
+  serviceId: string,
+  examId: string
+): Promise<string> {
+  // get annotation id from order
+  const order = await pouch.use(DB.GENERAL).get(orderId)
+  let annotationId = ''
+  order.services.forEach((service: any) => {
+    service.annotations.forEach((annotation: string) => {
+      if (annotation.includes(`:${serviceId}:${examId}`)) {
+        annotationId = annotation
+      }
+    })
+  })
+
+  // get annotation Url
+  console.log('token', useAuthStore().token)
+  return `${API_URL}/files/api/annotations/${orderId}/${annotationId}?h=${encodeURI(
+    useAuthStore().token
+  )}`
 }
 
 async function getExamsForService(examsId: string[]): Promise<any> {

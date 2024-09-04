@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useImageFile } from '@/app/core/composable/useImageFile'
 
-import { downloadExamCertificate, getOrder } from '../services'
+import {
+  downloadExamCertificate,
+  getOrder,
+  getAnnotationUrl,
+} from '../services'
 import OrderStatus from '../components/OrderStatus.vue'
 import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
 import DBtn from '@components/basic/DBtn.vue'
@@ -12,6 +16,9 @@ import ExamIcon from '@components/basic/icons/FileAttachment01Icon.vue'
 import { getPatient } from '../services/patients'
 import { useNotificationsStore } from '@/store/notifications'
 import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
+import XIcon from '@components/basic/icons/XIcon.vue'
+import ArrowRightIcon from '@components/basic/icons/ArrowRightIcon.vue'
+import { on } from 'pouchdb-browser'
 
 const notifications = useNotificationsStore()
 const route = useRoute()
@@ -21,11 +28,21 @@ const photo = useImageFile()
 const order = ref<any>({})
 const loading = ref(false)
 
-const back = () => {
-  console.log('Back')
-  router.back()
+// modal
+const modalActive = ref(false)
+const selectedAnnotationUrl = ref('')
+const handleShowAnnotation = async (serviceId: string, exam: any) => {
+  selectedAnnotationUrl.value = await getAnnotationUrl(
+    order.value.id,
+    serviceId,
+    exam.id
+  )
+  modalActive.value = true
 }
-
+const closeModal = () => {
+  modalActive.value = false
+  selectedAnnotationUrl.value = ''
+}
 const handleDownloadExamCertificate = async (
   serviceId: string,
   exam: {
@@ -37,10 +54,9 @@ const handleDownloadExamCertificate = async (
   try {
     const examId = exam.id
     // Descargar el examen
-    await downloadExamCertificate(order.value.id, serviceId, examId)
-
-    // //nueva ventana
-    // window.open(url, '_blank')
+    const url = await downloadExamCertificate(order.value.id, serviceId, examId)
+    selectedAnnotationUrl.value = url || ''
+    modalActive.value = true
   } catch (error: any) {
     notifications.addNotification({
       type: 'error',
@@ -51,6 +67,11 @@ const handleDownloadExamCertificate = async (
   exam.loading = false
 }
 
+const back = () => {
+  console.log('Back')
+  router.back()
+}
+
 onMounted(async () => {
   if (route.params.id) {
     loading.value = true
@@ -59,6 +80,20 @@ onMounted(async () => {
     photo.loadImageFromId(patientData.photoId)
     loading.value = false
   }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal()
+    }
+  })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal()
+    }
+  })
 })
 </script>
 
@@ -104,10 +139,12 @@ onMounted(async () => {
             />
           </div>
           <div class="flex flex-col">
+            <span class="font-semibold">PACIENTE </span>
             <span class="font-semibold">Nombre </span>
             <span class="font-semibold">Documento</span>
           </div>
           <div class="flex flex-col">
+            <span class="text-sm">&nbsp; </span>
             <span class="text-lg font-semibold">
               {{ order?.patientName }}
             </span>
@@ -165,6 +202,7 @@ onMounted(async () => {
                         class="text-blue-800 flex gap-2 cursor-pointer hover:resize"
                         @click="handleDownloadExamCertificate(service.id, exam)"
                       >
+                        <ArrowRightIcon class="h-4 w-4 mx-2" />
                         {{ exam.code }} - {{ exam.name }}
 
                         <Loading01Icon
@@ -174,8 +212,10 @@ onMounted(async () => {
                       </span>
                       <span
                         v-else
-                        class="text-gray-500 flex gap-2 cursor-pointer hover:resize"
+                        class="text-blue-800 flex gap-2 cursor-pointer hover:resize"
+                        @click="handleShowAnnotation(service.id, exam)"
                       >
+                        <ArrowRightIcon class="h-4 w-4 mx-2" />
                         {{ exam.code }} - {{ exam.name }}
                       </span>
                     </li>
@@ -190,6 +230,28 @@ onMounted(async () => {
       <hr />
       <div class="pt-5 flex justify-end">
         <DBtn @click="back" class="bg-gray-300 hover:bg-gray-400">Atras</DBtn>
+      </div>
+    </div>
+
+    <div
+      v-show="modalActive"
+      class="fixed w-screen h-screen p-10 inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+    >
+      <div class="relative w-full h-full bg-white rounded-2xl p-5">
+        <div
+          class="absolute -right-5 -top-5 cursor-pointer rounded-full bg-gray-50 text-gray-500 p-3"
+          @click="closeModal"
+        >
+          <XIcon class="w-6 h-6 cursor-pointer" />
+        </div>
+        <div class="w-full h-full">
+          <iframe
+            :src="selectedAnnotationUrl"
+            frameborder="0"
+            class="w-full h-full"
+            style="height: 80vh"
+          ></iframe>
+        </div>
       </div>
     </div>
   </div>

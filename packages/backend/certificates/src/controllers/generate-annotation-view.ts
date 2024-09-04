@@ -1,8 +1,12 @@
 import EjsService from '../services/ejs.service'
 import { couchHttp } from '../util/http'
 
-export class GenerateMedicalHistoryController {
-  async execute(orderId: string, token: string): Promise<string> {
+export class GenerateAnnotationViewController {
+  async execute(
+    orderId: string,
+    annotationId: string,
+    token: string
+  ): Promise<string> {
     const orderData = await this.getOrderData(orderId)
 
     const contractData = await this.getContractData(orderData?.contract)
@@ -35,6 +39,7 @@ export class GenerateMedicalHistoryController {
       contract: contractData,
       patient: patientData,
       allAnnotations: annotations,
+      annotation: annotations.find((a) => a._id === annotationId),
     })
 
     return transpiledHtml
@@ -115,7 +120,7 @@ export class GenerateMedicalHistoryController {
     const response = await couchHttp.post(`/general/_find`, {
       selector: {
         doctype: 'templates',
-        code: 'MEDICAL-HISTORY',
+        code: 'MEDICAL-ANNOTATION',
       },
       fields: ['_id', 'body'],
     })

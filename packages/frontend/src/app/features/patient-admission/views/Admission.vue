@@ -188,12 +188,17 @@ const form: any = {
           props: {
             class: 'lg:col-span-1 xl:col-span-1',
             required: true,
+            valueKey: 'concat',
+            showKey: 'concat',
           },
           query: {
             entity: 'general:entities',
-            fields: ['id', 'name'],
+            fields: ['code', 'name'],
             where: {
               type: 'EPS',
+            },
+            modifier: {
+              concat: ['code', ' - ', 'name'],
             },
           },
           rules: ['required'],
@@ -221,12 +226,17 @@ const form: any = {
           props: {
             class: 'lg:col-span-1 xl:col-span-1',
             required: true,
+            valueKey: 'concat',
+            showKey: 'concat',
           },
           query: {
             entity: 'general:entities',
             fields: ['id', 'name'],
             where: {
               type: 'ARL',
+            },
+            modifier: {
+              concat: ['code', ' - ', 'name'],
             },
           },
           rules: ['required'],
