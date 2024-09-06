@@ -7,6 +7,8 @@ import { GetFileController } from './controllers/get-file'
 import { GenerateMedicalHistoryController } from './controllers/generate-medical-history'
 import { GenerateAnnotationViewController } from './controllers/generate-annotation-view'
 
+import { GenerateConsentController } from './controllers/generate-consent'
+
 dotenv.config()
 
 const app = express()
@@ -59,6 +61,25 @@ app.post('/api/certificates/', async (req, res) => {
   res.setHeader('Content-Disposition', `inline; filename=${certificate.name}`)
   res.setHeader('Content-Type', certificate.mimeType) // 'application/pdf'
   res.send(certificate.data)
+  res.end()
+})
+
+app.get('/api/consent/:orderId/:consentTemplateId', async (req, res) => {
+  console.log('Received request to generate consent', req.body)
+
+  const consent = await new GenerateConsentController().execute(
+    req.params.orderId,
+    req.params.consentTemplateId
+  )
+
+  if (!consent) {
+    res.status(404).send('Certificate not found')
+    res.end()
+    return
+  }
+  res.setHeader('Content-Disposition', `inline; filename=${consent.name}`)
+  res.setHeader('Content-Type', consent.mimeType)
+  res.send(consent.data)
   res.end()
 })
 

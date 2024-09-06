@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/auth'
 import { API_URL } from '@/config'
 import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
 import { InformedConsent } from '@features/patient-admission/services'
+import { http } from '@/app/core/services/http'
 
 const pouch = new PouchService()
 
@@ -189,4 +190,42 @@ export function getPrintUrl(orderId: string): string {
   return `${API_URL}/files/api/medical-history/${orderId}?h=${encodeURI(
     useAuthStore().token
   )}`
+}
+
+export async function downloadConsent(
+  orderId: string,
+  consentTemplateCode: string
+) {
+  try {
+    // get templateId
+    const consentTemplate = await getData<any[]>({
+      entity: `${DB.GENERAL}:templates`,
+      fields: ['id'],
+      where: { code: consentTemplateCode },
+    })
+
+    if (consentTemplate.length === 0) {
+      throw 'template not found'
+    }
+
+    // get consent print blob
+    const consentPrintBlob = await http.get(
+      `files/api/consent/${orderId}/${consentTemplate[0].id}`,
+      {
+        headers: {
+          Authorization: `${useAuthStore().token}`,
+        },
+        responseType: 'blob',
+      }
+    )
+
+    if (consentPrintBlob.status !== 200) {
+      throw 'Error al descargar el archivo'
+    }
+
+    // generate download file url
+    return URL.createObjectURL(consentPrintBlob.data)
+  } catch (error) {
+    console.error(error)
+  }
 }
