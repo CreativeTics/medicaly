@@ -10,7 +10,7 @@ services:
       - ./config/certs:/data/caddy
 
   db:
-    image: couchdb:3.3.3
+    image: couchdb:3.4.2
     volumes:
       - db_data:/opt/couchdb/data # this is for couchdb data
       # - db_data:/var/lib/couchdb
