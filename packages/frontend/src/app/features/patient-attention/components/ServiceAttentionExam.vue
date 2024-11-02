@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, toRaw } from 'vue'
+import { computed, onBeforeMount, ref, toRaw } from 'vue'
 import {
   getAnnotation,
   getPatient,
@@ -8,9 +8,16 @@ import {
   saveAnnotation,
 } from '../services/services'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
-import { AlertCircleIcon, EyeIcon, EyeOffIcon } from '@components/basic'
+import {
+  AlertCircleIcon,
+  EyeIcon,
+  EyeOffIcon,
+  Loading01Icon,
+  DBtn,
+  Save02Icon,
+} from '@components/basic'
 import { useNotificationsStore } from '@/store/notifications'
-import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
+import { useAttentionStore } from '@/store/patient-attention'
 
 const props = defineProps<{
   orderId: string
@@ -21,6 +28,7 @@ const props = defineProps<{
 }>()
 
 const notifications = useNotificationsStore()
+const { setAnnotation } = useAttentionStore()
 
 const isHidden = ref(true)
 const isLoading = ref(false)
@@ -29,6 +37,10 @@ const exam = ref<any>({})
 const model = ref<any>({})
 
 const dynamicForm = ref<typeof DynamicFormWithOutTabs | null>(null)
+
+const titleSaveButton = computed(() => {
+  return model.value.id ? 'Actualizar examen' : 'Guardar examen'
+})
 
 const saveInCache = () => {
   const data = toRaw(dynamicForm.value?.getAllModel())
@@ -70,8 +82,18 @@ const submit = async (data: any) => {
     exam.value.version,
     data
   )
+  if (!id) {
+    notifications.addNotification({
+      title: 'Error',
+      text: 'Error al guardar el examen',
+    })
+    isSaving.value = false
+    return
+  }
+
   dynamicForm.value?.setModelValue('id', id)
   model.value.id = id
+  setAnnotation(exam.value.id, id)
 
   notifications.addNotification({
     title: 'Ok',
@@ -131,11 +153,29 @@ const submit = async (data: any) => {
         :form-schema="exam.form"
         :initial-model="model"
         :hide-cancel-button="true"
-        title-btn-save="Guardar examen"
         gridClass="grid grid-cols-6 px-6 pb-5 w-full"
         @update-field="saveInCache"
         @submit="submit"
-      />
+      >
+        <template v-slot:save-btn="{ onHandleSubmit }">
+          <DBtn
+            v-if="!model.id"
+            class="font-semibold py-1 text-base gap-2"
+            @click.prevent="onHandleSubmit"
+          >
+            {{ titleSaveButton }}
+          </DBtn>
+          <DBtn
+            v-else
+            class="font-semibold py-1 text-base gap-2 bg"
+            color="success"
+            @click.prevent="onHandleSubmit"
+          >
+            <Save02Icon class="h-6 w-6" />
+            {{ titleSaveButton }}
+          </DBtn>
+        </template>
+      </DynamicFormWithOutTabs>
     </div>
   </div>
   <div v-else class="flex">

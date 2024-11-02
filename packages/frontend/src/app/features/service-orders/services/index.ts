@@ -168,6 +168,17 @@ export async function create(entity: any): Promise<{
   // crear service order for each patient
 
   entity.patients.forEach(async (patient: any) => {
+    const servicesFromAttachOrder = await getServicesFromAttachOrder(
+      entity.services
+    )
+
+    if (servicesFromAttachOrder.length === 0) {
+      return {
+        isOk: false,
+        errors: ['No se encontraron servicios en la orden'],
+      }
+    }
+
     const patientEntity = {
       doctype: 'patients',
       id: patient.id ?? '',
@@ -195,10 +206,6 @@ export async function create(entity: any): Promise<{
     const medicalExamType = await pouch
       .use(DB.GENERAL)
       .get(entity.medicalExamType)
-
-    const servicesFromAttachOrder = await getServicesFromAttachOrder(
-      entity.services
-    )
 
     const serviceOrder = {
       doctype,
@@ -259,7 +266,6 @@ async function getServicesFromAttachOrder(services: any[]) {
         isLastVersion: true,
       },
     })
-    console.log('allExams', allExams)
 
     servicesFromAttachOrder.push({
       id: serviceFromAttachOrder.id,

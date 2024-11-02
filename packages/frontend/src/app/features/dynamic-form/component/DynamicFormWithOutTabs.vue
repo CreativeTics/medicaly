@@ -214,13 +214,16 @@ defineExpose<{
           >
             {{ getData ? 'Volver' : 'Cancelar' }}
           </DBtn>
-          <DBtn
-            v-if="!getData && !readonly && !hideSubmitButton"
-            class="font-semibold py-1 text-base"
-            @click.prevent="onHandleSubmit"
-          >
-            {{ titleBtnSave }}
-          </DBtn>
+
+          <slot name="save-btn" v-bind:onHandleSubmit="onHandleSubmit">
+            <DBtn
+              v-if="!getData && !readonly && !hideSubmitButton"
+              class="font-semibold py-1 text-base"
+              @click.prevent="onHandleSubmit"
+            >
+              {{ titleBtnSave }}
+            </DBtn>
+          </slot>
         </div>
       </div>
     </div>

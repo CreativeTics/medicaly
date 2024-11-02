@@ -2,6 +2,8 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useAttentionStore } from '@/store/patient-attention'
+
 import { getOrder, getFinalizeOrderPermission } from '../services'
 import { finalizeOrder } from '../services/services'
 import DBtn from '@components/basic/DBtn.vue'
@@ -13,6 +15,8 @@ import { useNotificationsStore } from '@/store/notifications'
 import { CheckCircleIcon } from '@components/basic'
 
 import PatientHeader from '../components/PatientHeader.vue'
+
+const attentionStore = useAttentionStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -33,7 +37,11 @@ onMounted(async () => {
   if (route.params.id) {
     loading.value = true
     order.value = await getOrder(route.params.id.toString())
+
+    attentionStore.loadOrder(order.value.code, order.value.services)
+
     allowFinalizeOrder.value = await getFinalizeOrderPermission()
+
     loading.value = false
   }
 })
@@ -87,15 +95,6 @@ async function finalize(id: string) {
     </div>
     <!-- services -->
     <div class="w-full flex-grow flex overflow-y-hidden">
-      <!-- <div class="w-28 flex flex-col justify-center items-center">
-        <div
-          v-for="service in order.services"
-          class="bg-white w-28 rounded-lg shadow-xl shadow-cyan-400 flex flex-col justify-center items-center h-10 mb-2 cursor-pointer"
-          @click="scrollTo(service.id)"
-        >
-          <ServiceStatus :status="service.status" :text="service.name" />
-        </div>
-      </div> -->
       <div
         class="flex-grow h-full rounded-xl bg-white shadow-lg p-5 flex flex-col overflow-y-scroll"
       >
@@ -115,7 +114,7 @@ async function finalize(id: string) {
           otras anotaciones
         </div> -->
         <Popper
-          v-if="allowFinalizeOrder"
+          v-if="allowFinalizeOrder && attentionStore.orderISComplete"
           arrow
           offsetDistance="0"
           content="Finalizar orden"
@@ -132,6 +131,7 @@ async function finalize(id: string) {
         </Popper>
       </div>
     </div>
+
     <!-- footer -->
     <div class="w-full h-14 flex items-center bg-white">
       <DBtn @click="back" class="bg-gray-300 hover:bg-gray-400">Atras</DBtn>
