@@ -18,7 +18,9 @@ export interface ContractSelectResult {
 
 export async function getContracts(): Promise<ContractSelectResult[]> {
   const user = useAuthStore().user
-  const where: any = {}
+  const where: any = {
+    status: 'active',
+  }
   if (user && user?.type != 'employee' && user.relations.length > 0) {
     where['_id'] = {
       $in: user.relations,
