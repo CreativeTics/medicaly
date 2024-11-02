@@ -6,6 +6,6 @@ YELLOW=`tput setaf 3`
 GREEN=`tput setaf 2`
 
 echo "${YELLOW}**** Stoping the service ****"
-docker-compose -f infrastructure/docker/docker-compose.dev.yaml --project-name medicaly down
+docker-compose -f ../docker/docker-compose.dev.yaml --project-name medicaly down
 
 echo "${GREEN}**** Service stoped ****"

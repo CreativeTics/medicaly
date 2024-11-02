@@ -8,7 +8,7 @@ chmod +x restart.sh
 
 # Start the service
 echo "${YELLOW}**** Starting the service ****"
-docker-compose -f infrastructure/docker/docker-compose.dev.yaml --project-name medicaly up -d --build
+docker-compose -f ../docker/docker-compose.dev.yaml --project-name medicaly up -d --build
 
 echo "${GREEN}**** Service started ****"
 

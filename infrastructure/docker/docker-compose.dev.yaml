@@ -13,7 +13,6 @@ services:
     image: couchdb:3.4.2
     volumes:
       - db_data:/opt/couchdb/data # this is for couchdb data
-      # - db_data:/var/lib/couchdb
       - ./config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
     restart: unless-stopped
     environment:

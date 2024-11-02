@@ -7,7 +7,7 @@ GREEN=`tput setaf 2`
 
 # Restart the service
 echo "${YELLOW}**** Restarting the service ****"
-docker-compose -f infrastructure/docker/docker-compose.dev.yaml --project-name medicaly restart
+docker-compose -f ../docker/docker-compose.dev.yaml --project-name medicaly restart
 
 echo "${GREEN}**** Service restarted ****"
 

@@ -3,7 +3,9 @@
   "packageManager": "yarn@3.6.1",
   "private": true,
   "scripts": {
-    "migrate": "node-pg-migrate"
+    "migrate": "node-pg-migrate",
+    "migrate:create": "node-pg-migrate create",
+    "migrate:up": "node-pg-migrate up"
   },
   "dependencies": {
     "node-pg-migrate": "^6.2.2",

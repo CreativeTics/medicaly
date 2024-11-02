@@ -32,7 +32,7 @@
 	}
 
 
-    handle {
+    handle { # frontend
 		reverse_proxy host.docker.internal:5173 # for local development
 		# reverse_proxy front:80
 	}
