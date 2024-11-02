@@ -55,6 +55,8 @@ export async function getList(searchOptions: any) {
       'createdAt',
     ],
     where: where,
+    limit: 100,
+    sort: [{ createdAt: 'desc' }],
   })
 
   return data.map((doc: any) => {
