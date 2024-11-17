@@ -17,6 +17,7 @@ import {
   SelectOption,
 } from '../../../core/services/get-table/index'
 import { computed, onMounted, ref, watch } from 'vue'
+import Audiogram from '@components/audiogram/Audiogram.vue'
 
 const props = defineProps({
   count: { type: Number, required: false, default: () => 0 },
@@ -53,6 +54,7 @@ const components = new Map<string, any>([
   ['subtitle', { component: DSubtitle, defaultProps: {} }],
   ['imc', { component: IMCField, defaultProps: {} }],
   ['multiselect_search', { component: MultiSelectSearch, defaultProps: {} }],
+  ['audiogram', { component: Audiogram, defaultProps: {} }],
 ])
 
 const isLoading = ref(false)

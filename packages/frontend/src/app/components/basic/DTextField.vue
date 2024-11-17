@@ -62,9 +62,9 @@ onMounted(() => {
 
 <template>
   <div class="relative" :class="[hidden ? 'hidden' : '']">
-    <label class="block text-sm font-medium text-gray-800 mb-1.5" v-if="label">
+    <span class="block text-sm font-medium text-gray-800 mb-1.5" v-if="label">
       {{ label }} <span v-if="required" class="text-red-500">*</span>
-    </label>
+    </span>
     <DIcon
       v-if="icon"
       :name="icon"
@@ -97,9 +97,7 @@ onMounted(() => {
         :value="item.name"
       ></option>
     </datalist>
-    <label v-if="hint">
-      <span class="text-xs text-red-500">{{ hint }}</span>
-    </label>
+    <span v-if="hint" class="text-xs text-red-500">{{ hint }}</span>
     <span v-if="error" class="text-xs text-red-500">{{ error }}</span>
   </div>
 </template>
