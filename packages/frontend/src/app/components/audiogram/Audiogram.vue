@@ -5,11 +5,21 @@ import { useAudiogram, TransportType, MaskType, Ear } from './useAudiogram'
 const props = withDefaults(
   defineProps<{
     modelValue: string
-    readonly: boolean
+    label: string
+    hint: string
+    disabled: boolean
+    hidden: boolean
+    error: string
+    required: boolean
   }>(),
   {
     modelValue: '',
-    readonly: true,
+    label: 'Audiograma',
+    hint: '',
+    disabled: false,
+    hidden: false,
+    error: '',
+    required: false,
   }
 )
 
@@ -48,11 +58,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-w-min w-full">
+  <div class="min-w-min w-full flex flex-col">
+    <span class="block text-sm font-medium text-gray-800 mb-1.5" v-if="label">
+      {{ label }} <span v-if="required" class="text-red-500">*</span>
+    </span>
     <div class="border flex">
       <div id="tools">
         <div
-          v-if="!props.readonly"
+          v-if="!props.disabled"
           class="w-full flex flex-col items-center font-semibold select-none"
         >
           <span>Oído</span>
@@ -78,7 +91,7 @@ onMounted(() => {
           </div>
         </div>
         <div
-          v-if="!props.readonly"
+          v-if="!props.disabled"
           class="w-full flex flex-col items-center font-semibold select-none"
         >
           <span>Transporte</span>
@@ -105,7 +118,7 @@ onMounted(() => {
         </div>
         <hr />
         <div
-          v-if="!props.readonly"
+          v-if="!props.disabled"
           class="w-full flex flex-col items-center font-semibold select-none"
         >
           <div class="flex gap-2 justify-stretch h-full">
@@ -140,12 +153,12 @@ onMounted(() => {
           </tbody>
         </table>
       </div>
-      <canvas v-if="!props.readonly" id="canvas"> </canvas>
-
-      <img :src="audiogram.image" alt="" />
+      <canvas v-if="!props.disabled" id="canvas"> </canvas>
+      <img v-else :src="audiogram.image" alt="" />
     </div>
+    <span v-if="hint" class="text-xs text-gray-500">{{ hint }}</span>
+    <span v-if="error" class="text-xs text-red-500">{{ error }} </span>
   </div>
-  {{ audiogram }}
 </template>
 
 <style scoped>
