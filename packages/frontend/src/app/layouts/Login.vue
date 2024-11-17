@@ -5,12 +5,11 @@ import DToastStack from '@components/DToastStack.vue'
   <DToastStack class="left-0" />
   <div class="grid grid-cols-1 gap-1 lg:grid-cols-2 lg:gap-2 bg-white h-screen">
     <div class="m-5 md:m-9">
-      <img src="/src/assets/logo.svg" class="h-11 static logo-aps" alt="Logo" />
       <div class="flex justify-center items-center form-login">
         <div class="max-w-md p-4 md:py-0 md:p-8">
           <img
-            src="/src/assets/logo.svg"
-            class="h-20 static mb-8 m-auto md:hidden"
+            src="../../assets/logo-blue.svg"
+            class="h-20 static mb-8 m-auto"
             alt="Logo"
           />
           <slot />

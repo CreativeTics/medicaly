@@ -47,7 +47,7 @@ const handleLogin = async () => {
 <template>
   <h2 class="text-3xl xl:text-4xl font-bold">Inicio de Sesión</h2>
   <p class="py-3 text-gray-400 text-md md:text-lg leading-6">
-    Bienvenido de nuevo! ingresa tus datos de acceso.
+    Bienvenido de nuevo! <small>ingresa tus datos de acceso.</small>
   </p>
   <div
     v-if="wrongData"
