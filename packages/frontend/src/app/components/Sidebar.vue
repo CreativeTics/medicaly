@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, watch } from 'vue'
 import {
   Pin01Icon,
   Pin02Icon,
@@ -8,80 +8,80 @@ import {
   User03Icon,
   ChevronDownIcon,
   LogOut03Icon,
-} from "@components/basic/icons";
-import DIcon from "@components/basic/DIcon.vue";
+} from '@components/basic/icons'
+import DIcon from '@components/basic/DIcon.vue'
 
-import Popper from "vue3-popper";
+import Popper from 'vue3-popper'
 
 type MenuItem = {
-  name: string;
-  icon?: string;
-  route?: string;
-  idMenu?: string;
-  children?: MenuItem[];
-  showItems?: boolean;
-};
+  name: string
+  icon?: string
+  route?: string
+  idMenu?: string
+  children?: MenuItem[]
+  showItems?: boolean
+}
 
 type user = {
-  role: any;
-  roleCode: any;
-  name: any;
-  photoUrl: any;
-  email: any;
-};
+  role: any
+  roleCode: any
+  name: any
+  photoUrl: any
+  email: any
+}
 
 const props = defineProps<{
-  menu?: MenuItem[];
-  user?: user;
-}>();
+  menu?: MenuItem[]
+  user?: user
+}>()
 
 const emit = defineEmits([
-  "change:route",
-  "change:role",
-  "support",
-  "config",
-  "logout",
-]);
+  'change:route',
+  'change:role',
+  'support',
+  'config',
+  'logout',
+])
 
-const isPinUp = ref(false); // false
-const subMenuItems = ref<MenuItem[]>([]);
-const activeRoute = ref("");
-const activeMenu = ref("");
+const isPinUp = ref(false) // false
+const subMenuItems = ref<MenuItem[]>([])
+const activeRoute = ref('')
+const activeMenu = ref('')
 
 /**
  * Marcar sidebar como fijo o no fijo
  */
 const pinUp = () => {
-  isPinUp.value === false ? (isPinUp.value = true) : (isPinUp.value = false);
-};
+  isPinUp.value === false ? (isPinUp.value = true) : (isPinUp.value = false)
+}
 
 /**
  * Ocultar sidebar
  */
 const onCloseSidebar = () => {
   if (isPinUp.value) {
-    document.getElementById("nav-secondary")!.style.marginLeft = "0";
+    document.getElementById('nav-secondary')!.style.marginLeft = '0'
   } else {
     if (window.innerWidth <= 639) {
-      document.getElementById("nav-secondary")!.style.marginLeft = "-224px";
+      document.getElementById('nav-secondary')!.style.marginLeft = '-224px'
     } else {
-      document.getElementById("nav-secondary")!.style.marginLeft = "-288px";
+      document.getElementById('nav-secondary')!.style.marginLeft = '-288px'
     }
   }
-};
+}
 
 /**
  * Mostrar sidebar
  */
 const openSidebar = (items?: MenuItem[], menuItem?: any) => {
-  activeMenu.value = menuItem.name;
+  activeMenu.value = menuItem.name
   if (!items) {
-    if (menuItem.route) changeRoute(menuItem.route);
-    onCloseSidebar();
-    return;
+    if (menuItem.route) changeRoute(menuItem.route)
+    onCloseSidebar()
+    return
   }
-  const childrens = document.querySelectorAll(".showItems");
-  const showChildrens = document.querySelectorAll(".rotateArrow");
+  const childrens = document.querySelectorAll('.showItems')
+  const showChildrens = document.querySelectorAll('.rotateArrow')
   for (let x = 0; x < childrens.length; x++) {
     for (let y = 0; y < showChildrens.length; y++) {
       if (
@@ -89,41 +89,41 @@ const openSidebar = (items?: MenuItem[], menuItem?: any) => {
         childrens[x].attributes[2].value
       ) {
         childrens[x].attributes[3].value =
-          "height: " + childrens[x].children.length * 48 + "px";
-        break;
+          'height: ' + childrens[x].children.length * 48 + 'px'
+        break
       } else {
-        childrens[x].attributes[3].value = "height: 0px;";
+        childrens[x].attributes[3].value = 'height: 0px;'
       }
     }
   }
 
-  document.getElementById("nav-secondary")!.style.marginLeft = "0";
-  subMenuItems.value = items;
-};
+  document.getElementById('nav-secondary')!.style.marginLeft = '0'
+  subMenuItems.value = items
+}
 
 /**
  * Mostrar submenus del sidebar
  */
 const showChildren = (id: any, arrow: any, childrens: any) => {
-  const children = document.getElementById(id);
-  const arrowMenu = document.getElementById(arrow);
-  if (children!.style.height === "0px") {
-    children!.style.height = childrens * 48 + "px";
-    arrowMenu!.classList.add("rotateArrow");
+  const children = document.getElementById(id)
+  const arrowMenu = document.getElementById(arrow)
+  if (children!.style.height === '0px') {
+    children!.style.height = childrens * 48 + 'px'
+    arrowMenu!.classList.add('rotateArrow')
   } else {
-    arrowMenu!.classList.remove("rotateArrow");
-    children!.style.height = "0px";
+    arrowMenu!.classList.remove('rotateArrow')
+    children!.style.height = '0px'
   }
-};
+}
 
 /**
  * Cambiar de ruta al seleccionar una opción del sidebar
  */
 const changeRoute = (route?: string) => {
-  if (!route) return;
-  activeRoute.value = route;
-  emit("change:route", route);
-};
+  if (!route) return
+  activeRoute.value = route
+  emit('change:route', route)
+}
 
 /**
  * Capturar cuando el menú cambia por cambio de rol
@@ -132,32 +132,32 @@ const changeRoute = (route?: string) => {
 watch(
   () => props.menu,
   () => {
-    const hideItems = document.querySelectorAll(".showItems");
-    const rotateArrows = document.querySelectorAll(".rotateArrow");
+    const hideItems = document.querySelectorAll('.showItems')
+    const rotateArrows = document.querySelectorAll('.rotateArrow')
     for (let i = 0; i < hideItems.length; i++) {
-      hideItems[i].attributes[3].value = "height: 0px;";
+      hideItems[i].attributes[3].value = 'height: 0px;'
     }
     rotateArrows.forEach((arrow) => {
-      arrow.classList.remove("rotateArrow");
-    });
+      arrow.classList.remove('rotateArrow')
+    })
   }
-);
+)
 
 const emitRole = () => {
-  emit("change:role");
-};
+  emit('change:role')
+}
 
 const emitSupport = () => {
-  emit("support");
-};
+  emit('support')
+}
 
 const emitConfig = () => {
-  emit("config");
-};
+  emit('config')
+}
 
 const emitLogout = () => {
-  emit("logout");
-};
+  emit('logout')
+}
 </script>
 
 <template>
@@ -238,7 +238,7 @@ const emitLogout = () => {
             <Popper
               offsetDistance="18"
               arrow
-              content="Actualizar&nbsp;información"
+              content="Actualizar&nbsp;contraseña"
               :hover="true"
               placement="right"
               class="tooltip"

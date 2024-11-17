@@ -2,12 +2,12 @@
 
 ## Pendientes
 
-- [ ] Que el usuario seleccione la relación activa cuando es necesario filtrar ordenes
-- [ ] Ordenes > Ver anotaciones
+- [x] Que el usuario seleccione la relación activa cuando es necesario filtrar ordenes
+- [x] Ordenes > Ver anotaciones
 - [ ] Ordenes > Ver Medico que atiende
 - [ ] Ordenes > Ver Historial de atención
-- [ ] Ordenes > Crear orden pre filtrar contrato
-- [ ] Ordenes > imprimir exámenes
-- [ ] Pacientes > Historia clínica
-- [ ] Pacientes > Historia clínica imprimir
-- [ ] Usuario > cambio de contraseña
+- [x] Ordenes > Crear orden pre filtrar contrato
+- [x] Ordenes > imprimir exámenes
+- [x] Pacientes > Historia clínica
+- [x] Pacientes > Historia clínica imprimir
+- [x] Usuario > cambio de contraseña
