@@ -15,6 +15,5 @@ export function calculateAgeFromBirthDate(birthDate: string): {
   const years = now.diff(birth, 'year')
   const months = now.diff(birth, 'month') % 12
   const days = now.diff(birth, 'day') % 30
-  console.log('calculateAgeFromBirthDate', { years, months, days })
   return { years, months, days }
 }

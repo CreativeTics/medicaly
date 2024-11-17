@@ -47,8 +47,8 @@ const columns = [
     title: 'Servicios',
   },
   {
-    key: 'createdAt',
-    title: 'Fecha de creación',
+    key: 'admittedAt',
+    title: 'Fecha de Ingreso',
     align: 'left',
   },
 ]

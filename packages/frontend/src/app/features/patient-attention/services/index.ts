@@ -4,6 +4,7 @@ import { formatDate } from '@/app/core/util/dates'
 import { PouchService, DB } from '../../../services/pouch'
 // import { useAuthStore } from "@/store/auth";
 import { OrderStatus } from '@/app/core/types/order-status'
+import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
 import { useAuthStore } from '@/store/auth'
 
 const pouch = new PouchService()
@@ -53,6 +54,7 @@ export async function getList(searchOptions: any) {
       'patientName',
       'status',
       'createdAt',
+      'orderCycle',
     ],
     where: where,
     limit: 100,
@@ -69,8 +71,19 @@ export async function getList(searchOptions: any) {
       patientName: doc.patientName,
       status: doc.status,
       createdAt: formatDate(doc.createdAt, true),
+      admittedAt: getAdmittedAtFromOrderCycle(doc.orderCycle),
     }
   })
+}
+
+function getAdmittedAtFromOrderCycle(orderCycle: any) {
+  if (!orderCycle) {
+    return ''
+  }
+  const admissionCycle = orderCycle.find(
+    (orderCycle: any) => orderCycle.type === OrderCycleTypes.admission
+  )
+  return formatDate(admissionCycle.at, true)
 }
 
 export async function getOrder(id: string) {
