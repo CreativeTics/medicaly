@@ -2,15 +2,19 @@
 import Sidebar from '@components/Sidebar.vue'
 import DToastStack from '@components/DToastStack.vue'
 import DIdleLogoutOverlay from '../components/DIdleLogoutOverlay.vue'
+import changePasswordModal from '@features/auth/users/components/change-password-modal.vue'
 import { useAuthStore } from '../../store/auth'
 
 import { useRouter } from 'vue-router'
 
 import { menuFilteredByPermissions } from '../../config'
+import { ref } from 'vue'
 
 const authStore = useAuthStore()
 
 const router = useRouter()
+
+const showChangePasswordModal = ref(false)
 
 const changeRoute = (route: string) => {
   console.log(route)
@@ -24,6 +28,10 @@ const handleLogout = () => {
 </script>
 
 <template>
+  <changePasswordModal
+    v-if="showChangePasswordModal"
+    @close="showChangePasswordModal = false"
+  />
   <DIdleLogoutOverlay />
   <DToastStack class="left-14" />
   <main class="h-screen w-screen text-gray-900 bg-gray-50 flex">
@@ -40,6 +48,7 @@ const handleLogout = () => {
       }"
       @change:route="changeRoute"
       @logout="handleLogout"
+      @config="showChangePasswordModal = true"
     >
     </Sidebar>
     <div class="w-full h-full overflow-hidden mb-1">

@@ -68,6 +68,26 @@ export async function edit(id: string, user: User): Promise<boolean> {
   return true
 }
 
+export async function changePassword(
+  id: string,
+  oldPassword: string,
+  newPassword: string
+): Promise<void> {
+  const user = await pouch.use(DB.AUTH).get(id)
+
+  if (Base64.stringify(SHA256(oldPassword)) !== user.encodedPassword) {
+    throw new Error('Contraseña actual incorrecta!')
+  }
+
+  const response = await pouch.use(DB.AUTH).update({
+    doctype: 'users',
+    id,
+    ...user,
+    encodedPassword: Base64.stringify(SHA256(newPassword)),
+  })
+  console.log('changePassword', response)
+}
+
 export async function remove(id: string): Promise<boolean> {
   const response = await pouch.use(DB.AUTH).delete(id)
   console.log('delete', response)
