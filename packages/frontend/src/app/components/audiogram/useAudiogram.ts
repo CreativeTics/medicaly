@@ -4,54 +4,6 @@ import { Threshold, THRESHOLDS } from './thresholds'
 import { reactive, ref } from 'vue'
 import { loadSymbols } from './symbols'
 
-// class Point {
-//   x: number
-//   y: number
-//   constructor(x: number, y: number) {
-//     this.x = x
-//     this.y = y
-//   }
-// }
-
-// class EarPoint extends Point {
-//   mask: Mask
-//   transport: TransportType
-//   constructor(x: number, y: number, mask: Mask, transport: TransportType) {
-//     super(x, y)
-//     this.mask = mask
-//     this.transport = transport
-//   }
-// }
-
-// class SoundFieldPoint extends Point {
-//   constructor(x: number, y: number) {
-//     super(x, y)
-//   }
-// }
-
-// class Audiogram {
-//   ear: {
-//     left: Map<Frequencies, EarPoint>
-//     right: Map<Frequencies, EarPoint>
-//   }
-//   soundField: {
-//     unaided: Map<Frequencies, SoundFieldPoint>
-//     aided: Map<Frequencies, SoundFieldPoint>
-//     ci: Map<Frequencies, SoundFieldPoint>
-//   }
-//   constructor() {
-//     this.ear = {
-//       left: new Map(),
-//       right: new Map(),
-//     }
-//     this.soundField = {
-//       unaided: new Map(),
-//       aided: new Map(),
-//       ci: new Map(),
-//     }
-//   }
-// }
-
 interface AudiogramSettings {
   xOffset: number
   yOffset: number
@@ -97,17 +49,6 @@ export interface EarPoint extends SoundFieldPoint {
   mask: MaskType
 }
 
-// export interface Audiogram {
-//   ear: {
-//     left: Map<Frequencies, EarPoint>
-//     right: Map<Frequencies, EarPoint>
-//   }
-//   soundField: {
-//     unaided: Map<Frequencies, SoundFieldPoint>
-//     aided: Map<Frequencies, SoundFieldPoint>
-//     ci: Map<Frequencies, SoundFieldPoint>
-//   }
-// }
 const ratio = window.devicePixelRatio || 1
 const ICON_SIZE = 30 * ratio
 const AUDIOGRAM_SYMBOLS = loadSymbols(ICON_SIZE)
@@ -253,7 +194,7 @@ export function useAudiogram(
 
   // audiogram functions
 
-  const audioType = ref<Type>(Type.Ear)
+  // const audioType = ref<Type>(Type.Ear)
   const ear = ref<Ear>(Ear.Left)
   const transport = ref<TransportType>(TransportType.Air)
   const mask = ref(MaskType.UnMasked)
@@ -274,11 +215,7 @@ export function useAudiogram(
       left: 0,
       right: 0,
     },
-    // soundField: {
-    //   unaided: new Map(),
-    //   aided: new Map(),
-    //   ci: new Map(),
-    // },
+    image: '',
   })
 
   const addPoint = (x: number, y: number) => {
@@ -392,6 +329,8 @@ export function useAudiogram(
     // audiogram.soundField.ci.forEach((point) => {
     //   drawSoundFieldPoints(point)
     // })
+    // save image
+    audiogram.image = canvasAudiogram.toDataURL()
   }
 
   const drawEarPoints = (symbolName: string, point: EarPoint) => {
@@ -482,6 +421,51 @@ export function useAudiogram(
     ear.value = earType
   }
 
+  const exportAudiogram = () => {
+    const data = {
+      ear: {
+        left: {
+          air: Array.from(audiogram.ear.left.air.values()),
+          bone: Array.from(audiogram.ear.left.bone.values()),
+        },
+        right: {
+          air: Array.from(audiogram.ear.right.air.values()),
+          bone: Array.from(audiogram.ear.right.bone.values()),
+        },
+      },
+      tonalAverage: {
+        left: audiogram.tonalAverage.left,
+        right: audiogram.tonalAverage.right,
+      },
+      image: audiogram.image,
+    }
+
+    return JSON.stringify(data)
+  }
+
+  const importAudiogram = (data: any) => {
+    if (!data) return
+    data = JSON.parse(data)
+    if (!data) return
+    audiogram.ear.left.air = new Map(
+      data.ear.left.air.map((point: EarPoint) => [point.frequency, point])
+    )
+    audiogram.ear.left.bone = new Map(
+      data.ear.left.bone.map((point: EarPoint) => [point.frequency, point])
+    )
+    audiogram.ear.right.air = new Map(
+      data.ear.right.air.map((point: EarPoint) => [point.frequency, point])
+    )
+    audiogram.ear.right.bone = new Map(
+      data.ear.right.bone.map((point: EarPoint) => [point.frequency, point])
+    )
+    audiogram.tonalAverage.left = data.tonalAverage.left
+    audiogram.tonalAverage.right = data.tonalAverage.right
+    audiogram.image = data.image
+
+    drawPoints()
+  }
+
   return {
     init,
     audiogram,
@@ -496,5 +480,7 @@ export function useAudiogram(
     // soundField,
     // addPoint,
     // removePoint,
+    exportAudiogram,
+    importAudiogram,
   }
 }

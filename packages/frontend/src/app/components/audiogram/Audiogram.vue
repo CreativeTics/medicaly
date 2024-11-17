@@ -1,7 +1,19 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-
+import { onMounted, watch } from 'vue'
 import { useAudiogram, TransportType, MaskType, Ear } from './useAudiogram'
+
+const props = withDefaults(
+  defineProps<{
+    modelValue: string
+    readonly: boolean
+  }>(),
+  {
+    modelValue: '',
+    readonly: true,
+  }
+)
+
+const emit = defineEmits(['update:modelValue'])
 
 const {
   init,
@@ -12,13 +24,26 @@ const {
   mask,
   setEar,
   ear,
+  importAudiogram,
+  exportAudiogram,
 } = useAudiogram()
+
+watch(
+  () => audiogram,
+  () => {
+    emit('update:modelValue', exportAudiogram())
+  },
+  { deep: true }
+)
 
 onMounted(() => {
   const canvas = document.getElementById('canvas') as HTMLCanvasElement
-
   if (!canvas) return
   init(canvas)
+
+  if (props.modelValue) {
+    importAudiogram(props.modelValue)
+  }
 })
 </script>
 
@@ -27,6 +52,7 @@ onMounted(() => {
     <div class="border flex">
       <div id="tools">
         <div
+          v-if="!props.readonly"
           class="w-full flex flex-col items-center font-semibold select-none"
         >
           <span>Oído</span>
@@ -52,6 +78,7 @@ onMounted(() => {
           </div>
         </div>
         <div
+          v-if="!props.readonly"
           class="w-full flex flex-col items-center font-semibold select-none"
         >
           <span>Transporte</span>
@@ -78,6 +105,7 @@ onMounted(() => {
         </div>
         <hr />
         <div
+          v-if="!props.readonly"
           class="w-full flex flex-col items-center font-semibold select-none"
         >
           <div class="flex gap-2 justify-stretch h-full">
@@ -112,7 +140,9 @@ onMounted(() => {
           </tbody>
         </table>
       </div>
-      <canvas id="canvas"> </canvas>
+      <canvas v-if="!props.readonly" id="canvas"> </canvas>
+
+      <img :src="audiogram.image" alt="" />
     </div>
   </div>
   {{ audiogram }}
