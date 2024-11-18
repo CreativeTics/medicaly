@@ -1,139 +1,139 @@
 <script setup lang="ts">
-import { ref, watchEffect, toRefs } from "vue";
-import DBtn from "./DBtn.vue";
-import DTextField from "./DTextField.vue";
-import DList from "./DList.vue";
-import { ChevronDownIcon, Loading02Icon } from "./icons";
+import { ref, watchEffect, toRefs } from 'vue'
+import DBtn from './DBtn.vue'
+import DTextField from './DTextField.vue'
+import DList from './DList.vue'
+import { ChevronDownIcon, Loading02Icon } from './icons'
 
-const openMultiSelect = ref(false);
-const searchValue = ref("");
-const itemsList = ref();
+const openMultiSelect = ref(false)
+const searchValue = ref('')
+const itemsList = ref()
 watchEffect(() => {
-  itemsList.value = props.options;
-});
-const arraySelected = ref<any[]>([]);
-const count = ref(0);
-const selected = ref();
-const copyItems = ref();
-const copySelected = ref();
-const countCopy = ref();
+  itemsList.value = props.options
+})
+const arraySelected = ref<any[]>([])
+const count = ref(0)
+const selected = ref()
+const copyItems = ref()
+const copySelected = ref()
+const countCopy = ref()
 
 const props = withDefaults(
   defineProps<{
-    label: string;
-    modelValue: any[];
-    options: any[];
-    headerTitle?: string;
-    showKey?: string;
-    valueKey?: string;
-    error?: string;
-    disabled?: boolean;
-    required?: boolean;
-    class?: string;
-    field?: any;
-    readonly?: string | boolean;
-    allModel?: any;
+    label: string
+    modelValue: any[]
+    options: any[]
+    headerTitle?: string
+    showKey?: string
+    valueKey?: string
+    error?: string
+    disabled?: boolean
+    required?: boolean
+    class?: string
+    field?: any
+    readonly?: string | boolean
+    allModel?: any
     //openMultiSelect: boolean
   }>(),
   {
-    label: "",
+    label: '',
     modelValue: () => [],
     options: () => [],
-    headerTitle: "",
-    showKey: "name",
-    valueKey: "id",
-    error: "",
+    headerTitle: '',
+    showKey: 'name',
+    valueKey: 'id',
+    error: '',
     disabled: false,
     required: false,
-    class: "",
+    class: '',
     //openMultiSelect: false
   }
-);
+)
 
-const { modelValue } = toRefs(props);
+const { modelValue } = toRefs(props)
 
-const emits = defineEmits(["update:modelValue", "change", "filter", "file"]);
+const emits = defineEmits(['update:modelValue', 'change', 'filter', 'file'])
 
 const emitUpdate = (val: any) => {
-  emits("update:modelValue", val);
-};
+  emits('update:modelValue', val)
+}
 
 const emitChange = () => {
-  emits("change");
-};
+  emits('change')
+}
 
 const addSelected = (item: any) => {
-  arraySelected.value.push(item);
-  itemsList.value = filter(itemsList.value, arraySelected.value);
-  count.value += 1;
-};
+  arraySelected.value.push(item)
+  itemsList.value = filter(itemsList.value, arraySelected.value)
+  count.value += 1
+}
 
 const deleteSelected = (item: any) => {
-  itemsList.value.push(item);
-  arraySelected.value = filter(arraySelected.value, itemsList.value);
-  count.value -= 1;
-};
+  itemsList.value.push(item)
+  arraySelected.value = filter(arraySelected.value, itemsList.value)
+  count.value -= 1
+}
 
 const filter = (items: any[], listFilter: any[]) => {
-  listFilter = listFilter.map((_: { [x: string]: any }) => _[props.valueKey]);
+  listFilter = listFilter.map((_: { [x: string]: any }) => _[props.valueKey])
   items = items.filter(
     (item: { [x: string]: any }) =>
       listFilter.indexOf(item[props.valueKey]) == -1
-  );
-  return items;
-};
+  )
+  return items
+}
 
 const openSelect = () => {
-  if (props.options?.length > 0) openMultiSelect.value = true;
-  copyItems.value = [...itemsList.value];
-  copySelected.value = [...arraySelected.value];
-  countCopy.value = count.value;
+  if (props.options?.length > 0) openMultiSelect.value = true
+  copyItems.value = [...itemsList.value]
+  copySelected.value = [...arraySelected.value]
+  countCopy.value = count.value
   if (props.modelValue.length == props.options.length) {
-    checkAll();
+    checkAll()
   } else {
     let itemSelected = itemsList.value.filter(
       (item: { [x: string]: any }) =>
         props.modelValue.indexOf(String(item[props.valueKey])) > -1
-    );
+    )
     for (const item of itemSelected) {
-      addSelected(item);
+      addSelected(item)
     }
   }
-};
+}
 
 const checkAll = () => {
-  arraySelected.value = [];
-  arraySelected.value = [...props.options];
-  itemsList.value = [];
-  count.value = arraySelected.value?.length;
-};
+  arraySelected.value = []
+  arraySelected.value = [...props.options]
+  itemsList.value = []
+  count.value = arraySelected.value?.length
+}
 
 const uncheckAll = () => {
-  arraySelected.value = [];
-  itemsList.value = props.options;
-  count.value = 0;
-};
+  arraySelected.value = []
+  itemsList.value = props.options
+  count.value = 0
+}
 
 const saveSelection = () => {
-  selected.value = arraySelected.value;
+  selected.value = arraySelected.value
   //emitUpdate(selected.value.map((_) => _[props.valueKey].toString()))
   emitUpdate(
     selected.value.map((_: { [x: string]: any }) =>
-      typeof _[props.valueKey] == "number"
+      typeof _[props.valueKey] == 'number'
         ? _[props.valueKey].toString()
         : _[props.valueKey]
     )
-  );
-  emitChange();
-  openMultiSelect.value = false;
-};
+  )
+  emitChange()
+  openMultiSelect.value = false
+}
 
 const cancelSelection = () => {
-  itemsList.value = copyItems.value;
-  arraySelected.value = copySelected.value;
-  openMultiSelect.value = false;
-  count.value = arraySelected.value?.length;
-};
+  itemsList.value = copyItems.value
+  arraySelected.value = copySelected.value
+  openMultiSelect.value = false
+  count.value = arraySelected.value?.length
+}
 </script>
 <template>
   <div class="w-full" :class="class">
@@ -214,7 +214,7 @@ const cancelSelection = () => {
                   Marcar Todos
                 </a>
                 <d-list
-                  v-for="(item, index) in itemsList.filter(function (x: any) {
+                  v-for="(item, index) in itemsList?.filter(function (x: any) {
                     return (
                       searchValue == '' ||
                       x[showKey]
@@ -250,7 +250,7 @@ const cancelSelection = () => {
                       x[showKey]
                         .toUpperCase()
                         .indexOf(searchValue.toUpperCase()) > -1
-                    );
+                    )
                   })"
                   :key="index"
                   :nameItem="item[showKey]"

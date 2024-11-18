@@ -8,6 +8,7 @@
     "infrastructure/migrations/**/*"
   ],
   "scripts": {
-    "docker:dev": "docker-compose -p medicaly -f infrastructure/docker/docker-compose.dev.yaml"
+    "docker:dev": "docker-compose -p medicaly -f infrastructure/docker/docker-compose.dev.yaml",
+    "docker:prod": "docker-compose -p medicaly_prod -f infrastructure/docker/docker-compose.prod.yaml"
   }
 }

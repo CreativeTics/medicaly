@@ -2734,7 +2734,6 @@ __metadata:
     "@esbuild-plugins/node-globals-polyfill": ^0.2.3
     "@superset-ui/embedded-sdk": ^0.1.0-alpha.10
     "@types/crypto-js": ^4.1.1
-    "@types/jsonwebtoken": ^9.0.6
     "@types/node": ^20.4.2
     "@types/pouchdb": ^6.4.0
     "@types/uuid": ^9.0.2
@@ -2745,7 +2744,6 @@ __metadata:
     dayjs: ^1.11.9
     events: ^3.3.0
     json-editor-vue: ^0.12.0
-    jsonwebtoken: ^9.0.2
     path: ^0.12.7
     pinia: ^2.1.4
     pinia-plugin-persistedstate: ^3.1.0

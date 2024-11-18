@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/store/auth'
-import { permissions, userTypes } from '../permissions/'
+import { permissions, userTypes } from '../permissions/index'
 import { PouchService, DB } from '@/app/services/pouch'
 
 const pouch = new PouchService()

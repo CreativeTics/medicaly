@@ -13,11 +13,11 @@ interface User {
   relations: string[]
   // relation[]
 }
-interface relation {
-  contractId: string
-  contractName: string
-  subsidiaries: string[]
-}
+// interface relation {
+//   contractId: string
+//   contractName: string
+//   subsidiaries: string[]
+// }
 
 export const useAuthStore = defineStore('auth', {
   persist: true,

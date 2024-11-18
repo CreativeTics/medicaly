@@ -16,10 +16,10 @@ services:
       - ./config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
     restart: unless-stopped
     environment:
-      COUCHDB_USER: 4dm1n-us3r
-      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      COUCHDB_USER: $COUCHDB_USERNAME
+      COUCHDB_PASSWORD: $COUCHDB_PASSWORD
     ports:
-      - 5985:5984
+      - 5984:5984
 
   api-gateway:
     build: ../../packages/backend/api-gateway
@@ -28,11 +28,11 @@ services:
       - db
     environment:
       COUCHDB_URL: http://db:5984
-      COUCHDB_USERNAME: 4dm1n-us3r
-      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      COUCHDB_USERNAME: $COUCHDB_USERNAME
+      COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       FRONTEND_URL: http://localhost:5173
       PORT: 4000
-      METABASE_SECRET_KEY: e054a13de988dd0858379171cc2e13e8af01aee5c3454e6c795389001da8a1f9
+      METABASE_SECRET_KEY: $MB_EMBEDDING_SECRET_KEY
       METABASE_SITE_URL: http://localhost:3000
 
   datawarehouse:
@@ -44,8 +44,8 @@ services:
       - 5432:5432
     environment:
       POSTGRES_DB: medicaly
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pgp4ssw0rd
+      POSTGRES_USER: $WAREHOUSE_POSTGRES_USER
+      POSTGRES_PASSWORD: $WAREHOUSE_POSTGRES_PASSWORD
 
   encode-orders:
     build: ../../packages/backend/ticket-codes
@@ -54,8 +54,8 @@ services:
       - db
     environment:
       COUCHDB_URL: http://db:5984
-      COUCHDB_USERNAME: 4dm1n-us3r
-      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      COUCHDB_USERNAME: $COUCHDB_USERNAME
+      COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       CRON_JOB_EXPRESSION: '0/15 * * * * *'
 
   datawarehouse-sync:
@@ -66,10 +66,10 @@ services:
       - datawarehouse
     environment:
       COUCHDB_URL: http://db:5984
-      COUCHDB_USERNAME: 4dm1n-us3r
-      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      COUCHDB_USERNAME: $COUCHDB_USERNAME
+      COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       CRON_JOB_EXPRESSION: '30 * * * * *'
-      WAREHOUSE_DB_URL: postgres://postgres:pgp4ssw0rd@datawarehouse:5432/medicaly
+      WAREHOUSE_DB_URL: $WAREHOUSE_DB_URL
 
   ws-service:
     build: ../../packages/backend/ws-service
@@ -91,11 +91,13 @@ services:
     ports:
       - 3000:3000
     environment:
-      MB_DB_CONNECTION_URI: postgres://metabase:pgp4ssw0rd@metabase-db:5432/postgres
-    healthcheck:
-      test: curl --fail -I http://localhost:3000/api/health || exit 1
-      interval: 15s
-      timeout: 5s
+      MB_ENABLE_EMBEDDING_STATIC: true
+      MB_DB_CONNECTION_URI: $DB_CONNECTION_URI
+      MB_EMBEDDING_SECRET_KEY: $MB_EMBEDDING_SECRET_KEY
+    # healthcheck:
+    #   test: curl --fail -I http://localhost:3000/api/health || exit 1
+    #   interval: 15s
+    #   timeout: 5s
 
   metabase-db:
     image: postgres:15
@@ -103,25 +105,8 @@ services:
     volumes:
       - metabase_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: metabase
-      POSTGRES_PASSWORD: pgp4ssw0rd
-
-  # redis:
-  #   image: redis:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - 6379:6379
-
-  # minio:
-  #   image: minio/minio:latest
-  #   restart: unless-stopped
-  #   volumes:
-  #     - minio_data:/data
-  #   ports:
-  #     - 9000:9000
-  #   environment:
-  #     MINIO_ACCESS_KEY: 4dm1n-us3r
-  #     MINIO_SECRET_KEY: 4dm1n-p4ssw0rd!!
+      POSTGRES_USER: $DB_POSTGRES_USER
+      POSTGRES_PASSWORD: $DB_POSTGRES_PASSWORD
 
   pdf-engine:
     image: gotenberg/gotenberg:8
@@ -139,13 +124,16 @@ services:
     environment:
       GOTENBERG_ENDPOINT: http://pdf-engine:3000
       COUCHDB_URL: http://db:5984
-      COUCHDB_USERNAME: 4dm1n-us3r
-      COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
+      COUCHDB_USERNAME: $COUCHDB_USERNAME
+      COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       FILES_API: /api/v1/files/api/
       PORT: 3002
 
 volumes:
   db_data:
+    driver: local
   warehouse_data:
+    driver: local
   metabase_data:
+    driver: local
   # minio_data:
