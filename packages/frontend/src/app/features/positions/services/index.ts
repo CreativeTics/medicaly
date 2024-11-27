@@ -10,6 +10,7 @@ export async function getList() {
     entity: `${DB.GENERAL}:${doctype}`,
     fields: ['id', 'name', 'updatedAt', 'isDeleted'],
     sort: [{ name: 'asc' }],
+    limit: 1000,
   })
 
   return data.map((doc: any) => {

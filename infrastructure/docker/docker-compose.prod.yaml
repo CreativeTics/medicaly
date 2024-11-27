@@ -94,10 +94,6 @@ services:
       MB_ENABLE_EMBEDDING_STATIC: true
       MB_DB_CONNECTION_URI: $DB_CONNECTION_URI
       MB_EMBEDDING_SECRET_KEY: $MB_EMBEDDING_SECRET_KEY
-    # healthcheck:
-    #   test: curl --fail -I http://localhost:3000/api/health || exit 1
-    #   interval: 15s
-    #   timeout: 5s
 
   metabase-db:
     image: postgres:15

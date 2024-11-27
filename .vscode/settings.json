@@ -1,5 +1,15 @@
 {
-  "cSpell.words": ["COUCHDB", "medicaly", "METABASE"],
+  "cSpell.words": [
+    "couchdb",
+    "COUCHDB",
+    "datawarehouse",
+    "medicaly",
+    "metabase",
+    "METABASE",
+    "postgres",
+    "postgresql",
+    "setaf"
+  ],
   "[python]": {
     "editor.defaultFormatter": "ms-python.autopep8"
   },
@@ -7,5 +17,9 @@
   "cSpell.language": "en,es,lorem",
   "yaml.schemas": {
     "https://www.artillery.io/schema.json": []
+  },
+  "sonarlint.connectedMode.project": {
+    "connectionId": "creativetics",
+    "projectKey": "CreativeTics_medicaly"
   }
 }
