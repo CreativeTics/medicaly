@@ -77,6 +77,15 @@ curl -X POST $COUCHDB_URL/auth  -H "Content-Type:application/json"    -d '{"_id"
 curl -X POST $COUCHDB_URL/general -H "Content-Type:application/json" -d '{"_id":"ca6ed7c97762d574d3c4501e7c001114","doctype": "positions","name": "ADMINISTRADOR","allowFinishServiceOrder": false,"createdAt": "'$DATE'","updatedAt": "'$DATE'","updatedBy": "user-admin","isDeleted": false}'
 
 
+# Entity types
+
+curl -X POST $COUCHDB_URL/general -H "Content-Type:application/json" -d '{"_id":"78562cce6597f42f93b6cece2400d62a","doctype": "entity-types","code": "ARL","name": "ARL","createdAt": "'$DATE'","updatedAt": "'$DATE'","updatedBy": "user-admin","isDeleted": false}'
+
+curl -X POST $COUCHDB_URL/general -H "Content-Type:application/json" -d '{"_id":"78562cce6597f42f93b6cece2400d62b","doctype": "entity-types","code": "EPS","name": "EPS","createdAt": "'$DATE'","updatedAt": "'$DATE'","updatedBy": "user-admin","isDeleted": false}'
+
+
+
+
 # Exam types
 
 curl -X POST $COUCHDB_URL/medical -H "Content-Type:application/json" -d '{"_id":"78562cce6597f42f93b6cece2400d62b","doctype": "exam-types","code": "EXAM","name": "EXAMEN","createdAt": "'$DATE'","updatedAt": "'$DATE'","updatedBy": "user-admin","isDeleted": false}'

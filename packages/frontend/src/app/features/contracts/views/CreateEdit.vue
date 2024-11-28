@@ -1,197 +1,200 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { Form, DynamicForm } from "../../dynamic-form";
-import { useNotificationsStore } from "@/store/notifications";
-import { create, getEntity, edit } from "../services";
+import { onBeforeMount, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { Form, DynamicForm } from '../../dynamic-form'
+import { useNotificationsStore } from '@/store/notifications'
+import { create, getEntity, edit } from '../services'
 
-const notifications = useNotificationsStore();
-const moduleName = "Contrato";
-const modulePath = "contracts";
+const notifications = useNotificationsStore()
+const moduleName = 'Contrato'
+const modulePath = 'contracts'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-let model = {};
-const loading = ref(false);
+let model = {}
+const loading = ref(false)
 
 const form: Form = {
   entity: modulePath,
   tabs: [
     {
-      name: "Datos",
+      name: 'Datos',
       groups: [
         {
-          name: "Información basica",
-          description: "Esta es la información basica del contrato.",
+          name: 'Información basica',
+          description: 'Esta es la información basica del contrato.',
           fields: [
             {
-              name: "status",
-              label: "Estado",
-              type: "select",
+              name: 'status',
+              label: 'Estado',
+              type: 'select',
               props: {
                 required: true,
-                class: "lg:col-span-1 xl:col-span-1",
+                class: 'lg:col-span-1 xl:col-span-1',
                 options: [
-                  { id: "active", name: "Activo" },
-                  { id: "inactive", name: "Inactivo" },
+                  { id: 'active', name: 'Activo' },
+                  { id: 'inactive', name: 'Inactivo' },
                 ],
               },
-              default: "active",
-              rules: ["required"],
+              default: 'active',
+              rules: ['required'],
             },
             {
-              name: "documentType",
-              label: "Tipo de Documento",
-              type: "select",
+              name: 'documentType',
+              label: 'Tipo de Documento',
+              type: 'select',
               props: {
-                class: "lg:col-span-1 xl:col-span-1",
+                class: 'lg:col-span-1 xl:col-span-1',
                 required: true,
               },
               query: {
-                entity: "general:identification-types",
-                fields: ["id", "name"],
+                entity: 'general:identification-types',
+                fields: ['id', 'name'],
+                sort: [{ name: 'asc' }],
               },
-              rules: ["required"],
+              rules: ['required'],
             },
             {
-              name: "documentNumber",
-              label: "No. Documento",
-              type: "text",
+              name: 'documentNumber',
+              label: 'No. Documento',
+              type: 'text',
               props: {
-                placeholder: "No. Documento",
-                class: "lg:col-span-1 xl:col-span-1",
+                placeholder: 'No. Documento',
+                class: 'lg:col-span-1 xl:col-span-1',
                 required: true,
               },
-              rules: ["required", "integer", "minlength:3", "maxlength:50"],
+              rules: ['required', 'integer', 'minlength:3', 'maxlength:50'],
             },
             {
-              name: "name",
-              label: "Nombre",
-              type: "text",
+              name: 'name',
+              label: 'Nombre',
+              type: 'text',
               props: {
-                placeholder: "Nombre",
+                placeholder: 'Nombre',
                 required: true,
               },
-              rules: ["required", "minlength:3", "maxlength:50"],
+              rules: ['required', 'minlength:3', 'maxlength:50'],
             },
+            // {
+            //   name: "billingCode",
+            //   label: "Codigo de facturación",
+            //   type: "text",
+            //   props: {
+            //     placeholder: "Codigo de facturación",
+            //     required: true,
+            //   },
+            //   rules: ["required", "upper", "minlength:3", "maxlength:50"],
+            // },
             {
-              name: "billingCode",
-              label: "Codigo de facturación",
-              type: "text",
+              name: 'legalRepresentative',
+              label: 'Representante legal',
+              type: 'text',
               props: {
-                placeholder: "Codigo de facturación",
-                required: true,
-              },
-              rules: ["required", "upper", "minlength:3", "maxlength:50"],
-            },
-            {
-              name: "legalRepresentative",
-              label: "Representante legal",
-              type: "text",
-              props: {
-                placeholder: "Representante legal",
+                placeholder: 'Representante legal',
                 required: true,
               },
               rules: [
-                "required",
-                "alphanumeric",
-                "minlength:3",
-                "maxlength:50",
+                'required',
+                'alphanumeric',
+                'minlength:3',
+                'maxlength:50',
               ],
             },
             {
-              name: "email",
-              label: "Email",
-              type: "text",
+              name: 'email',
+              label: 'Email',
+              type: 'text',
               props: {
-                placeholder: "email@example.com",
+                placeholder: 'email@example.com',
                 required: true,
               },
-              rules: ["required", "email"],
+              rules: ['required', 'email'],
             },
             {
-              name: "phone",
-              label: "Telefono",
-              type: "text",
+              name: 'phone',
+              label: 'Teléfono',
+              type: 'text',
               props: {
-                placeholder: "Telefono",
+                placeholder: 'Teléfono',
                 required: true,
               },
-              rules: ["required", "integer", "minlength:6", "maxlength:20"],
+              rules: ['required', 'integer', 'minlength:6', 'maxlength:20'],
             },
             {
-              name: "department",
-              label: "Departamento",
-              type: "select",
+              name: 'department',
+              label: 'Departamento',
+              type: 'select',
               props: {
                 required: true,
               },
-              rules: ["required"],
+              rules: ['required'],
               query: {
-                entity: "general:departments",
-                fields: ["id", "name"],
+                entity: 'general:departments',
+                fields: ['id', 'name'],
                 where: {
-                  countryName: "Colombia",
+                  countryName: 'Colombia',
                 },
+                sort: [{ name: 'asc' }],
               },
             },
             {
-              name: "city",
-              label: "Ciudad",
-              type: "select",
+              name: 'city',
+              label: 'Ciudad',
+              type: 'select',
               props: {
                 required: true,
               },
-              rules: ["required"],
+              rules: ['required'],
               query: {
-                entity: "general:cities",
-                fields: ["id", "name"],
+                entity: 'general:cities',
+                fields: ['id', 'name'],
+                sort: [{ name: 'asc' }],
               },
               dependsOn: {
-                field: "department",
+                field: 'department',
               },
             },
             {
-              name: "address",
-              label: "Dirección",
-              type: "text",
+              name: 'address',
+              label: 'Dirección',
+              type: 'text',
               props: {
-                placeholder: "Dirección",
-                class: "lg:col-span-4 xl:col-span-4",
+                placeholder: 'Dirección',
+                class: 'lg:col-span-4 xl:col-span-4',
                 required: true,
               },
-              rules: ["required", "minlength:3", "maxlength:100"],
+              rules: ['required', 'minlength:3', 'maxlength:100'],
             },
             {
-              name: "observations",
-              label: "Observaciones",
-              type: "textarea",
+              name: 'observations',
+              label: 'Observaciones',
+              type: 'textarea',
               props: {
                 rows: 3,
-                placeholder: "Observaciones",
-                class: "lg:col-span-6 xl:col-span-6",
+                placeholder: 'Observaciones',
+                class: 'lg:col-span-6 xl:col-span-6',
               },
-              rules: ["maxlength:500"],
+              rules: ['maxlength:500'],
             },
           ],
         },
       ],
     },
     {
-      name: "Sedes",
+      name: 'Sedes',
       groups: [
         {
-          name: "Sedes",
-          description: "Registre aqui la lista de sedes  del contrato.",
+          name: 'Sedes',
+          description: 'Registre aqui la lista de sedes  del contrato.',
           fields: [
             {
-              name: "",
-              label: "Observaciones",
-              type: "ContractSubsidiaryList",
+              name: '',
+              label: 'Observaciones',
+              type: 'ContractSubsidiaryList',
               props: {
                 id: route.params.id,
-                class: "lg:col-span-6 xl:col-span-6",
+                class: 'lg:col-span-6 xl:col-span-6',
               },
             },
           ],
@@ -199,20 +202,20 @@ const form: Form = {
       ],
     },
     {
-      name: "Centros de Costo",
+      name: 'Centros de Costo',
       groups: [
         {
-          name: "Centros de costo",
+          name: 'Centros de costo',
           description:
-            "Registre aqui la lista de centros de costo del contrato.",
+            'Registre aqui la lista de centros de costo del contrato.',
           fields: [
             {
-              name: "",
-              label: "",
-              type: "ContractCostCenterList",
+              name: '',
+              label: '',
+              type: 'ContractCostCenterList',
               props: {
                 id: route.params.id,
-                class: "lg:col-span-6 xl:col-span-6",
+                class: 'lg:col-span-6 xl:col-span-6',
               },
             },
           ],
@@ -220,20 +223,20 @@ const form: Form = {
       ],
     },
     {
-      name: "Profesiograma",
+      name: 'Profesiograma',
       groups: [
         {
-          name: "Cargos",
+          name: 'Cargos',
           description:
-            "Registre aqui la lista de cargos habilitados del contrato.",
+            'Registre aqui la lista de cargos habilitados del contrato.',
           fields: [
             {
-              name: "",
-              label: "",
-              type: "ContractPositionsList",
+              name: '',
+              label: '',
+              type: 'ContractPositionsList',
               props: {
                 id: route.params.id,
-                class: "lg:col-span-6 xl:col-span-6",
+                class: 'lg:col-span-6 xl:col-span-6',
               },
             },
           ],
@@ -241,20 +244,20 @@ const form: Form = {
       ],
     },
     {
-      name: "Tipos de examen",
+      name: 'Tipos de examen',
       groups: [
         {
-          name: "Tipos de Examen",
+          name: 'Tipos de Examen',
           description:
-            "Registre aqui la lista de tipos de examen  habilitados del contrato.",
+            'Registre aqui la lista de tipos de examen  habilitados del contrato.',
           fields: [
             {
-              name: "",
-              label: "",
-              type: "ContractMedicalExamTypes",
+              name: '',
+              label: '',
+              type: 'ContractMedicalExamTypes',
               props: {
                 id: route.params.id,
-                class: "lg:col-span-6 xl:col-span-6",
+                class: 'lg:col-span-6 xl:col-span-6',
               },
             },
           ],
@@ -262,20 +265,20 @@ const form: Form = {
       ],
     },
     {
-      name: "Servicios",
+      name: 'Servicios',
       groups: [
         {
-          name: "Servicios",
+          name: 'Servicios',
           description:
-            "Registre aqui la lista de Servicios habilitados del contrato.",
+            'Registre aqui la lista de Servicios habilitados del contrato.',
           fields: [
             {
-              name: "",
-              label: "",
-              type: "ContractServicesList",
+              name: '',
+              label: '',
+              type: 'ContractServicesList',
               props: {
                 id: route.params.id,
-                class: "lg:col-span-6 xl:col-span-6",
+                class: 'lg:col-span-6 xl:col-span-6',
               },
             },
           ],
@@ -283,20 +286,20 @@ const form: Form = {
       ],
     },
     {
-      name: "Usuarios",
+      name: 'Usuarios',
       groups: [
         {
-          name: "Usuarios",
+          name: 'Usuarios',
           description:
-            "Registre aqui la lista de usuarios habilitados del contrato.",
+            'Registre aqui la lista de usuarios habilitados del contrato.',
           fields: [
             {
-              name: "",
-              label: "",
-              type: "ContractUserList",
+              name: '',
+              label: '',
+              type: 'ContractUserList',
               props: {
                 id: route.params.id,
-                class: "lg:col-span-6 xl:col-span-6",
+                class: 'lg:col-span-6 xl:col-span-6',
               },
             },
           ],
@@ -304,60 +307,60 @@ const form: Form = {
       ],
     },
   ],
-};
+}
 
 const onSubmit = async (data: any) => {
-  console.log("Submit", data);
+  console.log('Submit', data)
 
   if (route.params.id === undefined) {
-    console.log("Create");
+    console.log('Create')
     if (await create(data)) {
       notifications.addNotification({
-        type: "success",
+        type: 'success',
         title: `${moduleName} creado`,
         text: `El ${moduleName} se ha creado correctamente`,
-      });
-      router.push({ name: `${modulePath}.list` });
+      })
+      router.push({ name: `${modulePath}.list` })
     } else {
       notifications.addNotification({
-        type: "error",
-        title: "Error",
+        type: 'error',
+        title: 'Error',
         text: `No se ha podido crear el ${moduleName}`,
-      });
+      })
     }
   } else {
     if (await edit(route.params.id as string, data)) {
       notifications.addNotification({
-        type: "success",
+        type: 'success',
         title: `${moduleName} actualizado`,
         text: `El ${moduleName} se ha actualizado correctamente`,
-      });
-      router.push({ name: `${modulePath}.list` });
+      })
+      router.push({ name: `${modulePath}.list` })
     } else {
       notifications.addNotification({
-        type: "error",
-        title: "Error",
+        type: 'error',
+        title: 'Error',
         text: `No se ha podido actualizar el ${moduleName}`,
-      });
+      })
     }
   }
-};
+}
 
 const back = () => {
-  console.log("Back");
-  router.push({ name: `${modulePath}.list` });
-};
+  console.log('Back')
+  router.push({ name: `${modulePath}.list` })
+}
 
 onBeforeMount(async () => {
-  loading.value = true;
+  loading.value = true
 
-  console.log("Mounted", route.params.id);
+  console.log('Mounted', route.params.id)
   if (route.params.id) {
-    model = await getEntity(route.params.id as string);
-    console.log("Model", model);
+    model = await getEntity(route.params.id as string)
+    console.log('Model', model)
   }
-  loading.value = false;
-});
+  loading.value = false
+})
 </script>
 
 <template>
@@ -365,7 +368,7 @@ onBeforeMount(async () => {
     <div class="bg-gray-50 pb-4">
       <div class="leading-4 pt-responsive">
         <p class="text-3xl font-semibold text-shadow text-blue-900">
-          {{ route.params.id == undefined ? "Crear" : "Editar" }}
+          {{ route.params.id == undefined ? 'Crear' : 'Editar' }}
           {{ moduleName }}
         </p>
       </div>
