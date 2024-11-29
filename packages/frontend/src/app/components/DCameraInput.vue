@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 
-import { Camera03Icon, Repeat04Icon } from './basic'
+import { Camera03Icon, Repeat04Icon } from './basic/icons'
 
 const props = defineProps<{
   modelValue: string

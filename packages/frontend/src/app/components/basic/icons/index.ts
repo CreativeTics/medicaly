@@ -1,1174 +1,3142 @@
-export { default as ActivityHeartIcon } from "./ActivityHeartIcon.vue";
-export { default as ActivityIcon } from "./ActivityIcon.vue";
-export { default as AirplayIcon } from "./AirplayIcon.vue";
-export { default as AirpodsIcon } from "./AirpodsIcon.vue";
-export { default as AlarmClockCheckIcon } from "./AlarmClockCheckIcon.vue";
-export { default as AlarmClockMinusIcon } from "./AlarmClockMinusIcon.vue";
-export { default as AlarmClockOffIcon } from "./AlarmClockOffIcon.vue";
-export { default as AlarmClockPlusIcon } from "./AlarmClockPlusIcon.vue";
-export { default as AlarmClockIcon } from "./AlarmClockIcon.vue";
-export { default as AlertCircleIcon } from "./AlertCircleIcon.vue";
-export { default as AlertHexagonIcon } from "./AlertHexagonIcon.vue";
-export { default as AlertOctagonIcon } from "./AlertOctagonIcon.vue";
-export { default as AlertSquareIcon } from "./AlertSquareIcon.vue";
-export { default as AlertTriangleIcon } from "./AlertTriangleIcon.vue";
-export { default as AlignBottom01Icon } from "./AlignBottom01Icon.vue";
-export { default as AlignBottom02Icon } from "./AlignBottom02Icon.vue";
-export { default as AlignCenterIcon } from "./AlignCenterIcon.vue";
-export { default as AlignHorizontalCentre01Icon } from "./AlignHorizontalCentre01Icon.vue";
-export { default as AlignHorizontalCentre02Icon } from "./AlignHorizontalCentre02Icon.vue";
-export { default as AlignJustifyIcon } from "./AlignJustifyIcon.vue";
-export { default as AlignLeft01Icon } from "./AlignLeft01Icon.vue";
-export { default as AlignLeft02Icon } from "./AlignLeft02Icon.vue";
-export { default as AlignLeftIcon } from "./AlignLeftIcon.vue";
-export { default as AlignRight01Icon } from "./AlignRight01Icon.vue";
-export { default as AlignRight02Icon } from "./AlignRight02Icon.vue";
-export { default as AlignRightIcon } from "./AlignRightIcon.vue";
-export { default as AlignTopArrow01Icon } from "./AlignTopArrow01Icon.vue";
-export { default as AlignTopArrow02Icon } from "./AlignTopArrow02Icon.vue";
-export { default as AlignVerticalCenter01Icon } from "./AlignVerticalCenter01Icon.vue";
-export { default as AlignVerticalCenter02Icon } from "./AlignVerticalCenter02Icon.vue";
-export { default as AnchorIcon } from "./AnchorIcon.vue";
-export { default as AnnotationAlertIcon } from "./AnnotationAlertIcon.vue";
-export { default as AnnotationCheckIcon } from "./AnnotationCheckIcon.vue";
-export { default as AnnotationDotsIcon } from "./AnnotationDotsIcon.vue";
-export { default as AnnotationHeartIcon } from "./AnnotationHeartIcon.vue";
-export { default as AnnotationInfoIcon } from "./AnnotationInfoIcon.vue";
-export { default as AnnotationPlusIcon } from "./AnnotationPlusIcon.vue";
-export { default as AnnotationQuestionIcon } from "./AnnotationQuestionIcon.vue";
-export { default as AnnotationXIcon } from "./AnnotationXIcon.vue";
-export { default as AnnotationIcon } from "./AnnotationIcon.vue";
-export { default as Announcement01Icon } from "./Announcement01Icon.vue";
-export { default as Announcement02Icon } from "./Announcement02Icon.vue";
-export { default as Announcement03Icon } from "./Announcement03Icon.vue";
-export { default as ArchiveIcon } from "./ArchiveIcon.vue";
-export { default as ArrowBlockDownIcon } from "./ArrowBlockDownIcon.vue";
-export { default as ArrowBlockLeftIcon } from "./ArrowBlockLeftIcon.vue";
-export { default as ArrowBlockRightIcon } from "./ArrowBlockRightIcon.vue";
-export { default as ArrowBlockUpIcon } from "./ArrowBlockUpIcon.vue";
-export { default as ArrowCircleBrokenDownLeftIcon } from "./ArrowCircleBrokenDownLeftIcon.vue";
-export { default as ArrowCircleBrokenDownRightIcon } from "./ArrowCircleBrokenDownRightIcon.vue";
-export { default as ArrowCircleBrokenDownIcon } from "./ArrowCircleBrokenDownIcon.vue";
-export { default as ArrowCircleBrokenLeftIcon } from "./ArrowCircleBrokenLeftIcon.vue";
-export { default as ArrowCircleBrokenRightIcon } from "./ArrowCircleBrokenRightIcon.vue";
-export { default as ArrowCircleBrokenUpLeftIcon } from "./ArrowCircleBrokenUpLeftIcon.vue";
-export { default as ArrowCircleBrokenUpRightIcon } from "./ArrowCircleBrokenUpRightIcon.vue";
-export { default as ArrowCircleBrokenUpIcon } from "./ArrowCircleBrokenUpIcon.vue";
-export { default as ArrowCircleDownLeftIcon } from "./ArrowCircleDownLeftIcon.vue";
-export { default as ArrowCircleDownRightIcon } from "./ArrowCircleDownRightIcon.vue";
-export { default as ArrowCircleDownIcon } from "./ArrowCircleDownIcon.vue";
-export { default as ArrowCircleLeftIcon } from "./ArrowCircleLeftIcon.vue";
-export { default as ArrowCircleRightIcon } from "./ArrowCircleRightIcon.vue";
-export { default as ArrowCircleUpLeftIcon } from "./ArrowCircleUpLeftIcon.vue";
-export { default as ArrowCircleUpRightIcon } from "./ArrowCircleUpRightIcon.vue";
-export { default as ArrowCircleUpIcon } from "./ArrowCircleUpIcon.vue";
-export { default as ArrowDownLeftIcon } from "./ArrowDownLeftIcon.vue";
-export { default as ArrowDownRightIcon } from "./ArrowDownRightIcon.vue";
-export { default as ArrowDownIcon } from "./ArrowDownIcon.vue";
-export { default as ArrowLeftIcon } from "./ArrowLeftIcon.vue";
-export { default as ArrowNarrowDownLeftIcon } from "./ArrowNarrowDownLeftIcon.vue";
-export { default as ArrowNarrowDownRightIcon } from "./ArrowNarrowDownRightIcon.vue";
-export { default as ArrowNarrowDownIcon } from "./ArrowNarrowDownIcon.vue";
-export { default as ArrowNarrowLeftIcon } from "./ArrowNarrowLeftIcon.vue";
-export { default as ArrowNarrowRightIcon } from "./ArrowNarrowRightIcon.vue";
-export { default as ArrowNarrowUpLeftIcon } from "./ArrowNarrowUpLeftIcon.vue";
-export { default as ArrowNarrowUpRightIcon } from "./ArrowNarrowUpRightIcon.vue";
-export { default as ArrowNarrowUpIcon } from "./ArrowNarrowUpIcon.vue";
-export { default as ArrowRightIcon } from "./ArrowRightIcon.vue";
-export { default as ArrowSquareDownLeftIcon } from "./ArrowSquareDownLeftIcon.vue";
-export { default as ArrowSquareDownRightIcon } from "./ArrowSquareDownRightIcon.vue";
-export { default as ArrowSquareDownIcon } from "./ArrowSquareDownIcon.vue";
-export { default as ArrowSquareLeftIcon } from "./ArrowSquareLeftIcon.vue";
-export { default as ArrowSquareRightIcon } from "./ArrowSquareRightIcon.vue";
-export { default as ArrowSquareUpLeftIcon } from "./ArrowSquareUpLeftIcon.vue";
-export { default as ArrowSquareUpRightIcon } from "./ArrowSquareUpRightIcon.vue";
-export { default as ArrowSquareUpIcon } from "./ArrowSquareUpIcon.vue";
-export { default as ArrowUpLeftIcon } from "./ArrowUpLeftIcon.vue";
-export { default as ArrowUpRightIcon } from "./ArrowUpRightIcon.vue";
-export { default as ArrowUpIcon } from "./ArrowUpIcon.vue";
-export { default as ArrowsDownIcon } from "./ArrowsDownIcon.vue";
-export { default as ArrowsLeftIcon } from "./ArrowsLeftIcon.vue";
-export { default as ArrowsRightIcon } from "./ArrowsRightIcon.vue";
-export { default as ArrowsTriangleIcon } from "./ArrowsTriangleIcon.vue";
-export { default as ArrowsUpIcon } from "./ArrowsUpIcon.vue";
-export { default as Asterisk01Icon } from "./Asterisk01Icon.vue";
-export { default as Asterisk02Icon } from "./Asterisk02Icon.vue";
-export { default as AtSignIcon } from "./AtSignIcon.vue";
-export { default as Atom01Icon } from "./Atom01Icon.vue";
-export { default as Atom02Icon } from "./Atom02Icon.vue";
-export { default as Attachment01Icon } from "./Attachment01Icon.vue";
-export { default as Attachment02Icon } from "./Attachment02Icon.vue";
-export { default as Award01Icon } from "./Award01Icon.vue";
-export { default as Award02Icon } from "./Award02Icon.vue";
-export { default as Award03Icon } from "./Award03Icon.vue";
-export { default as Award04Icon } from "./Award04Icon.vue";
-export { default as Award05Icon } from "./Award05Icon.vue";
-export { default as BackpackIcon } from "./BackpackIcon.vue";
-export { default as BankNote01Icon } from "./BankNote01Icon.vue";
-export { default as BankNote02Icon } from "./BankNote02Icon.vue";
-export { default as BankNote03Icon } from "./BankNote03Icon.vue";
-export { default as BankIcon } from "./BankIcon.vue";
-export { default as BarChart01Icon } from "./BarChart01Icon.vue";
-export { default as BarChart02Icon } from "./BarChart02Icon.vue";
-export { default as BarChart03Icon } from "./BarChart03Icon.vue";
-export { default as BarChart04Icon } from "./BarChart04Icon.vue";
-export { default as BarChart05Icon } from "./BarChart05Icon.vue";
-export { default as BarChart06Icon } from "./BarChart06Icon.vue";
-export { default as BarChart07Icon } from "./BarChart07Icon.vue";
-export { default as BarChart08Icon } from "./BarChart08Icon.vue";
-export { default as BarChart09Icon } from "./BarChart09Icon.vue";
-export { default as BarChart10Icon } from "./BarChart10Icon.vue";
-export { default as BarChart11Icon } from "./BarChart11Icon.vue";
-export { default as BarChart12Icon } from "./BarChart12Icon.vue";
-export { default as BarChartCircle01Icon } from "./BarChartCircle01Icon.vue";
-export { default as BarChartCircle02Icon } from "./BarChartCircle02Icon.vue";
-export { default as BarChartCircle03Icon } from "./BarChartCircle03Icon.vue";
-export { default as BarChartSquare01Icon } from "./BarChartSquare01Icon.vue";
-export { default as BarChartSquare02Icon } from "./BarChartSquare02Icon.vue";
-export { default as BarChartSquare03Icon } from "./BarChartSquare03Icon.vue";
-export { default as BarChartSquareDownIcon } from "./BarChartSquareDownIcon.vue";
-export { default as BarChartSquareMinusIcon } from "./BarChartSquareMinusIcon.vue";
-export { default as BarChartSquarePlusIcon } from "./BarChartSquarePlusIcon.vue";
-export { default as BarChartSquareUpIcon } from "./BarChartSquareUpIcon.vue";
-export { default as BarLineChartIcon } from "./BarLineChartIcon.vue";
-export { default as BatteryCharging01Icon } from "./BatteryCharging01Icon.vue";
-export { default as BatteryCharging02Icon } from "./BatteryCharging02Icon.vue";
-export { default as BatteryEmptyIcon } from "./BatteryEmptyIcon.vue";
-export { default as BatteryFullIcon } from "./BatteryFullIcon.vue";
-export { default as BatteryLowIcon } from "./BatteryLowIcon.vue";
-export { default as BatteryMidIcon } from "./BatteryMidIcon.vue";
-export { default as Beaker01Icon } from "./Beaker01Icon.vue";
-export { default as Beaker02Icon } from "./Beaker02Icon.vue";
-export { default as Bell01Icon } from "./Bell01Icon.vue";
-export { default as Bell02Icon } from "./Bell02Icon.vue";
-export { default as Bell03Icon } from "./Bell03Icon.vue";
-export { default as Bell04Icon } from "./Bell04Icon.vue";
-export { default as BellMinusIcon } from "./BellMinusIcon.vue";
-export { default as BellOff01Icon } from "./BellOff01Icon.vue";
-export { default as BellOff02Icon } from "./BellOff02Icon.vue";
-export { default as BellOff03Icon } from "./BellOff03Icon.vue";
-export { default as BellPlusIcon } from "./BellPlusIcon.vue";
-export { default as BellRinging01Icon } from "./BellRinging01Icon.vue";
-export { default as BellRinging02Icon } from "./BellRinging02Icon.vue";
-export { default as BellRinging03Icon } from "./BellRinging03Icon.vue";
-export { default as BellRinging04Icon } from "./BellRinging04Icon.vue";
-export { default as BezierCurve01Icon } from "./BezierCurve01Icon.vue";
-export { default as BezierCurve02Icon } from "./BezierCurve02Icon.vue";
-export { default as BezierCurve03Icon } from "./BezierCurve03Icon.vue";
-export { default as BluetoothConnectIcon } from "./BluetoothConnectIcon.vue";
-export { default as BluetoothOffIcon } from "./BluetoothOffIcon.vue";
-export { default as BluetoothOnIcon } from "./BluetoothOnIcon.vue";
-export { default as BluetoothSignalIcon } from "./BluetoothSignalIcon.vue";
-export { default as Bold01Icon } from "./Bold01Icon.vue";
-export { default as Bold02Icon } from "./Bold02Icon.vue";
-export { default as BoldSquareIcon } from "./BoldSquareIcon.vue";
-export { default as BookClosedIcon } from "./BookClosedIcon.vue";
-export { default as BookOpen01Icon } from "./BookOpen01Icon.vue";
-export { default as BookOpen02Icon } from "./BookOpen02Icon.vue";
-export { default as BookmarkAddIcon } from "./BookmarkAddIcon.vue";
-export { default as BookmarkCheckIcon } from "./BookmarkCheckIcon.vue";
-export { default as BookmarkMinusIcon } from "./BookmarkMinusIcon.vue";
-export { default as BookmarkXIcon } from "./BookmarkXIcon.vue";
-export { default as BookmarkIcon } from "./BookmarkIcon.vue";
-export { default as BoxIcon } from "./BoxIcon.vue";
-export { default as BracketsCheckIcon } from "./BracketsCheckIcon.vue";
-export { default as BracketsEllipsesIcon } from "./BracketsEllipsesIcon.vue";
-export { default as BracketsMinusIcon } from "./BracketsMinusIcon.vue";
-export { default as BracketsPlusIcon } from "./BracketsPlusIcon.vue";
-export { default as BracketsSlashIcon } from "./BracketsSlashIcon.vue";
-export { default as BracketsXIcon } from "./BracketsXIcon.vue";
-export { default as BracketsIcon } from "./BracketsIcon.vue";
-export { default as Briefcase01Icon } from "./Briefcase01Icon.vue";
-export { default as Briefcase02Icon } from "./Briefcase02Icon.vue";
-export { default as BrowserIcon } from "./BrowserIcon.vue";
-export { default as Brush01Icon } from "./Brush01Icon.vue";
-export { default as Brush02Icon } from "./Brush02Icon.vue";
-export { default as Brush03Icon } from "./Brush03Icon.vue";
-export { default as Building01Icon } from "./Building01Icon.vue";
-export { default as Building02Icon } from "./Building02Icon.vue";
-export { default as Building03Icon } from "./Building03Icon.vue";
-export { default as Building04Icon } from "./Building04Icon.vue";
-export { default as Building05Icon } from "./Building05Icon.vue";
-export { default as Building06Icon } from "./Building06Icon.vue";
-export { default as Building07Icon } from "./Building07Icon.vue";
-export { default as Building08Icon } from "./Building08Icon.vue";
-export { default as BusIcon } from "./BusIcon.vue";
-export { default as CalculatorIcon } from "./CalculatorIcon.vue";
-export { default as CalendarCheck01Icon } from "./CalendarCheck01Icon.vue";
-export { default as CalendarCheck02Icon } from "./CalendarCheck02Icon.vue";
-export { default as CalendarDateIcon } from "./CalendarDateIcon.vue";
-export { default as CalendarHeart01Icon } from "./CalendarHeart01Icon.vue";
-export { default as CalendarHeart02Icon } from "./CalendarHeart02Icon.vue";
-export { default as CalendarMinus01Icon } from "./CalendarMinus01Icon.vue";
-export { default as CalendarMinus02Icon } from "./CalendarMinus02Icon.vue";
-export { default as CalendarPlus01Icon } from "./CalendarPlus01Icon.vue";
-export { default as CalendarPlus02Icon } from "./CalendarPlus02Icon.vue";
-export { default as CalendarIcon } from "./CalendarIcon.vue";
-export { default as Camera01Icon } from "./Camera01Icon.vue";
-export { default as Camera02Icon } from "./Camera02Icon.vue";
-export { default as Camera03Icon } from "./Camera03Icon.vue";
-export { default as CameraLensIcon } from "./CameraLensIcon.vue";
-export { default as CameraOffIcon } from "./CameraOffIcon.vue";
-export { default as CameraPlusIcon } from "./CameraPlusIcon.vue";
-export { default as Car01Icon } from "./Car01Icon.vue";
-export { default as Car02Icon } from "./Car02Icon.vue";
-export { default as Certificate01Icon } from "./Certificate01Icon.vue";
-export { default as Certificate02Icon } from "./Certificate02Icon.vue";
-export { default as ChartBreakoutCircleIcon } from "./ChartBreakoutCircleIcon.vue";
-export { default as ChartBreakoutSquareIcon } from "./ChartBreakoutSquareIcon.vue";
-export { default as CheckCircleBrokenIcon } from "./CheckCircleBrokenIcon.vue";
-export { default as CheckCircleIcon } from "./CheckCircleIcon.vue";
-export { default as CheckDone01Icon } from "./CheckDone01Icon.vue";
-export { default as CheckDone02Icon } from "./CheckDone02Icon.vue";
-export { default as CheckHeartIcon } from "./CheckHeartIcon.vue";
-export { default as CheckSquareBrokenIcon } from "./CheckSquareBrokenIcon.vue";
-export { default as CheckSquareIcon } from "./CheckSquareIcon.vue";
-export { default as CheckVerified01Icon } from "./CheckVerified01Icon.vue";
-export { default as CheckVerified02Icon } from "./CheckVerified02Icon.vue";
-export { default as CheckVerified03Icon } from "./CheckVerified03Icon.vue";
-export { default as CheckIcon } from "./CheckIcon.vue";
-export { default as ChevronDownDoubleIcon } from "./ChevronDownDoubleIcon.vue";
-export { default as ChevronDownIcon } from "./ChevronDownIcon.vue";
-export { default as ChevronLeftDoubleIcon } from "./ChevronLeftDoubleIcon.vue";
-export { default as ChevronLeftIcon } from "./ChevronLeftIcon.vue";
-export { default as ChevronRightDoubleIcon } from "./ChevronRightDoubleIcon.vue";
-export { default as ChevronRightIcon } from "./ChevronRightIcon.vue";
-export { default as ChevronSelectorHorizontalIcon } from "./ChevronSelectorHorizontalIcon.vue";
-export { default as ChevronSelectorVerticalIcon } from "./ChevronSelectorVerticalIcon.vue";
-export { default as ChevronUpDoubleIcon } from "./ChevronUpDoubleIcon.vue";
-export { default as ChevronUpIcon } from "./ChevronUpIcon.vue";
-export { default as ChromeCastIcon } from "./ChromeCastIcon.vue";
-export { default as CircleCutIcon } from "./CircleCutIcon.vue";
-export { default as CircleIcon } from "./CircleIcon.vue";
-export { default as ClapperboardIcon } from "./ClapperboardIcon.vue";
-export { default as ClipboardAttachmentIcon } from "./ClipboardAttachmentIcon.vue";
-export { default as ClipboardCheckIcon } from "./ClipboardCheckIcon.vue";
-export { default as ClipboardDownloadIcon } from "./ClipboardDownloadIcon.vue";
-export { default as ClipboardMinusIcon } from "./ClipboardMinusIcon.vue";
-export { default as ClipboardPlusIcon } from "./ClipboardPlusIcon.vue";
-export { default as ClipboardXIcon } from "./ClipboardXIcon.vue";
-export { default as ClipboardIcon } from "./ClipboardIcon.vue";
-export { default as ClockCheckIcon } from "./ClockCheckIcon.vue";
-export { default as ClockFastForwardIcon } from "./ClockFastForwardIcon.vue";
-export { default as ClockPlusIcon } from "./ClockPlusIcon.vue";
-export { default as ClockRefreshIcon } from "./ClockRefreshIcon.vue";
-export { default as ClockRewindIcon } from "./ClockRewindIcon.vue";
-export { default as ClockSnoozeIcon } from "./ClockSnoozeIcon.vue";
-export { default as ClockStopwatchIcon } from "./ClockStopwatchIcon.vue";
-export { default as ClockIcon } from "./ClockIcon.vue";
-export { default as Cloud01Icon } from "./Cloud01Icon.vue";
-export { default as Cloud02Icon } from "./Cloud02Icon.vue";
-export { default as Cloud03Icon } from "./Cloud03Icon.vue";
-export { default as CloudBlank01Icon } from "./CloudBlank01Icon.vue";
-export { default as CloudBlank02Icon } from "./CloudBlank02Icon.vue";
-export { default as CloudLightningIcon } from "./CloudLightningIcon.vue";
-export { default as CloudMoonIcon } from "./CloudMoonIcon.vue";
-export { default as CloudOffIcon } from "./CloudOffIcon.vue";
-export { default as CloudRaining01Icon } from "./CloudRaining01Icon.vue";
-export { default as CloudRaining02Icon } from "./CloudRaining02Icon.vue";
-export { default as CloudRaining03Icon } from "./CloudRaining03Icon.vue";
-export { default as CloudRaining04Icon } from "./CloudRaining04Icon.vue";
-export { default as CloudRaining05Icon } from "./CloudRaining05Icon.vue";
-export { default as CloudRaining06Icon } from "./CloudRaining06Icon.vue";
-export { default as CloudSnowing01Icon } from "./CloudSnowing01Icon.vue";
-export { default as CloudSnowing02Icon } from "./CloudSnowing02Icon.vue";
-export { default as CloudSun01Icon } from "./CloudSun01Icon.vue";
-export { default as CloudSun02Icon } from "./CloudSun02Icon.vue";
-export { default as CloudSun03Icon } from "./CloudSun03Icon.vue";
-export { default as Code01Icon } from "./Code01Icon.vue";
-export { default as Code02Icon } from "./Code02Icon.vue";
-export { default as CodeBrowserIcon } from "./CodeBrowserIcon.vue";
-export { default as CodeCircle01Icon } from "./CodeCircle01Icon.vue";
-export { default as CodeCircle02Icon } from "./CodeCircle02Icon.vue";
-export { default as CodeCircle03Icon } from "./CodeCircle03Icon.vue";
-export { default as CodeSnippet01Icon } from "./CodeSnippet01Icon.vue";
-export { default as CodeSnippet02Icon } from "./CodeSnippet02Icon.vue";
-export { default as CodeSquare01Icon } from "./CodeSquare01Icon.vue";
-export { default as CodeSquare02Icon } from "./CodeSquare02Icon.vue";
-export { default as CodepenIcon } from "./CodepenIcon.vue";
-export { default as Coins01Icon } from "./Coins01Icon.vue";
-export { default as Coins02Icon } from "./Coins02Icon.vue";
-export { default as Coins03Icon } from "./Coins03Icon.vue";
-export { default as Coins04Icon } from "./Coins04Icon.vue";
-export { default as CoinsHandIcon } from "./CoinsHandIcon.vue";
-export { default as CoinsStacked01Icon } from "./CoinsStacked01Icon.vue";
-export { default as CoinsStacked02Icon } from "./CoinsStacked02Icon.vue";
-export { default as CoinsStacked03Icon } from "./CoinsStacked03Icon.vue";
-export { default as CoinsStacked04Icon } from "./CoinsStacked04Icon.vue";
-export { default as CoinsSwap01Icon } from "./CoinsSwap01Icon.vue";
-export { default as CoinsSwap02Icon } from "./CoinsSwap02Icon.vue";
-export { default as ColorsIcon } from "./ColorsIcon.vue";
-export { default as Columns01Icon } from "./Columns01Icon.vue";
-export { default as Columns02Icon } from "./Columns02Icon.vue";
-export { default as Columns03Icon } from "./Columns03Icon.vue";
-export { default as CommandIcon } from "./CommandIcon.vue";
-export { default as Compass01Icon } from "./Compass01Icon.vue";
-export { default as Compass02Icon } from "./Compass02Icon.vue";
-export { default as Compass03Icon } from "./Compass03Icon.vue";
-export { default as CompassIcon } from "./CompassIcon.vue";
-export { default as ContainerIcon } from "./ContainerIcon.vue";
-export { default as Contrast01Icon } from "./Contrast01Icon.vue";
-export { default as Contrast02Icon } from "./Contrast02Icon.vue";
-export { default as Contrast03Icon } from "./Contrast03Icon.vue";
-export { default as Copy01Icon } from "./Copy01Icon.vue";
-export { default as Copy02Icon } from "./Copy02Icon.vue";
-export { default as Copy03Icon } from "./Copy03Icon.vue";
-export { default as Copy04Icon } from "./Copy04Icon.vue";
-export { default as Copy05Icon } from "./Copy05Icon.vue";
-export { default as Copy06Icon } from "./Copy06Icon.vue";
-export { default as Copy07Icon } from "./Copy07Icon.vue";
-export { default as CornerDownLeftIcon } from "./CornerDownLeftIcon.vue";
-export { default as CornerDownRightIcon } from "./CornerDownRightIcon.vue";
-export { default as CornerLeftDownIcon } from "./CornerLeftDownIcon.vue";
-export { default as CornerLeftUpIcon } from "./CornerLeftUpIcon.vue";
-export { default as CornerRightDownIcon } from "./CornerRightDownIcon.vue";
-export { default as CornerRightUpIcon } from "./CornerRightUpIcon.vue";
-export { default as CornerUpLeftIcon } from "./CornerUpLeftIcon.vue";
-export { default as CornerUpRightIcon } from "./CornerUpRightIcon.vue";
-export { default as CpuChip01Icon } from "./CpuChip01Icon.vue";
-export { default as CpuChip02Icon } from "./CpuChip02Icon.vue";
-export { default as CreditCard01Icon } from "./CreditCard01Icon.vue";
-export { default as CreditCard02Icon } from "./CreditCard02Icon.vue";
-export { default as CreditCardCheckIcon } from "./CreditCardCheckIcon.vue";
-export { default as CreditCardDownIcon } from "./CreditCardDownIcon.vue";
-export { default as CreditCardDownloadIcon } from "./CreditCardDownloadIcon.vue";
-export { default as CreditCardEditIcon } from "./CreditCardEditIcon.vue";
-export { default as CreditCardLockIcon } from "./CreditCardLockIcon.vue";
-export { default as CreditCardMinusIcon } from "./CreditCardMinusIcon.vue";
-export { default as CreditCardPlusIcon } from "./CreditCardPlusIcon.vue";
-export { default as CreditCardRefreshIcon } from "./CreditCardRefreshIcon.vue";
-export { default as CreditCardSearchIcon } from "./CreditCardSearchIcon.vue";
-export { default as CreditCardShieldIcon } from "./CreditCardShieldIcon.vue";
-export { default as CreditCardUpIcon } from "./CreditCardUpIcon.vue";
-export { default as CreditCardUploadIcon } from "./CreditCardUploadIcon.vue";
-export { default as CreditCardXIcon } from "./CreditCardXIcon.vue";
-export { default as Crop01Icon } from "./Crop01Icon.vue";
-export { default as Crop02Icon } from "./Crop02Icon.vue";
-export { default as Cryptocurrency01Icon } from "./Cryptocurrency01Icon.vue";
-export { default as Cryptocurrency02Icon } from "./Cryptocurrency02Icon.vue";
-export { default as Cryptocurrency03Icon } from "./Cryptocurrency03Icon.vue";
-export { default as Cryptocurrency04Icon } from "./Cryptocurrency04Icon.vue";
-export { default as Cube01Icon } from "./Cube01Icon.vue";
-export { default as Cube02Icon } from "./Cube02Icon.vue";
-export { default as Cube03Icon } from "./Cube03Icon.vue";
-export { default as Cube04Icon } from "./Cube04Icon.vue";
-export { default as CubeOutlineIcon } from "./CubeOutlineIcon.vue";
-export { default as CurrencyBitcoinCircleIcon } from "./CurrencyBitcoinCircleIcon.vue";
-export { default as CurrencyBitcoinIcon } from "./CurrencyBitcoinIcon.vue";
-export { default as CurrencyDollarCircleIcon } from "./CurrencyDollarCircleIcon.vue";
-export { default as CurrencyDollarIcon } from "./CurrencyDollarIcon.vue";
-export { default as CurrencyEthereumCircleIcon } from "./CurrencyEthereumCircleIcon.vue";
-export { default as CurrencyEthereumIcon } from "./CurrencyEthereumIcon.vue";
-export { default as CurrencyEuroCircleIcon } from "./CurrencyEuroCircleIcon.vue";
-export { default as CurrencyEuroIcon } from "./CurrencyEuroIcon.vue";
-export { default as CurrencyPoundCircleIcon } from "./CurrencyPoundCircleIcon.vue";
-export { default as CurrencyPoundIcon } from "./CurrencyPoundIcon.vue";
-export { default as CurrencyRubleCircleIcon } from "./CurrencyRubleCircleIcon.vue";
-export { default as CurrencyRubleIcon } from "./CurrencyRubleIcon.vue";
-export { default as CurrencyRupeeCircleIcon } from "./CurrencyRupeeCircleIcon.vue";
-export { default as CurrencyRupeeIcon } from "./CurrencyRupeeIcon.vue";
-export { default as CurrencyYenCircleIcon } from "./CurrencyYenCircleIcon.vue";
-export { default as CurrencyYenIcon } from "./CurrencyYenIcon.vue";
-export { default as Cursor01Icon } from "./Cursor01Icon.vue";
-export { default as Cursor02Icon } from "./Cursor02Icon.vue";
-export { default as Cursor03Icon } from "./Cursor03Icon.vue";
-export { default as Cursor04Icon } from "./Cursor04Icon.vue";
-export { default as CursorBoxIcon } from "./CursorBoxIcon.vue";
-export { default as CursorClick01Icon } from "./CursorClick01Icon.vue";
-export { default as CursorClick02Icon } from "./CursorClick02Icon.vue";
-export { default as DataIcon } from "./DataIcon.vue";
-export { default as Database01Icon } from "./Database01Icon.vue";
-export { default as Database02Icon } from "./Database02Icon.vue";
-export { default as Database03Icon } from "./Database03Icon.vue";
-export { default as Dataflow01Icon } from "./Dataflow01Icon.vue";
-export { default as Dataflow02Icon } from "./Dataflow02Icon.vue";
-export { default as Dataflow03Icon } from "./Dataflow03Icon.vue";
-export { default as Dataflow04Icon } from "./Dataflow04Icon.vue";
-export { default as DeleteIcon } from "./DeleteIcon.vue";
-export { default as Diamond01Icon } from "./Diamond01Icon.vue";
-export { default as Diamond02Icon } from "./Diamond02Icon.vue";
-export { default as Dice1Icon } from "./Dice1Icon.vue";
-export { default as Dice2Icon } from "./Dice2Icon.vue";
-export { default as Dice3Icon } from "./Dice3Icon.vue";
-export { default as Dice4Icon } from "./Dice4Icon.vue";
-export { default as Dice5Icon } from "./Dice5Icon.vue";
-export { default as Dice6Icon } from "./Dice6Icon.vue";
-export { default as Disc01Icon } from "./Disc01Icon.vue";
-export { default as Disc02Icon } from "./Disc02Icon.vue";
-export { default as DistributeSpacingHorizontalIcon } from "./DistributeSpacingHorizontalIcon.vue";
-export { default as DistributeSpacingVerticalIcon } from "./DistributeSpacingVerticalIcon.vue";
-export { default as Divide01Icon } from "./Divide01Icon.vue";
-export { default as Divide02Icon } from "./Divide02Icon.vue";
-export { default as Divide03Icon } from "./Divide03Icon.vue";
-export { default as DividerIcon } from "./DividerIcon.vue";
-export { default as Dotpoints01Icon } from "./Dotpoints01Icon.vue";
-export { default as Dotpoints02Icon } from "./Dotpoints02Icon.vue";
-export { default as DotsGridIcon } from "./DotsGridIcon.vue";
-export { default as DotsHorizontalIcon } from "./DotsHorizontalIcon.vue";
-export { default as DotsVerticalIcon } from "./DotsVerticalIcon.vue";
-export { default as Download01Icon } from "./Download01Icon.vue";
-export { default as Download02Icon } from "./Download02Icon.vue";
-export { default as Download03Icon } from "./Download03Icon.vue";
-export { default as Download04Icon } from "./Download04Icon.vue";
-export { default as DownloadCloud01Icon } from "./DownloadCloud01Icon.vue";
-export { default as DownloadCloud02Icon } from "./DownloadCloud02Icon.vue";
-export { default as DropIcon } from "./DropIcon.vue";
-export { default as Droplets01Icon } from "./Droplets01Icon.vue";
-export { default as Droplets02Icon } from "./Droplets02Icon.vue";
-export { default as Droplets03Icon } from "./Droplets03Icon.vue";
-export { default as DropperIcon } from "./DropperIcon.vue";
-export { default as Edit01Icon } from "./Edit01Icon.vue";
-export { default as Edit02Icon } from "./Edit02Icon.vue";
-export { default as Edit03Icon } from "./Edit03Icon.vue";
-export { default as Edit04Icon } from "./Edit04Icon.vue";
-export { default as Edit05Icon } from "./Edit05Icon.vue";
-export { default as EqualNotIcon } from "./EqualNotIcon.vue";
-export { default as EqualIcon } from "./EqualIcon.vue";
-export { default as EraserIcon } from "./EraserIcon.vue";
-export { default as Expand01Icon } from "./Expand01Icon.vue";
-export { default as Expand02Icon } from "./Expand02Icon.vue";
-export { default as Expand03Icon } from "./Expand03Icon.vue";
-export { default as Expand04Icon } from "./Expand04Icon.vue";
-export { default as Expand05Icon } from "./Expand05Icon.vue";
-export { default as Expand06Icon } from "./Expand06Icon.vue";
-export { default as EyeOffIcon } from "./EyeOffIcon.vue";
-export { default as EyeIcon } from "./EyeIcon.vue";
-export { default as FaceContentIcon } from "./FaceContentIcon.vue";
-export { default as FaceFrownIcon } from "./FaceFrownIcon.vue";
-export { default as FaceHappyIcon } from "./FaceHappyIcon.vue";
-export { default as FaceIdSquareIcon } from "./FaceIdSquareIcon.vue";
-export { default as FaceIdIcon } from "./FaceIdIcon.vue";
-export { default as FaceNeutralIcon } from "./FaceNeutralIcon.vue";
-export { default as FaceSadIcon } from "./FaceSadIcon.vue";
-export { default as FaceSmileIcon } from "./FaceSmileIcon.vue";
-export { default as FaceWinkIcon } from "./FaceWinkIcon.vue";
-export { default as FastBackwardIcon } from "./FastBackwardIcon.vue";
-export { default as FastForwardIcon } from "./FastForwardIcon.vue";
-export { default as FeatherIcon } from "./FeatherIcon.vue";
-export { default as FigmaIcon } from "./FigmaIcon.vue";
-export { default as File01Icon } from "./File01Icon.vue";
-export { default as File02Icon } from "./File02Icon.vue";
-export { default as File03Icon } from "./File03Icon.vue";
-export { default as File04Icon } from "./File04Icon.vue";
-export { default as File05Icon } from "./File05Icon.vue";
-export { default as File06Icon } from "./File06Icon.vue";
-export { default as File07Icon } from "./File07Icon.vue";
-export { default as FileAttachment01Icon } from "./FileAttachment01Icon.vue";
-export { default as FileAttachment02Icon } from "./FileAttachment02Icon.vue";
-export { default as FileAttachment03Icon } from "./FileAttachment03Icon.vue";
-export { default as FileAttachment04Icon } from "./FileAttachment04Icon.vue";
-export { default as FileAttachment05Icon } from "./FileAttachment05Icon.vue";
-export { default as FileCheck01Icon } from "./FileCheck01Icon.vue";
-export { default as FileCheck02Icon } from "./FileCheck02Icon.vue";
-export { default as FileCheck03Icon } from "./FileCheck03Icon.vue";
-export { default as FileCode01Icon } from "./FileCode01Icon.vue";
-export { default as FileCode02Icon } from "./FileCode02Icon.vue";
-export { default as FileDownload01Icon } from "./FileDownload01Icon.vue";
-export { default as FileDownload02Icon } from "./FileDownload02Icon.vue";
-export { default as FileDownload03Icon } from "./FileDownload03Icon.vue";
-export { default as FileHeart01Icon } from "./FileHeart01Icon.vue";
-export { default as FileHeart02Icon } from "./FileHeart02Icon.vue";
-export { default as FileHeart03Icon } from "./FileHeart03Icon.vue";
-export { default as FileLock01Icon } from "./FileLock01Icon.vue";
-export { default as FileLock02Icon } from "./FileLock02Icon.vue";
-export { default as FileLock03Icon } from "./FileLock03Icon.vue";
-export { default as FileMinus01Icon } from "./FileMinus01Icon.vue";
-export { default as FileMinus02Icon } from "./FileMinus02Icon.vue";
-export { default as FileMinus03Icon } from "./FileMinus03Icon.vue";
-export { default as FilePlus01Icon } from "./FilePlus01Icon.vue";
-export { default as FilePlus02Icon } from "./FilePlus02Icon.vue";
-export { default as FilePlus03Icon } from "./FilePlus03Icon.vue";
-export { default as FileQuestion01Icon } from "./FileQuestion01Icon.vue";
-export { default as FileQuestion02Icon } from "./FileQuestion02Icon.vue";
-export { default as FileQuestion03Icon } from "./FileQuestion03Icon.vue";
-export { default as FileSearch01Icon } from "./FileSearch01Icon.vue";
-export { default as FileSearch02Icon } from "./FileSearch02Icon.vue";
-export { default as FileSearch03Icon } from "./FileSearch03Icon.vue";
-export { default as FileShield01Icon } from "./FileShield01Icon.vue";
-export { default as FileShield02Icon } from "./FileShield02Icon.vue";
-export { default as FileShield03Icon } from "./FileShield03Icon.vue";
-export { default as FileX01Icon } from "./FileX01Icon.vue";
-export { default as FileX02Icon } from "./FileX02Icon.vue";
-export { default as FileX03Icon } from "./FileX03Icon.vue";
-export { default as Film01Icon } from "./Film01Icon.vue";
-export { default as Film02Icon } from "./Film02Icon.vue";
-export { default as Film03Icon } from "./Film03Icon.vue";
-export { default as FilterFunnel01Icon } from "./FilterFunnel01Icon.vue";
-export { default as FilterFunnel02Icon } from "./FilterFunnel02Icon.vue";
-export { default as FilterLinesIcon } from "./FilterLinesIcon.vue";
-export { default as Fingerprint01Icon } from "./Fingerprint01Icon.vue";
-export { default as Fingerprint02Icon } from "./Fingerprint02Icon.vue";
-export { default as Fingerprint03Icon } from "./Fingerprint03Icon.vue";
-export { default as Fingerprint04Icon } from "./Fingerprint04Icon.vue";
-export { default as Flag01Icon } from "./Flag01Icon.vue";
-export { default as Flag02Icon } from "./Flag02Icon.vue";
-export { default as Flag03Icon } from "./Flag03Icon.vue";
-export { default as Flag04Icon } from "./Flag04Icon.vue";
-export { default as Flag05Icon } from "./Flag05Icon.vue";
-export { default as Flag06Icon } from "./Flag06Icon.vue";
-export { default as FlashOffIcon } from "./FlashOffIcon.vue";
-export { default as FlashIcon } from "./FlashIcon.vue";
-export { default as FlexAlignBottomIcon } from "./FlexAlignBottomIcon.vue";
-export { default as FlexAlignLeftIcon } from "./FlexAlignLeftIcon.vue";
-export { default as FlexAlignRightIcon } from "./FlexAlignRightIcon.vue";
-export { default as FlexAlignTopIcon } from "./FlexAlignTopIcon.vue";
-export { default as FlipBackwardIcon } from "./FlipBackwardIcon.vue";
-export { default as FlipForwardIcon } from "./FlipForwardIcon.vue";
-export { default as FolderCheckIcon } from "./FolderCheckIcon.vue";
-export { default as FolderClosedIcon } from "./FolderClosedIcon.vue";
-export { default as FolderCodeIcon } from "./FolderCodeIcon.vue";
-export { default as FolderDownloadIcon } from "./FolderDownloadIcon.vue";
-export { default as FolderLockIcon } from "./FolderLockIcon.vue";
-export { default as FolderMinusIcon } from "./FolderMinusIcon.vue";
-export { default as FolderPlusIcon } from "./FolderPlusIcon.vue";
-export { default as FolderQuestionIcon } from "./FolderQuestionIcon.vue";
-export { default as FolderSearchIcon } from "./FolderSearchIcon.vue";
-export { default as FolderShieldIcon } from "./FolderShieldIcon.vue";
-export { default as FolderXIcon } from "./FolderXIcon.vue";
-export { default as FolderIcon } from "./FolderIcon.vue";
-export { default as FramerIcon } from "./FramerIcon.vue";
-export { default as GamingPad01Icon } from "./GamingPad01Icon.vue";
-export { default as GamingPad02Icon } from "./GamingPad02Icon.vue";
-export { default as Gift01Icon } from "./Gift01Icon.vue";
-export { default as Gift02Icon } from "./Gift02Icon.vue";
-export { default as GitBranch01Icon } from "./GitBranch01Icon.vue";
-export { default as GitBranch02Icon } from "./GitBranch02Icon.vue";
-export { default as GitCommitIcon } from "./GitCommitIcon.vue";
-export { default as GitMergeIcon } from "./GitMergeIcon.vue";
-export { default as GitPullRequestIcon } from "./GitPullRequestIcon.vue";
-export { default as Glasses01Icon } from "./Glasses01Icon.vue";
-export { default as Glasses02Icon } from "./Glasses02Icon.vue";
-export { default as Globe011Icon } from "./Globe011Icon.vue";
-export { default as Globe01Icon } from "./Globe01Icon.vue";
-export { default as Globe021Icon } from "./Globe021Icon.vue";
-export { default as Globe02Icon } from "./Globe02Icon.vue";
-export { default as Globe03Icon } from "./Globe03Icon.vue";
-export { default as Globe04Icon } from "./Globe04Icon.vue";
-export { default as Globe05Icon } from "./Globe05Icon.vue";
-export { default as Globe06Icon } from "./Globe06Icon.vue";
-export { default as GoogleChromeIcon } from "./GoogleChromeIcon.vue";
-export { default as GraduationHat01Icon } from "./GraduationHat01Icon.vue";
-export { default as GraduationHat02Icon } from "./GraduationHat02Icon.vue";
-export { default as Grid01Icon } from "./Grid01Icon.vue";
-export { default as Grid02Icon } from "./Grid02Icon.vue";
-export { default as Grid03Icon } from "./Grid03Icon.vue";
-export { default as GridDotsBlankIcon } from "./GridDotsBlankIcon.vue";
-export { default as GridDotsBottomIcon } from "./GridDotsBottomIcon.vue";
-export { default as GridDotsHorizontalCenterIcon } from "./GridDotsHorizontalCenterIcon.vue";
-export { default as GridDotsLeftIcon } from "./GridDotsLeftIcon.vue";
-export { default as GridDotsOuterIcon } from "./GridDotsOuterIcon.vue";
-export { default as GridDotsRightIcon } from "./GridDotsRightIcon.vue";
-export { default as GridDotsTopIcon } from "./GridDotsTopIcon.vue";
-export { default as GridDotsVerticalCenterIcon } from "./GridDotsVerticalCenterIcon.vue";
-export { default as HandIcon } from "./HandIcon.vue";
-export { default as HardDriveIcon } from "./HardDriveIcon.vue";
-export { default as Hash01Icon } from "./Hash01Icon.vue";
-export { default as Hash02Icon } from "./Hash02Icon.vue";
-export { default as Heading01Icon } from "./Heading01Icon.vue";
-export { default as Heading02Icon } from "./Heading02Icon.vue";
-export { default as HeadingSquareIcon } from "./HeadingSquareIcon.vue";
-export { default as Headphones01Icon } from "./Headphones01Icon.vue";
-export { default as Headphones02Icon } from "./Headphones02Icon.vue";
-export { default as HeartCircleIcon } from "./HeartCircleIcon.vue";
-export { default as HeartHandIcon } from "./HeartHandIcon.vue";
-export { default as HeartHexagonIcon } from "./HeartHexagonIcon.vue";
-export { default as HeartOctagonIcon } from "./HeartOctagonIcon.vue";
-export { default as HeartRoundedIcon } from "./HeartRoundedIcon.vue";
-export { default as HeartSquareIcon } from "./HeartSquareIcon.vue";
-export { default as HeartIcon } from "./HeartIcon.vue";
-export { default as HeartsIcon } from "./HeartsIcon.vue";
-export { default as HelpCircleIcon } from "./HelpCircleIcon.vue";
-export { default as HelpOctagon1Icon } from "./HelpOctagon1Icon.vue";
-export { default as HelpOctagonIcon } from "./HelpOctagonIcon.vue";
-export { default as HelpSquareIcon } from "./HelpSquareIcon.vue";
-export { default as Hexagon01Icon } from "./Hexagon01Icon.vue";
-export { default as Hexagon02Icon } from "./Hexagon02Icon.vue";
-export { default as Home01Icon } from "./Home01Icon.vue";
-export { default as Home02Icon } from "./Home02Icon.vue";
-export { default as Home03Icon } from "./Home03Icon.vue";
-export { default as Home04Icon } from "./Home04Icon.vue";
-export { default as Home05Icon } from "./Home05Icon.vue";
-export { default as HomeLineIcon } from "./HomeLineIcon.vue";
-export { default as HomeSmileIcon } from "./HomeSmileIcon.vue";
-export { default as HorizontalBarChart01Icon } from "./HorizontalBarChart01Icon.vue";
-export { default as HorizontalBarChart02Icon } from "./HorizontalBarChart02Icon.vue";
-export { default as HorizontalBarChart03Icon } from "./HorizontalBarChart03Icon.vue";
-export { default as Hourglass01Icon } from "./Hourglass01Icon.vue";
-export { default as Hourglass02Icon } from "./Hourglass02Icon.vue";
-export { default as Hourglass03Icon } from "./Hourglass03Icon.vue";
-export { default as Hurricane01Icon } from "./Hurricane01Icon.vue";
-export { default as Hurricane02Icon } from "./Hurricane02Icon.vue";
-export { default as Hurricane03Icon } from "./Hurricane03Icon.vue";
-export { default as Image01Icon } from "./Image01Icon.vue";
-export { default as Image02Icon } from "./Image02Icon.vue";
-export { default as Image03Icon } from "./Image03Icon.vue";
-export { default as Image04Icon } from "./Image04Icon.vue";
-export { default as Image05Icon } from "./Image05Icon.vue";
-export { default as ImageCheckIcon } from "./ImageCheckIcon.vue";
-export { default as ImageDownIcon } from "./ImageDownIcon.vue";
-export { default as ImageIndentLeftIcon } from "./ImageIndentLeftIcon.vue";
-export { default as ImageIndentRightIcon } from "./ImageIndentRightIcon.vue";
-export { default as ImageLeftIcon } from "./ImageLeftIcon.vue";
-export { default as ImagePlusIcon } from "./ImagePlusIcon.vue";
-export { default as ImageRightIcon } from "./ImageRightIcon.vue";
-export { default as ImageUpIcon } from "./ImageUpIcon.vue";
-export { default as ImageUserCheckIcon } from "./ImageUserCheckIcon.vue";
-export { default as ImageUserDownIcon } from "./ImageUserDownIcon.vue";
-export { default as ImageUserLeftIcon } from "./ImageUserLeftIcon.vue";
-export { default as ImageUserPlusIcon } from "./ImageUserPlusIcon.vue";
-export { default as ImageUserRightIcon } from "./ImageUserRightIcon.vue";
-export { default as ImageUserUpIcon } from "./ImageUserUpIcon.vue";
-export { default as ImageUserXIcon } from "./ImageUserXIcon.vue";
-export { default as ImageUserIcon } from "./ImageUserIcon.vue";
-export { default as ImageXIcon } from "./ImageXIcon.vue";
-export { default as Inbox01Icon } from "./Inbox01Icon.vue";
-export { default as Inbox02Icon } from "./Inbox02Icon.vue";
-export { default as InfinityIcon } from "./InfinityIcon.vue";
-export { default as InfoCircleIcon } from "./InfoCircleIcon.vue";
-export { default as InfoHexagonIcon } from "./InfoHexagonIcon.vue";
-export { default as InfoOctagonIcon } from "./InfoOctagonIcon.vue";
-export { default as InfoSquareIcon } from "./InfoSquareIcon.vue";
-export { default as IntersectCircleIcon } from "./IntersectCircleIcon.vue";
-export { default as IntersectSquareIcon } from "./IntersectSquareIcon.vue";
-export { default as Italic01Icon } from "./Italic01Icon.vue";
-export { default as Italic02Icon } from "./Italic02Icon.vue";
-export { default as ItalicSquareIcon } from "./ItalicSquareIcon.vue";
-export { default as Key01Icon } from "./Key01Icon.vue";
-export { default as Key02Icon } from "./Key02Icon.vue";
-export { default as Keyboard01Icon } from "./Keyboard01Icon.vue";
-export { default as Keyboard02Icon } from "./Keyboard02Icon.vue";
-export { default as Laptop01Icon } from "./Laptop01Icon.vue";
-export { default as Laptop02Icon } from "./Laptop02Icon.vue";
-export { default as LayerSingleIcon } from "./LayerSingleIcon.vue";
-export { default as LayersThree01Icon } from "./LayersThree01Icon.vue";
-export { default as LayersThree02Icon } from "./LayersThree02Icon.vue";
-export { default as LayersTwo01Icon } from "./LayersTwo01Icon.vue";
-export { default as LayersTwo02Icon } from "./LayersTwo02Icon.vue";
-export { default as LayoutAlt01Icon } from "./LayoutAlt01Icon.vue";
-export { default as LayoutAlt02Icon } from "./LayoutAlt02Icon.vue";
-export { default as LayoutAlt03Icon } from "./LayoutAlt03Icon.vue";
-export { default as LayoutAlt04Icon } from "./LayoutAlt04Icon.vue";
-export { default as LayoutBottomIcon } from "./LayoutBottomIcon.vue";
-export { default as LayoutGrid01Icon } from "./LayoutGrid01Icon.vue";
-export { default as LayoutGrid02Icon } from "./LayoutGrid02Icon.vue";
-export { default as LayoutLeftIcon } from "./LayoutLeftIcon.vue";
-export { default as LayoutRightIcon } from "./LayoutRightIcon.vue";
-export { default as LayoutTopIcon } from "./LayoutTopIcon.vue";
-export { default as LeftIndent01Icon } from "./LeftIndent01Icon.vue";
-export { default as LeftIndent02Icon } from "./LeftIndent02Icon.vue";
-export { default as LetterSpacing01Icon } from "./LetterSpacing01Icon.vue";
-export { default as LetterSpacing02Icon } from "./LetterSpacing02Icon.vue";
-export { default as LifeBuoy01Icon } from "./LifeBuoy01Icon.vue";
-export { default as LifeBuoy02Icon } from "./LifeBuoy02Icon.vue";
-export { default as Lightbulb01Icon } from "./Lightbulb01Icon.vue";
-export { default as Lightbulb02Icon } from "./Lightbulb02Icon.vue";
-export { default as Lightbulb03Icon } from "./Lightbulb03Icon.vue";
-export { default as Lightbulb04Icon } from "./Lightbulb04Icon.vue";
-export { default as Lightbulb05Icon } from "./Lightbulb05Icon.vue";
-export { default as Lightning01Icon } from "./Lightning01Icon.vue";
-export { default as Lightning02Icon } from "./Lightning02Icon.vue";
-export { default as LineChartDown01Icon } from "./LineChartDown01Icon.vue";
-export { default as LineChartDown02Icon } from "./LineChartDown02Icon.vue";
-export { default as LineChartDown03Icon } from "./LineChartDown03Icon.vue";
-export { default as LineChartDown04Icon } from "./LineChartDown04Icon.vue";
-export { default as LineChartDown05Icon } from "./LineChartDown05Icon.vue";
-export { default as LineChartUp01Icon } from "./LineChartUp01Icon.vue";
-export { default as LineChartUp02Icon } from "./LineChartUp02Icon.vue";
-export { default as LineChartUp03Icon } from "./LineChartUp03Icon.vue";
-export { default as LineChartUp04Icon } from "./LineChartUp04Icon.vue";
-export { default as LineChartUp05Icon } from "./LineChartUp05Icon.vue";
-export { default as LineHeightIcon } from "./LineHeightIcon.vue";
-export { default as Link01Icon } from "./Link01Icon.vue";
-export { default as Link02Icon } from "./Link02Icon.vue";
-export { default as Link03Icon } from "./Link03Icon.vue";
-export { default as Link04Icon } from "./Link04Icon.vue";
-export { default as Link05Icon } from "./Link05Icon.vue";
-export { default as LinkBroken01Icon } from "./LinkBroken01Icon.vue";
-export { default as LinkBroken02Icon } from "./LinkBroken02Icon.vue";
-export { default as LinkExternal01Icon } from "./LinkExternal01Icon.vue";
-export { default as LinkExternal02Icon } from "./LinkExternal02Icon.vue";
-export { default as ListIcon } from "./ListIcon.vue";
-export { default as Loading01Icon } from "./Loading01Icon.vue";
-export { default as Loading02Icon } from "./Loading02Icon.vue";
-export { default as Loading03Icon } from "./Loading03Icon.vue";
-export { default as Lock01Icon } from "./Lock01Icon.vue";
-export { default as Lock02Icon } from "./Lock02Icon.vue";
-export { default as Lock03Icon } from "./Lock03Icon.vue";
-export { default as Lock04Icon } from "./Lock04Icon.vue";
-export { default as LockKeyholeCircleIcon } from "./LockKeyholeCircleIcon.vue";
-export { default as LockKeyholeSquareIcon } from "./LockKeyholeSquareIcon.vue";
-export { default as LockUnlocked01Icon } from "./LockUnlocked01Icon.vue";
-export { default as LockUnlocked02Icon } from "./LockUnlocked02Icon.vue";
-export { default as LockUnlocked03Icon } from "./LockUnlocked03Icon.vue";
-export { default as LockUnlocked04Icon } from "./LockUnlocked04Icon.vue";
-export { default as LogIn01Icon } from "./LogIn01Icon.vue";
-export { default as LogIn02Icon } from "./LogIn02Icon.vue";
-export { default as LogIn03Icon } from "./LogIn03Icon.vue";
-export { default as LogIn04Icon } from "./LogIn04Icon.vue";
-export { default as LogOut01Icon } from "./LogOut01Icon.vue";
-export { default as LogOut02Icon } from "./LogOut02Icon.vue";
-export { default as LogOut03Icon } from "./LogOut03Icon.vue";
-export { default as LogOut04Icon } from "./LogOut04Icon.vue";
-export { default as Luggage01Icon } from "./Luggage01Icon.vue";
-export { default as Luggage02Icon } from "./Luggage02Icon.vue";
-export { default as Luggage03Icon } from "./Luggage03Icon.vue";
-export { default as MagicWand01Icon } from "./MagicWand01Icon.vue";
-export { default as MagicWand02Icon } from "./MagicWand02Icon.vue";
-export { default as Mail01Icon } from "./Mail01Icon.vue";
-export { default as Mail02Icon } from "./Mail02Icon.vue";
-export { default as Mail03Icon } from "./Mail03Icon.vue";
-export { default as Mail04Icon } from "./Mail04Icon.vue";
-export { default as Mail05Icon } from "./Mail05Icon.vue";
-export { default as Map01Icon } from "./Map01Icon.vue";
-export { default as Map02Icon } from "./Map02Icon.vue";
-export { default as MarkIcon } from "./MarkIcon.vue";
-export { default as MarkerPin01Icon } from "./MarkerPin01Icon.vue";
-export { default as MarkerPin02Icon } from "./MarkerPin02Icon.vue";
-export { default as MarkerPin03Icon } from "./MarkerPin03Icon.vue";
-export { default as MarkerPin04Icon } from "./MarkerPin04Icon.vue";
-export { default as MarkerPin05Icon } from "./MarkerPin05Icon.vue";
-export { default as MarkerPin06Icon } from "./MarkerPin06Icon.vue";
-export { default as Maximize01Icon } from "./Maximize01Icon.vue";
-export { default as Maximize02Icon } from "./Maximize02Icon.vue";
-export { default as MedicalCircleIcon } from "./MedicalCircleIcon.vue";
-export { default as MedicalCrossIcon } from "./MedicalCrossIcon.vue";
-export { default as MedicalSquareIcon } from "./MedicalSquareIcon.vue";
-export { default as Menu01Icon } from "./Menu01Icon.vue";
-export { default as Menu02Icon } from "./Menu02Icon.vue";
-export { default as Menu03Icon } from "./Menu03Icon.vue";
-export { default as Menu04Icon } from "./Menu04Icon.vue";
-export { default as Menu05Icon } from "./Menu05Icon.vue";
-export { default as MessageAlertCircleIcon } from "./MessageAlertCircleIcon.vue";
-export { default as MessageAlertSquareIcon } from "./MessageAlertSquareIcon.vue";
-export { default as MessageChatCircleIcon } from "./MessageChatCircleIcon.vue";
-export { default as MessageChatSquareIcon } from "./MessageChatSquareIcon.vue";
-export { default as MessageCheckCircleIcon } from "./MessageCheckCircleIcon.vue";
-export { default as MessageCheckSquareIcon } from "./MessageCheckSquareIcon.vue";
-export { default as MessageCircle01Icon } from "./MessageCircle01Icon.vue";
-export { default as MessageCircle02Icon } from "./MessageCircle02Icon.vue";
-export { default as MessageDotsCircleIcon } from "./MessageDotsCircleIcon.vue";
-export { default as MessageDotsSquareIcon } from "./MessageDotsSquareIcon.vue";
-export { default as MessageHeartCircleIcon } from "./MessageHeartCircleIcon.vue";
-export { default as MessageHeartSquareIcon } from "./MessageHeartSquareIcon.vue";
-export { default as MessageNotificationCircleIcon } from "./MessageNotificationCircleIcon.vue";
-export { default as MessageNotificationSquareIcon } from "./MessageNotificationSquareIcon.vue";
-export { default as MessagePlusCircleIcon } from "./MessagePlusCircleIcon.vue";
-export { default as MessagePlusSquareIcon } from "./MessagePlusSquareIcon.vue";
-export { default as MessageQuestionCircleIcon } from "./MessageQuestionCircleIcon.vue";
-export { default as MessageQuestionSquareIcon } from "./MessageQuestionSquareIcon.vue";
-export { default as MessageSmileCircleIcon } from "./MessageSmileCircleIcon.vue";
-export { default as MessageSmileSquareIcon } from "./MessageSmileSquareIcon.vue";
-export { default as MessageSquare01Icon } from "./MessageSquare01Icon.vue";
-export { default as MessageSquare02Icon } from "./MessageSquare02Icon.vue";
-export { default as MessageTextCircle01Icon } from "./MessageTextCircle01Icon.vue";
-export { default as MessageTextCircle02Icon } from "./MessageTextCircle02Icon.vue";
-export { default as MessageTextSquare01Icon } from "./MessageTextSquare01Icon.vue";
-export { default as MessageTextSquare02Icon } from "./MessageTextSquare02Icon.vue";
-export { default as MessageXCircleIcon } from "./MessageXCircleIcon.vue";
-export { default as MessageXSquareIcon } from "./MessageXSquareIcon.vue";
-export { default as Microphone01Icon } from "./Microphone01Icon.vue";
-export { default as Microphone02Icon } from "./Microphone02Icon.vue";
-export { default as MicrophoneOff01Icon } from "./MicrophoneOff01Icon.vue";
-export { default as MicrophoneOff02Icon } from "./MicrophoneOff02Icon.vue";
-export { default as MicroscopeIcon } from "./MicroscopeIcon.vue";
-export { default as Minimize01Icon } from "./Minimize01Icon.vue";
-export { default as Minimize02Icon } from "./Minimize02Icon.vue";
-export { default as MinusCircleIcon } from "./MinusCircleIcon.vue";
-export { default as MinusSquareIcon } from "./MinusSquareIcon.vue";
-export { default as MinusIcon } from "./MinusIcon.vue";
-export { default as Modem01Icon } from "./Modem01Icon.vue";
-export { default as Modem02Icon } from "./Modem02Icon.vue";
-export { default as Monitor01Icon } from "./Monitor01Icon.vue";
-export { default as Monitor02Icon } from "./Monitor02Icon.vue";
-export { default as Monitor03Icon } from "./Monitor03Icon.vue";
-export { default as Monitor04Icon } from "./Monitor04Icon.vue";
-export { default as Monitor05Icon } from "./Monitor05Icon.vue";
-export { default as Moon01Icon } from "./Moon01Icon.vue";
-export { default as Moon02Icon } from "./Moon02Icon.vue";
-export { default as MoonEclipseIcon } from "./MoonEclipseIcon.vue";
-export { default as MoonStarIcon } from "./MoonStarIcon.vue";
-export { default as MouseIcon } from "./MouseIcon.vue";
-export { default as MoveIcon } from "./MoveIcon.vue";
-export { default as MusicNote01Icon } from "./MusicNote01Icon.vue";
-export { default as MusicNote02Icon } from "./MusicNote02Icon.vue";
-export { default as MusicNotePlusIcon } from "./MusicNotePlusIcon.vue";
-export { default as NavigationPointer01Icon } from "./NavigationPointer01Icon.vue";
-export { default as NavigationPointer02Icon } from "./NavigationPointer02Icon.vue";
-export { default as NavigationPointerOff01Icon } from "./NavigationPointerOff01Icon.vue";
-export { default as NavigationPointerOff02Icon } from "./NavigationPointerOff02Icon.vue";
-export { default as NotificationBoxIcon } from "./NotificationBoxIcon.vue";
-export { default as NotificationMessageIcon } from "./NotificationMessageIcon.vue";
-export { default as NotificationTextIcon } from "./NotificationTextIcon.vue";
-export { default as OctagonIcon } from "./OctagonIcon.vue";
-export { default as PackageCheckIcon } from "./PackageCheckIcon.vue";
-export { default as PackageMinusIcon } from "./PackageMinusIcon.vue";
-export { default as PackagePlusIcon } from "./PackagePlusIcon.vue";
-export { default as PackageSearchIcon } from "./PackageSearchIcon.vue";
-export { default as PackageXIcon } from "./PackageXIcon.vue";
-export { default as PackageIcon } from "./PackageIcon.vue";
-export { default as PaintPourIcon } from "./PaintPourIcon.vue";
-export { default as PaintIcon } from "./PaintIcon.vue";
-export { default as PaletteIcon } from "./PaletteIcon.vue";
-export { default as PaperclipIcon } from "./PaperclipIcon.vue";
-export { default as ParagraphSpacingIcon } from "./ParagraphSpacingIcon.vue";
-export { default as ParagraphWrapIcon } from "./ParagraphWrapIcon.vue";
-export { default as PasscodeLockIcon } from "./PasscodeLockIcon.vue";
-export { default as PasscodeIcon } from "./PasscodeIcon.vue";
-export { default as PassportIcon } from "./PassportIcon.vue";
-export { default as PauseCircleIcon } from "./PauseCircleIcon.vue";
-export { default as PauseSquareIcon } from "./PauseSquareIcon.vue";
-export { default as PenTool01Icon } from "./PenTool01Icon.vue";
-export { default as PenTool02Icon } from "./PenTool02Icon.vue";
-export { default as PenToolMinusIcon } from "./PenToolMinusIcon.vue";
-export { default as PenToolPlusIcon } from "./PenToolPlusIcon.vue";
-export { default as Pencil01Icon } from "./Pencil01Icon.vue";
-export { default as Pencil02Icon } from "./Pencil02Icon.vue";
-export { default as PencilLineIcon } from "./PencilLineIcon.vue";
-export { default as PentagonIcon } from "./PentagonIcon.vue";
-export { default as Percent01Icon } from "./Percent01Icon.vue";
-export { default as Percent02Icon } from "./Percent02Icon.vue";
-export { default as Percent03Icon } from "./Percent03Icon.vue";
-export { default as Perspective01Icon } from "./Perspective01Icon.vue";
-export { default as Perspective02Icon } from "./Perspective02Icon.vue";
-export { default as Phone01Icon } from "./Phone01Icon.vue";
-export { default as Phone02Icon } from "./Phone02Icon.vue";
-export { default as PhoneCall01Icon } from "./PhoneCall01Icon.vue";
-export { default as PhoneCall02Icon } from "./PhoneCall02Icon.vue";
-export { default as PhoneHangUpIcon } from "./PhoneHangUpIcon.vue";
-export { default as PhoneIncoming01Icon } from "./PhoneIncoming01Icon.vue";
-export { default as PhoneIncoming02Icon } from "./PhoneIncoming02Icon.vue";
-export { default as PhoneOutgoing01Icon } from "./PhoneOutgoing01Icon.vue";
-export { default as PhoneOutgoing02Icon } from "./PhoneOutgoing02Icon.vue";
-export { default as PhonePauseIcon } from "./PhonePauseIcon.vue";
-export { default as PhonePlusIcon } from "./PhonePlusIcon.vue";
-export { default as PhoneXIcon } from "./PhoneXIcon.vue";
-export { default as PhoneIcon } from "./PhoneIcon.vue";
-export { default as PieChart01Icon } from "./PieChart01Icon.vue";
-export { default as PieChart02Icon } from "./PieChart02Icon.vue";
-export { default as PieChart03Icon } from "./PieChart03Icon.vue";
-export { default as PieChart04Icon } from "./PieChart04Icon.vue";
-export { default as PiggyBank01Icon } from "./PiggyBank01Icon.vue";
-export { default as PiggyBank02Icon } from "./PiggyBank02Icon.vue";
-export { default as Pilcrow01Icon } from "./Pilcrow01Icon.vue";
-export { default as Pilcrow02Icon } from "./Pilcrow02Icon.vue";
-export { default as PilcrowSquareIcon } from "./PilcrowSquareIcon.vue";
-export { default as Pin01Icon } from "./Pin01Icon.vue";
-export { default as Pin02Icon } from "./Pin02Icon.vue";
-export { default as PlaceholderIcon } from "./PlaceholderIcon.vue";
-export { default as PlaneIcon } from "./PlaneIcon.vue";
-export { default as PlayCircleIcon } from "./PlayCircleIcon.vue";
-export { default as PlaySquareIcon } from "./PlaySquareIcon.vue";
-export { default as PlayIcon } from "./PlayIcon.vue";
-export { default as PlusCircleIcon } from "./PlusCircleIcon.vue";
-export { default as PlusSquareIcon } from "./PlusSquareIcon.vue";
-export { default as PlusIcon } from "./PlusIcon.vue";
-export { default as PodcastIcon } from "./PodcastIcon.vue";
-export { default as Power01Icon } from "./Power01Icon.vue";
-export { default as Power02Icon } from "./Power02Icon.vue";
-export { default as Power03Icon } from "./Power03Icon.vue";
-export { default as PresentationChart01Icon } from "./PresentationChart01Icon.vue";
-export { default as PresentationChart02Icon } from "./PresentationChart02Icon.vue";
-export { default as PresentationChart03Icon } from "./PresentationChart03Icon.vue";
-export { default as PrinterIcon } from "./PrinterIcon.vue";
-export { default as PuzzlePiece01Icon } from "./PuzzlePiece01Icon.vue";
-export { default as PuzzlePiece02Icon } from "./PuzzlePiece02Icon.vue";
-export { default as QrCode01Icon } from "./QrCode01Icon.vue";
-export { default as QrCode02Icon } from "./QrCode02Icon.vue";
-export { default as ReceiptCheckIcon } from "./ReceiptCheckIcon.vue";
-export { default as ReceiptIcon } from "./ReceiptIcon.vue";
-export { default as Recording01Icon } from "./Recording01Icon.vue";
-export { default as Recording02Icon } from "./Recording02Icon.vue";
-export { default as Recording03Icon } from "./Recording03Icon.vue";
-export { default as Reflect01Icon } from "./Reflect01Icon.vue";
-export { default as Reflect02Icon } from "./Reflect02Icon.vue";
-export { default as RefreshCcw01Icon } from "./RefreshCcw01Icon.vue";
-export { default as RefreshCcw02Icon } from "./RefreshCcw02Icon.vue";
-export { default as RefreshCcw03Icon } from "./RefreshCcw03Icon.vue";
-export { default as RefreshCcw04Icon } from "./RefreshCcw04Icon.vue";
-export { default as RefreshCcw05Icon } from "./RefreshCcw05Icon.vue";
-export { default as RefreshCw01Icon } from "./RefreshCw01Icon.vue";
-export { default as RefreshCw02Icon } from "./RefreshCw02Icon.vue";
-export { default as RefreshCw03Icon } from "./RefreshCw03Icon.vue";
-export { default as RefreshCw04Icon } from "./RefreshCw04Icon.vue";
-export { default as RefreshCw05Icon } from "./RefreshCw05Icon.vue";
-export { default as Repeat01Icon } from "./Repeat01Icon.vue";
-export { default as Repeat02Icon } from "./Repeat02Icon.vue";
-export { default as Repeat03Icon } from "./Repeat03Icon.vue";
-export { default as Repeat04Icon } from "./Repeat04Icon.vue";
-export { default as ReverseLeftIcon } from "./ReverseLeftIcon.vue";
-export { default as ReverseRightIcon } from "./ReverseRightIcon.vue";
-export { default as RightIndent01Icon } from "./RightIndent01Icon.vue";
-export { default as RightIndent02Icon } from "./RightIndent02Icon.vue";
-export { default as Rocket01Icon } from "./Rocket01Icon.vue";
-export { default as Rocket02Icon } from "./Rocket02Icon.vue";
-export { default as RollerBrushIcon } from "./RollerBrushIcon.vue";
-export { default as RouteIcon } from "./RouteIcon.vue";
-export { default as Rows01Icon } from "./Rows01Icon.vue";
-export { default as Rows02Icon } from "./Rows02Icon.vue";
-export { default as Rows03Icon } from "./Rows03Icon.vue";
-export { default as Rss01Icon } from "./Rss01Icon.vue";
-export { default as Rss02Icon } from "./Rss02Icon.vue";
-export { default as RulerIcon } from "./RulerIcon.vue";
-export { default as SafeIcon } from "./SafeIcon.vue";
-export { default as Sale01Icon } from "./Sale01Icon.vue";
-export { default as Sale02Icon } from "./Sale02Icon.vue";
-export { default as Sale03Icon } from "./Sale03Icon.vue";
-export { default as Sale04Icon } from "./Sale04Icon.vue";
-export { default as Save01Icon } from "./Save01Icon.vue";
-export { default as Save02Icon } from "./Save02Icon.vue";
-export { default as Save03Icon } from "./Save03Icon.vue";
-export { default as Scale01Icon } from "./Scale01Icon.vue";
-export { default as Scale02Icon } from "./Scale02Icon.vue";
-export { default as Scale03Icon } from "./Scale03Icon.vue";
-export { default as Scales01Icon } from "./Scales01Icon.vue";
-export { default as Scales02Icon } from "./Scales02Icon.vue";
-export { default as ScanIcon } from "./ScanIcon.vue";
-export { default as Scissors01Icon } from "./Scissors01Icon.vue";
-export { default as Scissors02Icon } from "./Scissors02Icon.vue";
-export { default as ScissorsCut01Icon } from "./ScissorsCut01Icon.vue";
-export { default as ScissorsCut02Icon } from "./ScissorsCut02Icon.vue";
-export { default as SearchLgIcon } from "./SearchLgIcon.vue";
-export { default as SearchMdIcon } from "./SearchMdIcon.vue";
-export { default as SearchRefractionIcon } from "./SearchRefractionIcon.vue";
-export { default as SearchSmIcon } from "./SearchSmIcon.vue";
-export { default as Send01Icon } from "./Send01Icon.vue";
-export { default as Send02Icon } from "./Send02Icon.vue";
-export { default as Send03Icon } from "./Send03Icon.vue";
-export { default as Server01Icon } from "./Server01Icon.vue";
-export { default as Server02Icon } from "./Server02Icon.vue";
-export { default as Server03Icon } from "./Server03Icon.vue";
-export { default as Server04Icon } from "./Server04Icon.vue";
-export { default as Server05Icon } from "./Server05Icon.vue";
-export { default as Server06Icon } from "./Server06Icon.vue";
-export { default as Settings01Icon } from "./Settings01Icon.vue";
-export { default as Settings02Icon } from "./Settings02Icon.vue";
-export { default as Settings03Icon } from "./Settings03Icon.vue";
-export { default as Settings04Icon } from "./Settings04Icon.vue";
-export { default as Share01Icon } from "./Share01Icon.vue";
-export { default as Share02Icon } from "./Share02Icon.vue";
-export { default as Share03Icon } from "./Share03Icon.vue";
-export { default as Share04Icon } from "./Share04Icon.vue";
-export { default as Share05Icon } from "./Share05Icon.vue";
-export { default as Share06Icon } from "./Share06Icon.vue";
-export { default as Share07Icon } from "./Share07Icon.vue";
-export { default as Shield01Icon } from "./Shield01Icon.vue";
-export { default as Shield02Icon } from "./Shield02Icon.vue";
-export { default as Shield03Icon } from "./Shield03Icon.vue";
-export { default as ShieldDollarIcon } from "./ShieldDollarIcon.vue";
-export { default as ShieldOffIcon } from "./ShieldOffIcon.vue";
-export { default as ShieldPlusIcon } from "./ShieldPlusIcon.vue";
-export { default as ShieldTickIcon } from "./ShieldTickIcon.vue";
-export { default as ShieldZapIcon } from "./ShieldZapIcon.vue";
-export { default as ShoppingBag01Icon } from "./ShoppingBag01Icon.vue";
-export { default as ShoppingBag02Icon } from "./ShoppingBag02Icon.vue";
-export { default as ShoppingBag03Icon } from "./ShoppingBag03Icon.vue";
-export { default as ShoppingCart01Icon } from "./ShoppingCart01Icon.vue";
-export { default as ShoppingCart02Icon } from "./ShoppingCart02Icon.vue";
-export { default as ShoppingCart03Icon } from "./ShoppingCart03Icon.vue";
-export { default as Shuffle01Icon } from "./Shuffle01Icon.vue";
-export { default as Shuffle02Icon } from "./Shuffle02Icon.vue";
-export { default as Signal01Icon } from "./Signal01Icon.vue";
-export { default as Signal02Icon } from "./Signal02Icon.vue";
-export { default as Signal03Icon } from "./Signal03Icon.vue";
-export { default as SimcardIcon } from "./SimcardIcon.vue";
-export { default as SkewIcon } from "./SkewIcon.vue";
-export { default as SkipBackIcon } from "./SkipBackIcon.vue";
-export { default as SkipForwardIcon } from "./SkipForwardIcon.vue";
-export { default as SlashCircle01Icon } from "./SlashCircle01Icon.vue";
-export { default as SlashCircle02Icon } from "./SlashCircle02Icon.vue";
-export { default as SlashDividerIcon } from "./SlashDividerIcon.vue";
-export { default as SlashOctagonIcon } from "./SlashOctagonIcon.vue";
-export { default as Sliders01Icon } from "./Sliders01Icon.vue";
-export { default as Sliders02Icon } from "./Sliders02Icon.vue";
-export { default as Sliders03Icon } from "./Sliders03Icon.vue";
-export { default as Sliders04Icon } from "./Sliders04Icon.vue";
-export { default as Snowflake01Icon } from "./Snowflake01Icon.vue";
-export { default as Snowflake02Icon } from "./Snowflake02Icon.vue";
-export { default as SpacingHeight01Icon } from "./SpacingHeight01Icon.vue";
-export { default as SpacingHeight02Icon } from "./SpacingHeight02Icon.vue";
-export { default as SpacingWidth01Icon } from "./SpacingWidth01Icon.vue";
-export { default as SpacingWidth02Icon } from "./SpacingWidth02Icon.vue";
-export { default as Speaker01Icon } from "./Speaker01Icon.vue";
-export { default as Speaker02Icon } from "./Speaker02Icon.vue";
-export { default as Speaker03Icon } from "./Speaker03Icon.vue";
-export { default as Speedometer01Icon } from "./Speedometer01Icon.vue";
-export { default as Speedometer02Icon } from "./Speedometer02Icon.vue";
-export { default as Speedometer03Icon } from "./Speedometer03Icon.vue";
-export { default as Speedometer04Icon } from "./Speedometer04Icon.vue";
-export { default as SquareIcon } from "./SquareIcon.vue";
-export { default as StandIcon } from "./StandIcon.vue";
-export { default as Star01Icon } from "./Star01Icon.vue";
-export { default as Star02Icon } from "./Star02Icon.vue";
-export { default as Star03Icon } from "./Star03Icon.vue";
-export { default as Star04Icon } from "./Star04Icon.vue";
-export { default as Star05Icon } from "./Star05Icon.vue";
-export { default as Star06Icon } from "./Star06Icon.vue";
-export { default as Star07Icon } from "./Star07Icon.vue";
-export { default as Stars01Icon } from "./Stars01Icon.vue";
-export { default as Stars02Icon } from "./Stars02Icon.vue";
-export { default as Stars03Icon } from "./Stars03Icon.vue";
-export { default as StickerCircleIcon } from "./StickerCircleIcon.vue";
-export { default as StickerSquareIcon } from "./StickerSquareIcon.vue";
-export { default as StopCircleIcon } from "./StopCircleIcon.vue";
-export { default as StopSquareIcon } from "./StopSquareIcon.vue";
-export { default as StopIcon } from "./StopIcon.vue";
-export { default as Strikethrough01Icon } from "./Strikethrough01Icon.vue";
-export { default as Strikethrough02Icon } from "./Strikethrough02Icon.vue";
-export { default as StrikethroughSquareIcon } from "./StrikethroughSquareIcon.vue";
-export { default as SubscriptIcon } from "./SubscriptIcon.vue";
-export { default as SunSetting01Icon } from "./SunSetting01Icon.vue";
-export { default as SunSetting02Icon } from "./SunSetting02Icon.vue";
-export { default as SunSetting03Icon } from "./SunSetting03Icon.vue";
-export { default as SunIcon } from "./SunIcon.vue";
-export { default as SunriseIcon } from "./SunriseIcon.vue";
-export { default as SunsetIcon } from "./SunsetIcon.vue";
-export { default as SwitchHorizontal01Icon } from "./SwitchHorizontal01Icon.vue";
-export { default as SwitchHorizontal02Icon } from "./SwitchHorizontal02Icon.vue";
-export { default as SwitchVertical01Icon } from "./SwitchVertical01Icon.vue";
-export { default as SwitchVertical02Icon } from "./SwitchVertical02Icon.vue";
-export { default as TableIcon } from "./TableIcon.vue";
-export { default as Tablet01Icon } from "./Tablet01Icon.vue";
-export { default as Tablet02Icon } from "./Tablet02Icon.vue";
-export { default as Tag01Icon } from "./Tag01Icon.vue";
-export { default as Tag02Icon } from "./Tag02Icon.vue";
-export { default as Tag03Icon } from "./Tag03Icon.vue";
-export { default as Target01Icon } from "./Target01Icon.vue";
-export { default as Target02Icon } from "./Target02Icon.vue";
-export { default as Target03Icon } from "./Target03Icon.vue";
-export { default as Target04Icon } from "./Target04Icon.vue";
-export { default as Target05Icon } from "./Target05Icon.vue";
-export { default as TelescopeIcon } from "./TelescopeIcon.vue";
-export { default as TerminalBrowserIcon } from "./TerminalBrowserIcon.vue";
-export { default as TerminalCircleIcon } from "./TerminalCircleIcon.vue";
-export { default as TerminalSquareIcon } from "./TerminalSquareIcon.vue";
-export { default as TerminalIcon } from "./TerminalIcon.vue";
-export { default as TextInputIcon } from "./TextInputIcon.vue";
-export { default as Thermometer01Icon } from "./Thermometer01Icon.vue";
-export { default as Thermometer02Icon } from "./Thermometer02Icon.vue";
-export { default as Thermometer03Icon } from "./Thermometer03Icon.vue";
-export { default as ThermometerColdIcon } from "./ThermometerColdIcon.vue";
-export { default as ThermometerWarmIcon } from "./ThermometerWarmIcon.vue";
-export { default as ThumbsDownIcon } from "./ThumbsDownIcon.vue";
-export { default as ThumbsUpIcon } from "./ThumbsUpIcon.vue";
-export { default as Ticket01Icon } from "./Ticket01Icon.vue";
-export { default as Ticket02Icon } from "./Ticket02Icon.vue";
-export { default as Toggle01LeftIcon } from "./Toggle01LeftIcon.vue";
-export { default as Toggle01RightIcon } from "./Toggle01RightIcon.vue";
-export { default as Toggle02LeftIcon } from "./Toggle02LeftIcon.vue";
-export { default as Toggle02RightIcon } from "./Toggle02RightIcon.vue";
-export { default as Toggle03LeftIcon } from "./Toggle03LeftIcon.vue";
-export { default as Toggle03RightIcon } from "./Toggle03RightIcon.vue";
-export { default as Tool01Icon } from "./Tool01Icon.vue";
-export { default as Tool02Icon } from "./Tool02Icon.vue";
-export { default as TrainIcon } from "./TrainIcon.vue";
-export { default as TramIcon } from "./TramIcon.vue";
-export { default as TransformIcon } from "./TransformIcon.vue";
-export { default as Translate01Icon } from "./Translate01Icon.vue";
-export { default as Translate02Icon } from "./Translate02Icon.vue";
-export { default as Trash01Icon } from "./Trash01Icon.vue";
-export { default as Trash02Icon } from "./Trash02Icon.vue";
-export { default as Trash03Icon } from "./Trash03Icon.vue";
-export { default as Trash04Icon } from "./Trash04Icon.vue";
-export { default as TrendDown01Icon } from "./TrendDown01Icon.vue";
-export { default as TrendDown02Icon } from "./TrendDown02Icon.vue";
-export { default as TrendUp01Icon } from "./TrendUp01Icon.vue";
-export { default as TrendUp02Icon } from "./TrendUp02Icon.vue";
-export { default as TriangleIcon } from "./TriangleIcon.vue";
-export { default as Trophy01Icon } from "./Trophy01Icon.vue";
-export { default as Trophy02Icon } from "./Trophy02Icon.vue";
-export { default as Truck01Icon } from "./Truck01Icon.vue";
-export { default as Truck02Icon } from "./Truck02Icon.vue";
-export { default as Tv01Icon } from "./Tv01Icon.vue";
-export { default as Tv02Icon } from "./Tv02Icon.vue";
-export { default as Tv03Icon } from "./Tv03Icon.vue";
-export { default as Type01Icon } from "./Type01Icon.vue";
-export { default as Type02Icon } from "./Type02Icon.vue";
-export { default as TypeSquareIcon } from "./TypeSquareIcon.vue";
-export { default as TypeStrikethrough01Icon } from "./TypeStrikethrough01Icon.vue";
-export { default as TypeStrikethrough02Icon } from "./TypeStrikethrough02Icon.vue";
-export { default as Umbrella01Icon } from "./Umbrella01Icon.vue";
-export { default as Umbrella02Icon } from "./Umbrella02Icon.vue";
-export { default as Umbrella03Icon } from "./Umbrella03Icon.vue";
-export { default as Underline01Icon } from "./Underline01Icon.vue";
-export { default as Underline02Icon } from "./Underline02Icon.vue";
-export { default as UnderlineSquareIcon } from "./UnderlineSquareIcon.vue";
-export { default as Upload01Icon } from "./Upload01Icon.vue";
-export { default as Upload02Icon } from "./Upload02Icon.vue";
-export { default as Upload03Icon } from "./Upload03Icon.vue";
-export { default as Upload04Icon } from "./Upload04Icon.vue";
-export { default as UploadCloud01Icon } from "./UploadCloud01Icon.vue";
-export { default as UploadCloud02Icon } from "./UploadCloud02Icon.vue";
-export { default as UsbFlashDriveIcon } from "./UsbFlashDriveIcon.vue";
-export { default as User01Icon } from "./User01Icon.vue";
-export { default as User02Icon } from "./User02Icon.vue";
-export { default as User03Icon } from "./User03Icon.vue";
-export { default as UserCheck01Icon } from "./UserCheck01Icon.vue";
-export { default as UserCheck02Icon } from "./UserCheck02Icon.vue";
-export { default as UserCircleIcon } from "./UserCircleIcon.vue";
-export { default as UserDown01Icon } from "./UserDown01Icon.vue";
-export { default as UserDown02Icon } from "./UserDown02Icon.vue";
-export { default as UserEditIcon } from "./UserEditIcon.vue";
-export { default as UserLeft01Icon } from "./UserLeft01Icon.vue";
-export { default as UserLeft02Icon } from "./UserLeft02Icon.vue";
-export { default as UserMinus01Icon } from "./UserMinus01Icon.vue";
-export { default as UserMinus02Icon } from "./UserMinus02Icon.vue";
-export { default as UserPlus01Icon } from "./UserPlus01Icon.vue";
-export { default as UserPlus02Icon } from "./UserPlus02Icon.vue";
-export { default as UserRight01Icon } from "./UserRight01Icon.vue";
-export { default as UserRight02Icon } from "./UserRight02Icon.vue";
-export { default as UserSquareIcon } from "./UserSquareIcon.vue";
-export { default as UserUp01Icon } from "./UserUp01Icon.vue";
-export { default as UserUp02Icon } from "./UserUp02Icon.vue";
-export { default as UserX01Icon } from "./UserX01Icon.vue";
-export { default as UserX02Icon } from "./UserX02Icon.vue";
-export { default as Users01Icon } from "./Users01Icon.vue";
-export { default as Users02Icon } from "./Users02Icon.vue";
-export { default as Users03Icon } from "./Users03Icon.vue";
-export { default as UsersCheckIcon } from "./UsersCheckIcon.vue";
-export { default as UsersDownIcon } from "./UsersDownIcon.vue";
-export { default as UsersEditIcon } from "./UsersEditIcon.vue";
-export { default as UsersLeftIcon } from "./UsersLeftIcon.vue";
-export { default as UsersMinusIcon } from "./UsersMinusIcon.vue";
-export { default as UsersPlusIcon } from "./UsersPlusIcon.vue";
-export { default as UsersRightIcon } from "./UsersRightIcon.vue";
-export { default as UsersUpIcon } from "./UsersUpIcon.vue";
-export { default as UsersXIcon } from "./UsersXIcon.vue";
-export { default as VariableIcon } from "./VariableIcon.vue";
-export { default as VideoRecorderOffIcon } from "./VideoRecorderOffIcon.vue";
-export { default as VideoRecorderIcon } from "./VideoRecorderIcon.vue";
-export { default as VirusIcon } from "./VirusIcon.vue";
-export { default as VoicemailIcon } from "./VoicemailIcon.vue";
-export { default as VolumeMaxIcon } from "./VolumeMaxIcon.vue";
-export { default as VolumeMinIcon } from "./VolumeMinIcon.vue";
-export { default as VolumeMinusIcon } from "./VolumeMinusIcon.vue";
-export { default as VolumePlusIcon } from "./VolumePlusIcon.vue";
-export { default as VolumeXIcon } from "./VolumeXIcon.vue";
-export { default as Wallet01Icon } from "./Wallet01Icon.vue";
-export { default as Wallet02Icon } from "./Wallet02Icon.vue";
-export { default as Wallet03Icon } from "./Wallet03Icon.vue";
-export { default as Wallet04Icon } from "./Wallet04Icon.vue";
-export { default as Wallet05Icon } from "./Wallet05Icon.vue";
-export { default as WatchCircleIcon } from "./WatchCircleIcon.vue";
-export { default as WatchSquareIcon } from "./WatchSquareIcon.vue";
-export { default as WavesIcon } from "./WavesIcon.vue";
-export { default as Webcam01Icon } from "./Webcam01Icon.vue";
-export { default as Webcam02Icon } from "./Webcam02Icon.vue";
-export { default as WifiOffIcon } from "./WifiOffIcon.vue";
-export { default as WifiIcon } from "./WifiIcon.vue";
-export { default as Wind01Icon } from "./Wind01Icon.vue";
-export { default as Wind02Icon } from "./Wind02Icon.vue";
-export { default as Wind03Icon } from "./Wind03Icon.vue";
-export { default as XCircleIcon } from "./XCircleIcon.vue";
-export { default as XCloseIcon } from "./XCloseIcon.vue";
-export { default as XSquareIcon } from "./XSquareIcon.vue";
-export { default as XIcon } from "./XIcon.vue";
-export { default as YoutubeIcon } from "./YoutubeIcon.vue";
-export { default as ZapCircleIcon } from "./ZapCircleIcon.vue";
-export { default as ZapFastIcon } from "./ZapFastIcon.vue";
-export { default as ZapOffIcon } from "./ZapOffIcon.vue";
-export { default as ZapSquareIcon } from "./ZapSquareIcon.vue";
-export { default as ZapIcon } from "./ZapIcon.vue";
-export { default as ZoomInIcon } from "./ZoomInIcon.vue";
-export { default as ZoomOutIcon } from "./ZoomOutIcon.vue";
+import { defineAsyncComponent } from 'vue'
 
-export const Zoom = () => import("./ZoomOutIcon.vue");
+export const ActivityHeartIcon = defineAsyncComponent(
+  () => import('./ActivityHeartIcon.vue')
+)
+export const ActivityIcon = defineAsyncComponent(
+  () => import('./ActivityIcon.vue')
+)
+export const AirplayIcon = defineAsyncComponent(
+  () => import('./AirplayIcon.vue')
+)
+export const AirpodsIcon = defineAsyncComponent(
+  () => import('./AirpodsIcon.vue')
+)
+export const AlarmClockCheckIcon = defineAsyncComponent(
+  () => import('./AlarmClockCheckIcon.vue')
+)
+export const AlarmClockMinusIcon = defineAsyncComponent(
+  () => import('./AlarmClockMinusIcon.vue')
+)
+export const AlarmClockOffIcon = defineAsyncComponent(
+  () => import('./AlarmClockOffIcon.vue')
+)
+export const AlarmClockPlusIcon = defineAsyncComponent(
+  () => import('./AlarmClockPlusIcon.vue')
+)
+export const AlarmClockIcon = defineAsyncComponent(
+  () => import('./AlarmClockIcon.vue')
+)
+export const AlertCircleIcon = defineAsyncComponent(
+  () => import('./AlertCircleIcon.vue')
+)
+export const AlertHexagonIcon = defineAsyncComponent(
+  () => import('./AlertHexagonIcon.vue')
+)
+export const AlertOctagonIcon = defineAsyncComponent(
+  () => import('./AlertOctagonIcon.vue')
+)
+export const AlertSquareIcon = defineAsyncComponent(
+  () => import('./AlertSquareIcon.vue')
+)
+export const AlertTriangleIcon = defineAsyncComponent(
+  () => import('./AlertTriangleIcon.vue')
+)
+export const AlignBottom01Icon = defineAsyncComponent(
+  () => import('./AlignBottom01Icon.vue')
+)
+export const AlignBottom02Icon = defineAsyncComponent(
+  () => import('./AlignBottom02Icon.vue')
+)
+export const AlignCenterIcon = defineAsyncComponent(
+  () => import('./AlignCenterIcon.vue')
+)
+export const AlignHorizontalCentre01Icon = defineAsyncComponent(
+  () => import('./AlignHorizontalCentre01Icon.vue')
+)
+export const AlignHorizontalCentre02Icon = defineAsyncComponent(
+  () => import('./AlignHorizontalCentre02Icon.vue')
+)
+export const AlignJustifyIcon = defineAsyncComponent(
+  () => import('./AlignJustifyIcon.vue')
+)
+export const AlignLeft01Icon = defineAsyncComponent(
+  () => import('./AlignLeft01Icon.vue')
+)
+export const AlignLeft02Icon = defineAsyncComponent(
+  () => import('./AlignLeft02Icon.vue')
+)
+export const AlignLeftIcon = defineAsyncComponent(
+  () => import('./AlignLeftIcon.vue')
+)
+export const AlignRight01Icon = defineAsyncComponent(
+  () => import('./AlignRight01Icon.vue')
+)
+export const AlignRight02Icon = defineAsyncComponent(
+  () => import('./AlignRight02Icon.vue')
+)
+export const AlignRightIcon = defineAsyncComponent(
+  () => import('./AlignRightIcon.vue')
+)
+export const AlignTopArrow01Icon = defineAsyncComponent(
+  () => import('./AlignTopArrow01Icon.vue')
+)
+export const AlignTopArrow02Icon = defineAsyncComponent(
+  () => import('./AlignTopArrow02Icon.vue')
+)
+export const AlignVerticalCenter01Icon = defineAsyncComponent(
+  () => import('./AlignVerticalCenter01Icon.vue')
+)
+export const AlignVerticalCenter02Icon = defineAsyncComponent(
+  () => import('./AlignVerticalCenter02Icon.vue')
+)
+export const AnchorIcon = defineAsyncComponent(() => import('./AnchorIcon.vue'))
+export const AnnotationAlertIcon = defineAsyncComponent(
+  () => import('./AnnotationAlertIcon.vue')
+)
+export const AnnotationCheckIcon = defineAsyncComponent(
+  () => import('./AnnotationCheckIcon.vue')
+)
+export const AnnotationDotsIcon = defineAsyncComponent(
+  () => import('./AnnotationDotsIcon.vue')
+)
+export const AnnotationHeartIcon = defineAsyncComponent(
+  () => import('./AnnotationHeartIcon.vue')
+)
+export const AnnotationInfoIcon = defineAsyncComponent(
+  () => import('./AnnotationInfoIcon.vue')
+)
+export const AnnotationPlusIcon = defineAsyncComponent(
+  () => import('./AnnotationPlusIcon.vue')
+)
+export const AnnotationQuestionIcon = defineAsyncComponent(
+  () => import('./AnnotationQuestionIcon.vue')
+)
+export const AnnotationXIcon = defineAsyncComponent(
+  () => import('./AnnotationXIcon.vue')
+)
+export const AnnotationIcon = defineAsyncComponent(
+  () => import('./AnnotationIcon.vue')
+)
+export const Announcement01Icon = defineAsyncComponent(
+  () => import('./Announcement01Icon.vue')
+)
+export const Announcement02Icon = defineAsyncComponent(
+  () => import('./Announcement02Icon.vue')
+)
+export const Announcement03Icon = defineAsyncComponent(
+  () => import('./Announcement03Icon.vue')
+)
+export const ArchiveIcon = defineAsyncComponent(
+  () => import('./ArchiveIcon.vue')
+)
+export const ArrowBlockDownIcon = defineAsyncComponent(
+  () => import('./ArrowBlockDownIcon.vue')
+)
+export const ArrowBlockLeftIcon = defineAsyncComponent(
+  () => import('./ArrowBlockLeftIcon.vue')
+)
+export const ArrowBlockRightIcon = defineAsyncComponent(
+  () => import('./ArrowBlockRightIcon.vue')
+)
+export const ArrowBlockUpIcon = defineAsyncComponent(
+  () => import('./ArrowBlockUpIcon.vue')
+)
+export const ArrowCircleBrokenDownLeftIcon = defineAsyncComponent(
+  () => import('./ArrowCircleBrokenDownLeftIcon.vue')
+)
+export const ArrowCircleBrokenDownRightIcon = defineAsyncComponent(
+  () => import('./ArrowCircleBrokenDownRightIcon.vue')
+)
+export const ArrowCircleBrokenDownIcon = defineAsyncComponent(
+  () => import('./ArrowCircleBrokenDownIcon.vue')
+)
+export const ArrowCircleBrokenLeftIcon = defineAsyncComponent(
+  () => import('./ArrowCircleBrokenLeftIcon.vue')
+)
+export const ArrowCircleBrokenRightIcon = defineAsyncComponent(
+  () => import('./ArrowCircleBrokenRightIcon.vue')
+)
+export const ArrowCircleBrokenUpLeftIcon = defineAsyncComponent(
+  () => import('./ArrowCircleBrokenUpLeftIcon.vue')
+)
+export const ArrowCircleBrokenUpRightIcon = defineAsyncComponent(
+  () => import('./ArrowCircleBrokenUpRightIcon.vue')
+)
+export const ArrowCircleBrokenUpIcon = defineAsyncComponent(
+  () => import('./ArrowCircleBrokenUpIcon.vue')
+)
+export const ArrowCircleDownLeftIcon = defineAsyncComponent(
+  () => import('./ArrowCircleDownLeftIcon.vue')
+)
+export const ArrowCircleDownRightIcon = defineAsyncComponent(
+  () => import('./ArrowCircleDownRightIcon.vue')
+)
+export const ArrowCircleDownIcon = defineAsyncComponent(
+  () => import('./ArrowCircleDownIcon.vue')
+)
+export const ArrowCircleLeftIcon = defineAsyncComponent(
+  () => import('./ArrowCircleLeftIcon.vue')
+)
+export const ArrowCircleRightIcon = defineAsyncComponent(
+  () => import('./ArrowCircleRightIcon.vue')
+)
+export const ArrowCircleUpLeftIcon = defineAsyncComponent(
+  () => import('./ArrowCircleUpLeftIcon.vue')
+)
+export const ArrowCircleUpRightIcon = defineAsyncComponent(
+  () => import('./ArrowCircleUpRightIcon.vue')
+)
+export const ArrowCircleUpIcon = defineAsyncComponent(
+  () => import('./ArrowCircleUpIcon.vue')
+)
+export const ArrowDownLeftIcon = defineAsyncComponent(
+  () => import('./ArrowDownLeftIcon.vue')
+)
+export const ArrowDownRightIcon = defineAsyncComponent(
+  () => import('./ArrowDownRightIcon.vue')
+)
+export const ArrowDownIcon = defineAsyncComponent(
+  () => import('./ArrowDownIcon.vue')
+)
+export const ArrowLeftIcon = defineAsyncComponent(
+  () => import('./ArrowLeftIcon.vue')
+)
+export const ArrowNarrowDownLeftIcon = defineAsyncComponent(
+  () => import('./ArrowNarrowDownLeftIcon.vue')
+)
+export const ArrowNarrowDownRightIcon = defineAsyncComponent(
+  () => import('./ArrowNarrowDownRightIcon.vue')
+)
+export const ArrowNarrowDownIcon = defineAsyncComponent(
+  () => import('./ArrowNarrowDownIcon.vue')
+)
+export const ArrowNarrowLeftIcon = defineAsyncComponent(
+  () => import('./ArrowNarrowLeftIcon.vue')
+)
+export const ArrowNarrowRightIcon = defineAsyncComponent(
+  () => import('./ArrowNarrowRightIcon.vue')
+)
+export const ArrowNarrowUpLeftIcon = defineAsyncComponent(
+  () => import('./ArrowNarrowUpLeftIcon.vue')
+)
+export const ArrowNarrowUpRightIcon = defineAsyncComponent(
+  () => import('./ArrowNarrowUpRightIcon.vue')
+)
+export const ArrowNarrowUpIcon = defineAsyncComponent(
+  () => import('./ArrowNarrowUpIcon.vue')
+)
+export const ArrowRightIcon = defineAsyncComponent(
+  () => import('./ArrowRightIcon.vue')
+)
+export const ArrowSquareDownLeftIcon = defineAsyncComponent(
+  () => import('./ArrowSquareDownLeftIcon.vue')
+)
+export const ArrowSquareDownRightIcon = defineAsyncComponent(
+  () => import('./ArrowSquareDownRightIcon.vue')
+)
+export const ArrowSquareDownIcon = defineAsyncComponent(
+  () => import('./ArrowSquareDownIcon.vue')
+)
+export const ArrowSquareLeftIcon = defineAsyncComponent(
+  () => import('./ArrowSquareLeftIcon.vue')
+)
+export const ArrowSquareRightIcon = defineAsyncComponent(
+  () => import('./ArrowSquareRightIcon.vue')
+)
+export const ArrowSquareUpLeftIcon = defineAsyncComponent(
+  () => import('./ArrowSquareUpLeftIcon.vue')
+)
+export const ArrowSquareUpRightIcon = defineAsyncComponent(
+  () => import('./ArrowSquareUpRightIcon.vue')
+)
+export const ArrowSquareUpIcon = defineAsyncComponent(
+  () => import('./ArrowSquareUpIcon.vue')
+)
+export const ArrowUpLeftIcon = defineAsyncComponent(
+  () => import('./ArrowUpLeftIcon.vue')
+)
+export const ArrowUpRightIcon = defineAsyncComponent(
+  () => import('./ArrowUpRightIcon.vue')
+)
+export const ArrowUpIcon = defineAsyncComponent(
+  () => import('./ArrowUpIcon.vue')
+)
+export const ArrowsDownIcon = defineAsyncComponent(
+  () => import('./ArrowsDownIcon.vue')
+)
+export const ArrowsLeftIcon = defineAsyncComponent(
+  () => import('./ArrowsLeftIcon.vue')
+)
+export const ArrowsRightIcon = defineAsyncComponent(
+  () => import('./ArrowsRightIcon.vue')
+)
+export const ArrowsTriangleIcon = defineAsyncComponent(
+  () => import('./ArrowsTriangleIcon.vue')
+)
+export const ArrowsUpIcon = defineAsyncComponent(
+  () => import('./ArrowsUpIcon.vue')
+)
+export const Asterisk01Icon = defineAsyncComponent(
+  () => import('./Asterisk01Icon.vue')
+)
+export const Asterisk02Icon = defineAsyncComponent(
+  () => import('./Asterisk02Icon.vue')
+)
+export const AtSignIcon = defineAsyncComponent(() => import('./AtSignIcon.vue'))
+export const Atom01Icon = defineAsyncComponent(() => import('./Atom01Icon.vue'))
+export const Atom02Icon = defineAsyncComponent(() => import('./Atom02Icon.vue'))
+export const Attachment01Icon = defineAsyncComponent(
+  () => import('./Attachment01Icon.vue')
+)
+export const Attachment02Icon = defineAsyncComponent(
+  () => import('./Attachment02Icon.vue')
+)
+export const Award01Icon = defineAsyncComponent(
+  () => import('./Award01Icon.vue')
+)
+export const Award02Icon = defineAsyncComponent(
+  () => import('./Award02Icon.vue')
+)
+export const Award03Icon = defineAsyncComponent(
+  () => import('./Award03Icon.vue')
+)
+export const Award04Icon = defineAsyncComponent(
+  () => import('./Award04Icon.vue')
+)
+export const Award05Icon = defineAsyncComponent(
+  () => import('./Award05Icon.vue')
+)
+export const BackpackIcon = defineAsyncComponent(
+  () => import('./BackpackIcon.vue')
+)
+export const BankNote01Icon = defineAsyncComponent(
+  () => import('./BankNote01Icon.vue')
+)
+export const BankNote02Icon = defineAsyncComponent(
+  () => import('./BankNote02Icon.vue')
+)
+export const BankNote03Icon = defineAsyncComponent(
+  () => import('./BankNote03Icon.vue')
+)
+export const BankIcon = defineAsyncComponent(() => import('./BankIcon.vue'))
+export const BarChart01Icon = defineAsyncComponent(
+  () => import('./BarChart01Icon.vue')
+)
+export const BarChart02Icon = defineAsyncComponent(
+  () => import('./BarChart02Icon.vue')
+)
+export const BarChart03Icon = defineAsyncComponent(
+  () => import('./BarChart03Icon.vue')
+)
+export const BarChart04Icon = defineAsyncComponent(
+  () => import('./BarChart04Icon.vue')
+)
+export const BarChart05Icon = defineAsyncComponent(
+  () => import('./BarChart05Icon.vue')
+)
+export const BarChart06Icon = defineAsyncComponent(
+  () => import('./BarChart06Icon.vue')
+)
+export const BarChart07Icon = defineAsyncComponent(
+  () => import('./BarChart07Icon.vue')
+)
+export const BarChart08Icon = defineAsyncComponent(
+  () => import('./BarChart08Icon.vue')
+)
+export const BarChart09Icon = defineAsyncComponent(
+  () => import('./BarChart09Icon.vue')
+)
+export const BarChart10Icon = defineAsyncComponent(
+  () => import('./BarChart10Icon.vue')
+)
+export const BarChart11Icon = defineAsyncComponent(
+  () => import('./BarChart11Icon.vue')
+)
+export const BarChart12Icon = defineAsyncComponent(
+  () => import('./BarChart12Icon.vue')
+)
+export const BarChartCircle01Icon = defineAsyncComponent(
+  () => import('./BarChartCircle01Icon.vue')
+)
+export const BarChartCircle02Icon = defineAsyncComponent(
+  () => import('./BarChartCircle02Icon.vue')
+)
+export const BarChartCircle03Icon = defineAsyncComponent(
+  () => import('./BarChartCircle03Icon.vue')
+)
+export const BarChartSquare01Icon = defineAsyncComponent(
+  () => import('./BarChartSquare01Icon.vue')
+)
+export const BarChartSquare02Icon = defineAsyncComponent(
+  () => import('./BarChartSquare02Icon.vue')
+)
+export const BarChartSquare03Icon = defineAsyncComponent(
+  () => import('./BarChartSquare03Icon.vue')
+)
+export const BarChartSquareDownIcon = defineAsyncComponent(
+  () => import('./BarChartSquareDownIcon.vue')
+)
+export const BarChartSquareMinusIcon = defineAsyncComponent(
+  () => import('./BarChartSquareMinusIcon.vue')
+)
+export const BarChartSquarePlusIcon = defineAsyncComponent(
+  () => import('./BarChartSquarePlusIcon.vue')
+)
+export const BarChartSquareUpIcon = defineAsyncComponent(
+  () => import('./BarChartSquareUpIcon.vue')
+)
+export const BarLineChartIcon = defineAsyncComponent(
+  () => import('./BarLineChartIcon.vue')
+)
+export const BatteryCharging01Icon = defineAsyncComponent(
+  () => import('./BatteryCharging01Icon.vue')
+)
+export const BatteryCharging02Icon = defineAsyncComponent(
+  () => import('./BatteryCharging02Icon.vue')
+)
+export const BatteryEmptyIcon = defineAsyncComponent(
+  () => import('./BatteryEmptyIcon.vue')
+)
+export const BatteryFullIcon = defineAsyncComponent(
+  () => import('./BatteryFullIcon.vue')
+)
+export const BatteryLowIcon = defineAsyncComponent(
+  () => import('./BatteryLowIcon.vue')
+)
+export const BatteryMidIcon = defineAsyncComponent(
+  () => import('./BatteryMidIcon.vue')
+)
+export const Beaker01Icon = defineAsyncComponent(
+  () => import('./Beaker01Icon.vue')
+)
+export const Beaker02Icon = defineAsyncComponent(
+  () => import('./Beaker02Icon.vue')
+)
+export const Bell01Icon = defineAsyncComponent(() => import('./Bell01Icon.vue'))
+export const Bell02Icon = defineAsyncComponent(() => import('./Bell02Icon.vue'))
+export const Bell03Icon = defineAsyncComponent(() => import('./Bell03Icon.vue'))
+export const Bell04Icon = defineAsyncComponent(() => import('./Bell04Icon.vue'))
+export const BellMinusIcon = defineAsyncComponent(
+  () => import('./BellMinusIcon.vue')
+)
+export const BellOff01Icon = defineAsyncComponent(
+  () => import('./BellOff01Icon.vue')
+)
+export const BellOff02Icon = defineAsyncComponent(
+  () => import('./BellOff02Icon.vue')
+)
+export const BellOff03Icon = defineAsyncComponent(
+  () => import('./BellOff03Icon.vue')
+)
+export const BellPlusIcon = defineAsyncComponent(
+  () => import('./BellPlusIcon.vue')
+)
+export const BellRinging01Icon = defineAsyncComponent(
+  () => import('./BellRinging01Icon.vue')
+)
+export const BellRinging02Icon = defineAsyncComponent(
+  () => import('./BellRinging02Icon.vue')
+)
+export const BellRinging03Icon = defineAsyncComponent(
+  () => import('./BellRinging03Icon.vue')
+)
+export const BellRinging04Icon = defineAsyncComponent(
+  () => import('./BellRinging04Icon.vue')
+)
+export const BezierCurve01Icon = defineAsyncComponent(
+  () => import('./BezierCurve01Icon.vue')
+)
+export const BezierCurve02Icon = defineAsyncComponent(
+  () => import('./BezierCurve02Icon.vue')
+)
+export const BezierCurve03Icon = defineAsyncComponent(
+  () => import('./BezierCurve03Icon.vue')
+)
+export const BluetoothConnectIcon = defineAsyncComponent(
+  () => import('./BluetoothConnectIcon.vue')
+)
+export const BluetoothOffIcon = defineAsyncComponent(
+  () => import('./BluetoothOffIcon.vue')
+)
+export const BluetoothOnIcon = defineAsyncComponent(
+  () => import('./BluetoothOnIcon.vue')
+)
+export const BluetoothSignalIcon = defineAsyncComponent(
+  () => import('./BluetoothSignalIcon.vue')
+)
+export const Bold01Icon = defineAsyncComponent(() => import('./Bold01Icon.vue'))
+export const Bold02Icon = defineAsyncComponent(() => import('./Bold02Icon.vue'))
+export const BoldSquareIcon = defineAsyncComponent(
+  () => import('./BoldSquareIcon.vue')
+)
+export const BookClosedIcon = defineAsyncComponent(
+  () => import('./BookClosedIcon.vue')
+)
+export const BookOpen01Icon = defineAsyncComponent(
+  () => import('./BookOpen01Icon.vue')
+)
+export const BookOpen02Icon = defineAsyncComponent(
+  () => import('./BookOpen02Icon.vue')
+)
+export const BookmarkAddIcon = defineAsyncComponent(
+  () => import('./BookmarkAddIcon.vue')
+)
+export const BookmarkCheckIcon = defineAsyncComponent(
+  () => import('./BookmarkCheckIcon.vue')
+)
+export const BookmarkMinusIcon = defineAsyncComponent(
+  () => import('./BookmarkMinusIcon.vue')
+)
+export const BookmarkXIcon = defineAsyncComponent(
+  () => import('./BookmarkXIcon.vue')
+)
+export const BookmarkIcon = defineAsyncComponent(
+  () => import('./BookmarkIcon.vue')
+)
+export const BoxIcon = defineAsyncComponent(() => import('./BoxIcon.vue'))
+export const BracketsCheckIcon = defineAsyncComponent(
+  () => import('./BracketsCheckIcon.vue')
+)
+export const BracketsEllipsesIcon = defineAsyncComponent(
+  () => import('./BracketsEllipsesIcon.vue')
+)
+export const BracketsMinusIcon = defineAsyncComponent(
+  () => import('./BracketsMinusIcon.vue')
+)
+export const BracketsPlusIcon = defineAsyncComponent(
+  () => import('./BracketsPlusIcon.vue')
+)
+export const BracketsSlashIcon = defineAsyncComponent(
+  () => import('./BracketsSlashIcon.vue')
+)
+export const BracketsXIcon = defineAsyncComponent(
+  () => import('./BracketsXIcon.vue')
+)
+export const BracketsIcon = defineAsyncComponent(
+  () => import('./BracketsIcon.vue')
+)
+export const Briefcase01Icon = defineAsyncComponent(
+  () => import('./Briefcase01Icon.vue')
+)
+export const Briefcase02Icon = defineAsyncComponent(
+  () => import('./Briefcase02Icon.vue')
+)
+export const BrowserIcon = defineAsyncComponent(
+  () => import('./BrowserIcon.vue')
+)
+export const Brush01Icon = defineAsyncComponent(
+  () => import('./Brush01Icon.vue')
+)
+export const Brush02Icon = defineAsyncComponent(
+  () => import('./Brush02Icon.vue')
+)
+export const Brush03Icon = defineAsyncComponent(
+  () => import('./Brush03Icon.vue')
+)
+export const Building01Icon = defineAsyncComponent(
+  () => import('./Building01Icon.vue')
+)
+export const Building02Icon = defineAsyncComponent(
+  () => import('./Building02Icon.vue')
+)
+export const Building03Icon = defineAsyncComponent(
+  () => import('./Building03Icon.vue')
+)
+export const Building04Icon = defineAsyncComponent(
+  () => import('./Building04Icon.vue')
+)
+export const Building05Icon = defineAsyncComponent(
+  () => import('./Building05Icon.vue')
+)
+export const Building06Icon = defineAsyncComponent(
+  () => import('./Building06Icon.vue')
+)
+export const Building07Icon = defineAsyncComponent(
+  () => import('./Building07Icon.vue')
+)
+export const Building08Icon = defineAsyncComponent(
+  () => import('./Building08Icon.vue')
+)
+export const BusIcon = defineAsyncComponent(() => import('./BusIcon.vue'))
+export const CalculatorIcon = defineAsyncComponent(
+  () => import('./CalculatorIcon.vue')
+)
+export const CalendarCheck01Icon = defineAsyncComponent(
+  () => import('./CalendarCheck01Icon.vue')
+)
+export const CalendarCheck02Icon = defineAsyncComponent(
+  () => import('./CalendarCheck02Icon.vue')
+)
+export const CalendarDateIcon = defineAsyncComponent(
+  () => import('./CalendarDateIcon.vue')
+)
+export const CalendarHeart01Icon = defineAsyncComponent(
+  () => import('./CalendarHeart01Icon.vue')
+)
+export const CalendarHeart02Icon = defineAsyncComponent(
+  () => import('./CalendarHeart02Icon.vue')
+)
+export const CalendarMinus01Icon = defineAsyncComponent(
+  () => import('./CalendarMinus01Icon.vue')
+)
+export const CalendarMinus02Icon = defineAsyncComponent(
+  () => import('./CalendarMinus02Icon.vue')
+)
+export const CalendarPlus01Icon = defineAsyncComponent(
+  () => import('./CalendarPlus01Icon.vue')
+)
+export const CalendarPlus02Icon = defineAsyncComponent(
+  () => import('./CalendarPlus02Icon.vue')
+)
+export const CalendarIcon = defineAsyncComponent(
+  () => import('./CalendarIcon.vue')
+)
+export const Camera01Icon = defineAsyncComponent(
+  () => import('./Camera01Icon.vue')
+)
+export const Camera02Icon = defineAsyncComponent(
+  () => import('./Camera02Icon.vue')
+)
+export const Camera03Icon = defineAsyncComponent(
+  () => import('./Camera03Icon.vue')
+)
+export const CameraLensIcon = defineAsyncComponent(
+  () => import('./CameraLensIcon.vue')
+)
+export const CameraOffIcon = defineAsyncComponent(
+  () => import('./CameraOffIcon.vue')
+)
+export const CameraPlusIcon = defineAsyncComponent(
+  () => import('./CameraPlusIcon.vue')
+)
+export const Car01Icon = defineAsyncComponent(() => import('./Car01Icon.vue'))
+export const Car02Icon = defineAsyncComponent(() => import('./Car02Icon.vue'))
+export const Certificate01Icon = defineAsyncComponent(
+  () => import('./Certificate01Icon.vue')
+)
+export const Certificate02Icon = defineAsyncComponent(
+  () => import('./Certificate02Icon.vue')
+)
+export const ChartBreakoutCircleIcon = defineAsyncComponent(
+  () => import('./ChartBreakoutCircleIcon.vue')
+)
+export const ChartBreakoutSquareIcon = defineAsyncComponent(
+  () => import('./ChartBreakoutSquareIcon.vue')
+)
+export const CheckCircleBrokenIcon = defineAsyncComponent(
+  () => import('./CheckCircleBrokenIcon.vue')
+)
+export const CheckCircleIcon = defineAsyncComponent(
+  () => import('./CheckCircleIcon.vue')
+)
+export const CheckDone01Icon = defineAsyncComponent(
+  () => import('./CheckDone01Icon.vue')
+)
+export const CheckDone02Icon = defineAsyncComponent(
+  () => import('./CheckDone02Icon.vue')
+)
+export const CheckHeartIcon = defineAsyncComponent(
+  () => import('./CheckHeartIcon.vue')
+)
+export const CheckSquareBrokenIcon = defineAsyncComponent(
+  () => import('./CheckSquareBrokenIcon.vue')
+)
+export const CheckSquareIcon = defineAsyncComponent(
+  () => import('./CheckSquareIcon.vue')
+)
+export const CheckVerified01Icon = defineAsyncComponent(
+  () => import('./CheckVerified01Icon.vue')
+)
+export const CheckVerified02Icon = defineAsyncComponent(
+  () => import('./CheckVerified02Icon.vue')
+)
+export const CheckVerified03Icon = defineAsyncComponent(
+  () => import('./CheckVerified03Icon.vue')
+)
+export const CheckIcon = defineAsyncComponent(() => import('./CheckIcon.vue'))
+export const ChevronDownDoubleIcon = defineAsyncComponent(
+  () => import('./ChevronDownDoubleIcon.vue')
+)
+export const ChevronDownIcon = defineAsyncComponent(
+  () => import('./ChevronDownIcon.vue')
+)
+export const ChevronLeftDoubleIcon = defineAsyncComponent(
+  () => import('./ChevronLeftDoubleIcon.vue')
+)
+export const ChevronLeftIcon = defineAsyncComponent(
+  () => import('./ChevronLeftIcon.vue')
+)
+export const ChevronRightDoubleIcon = defineAsyncComponent(
+  () => import('./ChevronRightDoubleIcon.vue')
+)
+export const ChevronRightIcon = defineAsyncComponent(
+  () => import('./ChevronRightIcon.vue')
+)
+export const ChevronSelectorHorizontalIcon = defineAsyncComponent(
+  () => import('./ChevronSelectorHorizontalIcon.vue')
+)
+export const ChevronSelectorVerticalIcon = defineAsyncComponent(
+  () => import('./ChevronSelectorVerticalIcon.vue')
+)
+export const ChevronUpDoubleIcon = defineAsyncComponent(
+  () => import('./ChevronUpDoubleIcon.vue')
+)
+export const ChevronUpIcon = defineAsyncComponent(
+  () => import('./ChevronUpIcon.vue')
+)
+export const ChromeCastIcon = defineAsyncComponent(
+  () => import('./ChromeCastIcon.vue')
+)
+export const CircleCutIcon = defineAsyncComponent(
+  () => import('./CircleCutIcon.vue')
+)
+export const CircleIcon = defineAsyncComponent(() => import('./CircleIcon.vue'))
+export const ClapperboardIcon = defineAsyncComponent(
+  () => import('./ClapperboardIcon.vue')
+)
+export const ClipboardAttachmentIcon = defineAsyncComponent(
+  () => import('./ClipboardAttachmentIcon.vue')
+)
+export const ClipboardCheckIcon = defineAsyncComponent(
+  () => import('./ClipboardCheckIcon.vue')
+)
+export const ClipboardDownloadIcon = defineAsyncComponent(
+  () => import('./ClipboardDownloadIcon.vue')
+)
+export const ClipboardMinusIcon = defineAsyncComponent(
+  () => import('./ClipboardMinusIcon.vue')
+)
+export const ClipboardPlusIcon = defineAsyncComponent(
+  () => import('./ClipboardPlusIcon.vue')
+)
+export const ClipboardXIcon = defineAsyncComponent(
+  () => import('./ClipboardXIcon.vue')
+)
+export const ClipboardIcon = defineAsyncComponent(
+  () => import('./ClipboardIcon.vue')
+)
+export const ClockCheckIcon = defineAsyncComponent(
+  () => import('./ClockCheckIcon.vue')
+)
+export const ClockFastForwardIcon = defineAsyncComponent(
+  () => import('./ClockFastForwardIcon.vue')
+)
+export const ClockPlusIcon = defineAsyncComponent(
+  () => import('./ClockPlusIcon.vue')
+)
+export const ClockRefreshIcon = defineAsyncComponent(
+  () => import('./ClockRefreshIcon.vue')
+)
+export const ClockRewindIcon = defineAsyncComponent(
+  () => import('./ClockRewindIcon.vue')
+)
+export const ClockSnoozeIcon = defineAsyncComponent(
+  () => import('./ClockSnoozeIcon.vue')
+)
+export const ClockStopwatchIcon = defineAsyncComponent(
+  () => import('./ClockStopwatchIcon.vue')
+)
+export const ClockIcon = defineAsyncComponent(() => import('./ClockIcon.vue'))
+export const Cloud01Icon = defineAsyncComponent(
+  () => import('./Cloud01Icon.vue')
+)
+export const Cloud02Icon = defineAsyncComponent(
+  () => import('./Cloud02Icon.vue')
+)
+export const Cloud03Icon = defineAsyncComponent(
+  () => import('./Cloud03Icon.vue')
+)
+export const CloudBlank01Icon = defineAsyncComponent(
+  () => import('./CloudBlank01Icon.vue')
+)
+export const CloudBlank02Icon = defineAsyncComponent(
+  () => import('./CloudBlank02Icon.vue')
+)
+export const CloudLightningIcon = defineAsyncComponent(
+  () => import('./CloudLightningIcon.vue')
+)
+export const CloudMoonIcon = defineAsyncComponent(
+  () => import('./CloudMoonIcon.vue')
+)
+export const CloudOffIcon = defineAsyncComponent(
+  () => import('./CloudOffIcon.vue')
+)
+export const CloudRaining01Icon = defineAsyncComponent(
+  () => import('./CloudRaining01Icon.vue')
+)
+export const CloudRaining02Icon = defineAsyncComponent(
+  () => import('./CloudRaining02Icon.vue')
+)
+export const CloudRaining03Icon = defineAsyncComponent(
+  () => import('./CloudRaining03Icon.vue')
+)
+export const CloudRaining04Icon = defineAsyncComponent(
+  () => import('./CloudRaining04Icon.vue')
+)
+export const CloudRaining05Icon = defineAsyncComponent(
+  () => import('./CloudRaining05Icon.vue')
+)
+export const CloudRaining06Icon = defineAsyncComponent(
+  () => import('./CloudRaining06Icon.vue')
+)
+export const CloudSnowing01Icon = defineAsyncComponent(
+  () => import('./CloudSnowing01Icon.vue')
+)
+export const CloudSnowing02Icon = defineAsyncComponent(
+  () => import('./CloudSnowing02Icon.vue')
+)
+export const CloudSun01Icon = defineAsyncComponent(
+  () => import('./CloudSun01Icon.vue')
+)
+export const CloudSun02Icon = defineAsyncComponent(
+  () => import('./CloudSun02Icon.vue')
+)
+export const CloudSun03Icon = defineAsyncComponent(
+  () => import('./CloudSun03Icon.vue')
+)
+export const Code01Icon = defineAsyncComponent(() => import('./Code01Icon.vue'))
+export const Code02Icon = defineAsyncComponent(() => import('./Code02Icon.vue'))
+export const CodeBrowserIcon = defineAsyncComponent(
+  () => import('./CodeBrowserIcon.vue')
+)
+export const CodeCircle01Icon = defineAsyncComponent(
+  () => import('./CodeCircle01Icon.vue')
+)
+export const CodeCircle02Icon = defineAsyncComponent(
+  () => import('./CodeCircle02Icon.vue')
+)
+export const CodeCircle03Icon = defineAsyncComponent(
+  () => import('./CodeCircle03Icon.vue')
+)
+export const CodeSnippet01Icon = defineAsyncComponent(
+  () => import('./CodeSnippet01Icon.vue')
+)
+export const CodeSnippet02Icon = defineAsyncComponent(
+  () => import('./CodeSnippet02Icon.vue')
+)
+export const CodeSquare01Icon = defineAsyncComponent(
+  () => import('./CodeSquare01Icon.vue')
+)
+export const CodeSquare02Icon = defineAsyncComponent(
+  () => import('./CodeSquare02Icon.vue')
+)
+export const CodepenIcon = defineAsyncComponent(
+  () => import('./CodepenIcon.vue')
+)
+export const Coins01Icon = defineAsyncComponent(
+  () => import('./Coins01Icon.vue')
+)
+export const Coins02Icon = defineAsyncComponent(
+  () => import('./Coins02Icon.vue')
+)
+export const Coins03Icon = defineAsyncComponent(
+  () => import('./Coins03Icon.vue')
+)
+export const Coins04Icon = defineAsyncComponent(
+  () => import('./Coins04Icon.vue')
+)
+export const CoinsHandIcon = defineAsyncComponent(
+  () => import('./CoinsHandIcon.vue')
+)
+export const CoinsStacked01Icon = defineAsyncComponent(
+  () => import('./CoinsStacked01Icon.vue')
+)
+export const CoinsStacked02Icon = defineAsyncComponent(
+  () => import('./CoinsStacked02Icon.vue')
+)
+export const CoinsStacked03Icon = defineAsyncComponent(
+  () => import('./CoinsStacked03Icon.vue')
+)
+export const CoinsStacked04Icon = defineAsyncComponent(
+  () => import('./CoinsStacked04Icon.vue')
+)
+export const CoinsSwap01Icon = defineAsyncComponent(
+  () => import('./CoinsSwap01Icon.vue')
+)
+export const CoinsSwap02Icon = defineAsyncComponent(
+  () => import('./CoinsSwap02Icon.vue')
+)
+export const ColorsIcon = defineAsyncComponent(() => import('./ColorsIcon.vue'))
+export const Columns01Icon = defineAsyncComponent(
+  () => import('./Columns01Icon.vue')
+)
+export const Columns02Icon = defineAsyncComponent(
+  () => import('./Columns02Icon.vue')
+)
+export const Columns03Icon = defineAsyncComponent(
+  () => import('./Columns03Icon.vue')
+)
+export const CommandIcon = defineAsyncComponent(
+  () => import('./CommandIcon.vue')
+)
+export const Compass01Icon = defineAsyncComponent(
+  () => import('./Compass01Icon.vue')
+)
+export const Compass02Icon = defineAsyncComponent(
+  () => import('./Compass02Icon.vue')
+)
+export const Compass03Icon = defineAsyncComponent(
+  () => import('./Compass03Icon.vue')
+)
+export const CompassIcon = defineAsyncComponent(
+  () => import('./CompassIcon.vue')
+)
+export const ContainerIcon = defineAsyncComponent(
+  () => import('./ContainerIcon.vue')
+)
+export const Contrast01Icon = defineAsyncComponent(
+  () => import('./Contrast01Icon.vue')
+)
+export const Contrast02Icon = defineAsyncComponent(
+  () => import('./Contrast02Icon.vue')
+)
+export const Contrast03Icon = defineAsyncComponent(
+  () => import('./Contrast03Icon.vue')
+)
+export const Copy01Icon = defineAsyncComponent(() => import('./Copy01Icon.vue'))
+export const Copy02Icon = defineAsyncComponent(() => import('./Copy02Icon.vue'))
+export const Copy03Icon = defineAsyncComponent(() => import('./Copy03Icon.vue'))
+export const Copy04Icon = defineAsyncComponent(() => import('./Copy04Icon.vue'))
+export const Copy05Icon = defineAsyncComponent(() => import('./Copy05Icon.vue'))
+export const Copy06Icon = defineAsyncComponent(() => import('./Copy06Icon.vue'))
+export const Copy07Icon = defineAsyncComponent(() => import('./Copy07Icon.vue'))
+export const CornerDownLeftIcon = defineAsyncComponent(
+  () => import('./CornerDownLeftIcon.vue')
+)
+export const CornerDownRightIcon = defineAsyncComponent(
+  () => import('./CornerDownRightIcon.vue')
+)
+export const CornerLeftDownIcon = defineAsyncComponent(
+  () => import('./CornerLeftDownIcon.vue')
+)
+export const CornerLeftUpIcon = defineAsyncComponent(
+  () => import('./CornerLeftUpIcon.vue')
+)
+export const CornerRightDownIcon = defineAsyncComponent(
+  () => import('./CornerRightDownIcon.vue')
+)
+export const CornerRightUpIcon = defineAsyncComponent(
+  () => import('./CornerRightUpIcon.vue')
+)
+export const CornerUpLeftIcon = defineAsyncComponent(
+  () => import('./CornerUpLeftIcon.vue')
+)
+export const CornerUpRightIcon = defineAsyncComponent(
+  () => import('./CornerUpRightIcon.vue')
+)
+export const CpuChip01Icon = defineAsyncComponent(
+  () => import('./CpuChip01Icon.vue')
+)
+export const CpuChip02Icon = defineAsyncComponent(
+  () => import('./CpuChip02Icon.vue')
+)
+export const CreditCard01Icon = defineAsyncComponent(
+  () => import('./CreditCard01Icon.vue')
+)
+export const CreditCard02Icon = defineAsyncComponent(
+  () => import('./CreditCard02Icon.vue')
+)
+export const CreditCardCheckIcon = defineAsyncComponent(
+  () => import('./CreditCardCheckIcon.vue')
+)
+export const CreditCardDownIcon = defineAsyncComponent(
+  () => import('./CreditCardDownIcon.vue')
+)
+export const CreditCardDownloadIcon = defineAsyncComponent(
+  () => import('./CreditCardDownloadIcon.vue')
+)
+export const CreditCardEditIcon = defineAsyncComponent(
+  () => import('./CreditCardEditIcon.vue')
+)
+export const CreditCardLockIcon = defineAsyncComponent(
+  () => import('./CreditCardLockIcon.vue')
+)
+export const CreditCardMinusIcon = defineAsyncComponent(
+  () => import('./CreditCardMinusIcon.vue')
+)
+export const CreditCardPlusIcon = defineAsyncComponent(
+  () => import('./CreditCardPlusIcon.vue')
+)
+export const CreditCardRefreshIcon = defineAsyncComponent(
+  () => import('./CreditCardRefreshIcon.vue')
+)
+export const CreditCardSearchIcon = defineAsyncComponent(
+  () => import('./CreditCardSearchIcon.vue')
+)
+export const CreditCardShieldIcon = defineAsyncComponent(
+  () => import('./CreditCardShieldIcon.vue')
+)
+export const CreditCardUpIcon = defineAsyncComponent(
+  () => import('./CreditCardUpIcon.vue')
+)
+export const CreditCardUploadIcon = defineAsyncComponent(
+  () => import('./CreditCardUploadIcon.vue')
+)
+export const CreditCardXIcon = defineAsyncComponent(
+  () => import('./CreditCardXIcon.vue')
+)
+export const Crop01Icon = defineAsyncComponent(() => import('./Crop01Icon.vue'))
+export const Crop02Icon = defineAsyncComponent(() => import('./Crop02Icon.vue'))
+export const Cryptocurrency01Icon = defineAsyncComponent(
+  () => import('./Cryptocurrency01Icon.vue')
+)
+export const Cryptocurrency02Icon = defineAsyncComponent(
+  () => import('./Cryptocurrency02Icon.vue')
+)
+export const Cryptocurrency03Icon = defineAsyncComponent(
+  () => import('./Cryptocurrency03Icon.vue')
+)
+export const Cryptocurrency04Icon = defineAsyncComponent(
+  () => import('./Cryptocurrency04Icon.vue')
+)
+export const Cube01Icon = defineAsyncComponent(() => import('./Cube01Icon.vue'))
+export const Cube02Icon = defineAsyncComponent(() => import('./Cube02Icon.vue'))
+export const Cube03Icon = defineAsyncComponent(() => import('./Cube03Icon.vue'))
+export const Cube04Icon = defineAsyncComponent(() => import('./Cube04Icon.vue'))
+export const CubeOutlineIcon = defineAsyncComponent(
+  () => import('./CubeOutlineIcon.vue')
+)
+export const CurrencyBitcoinCircleIcon = defineAsyncComponent(
+  () => import('./CurrencyBitcoinCircleIcon.vue')
+)
+export const CurrencyBitcoinIcon = defineAsyncComponent(
+  () => import('./CurrencyBitcoinIcon.vue')
+)
+export const CurrencyDollarCircleIcon = defineAsyncComponent(
+  () => import('./CurrencyDollarCircleIcon.vue')
+)
+export const CurrencyDollarIcon = defineAsyncComponent(
+  () => import('./CurrencyDollarIcon.vue')
+)
+export const CurrencyEthereumCircleIcon = defineAsyncComponent(
+  () => import('./CurrencyEthereumCircleIcon.vue')
+)
+export const CurrencyEthereumIcon = defineAsyncComponent(
+  () => import('./CurrencyEthereumIcon.vue')
+)
+export const CurrencyEuroCircleIcon = defineAsyncComponent(
+  () => import('./CurrencyEuroCircleIcon.vue')
+)
+export const CurrencyEuroIcon = defineAsyncComponent(
+  () => import('./CurrencyEuroIcon.vue')
+)
+export const CurrencyPoundCircleIcon = defineAsyncComponent(
+  () => import('./CurrencyPoundCircleIcon.vue')
+)
+export const CurrencyPoundIcon = defineAsyncComponent(
+  () => import('./CurrencyPoundIcon.vue')
+)
+export const CurrencyRubleCircleIcon = defineAsyncComponent(
+  () => import('./CurrencyRubleCircleIcon.vue')
+)
+export const CurrencyRubleIcon = defineAsyncComponent(
+  () => import('./CurrencyRubleIcon.vue')
+)
+export const CurrencyRupeeCircleIcon = defineAsyncComponent(
+  () => import('./CurrencyRupeeCircleIcon.vue')
+)
+export const CurrencyRupeeIcon = defineAsyncComponent(
+  () => import('./CurrencyRupeeIcon.vue')
+)
+export const CurrencyYenCircleIcon = defineAsyncComponent(
+  () => import('./CurrencyYenCircleIcon.vue')
+)
+export const CurrencyYenIcon = defineAsyncComponent(
+  () => import('./CurrencyYenIcon.vue')
+)
+export const Cursor01Icon = defineAsyncComponent(
+  () => import('./Cursor01Icon.vue')
+)
+export const Cursor02Icon = defineAsyncComponent(
+  () => import('./Cursor02Icon.vue')
+)
+export const Cursor03Icon = defineAsyncComponent(
+  () => import('./Cursor03Icon.vue')
+)
+export const Cursor04Icon = defineAsyncComponent(
+  () => import('./Cursor04Icon.vue')
+)
+export const CursorBoxIcon = defineAsyncComponent(
+  () => import('./CursorBoxIcon.vue')
+)
+export const CursorClick01Icon = defineAsyncComponent(
+  () => import('./CursorClick01Icon.vue')
+)
+export const CursorClick02Icon = defineAsyncComponent(
+  () => import('./CursorClick02Icon.vue')
+)
+export const DataIcon = defineAsyncComponent(() => import('./DataIcon.vue'))
+export const Database01Icon = defineAsyncComponent(
+  () => import('./Database01Icon.vue')
+)
+export const Database02Icon = defineAsyncComponent(
+  () => import('./Database02Icon.vue')
+)
+export const Database03Icon = defineAsyncComponent(
+  () => import('./Database03Icon.vue')
+)
+export const Dataflow01Icon = defineAsyncComponent(
+  () => import('./Dataflow01Icon.vue')
+)
+export const Dataflow02Icon = defineAsyncComponent(
+  () => import('./Dataflow02Icon.vue')
+)
+export const Dataflow03Icon = defineAsyncComponent(
+  () => import('./Dataflow03Icon.vue')
+)
+export const Dataflow04Icon = defineAsyncComponent(
+  () => import('./Dataflow04Icon.vue')
+)
+export const DeleteIcon = defineAsyncComponent(() => import('./DeleteIcon.vue'))
+export const Diamond01Icon = defineAsyncComponent(
+  () => import('./Diamond01Icon.vue')
+)
+export const Diamond02Icon = defineAsyncComponent(
+  () => import('./Diamond02Icon.vue')
+)
+export const Dice1Icon = defineAsyncComponent(() => import('./Dice1Icon.vue'))
+export const Dice2Icon = defineAsyncComponent(() => import('./Dice2Icon.vue'))
+export const Dice3Icon = defineAsyncComponent(() => import('./Dice3Icon.vue'))
+export const Dice4Icon = defineAsyncComponent(() => import('./Dice4Icon.vue'))
+export const Dice5Icon = defineAsyncComponent(() => import('./Dice5Icon.vue'))
+export const Dice6Icon = defineAsyncComponent(() => import('./Dice6Icon.vue'))
+export const Disc01Icon = defineAsyncComponent(() => import('./Disc01Icon.vue'))
+export const Disc02Icon = defineAsyncComponent(() => import('./Disc02Icon.vue'))
+export const DistributeSpacingHorizontalIcon = defineAsyncComponent(
+  () => import('./DistributeSpacingHorizontalIcon.vue')
+)
+export const DistributeSpacingVerticalIcon = defineAsyncComponent(
+  () => import('./DistributeSpacingVerticalIcon.vue')
+)
+export const Divide01Icon = defineAsyncComponent(
+  () => import('./Divide01Icon.vue')
+)
+export const Divide02Icon = defineAsyncComponent(
+  () => import('./Divide02Icon.vue')
+)
+export const Divide03Icon = defineAsyncComponent(
+  () => import('./Divide03Icon.vue')
+)
+export const DividerIcon = defineAsyncComponent(
+  () => import('./DividerIcon.vue')
+)
+export const Dotpoints01Icon = defineAsyncComponent(
+  () => import('./Dotpoints01Icon.vue')
+)
+export const Dotpoints02Icon = defineAsyncComponent(
+  () => import('./Dotpoints02Icon.vue')
+)
+export const DotsGridIcon = defineAsyncComponent(
+  () => import('./DotsGridIcon.vue')
+)
+export const DotsHorizontalIcon = defineAsyncComponent(
+  () => import('./DotsHorizontalIcon.vue')
+)
+export const DotsVerticalIcon = defineAsyncComponent(
+  () => import('./DotsVerticalIcon.vue')
+)
+export const Download01Icon = defineAsyncComponent(
+  () => import('./Download01Icon.vue')
+)
+export const Download02Icon = defineAsyncComponent(
+  () => import('./Download02Icon.vue')
+)
+export const Download03Icon = defineAsyncComponent(
+  () => import('./Download03Icon.vue')
+)
+export const Download04Icon = defineAsyncComponent(
+  () => import('./Download04Icon.vue')
+)
+export const DownloadCloud01Icon = defineAsyncComponent(
+  () => import('./DownloadCloud01Icon.vue')
+)
+export const DownloadCloud02Icon = defineAsyncComponent(
+  () => import('./DownloadCloud02Icon.vue')
+)
+export const DropIcon = defineAsyncComponent(() => import('./DropIcon.vue'))
+export const Droplets01Icon = defineAsyncComponent(
+  () => import('./Droplets01Icon.vue')
+)
+export const Droplets02Icon = defineAsyncComponent(
+  () => import('./Droplets02Icon.vue')
+)
+export const Droplets03Icon = defineAsyncComponent(
+  () => import('./Droplets03Icon.vue')
+)
+export const DropperIcon = defineAsyncComponent(
+  () => import('./DropperIcon.vue')
+)
+export const Edit01Icon = defineAsyncComponent(() => import('./Edit01Icon.vue'))
+export const Edit02Icon = defineAsyncComponent(() => import('./Edit02Icon.vue'))
+export const Edit03Icon = defineAsyncComponent(() => import('./Edit03Icon.vue'))
+export const Edit04Icon = defineAsyncComponent(() => import('./Edit04Icon.vue'))
+export const Edit05Icon = defineAsyncComponent(() => import('./Edit05Icon.vue'))
+export const EqualNotIcon = defineAsyncComponent(
+  () => import('./EqualNotIcon.vue')
+)
+export const EqualIcon = defineAsyncComponent(() => import('./EqualIcon.vue'))
+export const EraserIcon = defineAsyncComponent(() => import('./EraserIcon.vue'))
+export const Expand01Icon = defineAsyncComponent(
+  () => import('./Expand01Icon.vue')
+)
+export const Expand02Icon = defineAsyncComponent(
+  () => import('./Expand02Icon.vue')
+)
+export const Expand03Icon = defineAsyncComponent(
+  () => import('./Expand03Icon.vue')
+)
+export const Expand04Icon = defineAsyncComponent(
+  () => import('./Expand04Icon.vue')
+)
+export const Expand05Icon = defineAsyncComponent(
+  () => import('./Expand05Icon.vue')
+)
+export const Expand06Icon = defineAsyncComponent(
+  () => import('./Expand06Icon.vue')
+)
+export const EyeOffIcon = defineAsyncComponent(() => import('./EyeOffIcon.vue'))
+export const EyeIcon = defineAsyncComponent(() => import('./EyeIcon.vue'))
+export const FaceContentIcon = defineAsyncComponent(
+  () => import('./FaceContentIcon.vue')
+)
+export const FaceFrownIcon = defineAsyncComponent(
+  () => import('./FaceFrownIcon.vue')
+)
+export const FaceHappyIcon = defineAsyncComponent(
+  () => import('./FaceHappyIcon.vue')
+)
+export const FaceIdSquareIcon = defineAsyncComponent(
+  () => import('./FaceIdSquareIcon.vue')
+)
+export const FaceIdIcon = defineAsyncComponent(() => import('./FaceIdIcon.vue'))
+export const FaceNeutralIcon = defineAsyncComponent(
+  () => import('./FaceNeutralIcon.vue')
+)
+export const FaceSadIcon = defineAsyncComponent(
+  () => import('./FaceSadIcon.vue')
+)
+export const FaceSmileIcon = defineAsyncComponent(
+  () => import('./FaceSmileIcon.vue')
+)
+export const FaceWinkIcon = defineAsyncComponent(
+  () => import('./FaceWinkIcon.vue')
+)
+export const FastBackwardIcon = defineAsyncComponent(
+  () => import('./FastBackwardIcon.vue')
+)
+export const FastForwardIcon = defineAsyncComponent(
+  () => import('./FastForwardIcon.vue')
+)
+export const FeatherIcon = defineAsyncComponent(
+  () => import('./FeatherIcon.vue')
+)
+export const FigmaIcon = defineAsyncComponent(() => import('./FigmaIcon.vue'))
+export const File01Icon = defineAsyncComponent(() => import('./File01Icon.vue'))
+export const File02Icon = defineAsyncComponent(() => import('./File02Icon.vue'))
+export const File03Icon = defineAsyncComponent(() => import('./File03Icon.vue'))
+export const File04Icon = defineAsyncComponent(() => import('./File04Icon.vue'))
+export const File05Icon = defineAsyncComponent(() => import('./File05Icon.vue'))
+export const File06Icon = defineAsyncComponent(() => import('./File06Icon.vue'))
+export const File07Icon = defineAsyncComponent(() => import('./File07Icon.vue'))
+export const FileAttachment01Icon = defineAsyncComponent(
+  () => import('./FileAttachment01Icon.vue')
+)
+export const FileAttachment02Icon = defineAsyncComponent(
+  () => import('./FileAttachment02Icon.vue')
+)
+export const FileAttachment03Icon = defineAsyncComponent(
+  () => import('./FileAttachment03Icon.vue')
+)
+export const FileAttachment04Icon = defineAsyncComponent(
+  () => import('./FileAttachment04Icon.vue')
+)
+export const FileAttachment05Icon = defineAsyncComponent(
+  () => import('./FileAttachment05Icon.vue')
+)
+export const FileCheck01Icon = defineAsyncComponent(
+  () => import('./FileCheck01Icon.vue')
+)
+export const FileCheck02Icon = defineAsyncComponent(
+  () => import('./FileCheck02Icon.vue')
+)
+export const FileCheck03Icon = defineAsyncComponent(
+  () => import('./FileCheck03Icon.vue')
+)
+export const FileCode01Icon = defineAsyncComponent(
+  () => import('./FileCode01Icon.vue')
+)
+export const FileCode02Icon = defineAsyncComponent(
+  () => import('./FileCode02Icon.vue')
+)
+export const FileDownload01Icon = defineAsyncComponent(
+  () => import('./FileDownload01Icon.vue')
+)
+export const FileDownload02Icon = defineAsyncComponent(
+  () => import('./FileDownload02Icon.vue')
+)
+export const FileDownload03Icon = defineAsyncComponent(
+  () => import('./FileDownload03Icon.vue')
+)
+export const FileHeart01Icon = defineAsyncComponent(
+  () => import('./FileHeart01Icon.vue')
+)
+export const FileHeart02Icon = defineAsyncComponent(
+  () => import('./FileHeart02Icon.vue')
+)
+export const FileHeart03Icon = defineAsyncComponent(
+  () => import('./FileHeart03Icon.vue')
+)
+export const FileLock01Icon = defineAsyncComponent(
+  () => import('./FileLock01Icon.vue')
+)
+export const FileLock02Icon = defineAsyncComponent(
+  () => import('./FileLock02Icon.vue')
+)
+export const FileLock03Icon = defineAsyncComponent(
+  () => import('./FileLock03Icon.vue')
+)
+export const FileMinus01Icon = defineAsyncComponent(
+  () => import('./FileMinus01Icon.vue')
+)
+export const FileMinus02Icon = defineAsyncComponent(
+  () => import('./FileMinus02Icon.vue')
+)
+export const FileMinus03Icon = defineAsyncComponent(
+  () => import('./FileMinus03Icon.vue')
+)
+export const FilePlus01Icon = defineAsyncComponent(
+  () => import('./FilePlus01Icon.vue')
+)
+export const FilePlus02Icon = defineAsyncComponent(
+  () => import('./FilePlus02Icon.vue')
+)
+export const FilePlus03Icon = defineAsyncComponent(
+  () => import('./FilePlus03Icon.vue')
+)
+export const FileQuestion01Icon = defineAsyncComponent(
+  () => import('./FileQuestion01Icon.vue')
+)
+export const FileQuestion02Icon = defineAsyncComponent(
+  () => import('./FileQuestion02Icon.vue')
+)
+export const FileQuestion03Icon = defineAsyncComponent(
+  () => import('./FileQuestion03Icon.vue')
+)
+export const FileSearch01Icon = defineAsyncComponent(
+  () => import('./FileSearch01Icon.vue')
+)
+export const FileSearch02Icon = defineAsyncComponent(
+  () => import('./FileSearch02Icon.vue')
+)
+export const FileSearch03Icon = defineAsyncComponent(
+  () => import('./FileSearch03Icon.vue')
+)
+export const FileShield01Icon = defineAsyncComponent(
+  () => import('./FileShield01Icon.vue')
+)
+export const FileShield02Icon = defineAsyncComponent(
+  () => import('./FileShield02Icon.vue')
+)
+export const FileShield03Icon = defineAsyncComponent(
+  () => import('./FileShield03Icon.vue')
+)
+export const FileX01Icon = defineAsyncComponent(
+  () => import('./FileX01Icon.vue')
+)
+export const FileX02Icon = defineAsyncComponent(
+  () => import('./FileX02Icon.vue')
+)
+export const FileX03Icon = defineAsyncComponent(
+  () => import('./FileX03Icon.vue')
+)
+export const Film01Icon = defineAsyncComponent(() => import('./Film01Icon.vue'))
+export const Film02Icon = defineAsyncComponent(() => import('./Film02Icon.vue'))
+export const Film03Icon = defineAsyncComponent(() => import('./Film03Icon.vue'))
+export const FilterFunnel01Icon = defineAsyncComponent(
+  () => import('./FilterFunnel01Icon.vue')
+)
+export const FilterFunnel02Icon = defineAsyncComponent(
+  () => import('./FilterFunnel02Icon.vue')
+)
+export const FilterLinesIcon = defineAsyncComponent(
+  () => import('./FilterLinesIcon.vue')
+)
+export const Fingerprint01Icon = defineAsyncComponent(
+  () => import('./Fingerprint01Icon.vue')
+)
+export const Fingerprint02Icon = defineAsyncComponent(
+  () => import('./Fingerprint02Icon.vue')
+)
+export const Fingerprint03Icon = defineAsyncComponent(
+  () => import('./Fingerprint03Icon.vue')
+)
+export const Fingerprint04Icon = defineAsyncComponent(
+  () => import('./Fingerprint04Icon.vue')
+)
+export const Flag01Icon = defineAsyncComponent(() => import('./Flag01Icon.vue'))
+export const Flag02Icon = defineAsyncComponent(() => import('./Flag02Icon.vue'))
+export const Flag03Icon = defineAsyncComponent(() => import('./Flag03Icon.vue'))
+export const Flag04Icon = defineAsyncComponent(() => import('./Flag04Icon.vue'))
+export const Flag05Icon = defineAsyncComponent(() => import('./Flag05Icon.vue'))
+export const Flag06Icon = defineAsyncComponent(() => import('./Flag06Icon.vue'))
+export const FlashOffIcon = defineAsyncComponent(
+  () => import('./FlashOffIcon.vue')
+)
+export const FlashIcon = defineAsyncComponent(() => import('./FlashIcon.vue'))
+export const FlexAlignBottomIcon = defineAsyncComponent(
+  () => import('./FlexAlignBottomIcon.vue')
+)
+export const FlexAlignLeftIcon = defineAsyncComponent(
+  () => import('./FlexAlignLeftIcon.vue')
+)
+export const FlexAlignRightIcon = defineAsyncComponent(
+  () => import('./FlexAlignRightIcon.vue')
+)
+export const FlexAlignTopIcon = defineAsyncComponent(
+  () => import('./FlexAlignTopIcon.vue')
+)
+export const FlipBackwardIcon = defineAsyncComponent(
+  () => import('./FlipBackwardIcon.vue')
+)
+export const FlipForwardIcon = defineAsyncComponent(
+  () => import('./FlipForwardIcon.vue')
+)
+export const FolderCheckIcon = defineAsyncComponent(
+  () => import('./FolderCheckIcon.vue')
+)
+export const FolderClosedIcon = defineAsyncComponent(
+  () => import('./FolderClosedIcon.vue')
+)
+export const FolderCodeIcon = defineAsyncComponent(
+  () => import('./FolderCodeIcon.vue')
+)
+export const FolderDownloadIcon = defineAsyncComponent(
+  () => import('./FolderDownloadIcon.vue')
+)
+export const FolderLockIcon = defineAsyncComponent(
+  () => import('./FolderLockIcon.vue')
+)
+export const FolderMinusIcon = defineAsyncComponent(
+  () => import('./FolderMinusIcon.vue')
+)
+export const FolderPlusIcon = defineAsyncComponent(
+  () => import('./FolderPlusIcon.vue')
+)
+export const FolderQuestionIcon = defineAsyncComponent(
+  () => import('./FolderQuestionIcon.vue')
+)
+export const FolderSearchIcon = defineAsyncComponent(
+  () => import('./FolderSearchIcon.vue')
+)
+export const FolderShieldIcon = defineAsyncComponent(
+  () => import('./FolderShieldIcon.vue')
+)
+export const FolderXIcon = defineAsyncComponent(
+  () => import('./FolderXIcon.vue')
+)
+export const FolderIcon = defineAsyncComponent(() => import('./FolderIcon.vue'))
+export const FramerIcon = defineAsyncComponent(() => import('./FramerIcon.vue'))
+export const GamingPad01Icon = defineAsyncComponent(
+  () => import('./GamingPad01Icon.vue')
+)
+export const GamingPad02Icon = defineAsyncComponent(
+  () => import('./GamingPad02Icon.vue')
+)
+export const Gift01Icon = defineAsyncComponent(() => import('./Gift01Icon.vue'))
+export const Gift02Icon = defineAsyncComponent(() => import('./Gift02Icon.vue'))
+export const GitBranch01Icon = defineAsyncComponent(
+  () => import('./GitBranch01Icon.vue')
+)
+export const GitBranch02Icon = defineAsyncComponent(
+  () => import('./GitBranch02Icon.vue')
+)
+export const GitCommitIcon = defineAsyncComponent(
+  () => import('./GitCommitIcon.vue')
+)
+export const GitMergeIcon = defineAsyncComponent(
+  () => import('./GitMergeIcon.vue')
+)
+export const GitPullRequestIcon = defineAsyncComponent(
+  () => import('./GitPullRequestIcon.vue')
+)
+export const Glasses01Icon = defineAsyncComponent(
+  () => import('./Glasses01Icon.vue')
+)
+export const Glasses02Icon = defineAsyncComponent(
+  () => import('./Glasses02Icon.vue')
+)
+export const Globe011Icon = defineAsyncComponent(
+  () => import('./Globe011Icon.vue')
+)
+export const Globe01Icon = defineAsyncComponent(
+  () => import('./Globe01Icon.vue')
+)
+export const Globe021Icon = defineAsyncComponent(
+  () => import('./Globe021Icon.vue')
+)
+export const Globe02Icon = defineAsyncComponent(
+  () => import('./Globe02Icon.vue')
+)
+export const Globe03Icon = defineAsyncComponent(
+  () => import('./Globe03Icon.vue')
+)
+export const Globe04Icon = defineAsyncComponent(
+  () => import('./Globe04Icon.vue')
+)
+export const Globe05Icon = defineAsyncComponent(
+  () => import('./Globe05Icon.vue')
+)
+export const Globe06Icon = defineAsyncComponent(
+  () => import('./Globe06Icon.vue')
+)
+export const GoogleChromeIcon = defineAsyncComponent(
+  () => import('./GoogleChromeIcon.vue')
+)
+export const GraduationHat01Icon = defineAsyncComponent(
+  () => import('./GraduationHat01Icon.vue')
+)
+export const GraduationHat02Icon = defineAsyncComponent(
+  () => import('./GraduationHat02Icon.vue')
+)
+export const Grid01Icon = defineAsyncComponent(() => import('./Grid01Icon.vue'))
+export const Grid02Icon = defineAsyncComponent(() => import('./Grid02Icon.vue'))
+export const Grid03Icon = defineAsyncComponent(() => import('./Grid03Icon.vue'))
+export const GridDotsBlankIcon = defineAsyncComponent(
+  () => import('./GridDotsBlankIcon.vue')
+)
+export const GridDotsBottomIcon = defineAsyncComponent(
+  () => import('./GridDotsBottomIcon.vue')
+)
+export const GridDotsHorizontalCenterIcon = defineAsyncComponent(
+  () => import('./GridDotsHorizontalCenterIcon.vue')
+)
+export const GridDotsLeftIcon = defineAsyncComponent(
+  () => import('./GridDotsLeftIcon.vue')
+)
+export const GridDotsOuterIcon = defineAsyncComponent(
+  () => import('./GridDotsOuterIcon.vue')
+)
+export const GridDotsRightIcon = defineAsyncComponent(
+  () => import('./GridDotsRightIcon.vue')
+)
+export const GridDotsTopIcon = defineAsyncComponent(
+  () => import('./GridDotsTopIcon.vue')
+)
+export const GridDotsVerticalCenterIcon = defineAsyncComponent(
+  () => import('./GridDotsVerticalCenterIcon.vue')
+)
+export const HandIcon = defineAsyncComponent(() => import('./HandIcon.vue'))
+export const HardDriveIcon = defineAsyncComponent(
+  () => import('./HardDriveIcon.vue')
+)
+export const Hash01Icon = defineAsyncComponent(() => import('./Hash01Icon.vue'))
+export const Hash02Icon = defineAsyncComponent(() => import('./Hash02Icon.vue'))
+export const Heading01Icon = defineAsyncComponent(
+  () => import('./Heading01Icon.vue')
+)
+export const Heading02Icon = defineAsyncComponent(
+  () => import('./Heading02Icon.vue')
+)
+export const HeadingSquareIcon = defineAsyncComponent(
+  () => import('./HeadingSquareIcon.vue')
+)
+export const Headphones01Icon = defineAsyncComponent(
+  () => import('./Headphones01Icon.vue')
+)
+export const Headphones02Icon = defineAsyncComponent(
+  () => import('./Headphones02Icon.vue')
+)
+export const HeartCircleIcon = defineAsyncComponent(
+  () => import('./HeartCircleIcon.vue')
+)
+export const HeartHandIcon = defineAsyncComponent(
+  () => import('./HeartHandIcon.vue')
+)
+export const HeartHexagonIcon = defineAsyncComponent(
+  () => import('./HeartHexagonIcon.vue')
+)
+export const HeartOctagonIcon = defineAsyncComponent(
+  () => import('./HeartOctagonIcon.vue')
+)
+export const HeartRoundedIcon = defineAsyncComponent(
+  () => import('./HeartRoundedIcon.vue')
+)
+export const HeartSquareIcon = defineAsyncComponent(
+  () => import('./HeartSquareIcon.vue')
+)
+export const HeartIcon = defineAsyncComponent(() => import('./HeartIcon.vue'))
+export const HeartsIcon = defineAsyncComponent(() => import('./HeartsIcon.vue'))
+export const HelpCircleIcon = defineAsyncComponent(
+  () => import('./HelpCircleIcon.vue')
+)
+export const HelpOctagon1Icon = defineAsyncComponent(
+  () => import('./HelpOctagon1Icon.vue')
+)
+export const HelpOctagonIcon = defineAsyncComponent(
+  () => import('./HelpOctagonIcon.vue')
+)
+export const HelpSquareIcon = defineAsyncComponent(
+  () => import('./HelpSquareIcon.vue')
+)
+export const Hexagon01Icon = defineAsyncComponent(
+  () => import('./Hexagon01Icon.vue')
+)
+export const Hexagon02Icon = defineAsyncComponent(
+  () => import('./Hexagon02Icon.vue')
+)
+export const Home01Icon = defineAsyncComponent(() => import('./Home01Icon.vue'))
+export const Home02Icon = defineAsyncComponent(() => import('./Home02Icon.vue'))
+export const Home03Icon = defineAsyncComponent(() => import('./Home03Icon.vue'))
+export const Home04Icon = defineAsyncComponent(() => import('./Home04Icon.vue'))
+export const Home05Icon = defineAsyncComponent(() => import('./Home05Icon.vue'))
+export const HomeLineIcon = defineAsyncComponent(
+  () => import('./HomeLineIcon.vue')
+)
+export const HomeSmileIcon = defineAsyncComponent(
+  () => import('./HomeSmileIcon.vue')
+)
+export const HorizontalBarChart01Icon = defineAsyncComponent(
+  () => import('./HorizontalBarChart01Icon.vue')
+)
+export const HorizontalBarChart02Icon = defineAsyncComponent(
+  () => import('./HorizontalBarChart02Icon.vue')
+)
+export const HorizontalBarChart03Icon = defineAsyncComponent(
+  () => import('./HorizontalBarChart03Icon.vue')
+)
+export const Hourglass01Icon = defineAsyncComponent(
+  () => import('./Hourglass01Icon.vue')
+)
+export const Hourglass02Icon = defineAsyncComponent(
+  () => import('./Hourglass02Icon.vue')
+)
+export const Hourglass03Icon = defineAsyncComponent(
+  () => import('./Hourglass03Icon.vue')
+)
+export const Hurricane01Icon = defineAsyncComponent(
+  () => import('./Hurricane01Icon.vue')
+)
+export const Hurricane02Icon = defineAsyncComponent(
+  () => import('./Hurricane02Icon.vue')
+)
+export const Hurricane03Icon = defineAsyncComponent(
+  () => import('./Hurricane03Icon.vue')
+)
+export const Image01Icon = defineAsyncComponent(
+  () => import('./Image01Icon.vue')
+)
+export const Image02Icon = defineAsyncComponent(
+  () => import('./Image02Icon.vue')
+)
+export const Image03Icon = defineAsyncComponent(
+  () => import('./Image03Icon.vue')
+)
+export const Image04Icon = defineAsyncComponent(
+  () => import('./Image04Icon.vue')
+)
+export const Image05Icon = defineAsyncComponent(
+  () => import('./Image05Icon.vue')
+)
+export const ImageCheckIcon = defineAsyncComponent(
+  () => import('./ImageCheckIcon.vue')
+)
+export const ImageDownIcon = defineAsyncComponent(
+  () => import('./ImageDownIcon.vue')
+)
+export const ImageIndentLeftIcon = defineAsyncComponent(
+  () => import('./ImageIndentLeftIcon.vue')
+)
+export const ImageIndentRightIcon = defineAsyncComponent(
+  () => import('./ImageIndentRightIcon.vue')
+)
+export const ImageLeftIcon = defineAsyncComponent(
+  () => import('./ImageLeftIcon.vue')
+)
+export const ImagePlusIcon = defineAsyncComponent(
+  () => import('./ImagePlusIcon.vue')
+)
+export const ImageRightIcon = defineAsyncComponent(
+  () => import('./ImageRightIcon.vue')
+)
+export const ImageUpIcon = defineAsyncComponent(
+  () => import('./ImageUpIcon.vue')
+)
+export const ImageUserCheckIcon = defineAsyncComponent(
+  () => import('./ImageUserCheckIcon.vue')
+)
+export const ImageUserDownIcon = defineAsyncComponent(
+  () => import('./ImageUserDownIcon.vue')
+)
+export const ImageUserLeftIcon = defineAsyncComponent(
+  () => import('./ImageUserLeftIcon.vue')
+)
+export const ImageUserPlusIcon = defineAsyncComponent(
+  () => import('./ImageUserPlusIcon.vue')
+)
+export const ImageUserRightIcon = defineAsyncComponent(
+  () => import('./ImageUserRightIcon.vue')
+)
+export const ImageUserUpIcon = defineAsyncComponent(
+  () => import('./ImageUserUpIcon.vue')
+)
+export const ImageUserXIcon = defineAsyncComponent(
+  () => import('./ImageUserXIcon.vue')
+)
+export const ImageUserIcon = defineAsyncComponent(
+  () => import('./ImageUserIcon.vue')
+)
+export const ImageXIcon = defineAsyncComponent(() => import('./ImageXIcon.vue'))
+export const Inbox01Icon = defineAsyncComponent(
+  () => import('./Inbox01Icon.vue')
+)
+export const Inbox02Icon = defineAsyncComponent(
+  () => import('./Inbox02Icon.vue')
+)
+export const InfinityIcon = defineAsyncComponent(
+  () => import('./InfinityIcon.vue')
+)
+export const InfoCircleIcon = defineAsyncComponent(
+  () => import('./InfoCircleIcon.vue')
+)
+export const InfoHexagonIcon = defineAsyncComponent(
+  () => import('./InfoHexagonIcon.vue')
+)
+export const InfoOctagonIcon = defineAsyncComponent(
+  () => import('./InfoOctagonIcon.vue')
+)
+export const InfoSquareIcon = defineAsyncComponent(
+  () => import('./InfoSquareIcon.vue')
+)
+export const IntersectCircleIcon = defineAsyncComponent(
+  () => import('./IntersectCircleIcon.vue')
+)
+export const IntersectSquareIcon = defineAsyncComponent(
+  () => import('./IntersectSquareIcon.vue')
+)
+export const Italic01Icon = defineAsyncComponent(
+  () => import('./Italic01Icon.vue')
+)
+export const Italic02Icon = defineAsyncComponent(
+  () => import('./Italic02Icon.vue')
+)
+export const ItalicSquareIcon = defineAsyncComponent(
+  () => import('./ItalicSquareIcon.vue')
+)
+export const Key01Icon = defineAsyncComponent(() => import('./Key01Icon.vue'))
+export const Key02Icon = defineAsyncComponent(() => import('./Key02Icon.vue'))
+export const Keyboard01Icon = defineAsyncComponent(
+  () => import('./Keyboard01Icon.vue')
+)
+export const Keyboard02Icon = defineAsyncComponent(
+  () => import('./Keyboard02Icon.vue')
+)
+export const Laptop01Icon = defineAsyncComponent(
+  () => import('./Laptop01Icon.vue')
+)
+export const Laptop02Icon = defineAsyncComponent(
+  () => import('./Laptop02Icon.vue')
+)
+export const LayerSingleIcon = defineAsyncComponent(
+  () => import('./LayerSingleIcon.vue')
+)
+export const LayersThree01Icon = defineAsyncComponent(
+  () => import('./LayersThree01Icon.vue')
+)
+export const LayersThree02Icon = defineAsyncComponent(
+  () => import('./LayersThree02Icon.vue')
+)
+export const LayersTwo01Icon = defineAsyncComponent(
+  () => import('./LayersTwo01Icon.vue')
+)
+export const LayersTwo02Icon = defineAsyncComponent(
+  () => import('./LayersTwo02Icon.vue')
+)
+export const LayoutAlt01Icon = defineAsyncComponent(
+  () => import('./LayoutAlt01Icon.vue')
+)
+export const LayoutAlt02Icon = defineAsyncComponent(
+  () => import('./LayoutAlt02Icon.vue')
+)
+export const LayoutAlt03Icon = defineAsyncComponent(
+  () => import('./LayoutAlt03Icon.vue')
+)
+export const LayoutAlt04Icon = defineAsyncComponent(
+  () => import('./LayoutAlt04Icon.vue')
+)
+export const LayoutBottomIcon = defineAsyncComponent(
+  () => import('./LayoutBottomIcon.vue')
+)
+export const LayoutGrid01Icon = defineAsyncComponent(
+  () => import('./LayoutGrid01Icon.vue')
+)
+export const LayoutGrid02Icon = defineAsyncComponent(
+  () => import('./LayoutGrid02Icon.vue')
+)
+export const LayoutLeftIcon = defineAsyncComponent(
+  () => import('./LayoutLeftIcon.vue')
+)
+export const LayoutRightIcon = defineAsyncComponent(
+  () => import('./LayoutRightIcon.vue')
+)
+export const LayoutTopIcon = defineAsyncComponent(
+  () => import('./LayoutTopIcon.vue')
+)
+export const LeftIndent01Icon = defineAsyncComponent(
+  () => import('./LeftIndent01Icon.vue')
+)
+export const LeftIndent02Icon = defineAsyncComponent(
+  () => import('./LeftIndent02Icon.vue')
+)
+export const LetterSpacing01Icon = defineAsyncComponent(
+  () => import('./LetterSpacing01Icon.vue')
+)
+export const LetterSpacing02Icon = defineAsyncComponent(
+  () => import('./LetterSpacing02Icon.vue')
+)
+export const LifeBuoy01Icon = defineAsyncComponent(
+  () => import('./LifeBuoy01Icon.vue')
+)
+export const LifeBuoy02Icon = defineAsyncComponent(
+  () => import('./LifeBuoy02Icon.vue')
+)
+export const Lightbulb01Icon = defineAsyncComponent(
+  () => import('./Lightbulb01Icon.vue')
+)
+export const Lightbulb02Icon = defineAsyncComponent(
+  () => import('./Lightbulb02Icon.vue')
+)
+export const Lightbulb03Icon = defineAsyncComponent(
+  () => import('./Lightbulb03Icon.vue')
+)
+export const Lightbulb04Icon = defineAsyncComponent(
+  () => import('./Lightbulb04Icon.vue')
+)
+export const Lightbulb05Icon = defineAsyncComponent(
+  () => import('./Lightbulb05Icon.vue')
+)
+export const Lightning01Icon = defineAsyncComponent(
+  () => import('./Lightning01Icon.vue')
+)
+export const Lightning02Icon = defineAsyncComponent(
+  () => import('./Lightning02Icon.vue')
+)
+export const LineChartDown01Icon = defineAsyncComponent(
+  () => import('./LineChartDown01Icon.vue')
+)
+export const LineChartDown02Icon = defineAsyncComponent(
+  () => import('./LineChartDown02Icon.vue')
+)
+export const LineChartDown03Icon = defineAsyncComponent(
+  () => import('./LineChartDown03Icon.vue')
+)
+export const LineChartDown04Icon = defineAsyncComponent(
+  () => import('./LineChartDown04Icon.vue')
+)
+export const LineChartDown05Icon = defineAsyncComponent(
+  () => import('./LineChartDown05Icon.vue')
+)
+export const LineChartUp01Icon = defineAsyncComponent(
+  () => import('./LineChartUp01Icon.vue')
+)
+export const LineChartUp02Icon = defineAsyncComponent(
+  () => import('./LineChartUp02Icon.vue')
+)
+export const LineChartUp03Icon = defineAsyncComponent(
+  () => import('./LineChartUp03Icon.vue')
+)
+export const LineChartUp04Icon = defineAsyncComponent(
+  () => import('./LineChartUp04Icon.vue')
+)
+export const LineChartUp05Icon = defineAsyncComponent(
+  () => import('./LineChartUp05Icon.vue')
+)
+export const LineHeightIcon = defineAsyncComponent(
+  () => import('./LineHeightIcon.vue')
+)
+export const Link01Icon = defineAsyncComponent(() => import('./Link01Icon.vue'))
+export const Link02Icon = defineAsyncComponent(() => import('./Link02Icon.vue'))
+export const Link03Icon = defineAsyncComponent(() => import('./Link03Icon.vue'))
+export const Link04Icon = defineAsyncComponent(() => import('./Link04Icon.vue'))
+export const Link05Icon = defineAsyncComponent(() => import('./Link05Icon.vue'))
+export const LinkBroken01Icon = defineAsyncComponent(
+  () => import('./LinkBroken01Icon.vue')
+)
+export const LinkBroken02Icon = defineAsyncComponent(
+  () => import('./LinkBroken02Icon.vue')
+)
+export const LinkExternal01Icon = defineAsyncComponent(
+  () => import('./LinkExternal01Icon.vue')
+)
+export const LinkExternal02Icon = defineAsyncComponent(
+  () => import('./LinkExternal02Icon.vue')
+)
+export const ListIcon = defineAsyncComponent(() => import('./ListIcon.vue'))
+export const Loading01Icon = defineAsyncComponent(
+  () => import('./Loading01Icon.vue')
+)
+export const Loading02Icon = defineAsyncComponent(
+  () => import('./Loading02Icon.vue')
+)
+export const Loading03Icon = defineAsyncComponent(
+  () => import('./Loading03Icon.vue')
+)
+export const Lock01Icon = defineAsyncComponent(() => import('./Lock01Icon.vue'))
+export const Lock02Icon = defineAsyncComponent(() => import('./Lock02Icon.vue'))
+export const Lock03Icon = defineAsyncComponent(() => import('./Lock03Icon.vue'))
+export const Lock04Icon = defineAsyncComponent(() => import('./Lock04Icon.vue'))
+export const LockKeyholeCircleIcon = defineAsyncComponent(
+  () => import('./LockKeyholeCircleIcon.vue')
+)
+export const LockKeyholeSquareIcon = defineAsyncComponent(
+  () => import('./LockKeyholeSquareIcon.vue')
+)
+export const LockUnlocked01Icon = defineAsyncComponent(
+  () => import('./LockUnlocked01Icon.vue')
+)
+export const LockUnlocked02Icon = defineAsyncComponent(
+  () => import('./LockUnlocked02Icon.vue')
+)
+export const LockUnlocked03Icon = defineAsyncComponent(
+  () => import('./LockUnlocked03Icon.vue')
+)
+export const LockUnlocked04Icon = defineAsyncComponent(
+  () => import('./LockUnlocked04Icon.vue')
+)
+export const LogIn01Icon = defineAsyncComponent(
+  () => import('./LogIn01Icon.vue')
+)
+export const LogIn02Icon = defineAsyncComponent(
+  () => import('./LogIn02Icon.vue')
+)
+export const LogIn03Icon = defineAsyncComponent(
+  () => import('./LogIn03Icon.vue')
+)
+export const LogIn04Icon = defineAsyncComponent(
+  () => import('./LogIn04Icon.vue')
+)
+export const LogOut01Icon = defineAsyncComponent(
+  () => import('./LogOut01Icon.vue')
+)
+export const LogOut02Icon = defineAsyncComponent(
+  () => import('./LogOut02Icon.vue')
+)
+export const LogOut03Icon = defineAsyncComponent(
+  () => import('./LogOut03Icon.vue')
+)
+export const LogOut04Icon = defineAsyncComponent(
+  () => import('./LogOut04Icon.vue')
+)
+export const Luggage01Icon = defineAsyncComponent(
+  () => import('./Luggage01Icon.vue')
+)
+export const Luggage02Icon = defineAsyncComponent(
+  () => import('./Luggage02Icon.vue')
+)
+export const Luggage03Icon = defineAsyncComponent(
+  () => import('./Luggage03Icon.vue')
+)
+export const MagicWand01Icon = defineAsyncComponent(
+  () => import('./MagicWand01Icon.vue')
+)
+export const MagicWand02Icon = defineAsyncComponent(
+  () => import('./MagicWand02Icon.vue')
+)
+export const Mail01Icon = defineAsyncComponent(() => import('./Mail01Icon.vue'))
+export const Mail02Icon = defineAsyncComponent(() => import('./Mail02Icon.vue'))
+export const Mail03Icon = defineAsyncComponent(() => import('./Mail03Icon.vue'))
+export const Mail04Icon = defineAsyncComponent(() => import('./Mail04Icon.vue'))
+export const Mail05Icon = defineAsyncComponent(() => import('./Mail05Icon.vue'))
+export const Map01Icon = defineAsyncComponent(() => import('./Map01Icon.vue'))
+export const Map02Icon = defineAsyncComponent(() => import('./Map02Icon.vue'))
+export const MarkIcon = defineAsyncComponent(() => import('./MarkIcon.vue'))
+export const MarkerPin01Icon = defineAsyncComponent(
+  () => import('./MarkerPin01Icon.vue')
+)
+export const MarkerPin02Icon = defineAsyncComponent(
+  () => import('./MarkerPin02Icon.vue')
+)
+export const MarkerPin03Icon = defineAsyncComponent(
+  () => import('./MarkerPin03Icon.vue')
+)
+export const MarkerPin04Icon = defineAsyncComponent(
+  () => import('./MarkerPin04Icon.vue')
+)
+export const MarkerPin05Icon = defineAsyncComponent(
+  () => import('./MarkerPin05Icon.vue')
+)
+export const MarkerPin06Icon = defineAsyncComponent(
+  () => import('./MarkerPin06Icon.vue')
+)
+export const Maximize01Icon = defineAsyncComponent(
+  () => import('./Maximize01Icon.vue')
+)
+export const Maximize02Icon = defineAsyncComponent(
+  () => import('./Maximize02Icon.vue')
+)
+export const MedicalCircleIcon = defineAsyncComponent(
+  () => import('./MedicalCircleIcon.vue')
+)
+export const MedicalCrossIcon = defineAsyncComponent(
+  () => import('./MedicalCrossIcon.vue')
+)
+export const MedicalSquareIcon = defineAsyncComponent(
+  () => import('./MedicalSquareIcon.vue')
+)
+export const Menu01Icon = defineAsyncComponent(() => import('./Menu01Icon.vue'))
+export const Menu02Icon = defineAsyncComponent(() => import('./Menu02Icon.vue'))
+export const Menu03Icon = defineAsyncComponent(() => import('./Menu03Icon.vue'))
+export const Menu04Icon = defineAsyncComponent(() => import('./Menu04Icon.vue'))
+export const Menu05Icon = defineAsyncComponent(() => import('./Menu05Icon.vue'))
+export const MessageAlertCircleIcon = defineAsyncComponent(
+  () => import('./MessageAlertCircleIcon.vue')
+)
+export const MessageAlertSquareIcon = defineAsyncComponent(
+  () => import('./MessageAlertSquareIcon.vue')
+)
+export const MessageChatCircleIcon = defineAsyncComponent(
+  () => import('./MessageChatCircleIcon.vue')
+)
+export const MessageChatSquareIcon = defineAsyncComponent(
+  () => import('./MessageChatSquareIcon.vue')
+)
+export const MessageCheckCircleIcon = defineAsyncComponent(
+  () => import('./MessageCheckCircleIcon.vue')
+)
+export const MessageCheckSquareIcon = defineAsyncComponent(
+  () => import('./MessageCheckSquareIcon.vue')
+)
+export const MessageCircle01Icon = defineAsyncComponent(
+  () => import('./MessageCircle01Icon.vue')
+)
+export const MessageCircle02Icon = defineAsyncComponent(
+  () => import('./MessageCircle02Icon.vue')
+)
+export const MessageDotsCircleIcon = defineAsyncComponent(
+  () => import('./MessageDotsCircleIcon.vue')
+)
+export const MessageDotsSquareIcon = defineAsyncComponent(
+  () => import('./MessageDotsSquareIcon.vue')
+)
+export const MessageHeartCircleIcon = defineAsyncComponent(
+  () => import('./MessageHeartCircleIcon.vue')
+)
+export const MessageHeartSquareIcon = defineAsyncComponent(
+  () => import('./MessageHeartSquareIcon.vue')
+)
+export const MessageNotificationCircleIcon = defineAsyncComponent(
+  () => import('./MessageNotificationCircleIcon.vue')
+)
+export const MessageNotificationSquareIcon = defineAsyncComponent(
+  () => import('./MessageNotificationSquareIcon.vue')
+)
+export const MessagePlusCircleIcon = defineAsyncComponent(
+  () => import('./MessagePlusCircleIcon.vue')
+)
+export const MessagePlusSquareIcon = defineAsyncComponent(
+  () => import('./MessagePlusSquareIcon.vue')
+)
+export const MessageQuestionCircleIcon = defineAsyncComponent(
+  () => import('./MessageQuestionCircleIcon.vue')
+)
+export const MessageQuestionSquareIcon = defineAsyncComponent(
+  () => import('./MessageQuestionSquareIcon.vue')
+)
+export const MessageSmileCircleIcon = defineAsyncComponent(
+  () => import('./MessageSmileCircleIcon.vue')
+)
+export const MessageSmileSquareIcon = defineAsyncComponent(
+  () => import('./MessageSmileSquareIcon.vue')
+)
+export const MessageSquare01Icon = defineAsyncComponent(
+  () => import('./MessageSquare01Icon.vue')
+)
+export const MessageSquare02Icon = defineAsyncComponent(
+  () => import('./MessageSquare02Icon.vue')
+)
+export const MessageTextCircle01Icon = defineAsyncComponent(
+  () => import('./MessageTextCircle01Icon.vue')
+)
+export const MessageTextCircle02Icon = defineAsyncComponent(
+  () => import('./MessageTextCircle02Icon.vue')
+)
+export const MessageTextSquare01Icon = defineAsyncComponent(
+  () => import('./MessageTextSquare01Icon.vue')
+)
+export const MessageTextSquare02Icon = defineAsyncComponent(
+  () => import('./MessageTextSquare02Icon.vue')
+)
+export const MessageXCircleIcon = defineAsyncComponent(
+  () => import('./MessageXCircleIcon.vue')
+)
+export const MessageXSquareIcon = defineAsyncComponent(
+  () => import('./MessageXSquareIcon.vue')
+)
+export const Microphone01Icon = defineAsyncComponent(
+  () => import('./Microphone01Icon.vue')
+)
+export const Microphone02Icon = defineAsyncComponent(
+  () => import('./Microphone02Icon.vue')
+)
+export const MicrophoneOff01Icon = defineAsyncComponent(
+  () => import('./MicrophoneOff01Icon.vue')
+)
+export const MicrophoneOff02Icon = defineAsyncComponent(
+  () => import('./MicrophoneOff02Icon.vue')
+)
+export const MicroscopeIcon = defineAsyncComponent(
+  () => import('./MicroscopeIcon.vue')
+)
+export const Minimize01Icon = defineAsyncComponent(
+  () => import('./Minimize01Icon.vue')
+)
+export const Minimize02Icon = defineAsyncComponent(
+  () => import('./Minimize02Icon.vue')
+)
+export const MinusCircleIcon = defineAsyncComponent(
+  () => import('./MinusCircleIcon.vue')
+)
+export const MinusSquareIcon = defineAsyncComponent(
+  () => import('./MinusSquareIcon.vue')
+)
+export const MinusIcon = defineAsyncComponent(() => import('./MinusIcon.vue'))
+export const Modem01Icon = defineAsyncComponent(
+  () => import('./Modem01Icon.vue')
+)
+export const Modem02Icon = defineAsyncComponent(
+  () => import('./Modem02Icon.vue')
+)
+export const Monitor01Icon = defineAsyncComponent(
+  () => import('./Monitor01Icon.vue')
+)
+export const Monitor02Icon = defineAsyncComponent(
+  () => import('./Monitor02Icon.vue')
+)
+export const Monitor03Icon = defineAsyncComponent(
+  () => import('./Monitor03Icon.vue')
+)
+export const Monitor04Icon = defineAsyncComponent(
+  () => import('./Monitor04Icon.vue')
+)
+export const Monitor05Icon = defineAsyncComponent(
+  () => import('./Monitor05Icon.vue')
+)
+export const Moon01Icon = defineAsyncComponent(() => import('./Moon01Icon.vue'))
+export const Moon02Icon = defineAsyncComponent(() => import('./Moon02Icon.vue'))
+export const MoonEclipseIcon = defineAsyncComponent(
+  () => import('./MoonEclipseIcon.vue')
+)
+export const MoonStarIcon = defineAsyncComponent(
+  () => import('./MoonStarIcon.vue')
+)
+export const MouseIcon = defineAsyncComponent(() => import('./MouseIcon.vue'))
+export const MoveIcon = defineAsyncComponent(() => import('./MoveIcon.vue'))
+export const MusicNote01Icon = defineAsyncComponent(
+  () => import('./MusicNote01Icon.vue')
+)
+export const MusicNote02Icon = defineAsyncComponent(
+  () => import('./MusicNote02Icon.vue')
+)
+export const MusicNotePlusIcon = defineAsyncComponent(
+  () => import('./MusicNotePlusIcon.vue')
+)
+export const NavigationPointer01Icon = defineAsyncComponent(
+  () => import('./NavigationPointer01Icon.vue')
+)
+export const NavigationPointer02Icon = defineAsyncComponent(
+  () => import('./NavigationPointer02Icon.vue')
+)
+export const NavigationPointerOff01Icon = defineAsyncComponent(
+  () => import('./NavigationPointerOff01Icon.vue')
+)
+export const NavigationPointerOff02Icon = defineAsyncComponent(
+  () => import('./NavigationPointerOff02Icon.vue')
+)
+export const NotificationBoxIcon = defineAsyncComponent(
+  () => import('./NotificationBoxIcon.vue')
+)
+export const NotificationMessageIcon = defineAsyncComponent(
+  () => import('./NotificationMessageIcon.vue')
+)
+export const NotificationTextIcon = defineAsyncComponent(
+  () => import('./NotificationTextIcon.vue')
+)
+export const OctagonIcon = defineAsyncComponent(
+  () => import('./OctagonIcon.vue')
+)
+export const PackageCheckIcon = defineAsyncComponent(
+  () => import('./PackageCheckIcon.vue')
+)
+export const PackageMinusIcon = defineAsyncComponent(
+  () => import('./PackageMinusIcon.vue')
+)
+export const PackagePlusIcon = defineAsyncComponent(
+  () => import('./PackagePlusIcon.vue')
+)
+export const PackageSearchIcon = defineAsyncComponent(
+  () => import('./PackageSearchIcon.vue')
+)
+export const PackageXIcon = defineAsyncComponent(
+  () => import('./PackageXIcon.vue')
+)
+export const PackageIcon = defineAsyncComponent(
+  () => import('./PackageIcon.vue')
+)
+export const PaintPourIcon = defineAsyncComponent(
+  () => import('./PaintPourIcon.vue')
+)
+export const PaintIcon = defineAsyncComponent(() => import('./PaintIcon.vue'))
+export const PaletteIcon = defineAsyncComponent(
+  () => import('./PaletteIcon.vue')
+)
+export const PaperclipIcon = defineAsyncComponent(
+  () => import('./PaperclipIcon.vue')
+)
+export const ParagraphSpacingIcon = defineAsyncComponent(
+  () => import('./ParagraphSpacingIcon.vue')
+)
+export const ParagraphWrapIcon = defineAsyncComponent(
+  () => import('./ParagraphWrapIcon.vue')
+)
+export const PasscodeLockIcon = defineAsyncComponent(
+  () => import('./PasscodeLockIcon.vue')
+)
+export const PasscodeIcon = defineAsyncComponent(
+  () => import('./PasscodeIcon.vue')
+)
+export const PassportIcon = defineAsyncComponent(
+  () => import('./PassportIcon.vue')
+)
+export const PauseCircleIcon = defineAsyncComponent(
+  () => import('./PauseCircleIcon.vue')
+)
+export const PauseSquareIcon = defineAsyncComponent(
+  () => import('./PauseSquareIcon.vue')
+)
+export const PenTool01Icon = defineAsyncComponent(
+  () => import('./PenTool01Icon.vue')
+)
+export const PenTool02Icon = defineAsyncComponent(
+  () => import('./PenTool02Icon.vue')
+)
+export const PenToolMinusIcon = defineAsyncComponent(
+  () => import('./PenToolMinusIcon.vue')
+)
+export const PenToolPlusIcon = defineAsyncComponent(
+  () => import('./PenToolPlusIcon.vue')
+)
+export const Pencil01Icon = defineAsyncComponent(
+  () => import('./Pencil01Icon.vue')
+)
+export const Pencil02Icon = defineAsyncComponent(
+  () => import('./Pencil02Icon.vue')
+)
+export const PencilLineIcon = defineAsyncComponent(
+  () => import('./PencilLineIcon.vue')
+)
+export const PentagonIcon = defineAsyncComponent(
+  () => import('./PentagonIcon.vue')
+)
+export const Percent01Icon = defineAsyncComponent(
+  () => import('./Percent01Icon.vue')
+)
+export const Percent02Icon = defineAsyncComponent(
+  () => import('./Percent02Icon.vue')
+)
+export const Percent03Icon = defineAsyncComponent(
+  () => import('./Percent03Icon.vue')
+)
+export const Perspective01Icon = defineAsyncComponent(
+  () => import('./Perspective01Icon.vue')
+)
+export const Perspective02Icon = defineAsyncComponent(
+  () => import('./Perspective02Icon.vue')
+)
+export const Phone01Icon = defineAsyncComponent(
+  () => import('./Phone01Icon.vue')
+)
+export const Phone02Icon = defineAsyncComponent(
+  () => import('./Phone02Icon.vue')
+)
+export const PhoneCall01Icon = defineAsyncComponent(
+  () => import('./PhoneCall01Icon.vue')
+)
+export const PhoneCall02Icon = defineAsyncComponent(
+  () => import('./PhoneCall02Icon.vue')
+)
+export const PhoneHangUpIcon = defineAsyncComponent(
+  () => import('./PhoneHangUpIcon.vue')
+)
+export const PhoneIncoming01Icon = defineAsyncComponent(
+  () => import('./PhoneIncoming01Icon.vue')
+)
+export const PhoneIncoming02Icon = defineAsyncComponent(
+  () => import('./PhoneIncoming02Icon.vue')
+)
+export const PhoneOutgoing01Icon = defineAsyncComponent(
+  () => import('./PhoneOutgoing01Icon.vue')
+)
+export const PhoneOutgoing02Icon = defineAsyncComponent(
+  () => import('./PhoneOutgoing02Icon.vue')
+)
+export const PhonePauseIcon = defineAsyncComponent(
+  () => import('./PhonePauseIcon.vue')
+)
+export const PhonePlusIcon = defineAsyncComponent(
+  () => import('./PhonePlusIcon.vue')
+)
+export const PhoneXIcon = defineAsyncComponent(() => import('./PhoneXIcon.vue'))
+export const PhoneIcon = defineAsyncComponent(() => import('./PhoneIcon.vue'))
+export const PieChart01Icon = defineAsyncComponent(
+  () => import('./PieChart01Icon.vue')
+)
+export const PieChart02Icon = defineAsyncComponent(
+  () => import('./PieChart02Icon.vue')
+)
+export const PieChart03Icon = defineAsyncComponent(
+  () => import('./PieChart03Icon.vue')
+)
+export const PieChart04Icon = defineAsyncComponent(
+  () => import('./PieChart04Icon.vue')
+)
+export const PiggyBank01Icon = defineAsyncComponent(
+  () => import('./PiggyBank01Icon.vue')
+)
+export const PiggyBank02Icon = defineAsyncComponent(
+  () => import('./PiggyBank02Icon.vue')
+)
+export const Pilcrow01Icon = defineAsyncComponent(
+  () => import('./Pilcrow01Icon.vue')
+)
+export const Pilcrow02Icon = defineAsyncComponent(
+  () => import('./Pilcrow02Icon.vue')
+)
+export const PilcrowSquareIcon = defineAsyncComponent(
+  () => import('./PilcrowSquareIcon.vue')
+)
+export const Pin01Icon = defineAsyncComponent(() => import('./Pin01Icon.vue'))
+export const Pin02Icon = defineAsyncComponent(() => import('./Pin02Icon.vue'))
+export const PlaceholderIcon = defineAsyncComponent(
+  () => import('./PlaceholderIcon.vue')
+)
+export const PlaneIcon = defineAsyncComponent(() => import('./PlaneIcon.vue'))
+export const PlayCircleIcon = defineAsyncComponent(
+  () => import('./PlayCircleIcon.vue')
+)
+export const PlaySquareIcon = defineAsyncComponent(
+  () => import('./PlaySquareIcon.vue')
+)
+export const PlayIcon = defineAsyncComponent(() => import('./PlayIcon.vue'))
+export const PlusCircleIcon = defineAsyncComponent(
+  () => import('./PlusCircleIcon.vue')
+)
+export const PlusSquareIcon = defineAsyncComponent(
+  () => import('./PlusSquareIcon.vue')
+)
+export const PlusIcon = defineAsyncComponent(() => import('./PlusIcon.vue'))
+export const PodcastIcon = defineAsyncComponent(
+  () => import('./PodcastIcon.vue')
+)
+export const Power01Icon = defineAsyncComponent(
+  () => import('./Power01Icon.vue')
+)
+export const Power02Icon = defineAsyncComponent(
+  () => import('./Power02Icon.vue')
+)
+export const Power03Icon = defineAsyncComponent(
+  () => import('./Power03Icon.vue')
+)
+export const PresentationChart01Icon = defineAsyncComponent(
+  () => import('./PresentationChart01Icon.vue')
+)
+export const PresentationChart02Icon = defineAsyncComponent(
+  () => import('./PresentationChart02Icon.vue')
+)
+export const PresentationChart03Icon = defineAsyncComponent(
+  () => import('./PresentationChart03Icon.vue')
+)
+export const PrinterIcon = defineAsyncComponent(
+  () => import('./PrinterIcon.vue')
+)
+export const PuzzlePiece01Icon = defineAsyncComponent(
+  () => import('./PuzzlePiece01Icon.vue')
+)
+export const PuzzlePiece02Icon = defineAsyncComponent(
+  () => import('./PuzzlePiece02Icon.vue')
+)
+export const QrCode01Icon = defineAsyncComponent(
+  () => import('./QrCode01Icon.vue')
+)
+export const QrCode02Icon = defineAsyncComponent(
+  () => import('./QrCode02Icon.vue')
+)
+export const ReceiptCheckIcon = defineAsyncComponent(
+  () => import('./ReceiptCheckIcon.vue')
+)
+export const ReceiptIcon = defineAsyncComponent(
+  () => import('./ReceiptIcon.vue')
+)
+export const Recording01Icon = defineAsyncComponent(
+  () => import('./Recording01Icon.vue')
+)
+export const Recording02Icon = defineAsyncComponent(
+  () => import('./Recording02Icon.vue')
+)
+export const Recording03Icon = defineAsyncComponent(
+  () => import('./Recording03Icon.vue')
+)
+export const Reflect01Icon = defineAsyncComponent(
+  () => import('./Reflect01Icon.vue')
+)
+export const Reflect02Icon = defineAsyncComponent(
+  () => import('./Reflect02Icon.vue')
+)
+export const RefreshCcw01Icon = defineAsyncComponent(
+  () => import('./RefreshCcw01Icon.vue')
+)
+export const RefreshCcw02Icon = defineAsyncComponent(
+  () => import('./RefreshCcw02Icon.vue')
+)
+export const RefreshCcw03Icon = defineAsyncComponent(
+  () => import('./RefreshCcw03Icon.vue')
+)
+export const RefreshCcw04Icon = defineAsyncComponent(
+  () => import('./RefreshCcw04Icon.vue')
+)
+export const RefreshCcw05Icon = defineAsyncComponent(
+  () => import('./RefreshCcw05Icon.vue')
+)
+export const RefreshCw01Icon = defineAsyncComponent(
+  () => import('./RefreshCw01Icon.vue')
+)
+export const RefreshCw02Icon = defineAsyncComponent(
+  () => import('./RefreshCw02Icon.vue')
+)
+export const RefreshCw03Icon = defineAsyncComponent(
+  () => import('./RefreshCw03Icon.vue')
+)
+export const RefreshCw04Icon = defineAsyncComponent(
+  () => import('./RefreshCw04Icon.vue')
+)
+export const RefreshCw05Icon = defineAsyncComponent(
+  () => import('./RefreshCw05Icon.vue')
+)
+export const Repeat01Icon = defineAsyncComponent(
+  () => import('./Repeat01Icon.vue')
+)
+export const Repeat02Icon = defineAsyncComponent(
+  () => import('./Repeat02Icon.vue')
+)
+export const Repeat03Icon = defineAsyncComponent(
+  () => import('./Repeat03Icon.vue')
+)
+export const Repeat04Icon = defineAsyncComponent(
+  () => import('./Repeat04Icon.vue')
+)
+export const ReverseLeftIcon = defineAsyncComponent(
+  () => import('./ReverseLeftIcon.vue')
+)
+export const ReverseRightIcon = defineAsyncComponent(
+  () => import('./ReverseRightIcon.vue')
+)
+export const RightIndent01Icon = defineAsyncComponent(
+  () => import('./RightIndent01Icon.vue')
+)
+export const RightIndent02Icon = defineAsyncComponent(
+  () => import('./RightIndent02Icon.vue')
+)
+export const Rocket01Icon = defineAsyncComponent(
+  () => import('./Rocket01Icon.vue')
+)
+export const Rocket02Icon = defineAsyncComponent(
+  () => import('./Rocket02Icon.vue')
+)
+export const RollerBrushIcon = defineAsyncComponent(
+  () => import('./RollerBrushIcon.vue')
+)
+export const RouteIcon = defineAsyncComponent(() => import('./RouteIcon.vue'))
+export const Rows01Icon = defineAsyncComponent(() => import('./Rows01Icon.vue'))
+export const Rows02Icon = defineAsyncComponent(() => import('./Rows02Icon.vue'))
+export const Rows03Icon = defineAsyncComponent(() => import('./Rows03Icon.vue'))
+export const Rss01Icon = defineAsyncComponent(() => import('./Rss01Icon.vue'))
+export const Rss02Icon = defineAsyncComponent(() => import('./Rss02Icon.vue'))
+export const RulerIcon = defineAsyncComponent(() => import('./RulerIcon.vue'))
+export const SafeIcon = defineAsyncComponent(() => import('./SafeIcon.vue'))
+export const Sale01Icon = defineAsyncComponent(() => import('./Sale01Icon.vue'))
+export const Sale02Icon = defineAsyncComponent(() => import('./Sale02Icon.vue'))
+export const Sale03Icon = defineAsyncComponent(() => import('./Sale03Icon.vue'))
+export const Sale04Icon = defineAsyncComponent(() => import('./Sale04Icon.vue'))
+export const Save01Icon = defineAsyncComponent(() => import('./Save01Icon.vue'))
+export const Save02Icon = defineAsyncComponent(() => import('./Save02Icon.vue'))
+export const Save03Icon = defineAsyncComponent(() => import('./Save03Icon.vue'))
+export const Scale01Icon = defineAsyncComponent(
+  () => import('./Scale01Icon.vue')
+)
+export const Scale02Icon = defineAsyncComponent(
+  () => import('./Scale02Icon.vue')
+)
+export const Scale03Icon = defineAsyncComponent(
+  () => import('./Scale03Icon.vue')
+)
+export const Scales01Icon = defineAsyncComponent(
+  () => import('./Scales01Icon.vue')
+)
+export const Scales02Icon = defineAsyncComponent(
+  () => import('./Scales02Icon.vue')
+)
+export const ScanIcon = defineAsyncComponent(() => import('./ScanIcon.vue'))
+export const Scissors01Icon = defineAsyncComponent(
+  () => import('./Scissors01Icon.vue')
+)
+export const Scissors02Icon = defineAsyncComponent(
+  () => import('./Scissors02Icon.vue')
+)
+export const ScissorsCut01Icon = defineAsyncComponent(
+  () => import('./ScissorsCut01Icon.vue')
+)
+export const ScissorsCut02Icon = defineAsyncComponent(
+  () => import('./ScissorsCut02Icon.vue')
+)
+export const SearchLgIcon = defineAsyncComponent(
+  () => import('./SearchLgIcon.vue')
+)
+export const SearchMdIcon = defineAsyncComponent(
+  () => import('./SearchMdIcon.vue')
+)
+export const SearchRefractionIcon = defineAsyncComponent(
+  () => import('./SearchRefractionIcon.vue')
+)
+export const SearchSmIcon = defineAsyncComponent(
+  () => import('./SearchSmIcon.vue')
+)
+export const Send01Icon = defineAsyncComponent(() => import('./Send01Icon.vue'))
+export const Send02Icon = defineAsyncComponent(() => import('./Send02Icon.vue'))
+export const Send03Icon = defineAsyncComponent(() => import('./Send03Icon.vue'))
+export const Server01Icon = defineAsyncComponent(
+  () => import('./Server01Icon.vue')
+)
+export const Server02Icon = defineAsyncComponent(
+  () => import('./Server02Icon.vue')
+)
+export const Server03Icon = defineAsyncComponent(
+  () => import('./Server03Icon.vue')
+)
+export const Server04Icon = defineAsyncComponent(
+  () => import('./Server04Icon.vue')
+)
+export const Server05Icon = defineAsyncComponent(
+  () => import('./Server05Icon.vue')
+)
+export const Server06Icon = defineAsyncComponent(
+  () => import('./Server06Icon.vue')
+)
+export const Settings01Icon = defineAsyncComponent(
+  () => import('./Settings01Icon.vue')
+)
+export const Settings02Icon = defineAsyncComponent(
+  () => import('./Settings02Icon.vue')
+)
+export const Settings03Icon = defineAsyncComponent(
+  () => import('./Settings03Icon.vue')
+)
+export const Settings04Icon = defineAsyncComponent(
+  () => import('./Settings04Icon.vue')
+)
+export const Share01Icon = defineAsyncComponent(
+  () => import('./Share01Icon.vue')
+)
+export const Share02Icon = defineAsyncComponent(
+  () => import('./Share02Icon.vue')
+)
+export const Share03Icon = defineAsyncComponent(
+  () => import('./Share03Icon.vue')
+)
+export const Share04Icon = defineAsyncComponent(
+  () => import('./Share04Icon.vue')
+)
+export const Share05Icon = defineAsyncComponent(
+  () => import('./Share05Icon.vue')
+)
+export const Share06Icon = defineAsyncComponent(
+  () => import('./Share06Icon.vue')
+)
+export const Share07Icon = defineAsyncComponent(
+  () => import('./Share07Icon.vue')
+)
+export const Shield01Icon = defineAsyncComponent(
+  () => import('./Shield01Icon.vue')
+)
+export const Shield02Icon = defineAsyncComponent(
+  () => import('./Shield02Icon.vue')
+)
+export const Shield03Icon = defineAsyncComponent(
+  () => import('./Shield03Icon.vue')
+)
+export const ShieldDollarIcon = defineAsyncComponent(
+  () => import('./ShieldDollarIcon.vue')
+)
+export const ShieldOffIcon = defineAsyncComponent(
+  () => import('./ShieldOffIcon.vue')
+)
+export const ShieldPlusIcon = defineAsyncComponent(
+  () => import('./ShieldPlusIcon.vue')
+)
+export const ShieldTickIcon = defineAsyncComponent(
+  () => import('./ShieldTickIcon.vue')
+)
+export const ShieldZapIcon = defineAsyncComponent(
+  () => import('./ShieldZapIcon.vue')
+)
+export const ShoppingBag01Icon = defineAsyncComponent(
+  () => import('./ShoppingBag01Icon.vue')
+)
+export const ShoppingBag02Icon = defineAsyncComponent(
+  () => import('./ShoppingBag02Icon.vue')
+)
+export const ShoppingBag03Icon = defineAsyncComponent(
+  () => import('./ShoppingBag03Icon.vue')
+)
+export const ShoppingCart01Icon = defineAsyncComponent(
+  () => import('./ShoppingCart01Icon.vue')
+)
+export const ShoppingCart02Icon = defineAsyncComponent(
+  () => import('./ShoppingCart02Icon.vue')
+)
+export const ShoppingCart03Icon = defineAsyncComponent(
+  () => import('./ShoppingCart03Icon.vue')
+)
+export const Shuffle01Icon = defineAsyncComponent(
+  () => import('./Shuffle01Icon.vue')
+)
+export const Shuffle02Icon = defineAsyncComponent(
+  () => import('./Shuffle02Icon.vue')
+)
+export const Signal01Icon = defineAsyncComponent(
+  () => import('./Signal01Icon.vue')
+)
+export const Signal02Icon = defineAsyncComponent(
+  () => import('./Signal02Icon.vue')
+)
+export const Signal03Icon = defineAsyncComponent(
+  () => import('./Signal03Icon.vue')
+)
+export const SimcardIcon = defineAsyncComponent(
+  () => import('./SimcardIcon.vue')
+)
+export const SkewIcon = defineAsyncComponent(() => import('./SkewIcon.vue'))
+export const SkipBackIcon = defineAsyncComponent(
+  () => import('./SkipBackIcon.vue')
+)
+export const SkipForwardIcon = defineAsyncComponent(
+  () => import('./SkipForwardIcon.vue')
+)
+export const SlashCircle01Icon = defineAsyncComponent(
+  () => import('./SlashCircle01Icon.vue')
+)
+export const SlashCircle02Icon = defineAsyncComponent(
+  () => import('./SlashCircle02Icon.vue')
+)
+export const SlashDividerIcon = defineAsyncComponent(
+  () => import('./SlashDividerIcon.vue')
+)
+export const SlashOctagonIcon = defineAsyncComponent(
+  () => import('./SlashOctagonIcon.vue')
+)
+export const Sliders01Icon = defineAsyncComponent(
+  () => import('./Sliders01Icon.vue')
+)
+export const Sliders02Icon = defineAsyncComponent(
+  () => import('./Sliders02Icon.vue')
+)
+export const Sliders03Icon = defineAsyncComponent(
+  () => import('./Sliders03Icon.vue')
+)
+export const Sliders04Icon = defineAsyncComponent(
+  () => import('./Sliders04Icon.vue')
+)
+export const Snowflake01Icon = defineAsyncComponent(
+  () => import('./Snowflake01Icon.vue')
+)
+export const Snowflake02Icon = defineAsyncComponent(
+  () => import('./Snowflake02Icon.vue')
+)
+export const SpacingHeight01Icon = defineAsyncComponent(
+  () => import('./SpacingHeight01Icon.vue')
+)
+export const SpacingHeight02Icon = defineAsyncComponent(
+  () => import('./SpacingHeight02Icon.vue')
+)
+export const SpacingWidth01Icon = defineAsyncComponent(
+  () => import('./SpacingWidth01Icon.vue')
+)
+export const SpacingWidth02Icon = defineAsyncComponent(
+  () => import('./SpacingWidth02Icon.vue')
+)
+export const Speaker01Icon = defineAsyncComponent(
+  () => import('./Speaker01Icon.vue')
+)
+export const Speaker02Icon = defineAsyncComponent(
+  () => import('./Speaker02Icon.vue')
+)
+export const Speaker03Icon = defineAsyncComponent(
+  () => import('./Speaker03Icon.vue')
+)
+export const Speedometer01Icon = defineAsyncComponent(
+  () => import('./Speedometer01Icon.vue')
+)
+export const Speedometer02Icon = defineAsyncComponent(
+  () => import('./Speedometer02Icon.vue')
+)
+export const Speedometer03Icon = defineAsyncComponent(
+  () => import('./Speedometer03Icon.vue')
+)
+export const Speedometer04Icon = defineAsyncComponent(
+  () => import('./Speedometer04Icon.vue')
+)
+export const SquareIcon = defineAsyncComponent(() => import('./SquareIcon.vue'))
+export const StandIcon = defineAsyncComponent(() => import('./StandIcon.vue'))
+export const Star01Icon = defineAsyncComponent(() => import('./Star01Icon.vue'))
+export const Star02Icon = defineAsyncComponent(() => import('./Star02Icon.vue'))
+export const Star03Icon = defineAsyncComponent(() => import('./Star03Icon.vue'))
+export const Star04Icon = defineAsyncComponent(() => import('./Star04Icon.vue'))
+export const Star05Icon = defineAsyncComponent(() => import('./Star05Icon.vue'))
+export const Star06Icon = defineAsyncComponent(() => import('./Star06Icon.vue'))
+export const Star07Icon = defineAsyncComponent(() => import('./Star07Icon.vue'))
+export const Stars01Icon = defineAsyncComponent(
+  () => import('./Stars01Icon.vue')
+)
+export const Stars02Icon = defineAsyncComponent(
+  () => import('./Stars02Icon.vue')
+)
+export const Stars03Icon = defineAsyncComponent(
+  () => import('./Stars03Icon.vue')
+)
+export const StickerCircleIcon = defineAsyncComponent(
+  () => import('./StickerCircleIcon.vue')
+)
+export const StickerSquareIcon = defineAsyncComponent(
+  () => import('./StickerSquareIcon.vue')
+)
+export const StopCircleIcon = defineAsyncComponent(
+  () => import('./StopCircleIcon.vue')
+)
+export const StopSquareIcon = defineAsyncComponent(
+  () => import('./StopSquareIcon.vue')
+)
+export const StopIcon = defineAsyncComponent(() => import('./StopIcon.vue'))
+export const Strikethrough01Icon = defineAsyncComponent(
+  () => import('./Strikethrough01Icon.vue')
+)
+export const Strikethrough02Icon = defineAsyncComponent(
+  () => import('./Strikethrough02Icon.vue')
+)
+export const StrikethroughSquareIcon = defineAsyncComponent(
+  () => import('./StrikethroughSquareIcon.vue')
+)
+export const SubscriptIcon = defineAsyncComponent(
+  () => import('./SubscriptIcon.vue')
+)
+export const SunSetting01Icon = defineAsyncComponent(
+  () => import('./SunSetting01Icon.vue')
+)
+export const SunSetting02Icon = defineAsyncComponent(
+  () => import('./SunSetting02Icon.vue')
+)
+export const SunSetting03Icon = defineAsyncComponent(
+  () => import('./SunSetting03Icon.vue')
+)
+export const SunIcon = defineAsyncComponent(() => import('./SunIcon.vue'))
+export const SunriseIcon = defineAsyncComponent(
+  () => import('./SunriseIcon.vue')
+)
+export const SunsetIcon = defineAsyncComponent(() => import('./SunsetIcon.vue'))
+export const SwitchHorizontal01Icon = defineAsyncComponent(
+  () => import('./SwitchHorizontal01Icon.vue')
+)
+export const SwitchHorizontal02Icon = defineAsyncComponent(
+  () => import('./SwitchHorizontal02Icon.vue')
+)
+export const SwitchVertical01Icon = defineAsyncComponent(
+  () => import('./SwitchVertical01Icon.vue')
+)
+export const SwitchVertical02Icon = defineAsyncComponent(
+  () => import('./SwitchVertical02Icon.vue')
+)
+export const TableIcon = defineAsyncComponent(() => import('./TableIcon.vue'))
+export const Tablet01Icon = defineAsyncComponent(
+  () => import('./Tablet01Icon.vue')
+)
+export const Tablet02Icon = defineAsyncComponent(
+  () => import('./Tablet02Icon.vue')
+)
+export const Tag01Icon = defineAsyncComponent(() => import('./Tag01Icon.vue'))
+export const Tag02Icon = defineAsyncComponent(() => import('./Tag02Icon.vue'))
+export const Tag03Icon = defineAsyncComponent(() => import('./Tag03Icon.vue'))
+export const Target01Icon = defineAsyncComponent(
+  () => import('./Target01Icon.vue')
+)
+export const Target02Icon = defineAsyncComponent(
+  () => import('./Target02Icon.vue')
+)
+export const Target03Icon = defineAsyncComponent(
+  () => import('./Target03Icon.vue')
+)
+export const Target04Icon = defineAsyncComponent(
+  () => import('./Target04Icon.vue')
+)
+export const Target05Icon = defineAsyncComponent(
+  () => import('./Target05Icon.vue')
+)
+export const TelescopeIcon = defineAsyncComponent(
+  () => import('./TelescopeIcon.vue')
+)
+export const TerminalBrowserIcon = defineAsyncComponent(
+  () => import('./TerminalBrowserIcon.vue')
+)
+export const TerminalCircleIcon = defineAsyncComponent(
+  () => import('./TerminalCircleIcon.vue')
+)
+export const TerminalSquareIcon = defineAsyncComponent(
+  () => import('./TerminalSquareIcon.vue')
+)
+export const TerminalIcon = defineAsyncComponent(
+  () => import('./TerminalIcon.vue')
+)
+export const TextInputIcon = defineAsyncComponent(
+  () => import('./TextInputIcon.vue')
+)
+export const Thermometer01Icon = defineAsyncComponent(
+  () => import('./Thermometer01Icon.vue')
+)
+export const Thermometer02Icon = defineAsyncComponent(
+  () => import('./Thermometer02Icon.vue')
+)
+export const Thermometer03Icon = defineAsyncComponent(
+  () => import('./Thermometer03Icon.vue')
+)
+export const ThermometerColdIcon = defineAsyncComponent(
+  () => import('./ThermometerColdIcon.vue')
+)
+export const ThermometerWarmIcon = defineAsyncComponent(
+  () => import('./ThermometerWarmIcon.vue')
+)
+export const ThumbsDownIcon = defineAsyncComponent(
+  () => import('./ThumbsDownIcon.vue')
+)
+export const ThumbsUpIcon = defineAsyncComponent(
+  () => import('./ThumbsUpIcon.vue')
+)
+export const Ticket01Icon = defineAsyncComponent(
+  () => import('./Ticket01Icon.vue')
+)
+export const Ticket02Icon = defineAsyncComponent(
+  () => import('./Ticket02Icon.vue')
+)
+export const Toggle01LeftIcon = defineAsyncComponent(
+  () => import('./Toggle01LeftIcon.vue')
+)
+export const Toggle01RightIcon = defineAsyncComponent(
+  () => import('./Toggle01RightIcon.vue')
+)
+export const Toggle02LeftIcon = defineAsyncComponent(
+  () => import('./Toggle02LeftIcon.vue')
+)
+export const Toggle02RightIcon = defineAsyncComponent(
+  () => import('./Toggle02RightIcon.vue')
+)
+export const Toggle03LeftIcon = defineAsyncComponent(
+  () => import('./Toggle03LeftIcon.vue')
+)
+export const Toggle03RightIcon = defineAsyncComponent(
+  () => import('./Toggle03RightIcon.vue')
+)
+export const Tool01Icon = defineAsyncComponent(() => import('./Tool01Icon.vue'))
+export const Tool02Icon = defineAsyncComponent(() => import('./Tool02Icon.vue'))
+export const TrainIcon = defineAsyncComponent(() => import('./TrainIcon.vue'))
+export const TramIcon = defineAsyncComponent(() => import('./TramIcon.vue'))
+export const TransformIcon = defineAsyncComponent(
+  () => import('./TransformIcon.vue')
+)
+export const Translate01Icon = defineAsyncComponent(
+  () => import('./Translate01Icon.vue')
+)
+export const Translate02Icon = defineAsyncComponent(
+  () => import('./Translate02Icon.vue')
+)
+export const Trash01Icon = defineAsyncComponent(
+  () => import('./Trash01Icon.vue')
+)
+export const Trash02Icon = defineAsyncComponent(
+  () => import('./Trash02Icon.vue')
+)
+export const Trash03Icon = defineAsyncComponent(
+  () => import('./Trash03Icon.vue')
+)
+export const Trash04Icon = defineAsyncComponent(
+  () => import('./Trash04Icon.vue')
+)
+export const TrendDown01Icon = defineAsyncComponent(
+  () => import('./TrendDown01Icon.vue')
+)
+export const TrendDown02Icon = defineAsyncComponent(
+  () => import('./TrendDown02Icon.vue')
+)
+export const TrendUp01Icon = defineAsyncComponent(
+  () => import('./TrendUp01Icon.vue')
+)
+export const TrendUp02Icon = defineAsyncComponent(
+  () => import('./TrendUp02Icon.vue')
+)
+export const TriangleIcon = defineAsyncComponent(
+  () => import('./TriangleIcon.vue')
+)
+export const Trophy01Icon = defineAsyncComponent(
+  () => import('./Trophy01Icon.vue')
+)
+export const Trophy02Icon = defineAsyncComponent(
+  () => import('./Trophy02Icon.vue')
+)
+export const Truck01Icon = defineAsyncComponent(
+  () => import('./Truck01Icon.vue')
+)
+export const Truck02Icon = defineAsyncComponent(
+  () => import('./Truck02Icon.vue')
+)
+export const Tv01Icon = defineAsyncComponent(() => import('./Tv01Icon.vue'))
+export const Tv02Icon = defineAsyncComponent(() => import('./Tv02Icon.vue'))
+export const Tv03Icon = defineAsyncComponent(() => import('./Tv03Icon.vue'))
+export const Type01Icon = defineAsyncComponent(() => import('./Type01Icon.vue'))
+export const Type02Icon = defineAsyncComponent(() => import('./Type02Icon.vue'))
+export const TypeSquareIcon = defineAsyncComponent(
+  () => import('./TypeSquareIcon.vue')
+)
+export const TypeStrikethrough01Icon = defineAsyncComponent(
+  () => import('./TypeStrikethrough01Icon.vue')
+)
+export const TypeStrikethrough02Icon = defineAsyncComponent(
+  () => import('./TypeStrikethrough02Icon.vue')
+)
+export const Umbrella01Icon = defineAsyncComponent(
+  () => import('./Umbrella01Icon.vue')
+)
+export const Umbrella02Icon = defineAsyncComponent(
+  () => import('./Umbrella02Icon.vue')
+)
+export const Umbrella03Icon = defineAsyncComponent(
+  () => import('./Umbrella03Icon.vue')
+)
+export const Underline01Icon = defineAsyncComponent(
+  () => import('./Underline01Icon.vue')
+)
+export const Underline02Icon = defineAsyncComponent(
+  () => import('./Underline02Icon.vue')
+)
+export const UnderlineSquareIcon = defineAsyncComponent(
+  () => import('./UnderlineSquareIcon.vue')
+)
+export const Upload01Icon = defineAsyncComponent(
+  () => import('./Upload01Icon.vue')
+)
+export const Upload02Icon = defineAsyncComponent(
+  () => import('./Upload02Icon.vue')
+)
+export const Upload03Icon = defineAsyncComponent(
+  () => import('./Upload03Icon.vue')
+)
+export const Upload04Icon = defineAsyncComponent(
+  () => import('./Upload04Icon.vue')
+)
+export const UploadCloud01Icon = defineAsyncComponent(
+  () => import('./UploadCloud01Icon.vue')
+)
+export const UploadCloud02Icon = defineAsyncComponent(
+  () => import('./UploadCloud02Icon.vue')
+)
+export const UsbFlashDriveIcon = defineAsyncComponent(
+  () => import('./UsbFlashDriveIcon.vue')
+)
+export const User01Icon = defineAsyncComponent(() => import('./User01Icon.vue'))
+export const User02Icon = defineAsyncComponent(() => import('./User02Icon.vue'))
+export const User03Icon = defineAsyncComponent(() => import('./User03Icon.vue'))
+export const UserCheck01Icon = defineAsyncComponent(
+  () => import('./UserCheck01Icon.vue')
+)
+export const UserCheck02Icon = defineAsyncComponent(
+  () => import('./UserCheck02Icon.vue')
+)
+export const UserCircleIcon = defineAsyncComponent(
+  () => import('./UserCircleIcon.vue')
+)
+export const UserDown01Icon = defineAsyncComponent(
+  () => import('./UserDown01Icon.vue')
+)
+export const UserDown02Icon = defineAsyncComponent(
+  () => import('./UserDown02Icon.vue')
+)
+export const UserEditIcon = defineAsyncComponent(
+  () => import('./UserEditIcon.vue')
+)
+export const UserLeft01Icon = defineAsyncComponent(
+  () => import('./UserLeft01Icon.vue')
+)
+export const UserLeft02Icon = defineAsyncComponent(
+  () => import('./UserLeft02Icon.vue')
+)
+export const UserMinus01Icon = defineAsyncComponent(
+  () => import('./UserMinus01Icon.vue')
+)
+export const UserMinus02Icon = defineAsyncComponent(
+  () => import('./UserMinus02Icon.vue')
+)
+export const UserPlus01Icon = defineAsyncComponent(
+  () => import('./UserPlus01Icon.vue')
+)
+export const UserPlus02Icon = defineAsyncComponent(
+  () => import('./UserPlus02Icon.vue')
+)
+export const UserRight01Icon = defineAsyncComponent(
+  () => import('./UserRight01Icon.vue')
+)
+export const UserRight02Icon = defineAsyncComponent(
+  () => import('./UserRight02Icon.vue')
+)
+export const UserSquareIcon = defineAsyncComponent(
+  () => import('./UserSquareIcon.vue')
+)
+export const UserUp01Icon = defineAsyncComponent(
+  () => import('./UserUp01Icon.vue')
+)
+export const UserUp02Icon = defineAsyncComponent(
+  () => import('./UserUp02Icon.vue')
+)
+export const UserX01Icon = defineAsyncComponent(
+  () => import('./UserX01Icon.vue')
+)
+export const UserX02Icon = defineAsyncComponent(
+  () => import('./UserX02Icon.vue')
+)
+export const Users01Icon = defineAsyncComponent(
+  () => import('./Users01Icon.vue')
+)
+export const Users02Icon = defineAsyncComponent(
+  () => import('./Users02Icon.vue')
+)
+export const Users03Icon = defineAsyncComponent(
+  () => import('./Users03Icon.vue')
+)
+export const UsersCheckIcon = defineAsyncComponent(
+  () => import('./UsersCheckIcon.vue')
+)
+export const UsersDownIcon = defineAsyncComponent(
+  () => import('./UsersDownIcon.vue')
+)
+export const UsersEditIcon = defineAsyncComponent(
+  () => import('./UsersEditIcon.vue')
+)
+export const UsersLeftIcon = defineAsyncComponent(
+  () => import('./UsersLeftIcon.vue')
+)
+export const UsersMinusIcon = defineAsyncComponent(
+  () => import('./UsersMinusIcon.vue')
+)
+export const UsersPlusIcon = defineAsyncComponent(
+  () => import('./UsersPlusIcon.vue')
+)
+export const UsersRightIcon = defineAsyncComponent(
+  () => import('./UsersRightIcon.vue')
+)
+export const UsersUpIcon = defineAsyncComponent(
+  () => import('./UsersUpIcon.vue')
+)
+export const UsersXIcon = defineAsyncComponent(() => import('./UsersXIcon.vue'))
+export const VariableIcon = defineAsyncComponent(
+  () => import('./VariableIcon.vue')
+)
+export const VideoRecorderOffIcon = defineAsyncComponent(
+  () => import('./VideoRecorderOffIcon.vue')
+)
+export const VideoRecorderIcon = defineAsyncComponent(
+  () => import('./VideoRecorderIcon.vue')
+)
+export const VirusIcon = defineAsyncComponent(() => import('./VirusIcon.vue'))
+export const VoicemailIcon = defineAsyncComponent(
+  () => import('./VoicemailIcon.vue')
+)
+export const VolumeMaxIcon = defineAsyncComponent(
+  () => import('./VolumeMaxIcon.vue')
+)
+export const VolumeMinIcon = defineAsyncComponent(
+  () => import('./VolumeMinIcon.vue')
+)
+export const VolumeMinusIcon = defineAsyncComponent(
+  () => import('./VolumeMinusIcon.vue')
+)
+export const VolumePlusIcon = defineAsyncComponent(
+  () => import('./VolumePlusIcon.vue')
+)
+export const VolumeXIcon = defineAsyncComponent(
+  () => import('./VolumeXIcon.vue')
+)
+export const Wallet01Icon = defineAsyncComponent(
+  () => import('./Wallet01Icon.vue')
+)
+export const Wallet02Icon = defineAsyncComponent(
+  () => import('./Wallet02Icon.vue')
+)
+export const Wallet03Icon = defineAsyncComponent(
+  () => import('./Wallet03Icon.vue')
+)
+export const Wallet04Icon = defineAsyncComponent(
+  () => import('./Wallet04Icon.vue')
+)
+export const Wallet05Icon = defineAsyncComponent(
+  () => import('./Wallet05Icon.vue')
+)
+export const WatchCircleIcon = defineAsyncComponent(
+  () => import('./WatchCircleIcon.vue')
+)
+export const WatchSquareIcon = defineAsyncComponent(
+  () => import('./WatchSquareIcon.vue')
+)
+export const WavesIcon = defineAsyncComponent(() => import('./WavesIcon.vue'))
+export const Webcam01Icon = defineAsyncComponent(
+  () => import('./Webcam01Icon.vue')
+)
+export const Webcam02Icon = defineAsyncComponent(
+  () => import('./Webcam02Icon.vue')
+)
+export const WifiOffIcon = defineAsyncComponent(
+  () => import('./WifiOffIcon.vue')
+)
+export const WifiIcon = defineAsyncComponent(() => import('./WifiIcon.vue'))
+export const Wind01Icon = defineAsyncComponent(() => import('./Wind01Icon.vue'))
+export const Wind02Icon = defineAsyncComponent(() => import('./Wind02Icon.vue'))
+export const Wind03Icon = defineAsyncComponent(() => import('./Wind03Icon.vue'))
+export const XCircleIcon = defineAsyncComponent(
+  () => import('./XCircleIcon.vue')
+)
+export const XCloseIcon = defineAsyncComponent(() => import('./XCloseIcon.vue'))
+export const XSquareIcon = defineAsyncComponent(
+  () => import('./XSquareIcon.vue')
+)
+export const XIcon = defineAsyncComponent(() => import('./XIcon.vue'))
+export const YoutubeIcon = defineAsyncComponent(
+  () => import('./YoutubeIcon.vue')
+)
+export const ZapCircleIcon = defineAsyncComponent(
+  () => import('./ZapCircleIcon.vue')
+)
+export const ZapFastIcon = defineAsyncComponent(
+  () => import('./ZapFastIcon.vue')
+)
+export const ZapOffIcon = defineAsyncComponent(() => import('./ZapOffIcon.vue'))
+export const ZapSquareIcon = defineAsyncComponent(
+  () => import('./ZapSquareIcon.vue')
+)
+export const ZapIcon = defineAsyncComponent(() => import('./ZapIcon.vue'))
+export const ZoomInIcon = defineAsyncComponent(() => import('./ZoomInIcon.vue'))
+export const ZoomOutIcon = defineAsyncComponent(
+  () => import('./ZoomOutIcon.vue')
+)
+
+export const Zoom = defineAsyncComponent(() => import('./ZoomOutIcon.vue'))

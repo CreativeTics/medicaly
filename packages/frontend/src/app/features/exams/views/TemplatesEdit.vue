@@ -10,7 +10,7 @@ import {
   getPreviewPrintTemplateUrl,
 } from '../services/templates'
 import Popper from 'vue3-popper'
-import { PrinterIcon } from '@components/basic'
+import { PrinterIcon } from '@components/basic/icons'
 
 const notifications = useNotificationsStore()
 const moduleName = 'Templates'

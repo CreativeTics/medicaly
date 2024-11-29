@@ -9,15 +9,17 @@ import {
   getAnnotationUrl,
 } from '../services'
 import OrderStatus from '../components/OrderStatus.vue'
-import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
-import DBtn from '@components/basic/DBtn.vue'
-
-import ExamIcon from '@components/basic/icons/FileAttachment01Icon.vue'
 import { getPatient } from '../services/patients'
+import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
 import { useNotificationsStore } from '@/store/notifications'
-import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
-import XIcon from '@components/basic/icons/XIcon.vue'
-import ArrowRightIcon from '@components/basic/icons/ArrowRightIcon.vue'
+
+import { DBtn } from '@components/basic'
+import {
+  FileAttachment01Icon as ExamIcon,
+  Loading01Icon,
+  XIcon,
+  ArrowRightIcon,
+} from '@components/basic/icons'
 
 const notifications = useNotificationsStore()
 const route = useRoute()

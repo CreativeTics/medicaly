@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
+import { DLoading, DBtn } from '@/app/components/basic'
+
 import {
-  DLoading,
   Edit03Icon,
-  DBtn,
   FileSearch01Icon,
   SearchLgIcon,
-} from '@/app/components/basic'
+} from '@/app/components/basic/icons'
 import PaginatedTable from './PaginatedTable.vue'
 import Popper from 'vue3-popper'
 

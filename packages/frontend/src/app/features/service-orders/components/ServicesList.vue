@@ -1,40 +1,40 @@
 <script lang="ts" setup>
-import { File02Icon } from "../../../components/basic";
+import { File02Icon } from '@components/basic/icons'
 
-import { getList } from "../services/services";
-import { onMounted, ref, watch } from "vue";
+import { getList } from '../services/services'
+import { onMounted, ref, watch } from 'vue'
 
 const props = defineProps<{
-  allModel: any;
-  modelValue: any;
-  error?: string;
-}>();
+  allModel: any
+  modelValue: any
+  error?: string
+}>()
 
 watch(
   () => props.allModel?.medicalExamType,
   async (value) => {
     if (value) {
-      await loadRows();
+      await loadRows()
     }
   }
-);
+)
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
-const rows = ref<any[]>([]);
+const rows = ref<any[]>([])
 
 const loadRows = async () => {
   rows.value = await getList(
     props.allModel?.contract,
     props.allModel?.medicalExamType
-  );
+  )
 
-  emit("update:modelValue", rows.value);
-};
+  emit('update:modelValue', rows.value)
+}
 
 onMounted(async () => {
-  await loadRows();
-});
+  await loadRows()
+})
 </script>
 <template>
   <div class="w-full">

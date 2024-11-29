@@ -1,29 +1,57 @@
+import { defineAsyncComponent } from 'vue'
 // icons
-export * from './icons'
-export * from './icons/countries'
+// export * from './icons/icons'
+
+// export * from './icons/countries/countries'
+
 // table
-export { default as DPagination } from './table/DPagination.vue'
-export { default as DTable } from './table/DTable.vue'
-export { default as DTablePendingProcesses } from './table/DTablePendingProcesses.vue'
+export const DPagination = defineAsyncComponent(
+  () => import('./table/DPagination.vue')
+)
+export const DTable = defineAsyncComponent(() => import('./table/DTable.vue'))
+export const DTablePendingProcesses = defineAsyncComponent(
+  () => import('./table/DTablePendingProcesses.vue')
+)
+
 // tab
-export { default as DTab } from './tab/DTab.vue'
-export { default as DTabs } from './tab/DTabs.vue'
+
+export const DTab = defineAsyncComponent(() => import('./tab/DTab.vue'))
+export const DTabs = defineAsyncComponent(() => import('./tab/DTabs.vue'))
 
 // fields and buttons
-export { default as DBtn } from './DBtn.vue'
-export { default as DCard } from './DCard.vue'
-export { default as DDropdown } from './DDropdown.vue'
-export { default as DFileUploader } from './DFileUploader.vue'
-export { default as DIcon } from './DIcon.vue'
-export { default as DInfo } from './DInfo.vue'
-export { default as DList } from './DList.vue'
-export { default as DLoading } from './DLoading.vue'
-export { default as DModal } from './DModal.vue'
-export { default as DMultiselect } from './DMultiselect.vue'
-export { default as DSelectField } from './DSelectField.vue'
-export { default as DSelectFieldSearch } from './DSelectFieldSearch.vue'
-export { default as DTextAreaField } from './DTextAreaField.vue'
-export { default as DTextField } from './DTextField.vue'
-export { default as DToggleField } from './DToggleField.vue'
+export const DBtn = defineAsyncComponent(() => import('./DBtn.vue'))
+export const DCard = defineAsyncComponent(() => import('./DCard.vue'))
+export const DDropdown = defineAsyncComponent(() => import('./DDropdown.vue'))
+export const DFileUploader = defineAsyncComponent(
+  () => import('./DFileUploader.vue')
+)
+export const DIcon = defineAsyncComponent(() => import('./DIcon.vue'))
+export const DInfo = defineAsyncComponent(() => import('./DInfo.vue'))
+export const DList = defineAsyncComponent(() => import('./DList.vue'))
+export const DLoading = defineAsyncComponent(() => import('./DLoading.vue'))
+export const DModal = defineAsyncComponent(() => import('./DModal.vue'))
+export const DMultiselect = defineAsyncComponent(
+  () => import('./DMultiselect.vue')
+)
+export const DSelectField = defineAsyncComponent(
+  () => import('./DSelectField.vue')
+)
+export const DSelectFieldSearch = defineAsyncComponent(
+  () => import('./DSelectFieldSearch.vue')
+)
+export const DTextAreaField = defineAsyncComponent(
+  () => import('./DTextAreaField.vue')
+)
+// export const DTextField = () => import('./DTextField.vue')
+// export { default as DTextField } from './DTextField.vue'
+export const DTextField = defineAsyncComponent(() => import('./DTextField.vue'))
+
+export const DToggleField = defineAsyncComponent(
+  () => import('./DToggleField.vue')
+)
+
+export const DTextContentEditable = defineAsyncComponent(
+  () => import('./DTextContentEditable.vue')
+)
 // form
-export { default as DSubtitle } from './DSubtitle.vue'
+export const DSubtitle = defineAsyncComponent(() => import('./DSubtitle.vue'))

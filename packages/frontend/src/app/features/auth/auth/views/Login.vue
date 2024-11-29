@@ -3,8 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNotificationsStore } from '@/store/notifications'
 import { EyeIcon, EyeOffIcon } from '@components/basic/icons'
-import DTextField from '@components/basic/DTextField.vue'
-import DBtn from '@components/basic/DBtn.vue'
+import { DTextField, DBtn } from '@components/basic'
 const router = useRouter()
 const notificationsStore = useNotificationsStore()
 

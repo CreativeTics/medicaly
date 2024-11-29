@@ -6,13 +6,12 @@ import { useAttentionStore } from '@/store/patient-attention'
 
 import { getOrder, getFinalizeOrderPermission } from '../services'
 import { finalizeOrder } from '../services/services'
-import DBtn from '@components/basic/DBtn.vue'
-import DModal from '@components/basic/DModal.vue'
 import ServiceAttention from '../components/ServiceAttention.vue'
 import Popper from 'vue3-popper'
 import { useNotificationsStore } from '@/store/notifications'
 
-import { CheckCircleIcon } from '@components/basic'
+import { DBtn, DModal } from '@components/basic'
+import { CheckCircleIcon } from '@components/basic/icons'
 
 import PatientHeader from '../components/PatientHeader.vue'
 

@@ -12,12 +12,11 @@ import {
 } from '../services'
 import OrderStatus from '../../service-orders/components/OrderStatus.vue'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
-import DModal from '@components/basic/DModal.vue'
+import { DModal, DToggleField } from '@components/basic'
 
 import DCameraInput from '@components/DCameraInput.vue'
 import DSignatureInput from '@components/biometric/DSignatureInput.vue'
 import DFingerPrintInput from '@components/biometric/DFingerPrintInput.vue'
-import DToggleField from '@components/basic/DToggleField.vue'
 
 const route = useRoute()
 const router = useRouter()

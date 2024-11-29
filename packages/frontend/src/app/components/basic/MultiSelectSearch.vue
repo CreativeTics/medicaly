@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-import { XIcon } from '../basic'
+import { XIcon } from '../basic/icons'
 
 const props = withDefaults(
   defineProps<{

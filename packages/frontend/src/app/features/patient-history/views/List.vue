@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue'
-import {
-  SearchMdIcon,
-  DBtn,
-  DTextField,
-  DSelectFieldSearch,
-} from '@/app/components/basic'
-import PaginatedTable from '@/app/components/PaginatedTable.vue'
+import { ref, onMounted, reactive, defineAsyncComponent } from 'vue'
+import { DBtn, DTextField, DSelectFieldSearch } from '@/app/components/basic'
+import { SearchMdIcon } from '@components/basic/icons'
+
+const PaginatedTable = defineAsyncComponent(
+  () => import('@/app/components/PaginatedTable.vue')
+)
 import Popper from 'vue3-popper'
 import { useRouter } from 'vue-router'
 import {

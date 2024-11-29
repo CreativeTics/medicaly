@@ -9,7 +9,7 @@ import {
   ChevronDownIcon,
   LogOut03Icon,
 } from '@components/basic/icons'
-import DIcon from '@components/basic/DIcon.vue'
+import { DIcon } from '@components/basic'
 
 import Popper from 'vue3-popper'
 

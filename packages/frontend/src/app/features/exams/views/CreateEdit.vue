@@ -150,10 +150,8 @@ const form: Form = {
             {
               name: 'form',
               label: 'Formulario',
-              type: 'textarea',
+              type: 'form-editor',
               props: {
-                rows: 20,
-                placeholder: 'texto de la recomendación',
                 required: true,
                 class: 'lg:col-span-6 xl:col-span-6',
               },

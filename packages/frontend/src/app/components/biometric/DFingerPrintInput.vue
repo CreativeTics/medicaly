@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useFingerprint, DeviceStatus } from './use-fingerprint'
-import { Fingerprint03Icon } from '../basic'
+import { Fingerprint03Icon } from '../basic/icons'
 
 const props = defineProps<{
   modelValue: string

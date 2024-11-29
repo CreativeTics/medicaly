@@ -2,7 +2,9 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { io, Socket } from 'socket.io-client'
 import DDrawPanel from './DDrawPanel.vue'
-import { DBtn, Trash03Icon } from '../basic'
+
+import { DBtn } from '../basic'
+import { Trash03Icon } from '../basic/icons'
 import { WS_URL } from '@/config'
 
 const props = defineProps<{

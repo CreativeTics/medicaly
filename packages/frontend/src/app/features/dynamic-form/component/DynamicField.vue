@@ -6,18 +6,19 @@ import {
   DMultiselect,
   DToggleField,
   DSubtitle,
-} from '../../../components/basic'
-import DFileAttachment from '../../../components/attachments/DFileAttachment.vue'
-import IMCField from '../../../components/medical/IMCField.vue'
-import MultiSelectSearch from '../../../components/basic/MultiSelectSearch.vue'
+} from '@components/basic'
+import DFileAttachment from '@components/attachments/DFileAttachment.vue'
+import IMCField from '@components/medical/IMCField.vue'
+import MultiSelectSearch from '@components/basic/MultiSelectSearch.vue'
 import JsonEditorVue from 'json-editor-vue'
+import Audiogram from '@components/audiogram/Audiogram.vue'
+import DynamicFormEditor from '@components/dynamic-form-editor/DynamicFormEditor.vue'
 import {
   getSelectData,
   TableDataQuery,
   SelectOption,
 } from '../../../core/services/get-table/index'
 import { computed, onMounted, ref, watch } from 'vue'
-import Audiogram from '@components/audiogram/Audiogram.vue'
 
 const props = defineProps({
   count: { type: Number, required: false, default: () => 0 },
@@ -55,6 +56,7 @@ const components = new Map<string, any>([
   ['imc', { component: IMCField, defaultProps: {} }],
   ['multiselect_search', { component: MultiSelectSearch, defaultProps: {} }],
   ['audiogram', { component: Audiogram, defaultProps: {} }],
+  ['form-editor', { component: DynamicFormEditor, defaultProps: {} }],
 ])
 
 const isLoading = ref(false)

@@ -1,10 +1,7 @@
 <script lang="ts" setup>
-import {
-  DBtn,
-  DSelectFieldSearch,
-  DTextField,
-  Trash03Icon,
-} from '../../../components/basic'
+import { DBtn, DSelectFieldSearch, DTextField } from '@components/basic'
+import { Trash03Icon } from '@components/basic/icons'
+
 import Popper from 'vue3-popper'
 
 import {

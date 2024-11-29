@@ -8,14 +8,14 @@ import {
   saveAnnotation,
 } from '../services/services'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
+import { DBtn } from '@components/basic'
 import {
   AlertCircleIcon,
   EyeIcon,
   EyeOffIcon,
   Loading01Icon,
-  DBtn,
   Save02Icon,
-} from '@components/basic'
+} from '@components/basic/icons'
 import { useNotificationsStore } from '@/store/notifications'
 import { useAttentionStore } from '@/store/patient-attention'
 

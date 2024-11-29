@@ -1,28 +1,29 @@
 <script setup lang="ts">
-import { usePagination, useSelectableRows } from "@/app/core/composable/tables";
-import { onMounted, ref, watch } from "vue";
+import { usePagination, useSelectableRows } from '@/app/core/composable/tables'
+import { onMounted, ref, watch } from 'vue'
 
-import DTextField from "./basic/DTextField.vue";
-import DBtn from "./basic/DBtn.vue";
-import ChevronLeftIcon from "./basic/icons/ChevronLeftIcon.vue";
-import ChevronRightIcon from "./basic/icons/ChevronRightIcon.vue";
-import ChevronLeftDoubleIcon from "./basic/icons/ChevronLeftDoubleIcon.vue";
-import ChevronRightDoubleIcon from "./basic/icons/ChevronRightDoubleIcon.vue";
+import { DTextField, DBtn } from './basic'
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronLeftDoubleIcon,
+  ChevronRightDoubleIcon,
+} from './basic/icons'
 
 interface Columns {
-  title: string;
-  key: string;
-  align?: string;
+  title: string
+  key: string
+  align?: string
 }
 const props = withDefaults(
   defineProps<{
-    rows: any[];
-    columns: Columns[];
-    rowsPerPage?: number[];
-    perPage?: number;
-    enableSelectRows?: boolean;
-    selectRowsProp?: string;
-    heightTable?: string;
+    rows: any[]
+    columns: Columns[]
+    rowsPerPage?: number[]
+    perPage?: number
+    enableSelectRows?: boolean
+    selectRowsProp?: string
+    heightTable?: string
   }>(),
   {
     rows: () => [],
@@ -30,12 +31,12 @@ const props = withDefaults(
     rowsPerPage: () => [10, 25, 50, 200],
     perPage: 10,
     enableSelectRows: false,
-    selectRowsProp: "id",
-    heightTable: "",
+    selectRowsProp: 'id',
+    heightTable: '',
   }
-);
+)
 
-const searchText = ref("");
+const searchText = ref('')
 
 const {
   currentPageRows,
@@ -47,7 +48,7 @@ const {
   goToFirsPage,
   goToLastPage,
   search,
-} = usePagination<any>(props.rows);
+} = usePagination<any>(props.rows)
 
 const {
   selectedRows,
@@ -56,19 +57,19 @@ const {
   toggleAllRow,
   setSelectProp,
   setRows,
-} = useSelectableRows<any>(props.rows);
+} = useSelectableRows<any>(props.rows)
 
 onMounted(() => {
-  setSelectProp(props.selectRowsProp);
-});
+  setSelectProp(props.selectRowsProp)
+})
 
 watch(
   () => props.rows.length,
   () => {
-    updateRows(props.rows);
-    setRows(props.rows);
+    updateRows(props.rows)
+    setRows(props.rows)
   }
-);
+)
 
 defineExpose({
   updateRows,
@@ -76,7 +77,7 @@ defineExpose({
   toggleAllRow,
   selectedRows,
   selectedAllRows,
-});
+})
 </script>
 <template>
   <div class="h-full w-full">
@@ -223,7 +224,7 @@ defineExpose({
 .h-tr {
   height: 3.83rem;
 }
-input[type="checkbox"] {
+input[type='checkbox'] {
   transform: scale(1.5);
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { defineAsyncComponent, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import {
@@ -10,19 +10,25 @@ import {
   getPrintUrl,
   downloadConsent,
 } from '../services'
-import DBtn from '@components/basic/DBtn.vue'
+import { DBtn } from '@components/basic'
 import OrderStatus from '@features/service-orders/components/OrderStatus.vue'
 import Popper from 'vue3-popper'
-import PaginatedTable from '@components/PaginatedTable.vue'
-import PatientHeader from '../components/PatientHeader.vue'
-import SearchMdIcon from '@components/basic/icons/SearchMdIcon.vue'
-import PrinterIcon from '@components/basic/icons/PrinterIcon.vue'
-import DLoadingIcon from '@components/basic/icons/Loading01Icon.vue'
+const PaginatedTable = defineAsyncComponent(
+  () => import('@/app/components/PaginatedTable.vue')
+)
+const PatientHeader = defineAsyncComponent(
+  () => import('@/app/features/patients/components/PatientHeader.vue')
+)
+
+import {
+  SearchMdIcon,
+  PrinterIcon,
+  Loading01Icon as DLoadingIcon,
+  ArrowRightIcon,
+  XIcon,
+} from '@components/basic/icons'
 
 import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
-import Loading01Icon from '@components/basic/icons/Loading01Icon.vue'
-import XIcon from '@components/basic/icons/XIcon.vue'
-import ArrowRightIcon from '@components/basic/icons/ArrowRightIcon.vue'
 
 const route = useRoute()
 const router = useRouter()

@@ -6,7 +6,7 @@ import {
   Trash01Icon,
   Download01Icon,
 } from '../basic/icons'
-import { onMounted, ref, warn, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 import { useFileAttachment } from '../../core/composable/useFileAttachment'
 

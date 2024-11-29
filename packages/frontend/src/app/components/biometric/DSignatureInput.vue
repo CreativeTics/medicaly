@@ -2,7 +2,7 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { io, Socket } from 'socket.io-client'
 
-import { Camera03Icon, Repeat04Icon } from '../basic'
+import { Camera03Icon, Repeat04Icon } from '../basic/icons'
 import { WS_URL } from '@/config'
 
 const props = defineProps<{

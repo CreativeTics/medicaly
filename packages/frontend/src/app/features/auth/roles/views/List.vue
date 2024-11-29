@@ -1,49 +1,51 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import ModuleListBasic from "../../../../components/ModuleListBasic.vue";
-import { getRoles } from "../services";
+import { ref, onMounted, defineAsyncComponent } from 'vue'
+import { useRouter } from 'vue-router'
+const ModuleListBasic = defineAsyncComponent(
+  () => import('@components/ModuleListBasic.vue')
+)
+import { getRoles } from '../services'
 
-const router = useRouter();
+const router = useRouter()
 
 const columns = [
   {
-    key: "name",
-    title: "Nombre",
-    align: "left",
+    key: 'name',
+    title: 'Nombre',
+    align: 'left',
   },
   {
-    key: "description",
-    title: "Descripción",
-    align: "left",
+    key: 'description',
+    title: 'Descripción',
+    align: 'left',
   },
   {
-    key: "permissions",
-    title: "Permisos",
-    align: "left",
+    key: 'permissions',
+    title: 'Permisos',
+    align: 'left',
   },
   {
-    key: "updatedAt",
-    title: "Ultima modificación",
-    align: "left",
+    key: 'updatedAt',
+    title: 'Ultima modificación',
+    align: 'left',
   },
-];
+]
 
-const data = ref<any>([]);
+const data = ref<any>([])
 
 const goToCreate = () => {
-  console.log("Create");
-  router.push({ name: "roles.create" });
-};
+  console.log('Create')
+  router.push({ name: 'roles.create' })
+}
 const goToEdit = (id: string) => {
-  console.log("Edit", id);
-  router.push({ name: "roles.edit", params: { id } });
-};
+  console.log('Edit', id)
+  router.push({ name: 'roles.edit', params: { id } })
+}
 
 onMounted(async () => {
-  data.value = await getRoles();
-  console.log("Mounted", data.value);
-});
+  data.value = await getRoles()
+  console.log('Mounted', data.value)
+})
 </script>
 
 <template>

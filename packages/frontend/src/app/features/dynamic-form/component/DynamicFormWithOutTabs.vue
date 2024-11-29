@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { markRaw, onMounted, reactive, ref } from 'vue'
 import { useValidation } from '../../../core/composable/validation/index'
-import { DBtn } from '../../../components/basic'
+import { DBtn } from '@components/basic'
 import DynamicField from './DynamicField.vue'
 import { useNotificationsStore } from '../../../../store/notifications'
 

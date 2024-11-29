@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import XIcon from '@components/basic/icons/XIcon.vue'
-import DTextField from '@components/basic/DTextField.vue'
+import { XIcon } from '@components/basic/icons'
+import { DTextField } from '@components/basic'
+
 import { useNotificationsStore } from '@/store/notifications'
 import { useAuthStore } from '@/store/auth'
 

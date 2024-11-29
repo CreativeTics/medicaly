@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import ModuleListBasic from '../../../components/ModuleListBasic.vue'
+const ModuleListBasic = defineAsyncComponent(
+  () => import('@components/ModuleListBasic.vue')
+)
 
 const router = useRouter()
 
