@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 const ModuleListBasic = defineAsyncComponent(
   () => import('@components/ModuleListBasic.vue')
