@@ -5,11 +5,6 @@ GREEN=`tput setaf 2`
 # load .env file
 
 export $(cat .env | xargs)
-# WAREHOUSE_POSTGRES_USER
-# WAREHOUSE_POSTGRES_PASSWORD
-# WAREHOUSE_DB_URL
-
-# run migrations to datawarehouse
 
 export DATABASE_URL=postgres://$WAREHOUSE_POSTGRES_USER:$WAREHOUSE_POSTGRES_PASSWORD@localhost:5432/medicaly
 
