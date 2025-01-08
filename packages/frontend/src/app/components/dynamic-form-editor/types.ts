@@ -1,10 +1,22 @@
 import { TableDataQuery } from '@/app/core/services/get-table/index'
 
 export interface Field {
-  id: string
+  id?: string
   name: string
   label?: string
-  type: string
+  type:
+    | 'text'
+    | 'number'
+    | 'check'
+    | 'date'
+    | 'select'
+    | 'multiselect'
+    | 'textarea'
+    | 'file'
+    | 'subtitle'
+    | 'imc'
+    | 'multiselect_search'
+    | 'audiogram'
   props?: any
   if?: string
   editingProps?: any
@@ -17,7 +29,7 @@ export interface Field {
   }
 }
 
-interface Group {
+export interface Group {
   name: string
   description?: string
   fields: Field[]
