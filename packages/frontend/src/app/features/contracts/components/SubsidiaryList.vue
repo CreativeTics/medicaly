@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import { Edit03Icon, Trash03Icon } from '@components/basic/icons'
 import { DBtn } from '@components/basic'
-const PaginatedTable = () => import('@components/PaginatedTable.vue')
-const DSideModal = () => import('@components/DSideModal.vue')
+const PaginatedTable = defineAsyncComponent(
+  () => import('@components/PaginatedTable.vue')
+)
+const DSideModal = defineAsyncComponent(
+  () => import('@components/DSideModal.vue')
+)
 import Popper from 'vue3-popper'
 import {
   getList,
@@ -14,6 +18,7 @@ import {
 import { Form, DynamicForm } from '../../dynamic-form'
 import { onMounted, ref } from 'vue'
 import { useNotificationsStore } from '@/store/notifications'
+import { defineAsyncComponent } from 'vue'
 
 const moduleName = 'Sede'
 // const modulePath = "contract-subsidiaries";
