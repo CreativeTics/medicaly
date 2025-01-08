@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Field } from './types'
-import { Edit05Icon as EditIcon, XIcon } from '@/app/components/basic/icons'
+import { Edit05Icon as EditIcon } from '@/app/components/basic/icons'
 import DBtn from '@components/basic/DBtn.vue'
 import DTextAreaField from '@components/basic/DTextAreaField.vue'
 import { ref } from 'vue'
