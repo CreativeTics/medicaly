@@ -4,7 +4,7 @@ GREEN=`tput setaf 2`
 
 # load .env file
 
-export $(cat .env | xargs)
+export $(grep -v '^#' .env | xargs)
 
 export DATABASE_URL=postgres://$WAREHOUSE_POSTGRES_USER:$WAREHOUSE_POSTGRES_PASSWORD@localhost:5432/medicaly
 
