@@ -17,7 +17,7 @@ const PaginatedTable = defineAsyncComponent(
   () => import('@/app/components/PaginatedTable.vue')
 )
 const PatientHeader = defineAsyncComponent(
-  () => import('@/app/features/patients/components/PatientHeader.vue')
+  () => import('../components/PatientHeader.vue')
 )
 
 import {
