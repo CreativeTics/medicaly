@@ -1,4 +1,5 @@
-const location = window.location.host.replace(/:[0-9]*/, '')
+// const location = window.location.host.replace(/:[0-9]*/, '')
+const location = 'app.javapsaludocupacional.com.co'
 
 export const API_URL = `https://${location}/api/v1`
 export const DB_URL = `https://${location}/db`
@@ -19,7 +20,7 @@ export const menu = [
     route: '/home',
   },
   {
-    name: 'Atencion',
+    name: 'Atención',
     icon: 'ClipboardCheckIcon',
     children: [
       {
@@ -68,15 +69,15 @@ export const menu = [
   },
 
   {
-    name: 'Tablas Basicas',
+    name: 'Tablas Básicas',
     icon: 'Tool02Icon',
     children: [
       {
-        name: 'Basica',
+        name: 'Básica',
         idMenu: '1',
         children: [
           {
-            name: 'Paises',
+            name: 'Países',
             route: '/countries',
             permission: 'countries:list',
           },
@@ -124,11 +125,11 @@ export const menu = [
         ],
       },
       {
-        name: 'Examenes',
+        name: 'Exámenes',
         idMenu: '1',
         children: [
           {
-            name: 'Examenes',
+            name: 'Exámenes',
             route: '/exams',
             permission: 'exams:list',
           },
