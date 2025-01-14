@@ -1,22 +1,11 @@
 <script setup lang="ts">
-import { ref, watchEffect, toRefs } from 'vue'
+import { ref, toRefs } from 'vue'
 import DBtn from './DBtn.vue'
 import DTextField from './DTextField.vue'
 import DList from './DList.vue'
 import { ChevronDownIcon, Loading02Icon } from './icons'
 
-const openMultiSelect = ref(false)
-const searchValue = ref('')
-const itemsList = ref()
-watchEffect(() => {
-  itemsList.value = props.options
-})
-const arraySelected = ref<any[]>([])
-const count = ref(0)
-const selected = ref()
-const copyItems = ref()
-const copySelected = ref()
-const countCopy = ref()
+import { onMounted } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -49,10 +38,24 @@ const props = withDefaults(
     //openMultiSelect: false
   }
 )
+const emits = defineEmits(['update:modelValue', 'change', 'filter', 'file'])
+
+const openMultiSelect = ref(false)
+const searchValue = ref('')
+const itemsList = ref<any[]>([])
+
+onMounted(() => {
+  itemsList.value = props.options
+})
+
+const arraySelected = ref<any[]>([])
+const count = ref(0)
+const selected = ref()
+const copyItems = ref()
+const copySelected = ref()
+const countCopy = ref()
 
 const { modelValue } = toRefs(props)
-
-const emits = defineEmits(['update:modelValue', 'change', 'filter', 'file'])
 
 const emitUpdate = (val: any) => {
   emits('update:modelValue', val)
@@ -184,7 +187,6 @@ const cancelSelection = () => {
           <header
             class="sticky inset-x-0 top-0 bg-gray-100 w-full h-16 px-4 flex items-center justify-center gap-3 border"
           >
-            <!-- <slot name="title_header"></slot> -->
             <h1 class="font-bold text-xl">{{ headerTitle }}</h1>
             <div
               class="flex justify-center items-center rounded-full bg-blue-600 text-white w-9 h-9 font-bold"
