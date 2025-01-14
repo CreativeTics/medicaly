@@ -33,7 +33,7 @@ services:
       FRONTEND_URL: http://localhost:5173
       PORT: 4000
       METABASE_SECRET_KEY: $MB_EMBEDDING_SECRET_KEY
-      METABASE_SITE_URL: https://app.javapsaludocupacional.com.co:3090
+      METABASE_SITE_URL: http://app.javapsaludocupacional.com.co:3090
 
   datawarehouse:
     image: postgres:15
