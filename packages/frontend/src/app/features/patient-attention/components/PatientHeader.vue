@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { getContractPositionNameById, getPatient } from '../services/services'
 import { useImageFile } from '@/app/core/composable/useImageFile'
+import { DAlertText } from '@components/basic'
 
 const props = defineProps({
   patientName: String,
@@ -25,10 +26,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex">
-    <div
-      class="text-lg font-semibold text-gray-900 p-3 flex flex-col items-end"
-    >
+  <div class="flex items-start justify-end flex-wrap gap-2">
+    <DAlertText v-if="patient.observation" class="text-xs w-full">
+      {{ patient.observation }}
+    </DAlertText>
+    <div class="font-semibold text-gray-900 p-3 flex flex-col items-end">
       {{ patientName }}
       <span class="text-sm font-normal text-gray-500">
         {{ contractName }}({{ positionName }})
@@ -42,7 +44,7 @@ onMounted(async () => {
       >
     </div>
     <div
-      class="rounded-full h-24 w-24 min-w-min bg-white"
+      class="rounded-full h-24 w-24 min-w-min bg-white hidden md:block"
       style="min-width: 6rem"
     >
       <img

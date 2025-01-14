@@ -55,3 +55,5 @@ export const DTextContentEditable = defineAsyncComponent(
 )
 // form
 export const DSubtitle = defineAsyncComponent(() => import('./DSubtitle.vue'))
+
+export const DAlertText = defineAsyncComponent(() => import('./DAlertText.vue'))

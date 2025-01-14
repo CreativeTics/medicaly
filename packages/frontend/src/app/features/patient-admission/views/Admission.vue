@@ -12,7 +12,7 @@ import {
 } from '../services'
 import OrderStatus from '../../service-orders/components/OrderStatus.vue'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
-import { DModal, DToggleField } from '@components/basic'
+import { DAlertText, DModal, DToggleField } from '@components/basic'
 
 import DCameraInput from '@components/DCameraInput.vue'
 import DSignatureInput from '@components/biometric/DSignatureInput.vue'
@@ -513,18 +513,21 @@ const onSubmit = async () => {
 
 <template>
   <div class="w-full h-full px-5">
-    <div class="bg-gray-50 pb-4">
-      <div class="leading-4 pt-responsive">
+    <div class="bg-gray-50">
+      <div class="flex justify-between flex-wrap">
         <p
-          class="text-3xl flex items-center gap-5 font-semibold text-shadow text-blue-900"
+          class="flex items-center gap-5 font-semibold text-shadow text-blue-900"
         >
           Orden # {{ order.code }}
-          <span class="text-lg font-semibold"
+          <span class="font-semibold"
             >{{ order.medicalExamType?.name }} :
             {{ order.medicalExamType?.emphasis }}
           </span>
-          <OrderStatus :status="order.status" class="text-lg" />
+          <OrderStatus :status="order.status" />
         </p>
+        <DAlertText v-if="order.observation">
+          {{ order.observation }}
+        </DAlertText>
       </div>
     </div>
 
@@ -533,7 +536,7 @@ const onSubmit = async () => {
     >
       <div
         class="flex flex-col justify-end"
-        style="height: calc(100vh - 200px)"
+        style="height: calc(100vh - 120px)"
       >
         <div class="w-full flex flex-row h-full">
           <div class="w-96 p-2 bg-slate-100 flex flex-col gap-2">

@@ -19,9 +19,9 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div class="w-full p-5">
+  <div class="w-full">
     <span class="text-xl text-indigo-800 font-semibold flex justify-between">
-      {{ service.name }}
+      <!-- {{ service.name }} -->
     </span>
     <div v-for="exam in service.exams">
       <Exam

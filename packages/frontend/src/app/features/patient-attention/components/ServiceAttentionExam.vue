@@ -105,7 +105,7 @@ const submit = async (data: any) => {
 <template>
   <div v-if="!isLoading" class="w-full mb-5">
     <span
-      class="text-md text-gray-500 w-full flex items-center hover:bg-slate-50 cursor-pointer"
+      class="text-sm text-gray-500 w-full flex items-center hover:bg-slate-50 cursor-pointer"
     >
       <div class="flex-grow flex" @click="isHidden = !isHidden">
         {{ exam.name?.toUpperCase() }} v.{{ exam.version }}

@@ -41,6 +41,11 @@ const columns = [
     align: 'left',
   },
   {
+    key: 'observation',
+    title: 'Observación',
+    align: 'left',
+  },
+  {
     key: 'status',
     title: 'Estado de atención',
   },

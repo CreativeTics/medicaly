@@ -58,6 +58,7 @@ export async function getList(searchOptions: any) {
       'medicalExamTypeName',
       'patientName',
       'status',
+      'observation',
       'createdAt',
     ],
     where: where,
@@ -73,6 +74,7 @@ export async function getList(searchOptions: any) {
       type: doc.medicalExamTypeName,
       patientName: doc.patientName,
       status: doc.status,
+      observation: doc.observation,
       createdAt: formatDate(doc.createdAt, true),
     }
   })

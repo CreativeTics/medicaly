@@ -73,14 +73,12 @@ async function finalize(id: string) {
 <template>
   <div class="w-full h-full px-5 flex flex-col">
     <!-- header -->
-    <div class="bg-gray-50 flex justify-between">
-      <p
-        class="text-3xl flex items-center gap-5 font-semibold text-shadow text-blue-900"
-      >
+    <div class="bg-gray-50 flex flex-wrap justify-between">
+      <p class="flex items-start gap-2 font-semibold text-shadow text-blue-900">
         {{ order.code }}
 
-        <span class="text-lg font-semibold"
-          >{{ order.medicalExamType?.name }} :
+        <span class="font-semibold"
+          >{{ order.medicalExamType?.name }}
           {{ order.medicalExamType?.emphasis }}
         </span>
       </p>
