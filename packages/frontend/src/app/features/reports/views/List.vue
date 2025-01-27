@@ -23,11 +23,11 @@ const columns = [
 const data = ref<any>([
   {
     id: '2',
-    name: 'Ordenes de servicio',
+    name: 'Ordenes Atendidas por Medico/Auxiliar',
   },
   {
     id: '3',
-    name: 'Ordenes Atendidas por Medico/Auxiliar',
+    name: 'Ordenes de servicio',
   },
 ])
 
