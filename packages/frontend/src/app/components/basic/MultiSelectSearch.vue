@@ -66,7 +66,7 @@ const search = () => {
 
   if (props.allowAddSearch && searchText.value) data.push(searchText.value)
   if (data.length > 0) searchActiveItem.value = 0
-  searchElements.value = data
+  searchElements.value = data.slice(0, 100) // Limit to 100 items
 }
 
 const add = (index?: number) => {

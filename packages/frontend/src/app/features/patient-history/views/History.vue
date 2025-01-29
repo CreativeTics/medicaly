@@ -227,7 +227,7 @@ onUnmounted(() => {
                       class="bg-gray-50 rounded-md py-2"
                       @click="generatePrint(rowProps.row.id)"
                     >
-                      <Loading01Icon
+                      <DLoadingIcon
                         v-if="printingTicket === rowProps.row.id"
                         class="h-6 w-6 mx-2 cursor-pointer text-gray-600 animate-spin"
                       />

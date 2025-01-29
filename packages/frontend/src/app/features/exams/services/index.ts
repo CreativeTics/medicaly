@@ -9,6 +9,7 @@ export async function getList() {
   const data = await getData<any[]>({
     entity: `${DB.MEDICAL}:${doctype}`,
     fields: ['id', 'type', 'code', 'name', 'version', 'updatedAt'],
+    sort: [{ code: 'asc' }],
   })
 
   const uniques = data.reduce((acc: Map<string, any>, curr: any) => {

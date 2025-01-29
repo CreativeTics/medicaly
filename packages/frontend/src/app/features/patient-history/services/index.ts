@@ -91,6 +91,7 @@ export async function getPatientById(patientId: string): Promise<Patient> {
     entity: `${DB.MEDICAL}:patients-data`,
     fields: ['id', 'birthDate', 'photoId'],
     where: { patientId: patientId },
+    sort: [{ createdAt: 'desc' }],
   })
 
   if (patientsData.length > 0) {
