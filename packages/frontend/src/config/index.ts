@@ -146,6 +146,16 @@ export const menu = [
         route: '/reports/basics',
         permission: 'reports:basics',
       },
+      {
+        name: 'Facturación',
+        route: '/reports/billing',
+        permission: 'reports:billing',
+      },
+      {
+        name: 'RIPS',
+        route: '/reports/rips',
+        permission: 'reports:rips',
+      },
     ],
   },
   {

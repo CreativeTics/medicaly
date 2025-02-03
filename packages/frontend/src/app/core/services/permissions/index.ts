@@ -87,6 +87,14 @@ export const permissions = [
     id: 'reports:basics',
     name: 'Reportes > Básicos',
   },
+  {
+    id: 'reports:billing',
+    name: 'Reportes > Facturación',
+  },
+  {
+    id: 'reports:rips',
+    name: 'Reportes > RIPS',
+  },
 ]
 
 export const userTypes = [
