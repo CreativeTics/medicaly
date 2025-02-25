@@ -210,7 +210,8 @@ const form: any = {
             class: 'lg:col-span-1 xl:col-span-1',
             required: true,
             options: [
-              { id: 'CONTRIBUTIVO', name: 'CONTRIBUTIVO' },
+              { id: 'CONTRIBUTIVO-COTIZANTE', name: 'CONTRIBUTIVO-COTIZANTE' },
+              { id: 'CONTRIBUTIVO-BENEFICIARIO', name: 'CONTRIBUTIVO-BENEFICIARIO' },
               { id: 'SUBSIDIADO', name: 'SUBSIDIADO' },
               { id: 'ESPECIAL', name: 'ESPECIAL' },
               { id: 'NO REFIERE', name: 'NO REFIERE' },
