@@ -3,36 +3,41 @@ import { getChanges, getDoc } from './get-couch-changes'
 import { upsertAnnotation } from './sync-medical-annotations'
 
 export async function syncMedical() {
-  const lastEventId = await getLastEventId('medical')
+  try {
+    const lastEventId = await getLastEventId('medical')
 
-  const changes = await getChanges(
-    'medical',
-    lastEventId[0]?.last_completed_sync
-  )
+    const changes = await getChanges(
+      'medical',
+      lastEventId[0]?.last_completed_sync
+    )
 
-  const filteredChanges = changes.data.results.filter(
-    (change) =>
-      change.doc.doctype === 'patients' ||
-      change.doc.doctype === 'patients-data' ||
-      change.doc.doctype === 'annotations'
-  )
+    const filteredChanges = changes.data.results.filter(
+      (change) =>
+        change.doc.doctype === 'patients' ||
+        change.doc.doctype === 'patients-data' ||
+        change.doc.doctype === 'annotations'
+    )
 
-  console.log(`medical :: found ${filteredChanges.length} changes`)
+    console.log(`medical :: found ${filteredChanges.length} changes`)
 
-  for (const change of filteredChanges) {
-    if (change.doc.doctype === 'patients') {
-      await upsertPatient(change.doc as Patient)
-      await updateLastEventId('medical', change.seq)
-    } else if (change.doc.doctype === 'patients-data') {
-      await upsertPatientData(change.doc as PatientData)
-      await updateLastEventId('medical', change.seq)
-    } else if (change.doc.doctype === 'annotations') {
-      await upsertAnnotation(change.doc)
-      await updateLastEventId('medical', change.seq)
+    for (const change of filteredChanges) {
+      if (change.doc.doctype === 'patients') {
+        await upsertPatient(change.doc as Patient)
+        await updateLastEventId('medical', change.seq)
+      } else if (change.doc.doctype === 'patients-data') {
+        await upsertPatientData(change.doc as PatientData)
+        await updateLastEventId('medical', change.seq)
+      } else if (change.doc.doctype === 'annotations') {
+        await upsertAnnotation(change.doc)
+        await updateLastEventId('medical', change.seq)
+      }
     }
+    await updateLastEventId('medical', changes.data.last_seq)
+
+    console.log(`medical :: ${filteredChanges.length} changes synced`)
+  } catch (error) {
+    console.log('Error in syncMedical', error)
   }
-  await updateLastEventId('medical', changes.data.last_seq)
-  console.log(`medical :: ${filteredChanges.length} changes synced`)
 }
 
 interface Patient {
