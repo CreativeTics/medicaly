@@ -1,5 +1,4 @@
-import { PoolClient } from 'pg'
-import { query, getLastEventId, updateLastEventId } from '../util/pg-client'
+import { getLastEventId, query, updateLastEventId } from '../util/pg-client'
 import { getChanges, getDoc } from './get-couch-changes'
 
 export async function syncMedical() {
@@ -143,8 +142,6 @@ async function upsertPatientData(patientData: PatientData) {
     await query(`DELETE FROM patients_data WHERE id = '${patientData._id}'`)
   }
 
-  const eps = await getDoc('general', patientData.eps || '')
-  const arl = await getDoc('general', patientData.arl || '')
   const position = await getDoc('general', patientData.applyPosition || '')
   const precedenceCity = await getDoc(
     'general',
@@ -219,9 +216,9 @@ async function upsertPatientData(patientData: PatientData) {
       patientData.birthDate,
       patientData.maritalStatus,
       patientData.bloodType,
-      `${eps.code} - ${eps.name}`,
+      patientData.eps,
       patientData.epsAffiliationType,
-      `${arl.code} - ${arl.name}`,
+      patientData.arl,
       patientData.schoolLevel,
       patientData.biologicalSex,
       patientData.gender,
