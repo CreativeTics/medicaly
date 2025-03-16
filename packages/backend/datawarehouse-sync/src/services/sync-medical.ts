@@ -1,5 +1,6 @@
 import { getLastEventId, query, updateLastEventId } from '../util/pg-client'
 import { getChanges, getDoc } from './get-couch-changes'
+import { upsertAnnotation } from './sync-medical-annotations'
 
 export async function syncMedical() {
   const lastEventId = await getLastEventId('medical')
@@ -12,7 +13,8 @@ export async function syncMedical() {
   const filteredChanges = changes.data.results.filter(
     (change) =>
       change.doc.doctype === 'patients' ||
-      change.doc.doctype === 'patients-data'
+      change.doc.doctype === 'patients-data' ||
+      change.doc.doctype === 'annotations'
   )
 
   console.log(`medical :: found ${filteredChanges.length} changes`)
@@ -23,6 +25,9 @@ export async function syncMedical() {
       await updateLastEventId('medical', change.seq)
     } else if (change.doc.doctype === 'patients-data') {
       await upsertPatientData(change.doc as PatientData)
+      await updateLastEventId('medical', change.seq)
+    } else if (change.doc.doctype === 'annotations') {
+      await upsertAnnotation(change.doc)
       await updateLastEventId('medical', change.seq)
     }
   }

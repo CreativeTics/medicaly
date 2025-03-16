@@ -1,25 +1,7 @@
 import { query } from '../util/pg-client'
-import { getDoc, searchDocs } from './get-couch-changes'
+import { getDoc } from './get-couch-changes'
 
-const annotationsStatus = {
-  FINISHED: 'FINALIZADO',
-}
-
-export async function syncMedicalAnnotations() {
-  const todayAnnotations = await searchDocs('medical', {
-    doctype: 'annotations',
-    updatedAt: new Date().toISOString().split('T')[0],
-    status: annotationsStatus.FINISHED,
-  })
-
-  console.log(`medical :: found ${todayAnnotations.length} annotations`)
-
-  for (const annotation of todayAnnotations) {
-    await upsertAnnotation(annotation)
-  }
-}
-
-async function upsertAnnotation(annotation: any) {
+export async function upsertAnnotation(annotation: any) {
   const exist = await query(
     `SELECT * FROM annotations WHERE id = '${annotation._id}'`
   )
