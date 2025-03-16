@@ -18,7 +18,7 @@ export async function getDocumentTypes() {
     return {
       id: doc.id,
       code: doc.code,
-      name: doc.name,
+      name: `${doc.code} - ${doc.name}`,
     }
   })
 }
