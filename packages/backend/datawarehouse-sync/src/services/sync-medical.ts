@@ -21,6 +21,9 @@ export async function syncMedical() {
     console.log(`medical :: found ${filteredChanges.length} changes`)
 
     for (const change of filteredChanges) {
+      console.log(
+        `medical :: processing change ${change.doc.doctype}::${change.doc._id} `
+      )
       if (change.doc.doctype === 'patients') {
         await upsertPatient(change.doc as Patient)
         await updateLastEventId('medical', change.seq)
