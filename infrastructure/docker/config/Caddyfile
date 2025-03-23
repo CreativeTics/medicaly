@@ -1,11 +1,6 @@
 
-# :443 {
-#     reverse_proxy / host.docker.internal:5173
-# #    reverse_proxy /api/v1/certificates certificates:3002
-#     tls internal
-# }
 
-:80, :443 {
+:80 {
 
     handle /api/files/* {
 		reverse_proxy certificates:3002
@@ -33,13 +28,13 @@
 
 
     handle { # frontend
-		# reverse_proxy host.docker.internal:5173 # for local development
 		reverse_proxy front:80
+		# reverse_proxy host.docker.internal:5173 # for local development
 	}
 
-	tls internal {
-		on_demand
-	}	
+	# tls internal {
+	# 	on_demand
+	# }	
 	
 }
 
