@@ -64,7 +64,25 @@ export interface Invoice {
   createdAt: string
 }
 
-export async function getInvoices(): Promise<Invoice[]> {
+export async function getInvoices(searchOptions: any): Promise<Invoice[]> {
+  const where: Record<string, any> = {}
+
+  if (searchOptions.startDate && searchOptions.endDate) {
+    where.createdAt = {
+      $gte: searchOptions.startDate,
+      $lte: searchOptions.endDate,
+    }
+  }
+
+  console.log('searchOptions', searchOptions.subsidiaryId)
+  if (searchOptions.subsidiaryId) {
+    where.subsidiary = searchOptions.subsidiaryId
+  }
+  console.log('searchOptions', searchOptions.contractName)
+  if (searchOptions.contractName) {
+    where.contractName = { $regex: `(?i).*${searchOptions.contractName}.*` }
+  }
+
   const data = await getData<Invoice[]>({
     entity: `${DB.BILLING}:invoice`,
     fields: [
@@ -78,6 +96,7 @@ export async function getInvoices(): Promise<Invoice[]> {
       'totalAmount',
       'createdAt',
     ],
+    where,
     sort: [{ createdAt: 'desc' }],
   })
 

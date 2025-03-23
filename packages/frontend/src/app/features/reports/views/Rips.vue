@@ -6,14 +6,12 @@ const PaginatedTable = defineAsyncComponent(
 )
 
 import Popper from 'vue3-popper'
-import { useRouter } from 'vue-router'
-import { getInvoices, Invoice } from '../services/invoices'
+import { getInvoices, Invoice } from '../../billing/services/invoices'
 
 import dayjs from 'dayjs'
-import SearchLgIcon from '@components/basic/icons/SearchLgIcon.vue'
-import { getSubsidiariesList } from '../services'
-
-const router = useRouter()
+import { getSubsidiariesList } from '../../billing/services'
+import { getRipsReport } from '../services'
+import { XlsxIcon, JsonIcon } from '@components/basic/'
 
 const actionsColumn = {
   key: 'actions',
@@ -46,11 +44,6 @@ const columns = [
     title: 'Cant. Ordenes',
     align: 'left',
   },
-  {
-    key: 'totalAmount',
-    title: 'Total',
-    align: 'left',
-  },
 ]
 
 const subsidiaries = ref<{ id: any; name: any }[]>([])
@@ -67,8 +60,8 @@ const search = async () => {
   data.value = await getInvoices(searchOptions)
 }
 
-const goToDetail = (invoiceId: string) => {
-  router.push(`/billing/invoices/${invoiceId}`)
+const downloadRipsReport = async (id: string, format: 'xlsx' | 'json') => {
+  await getRipsReport(id, format)
 }
 
 onMounted(async () => {
@@ -81,8 +74,10 @@ onMounted(async () => {
   <div class="h-full px-5 overflow-auto scroll">
     <div class="bg-gray-50 pb-4">
       <div class="leading-4 pt-responsive">
-        <p class="text-3xl font-semibold text-shadow">Facturas</p>
-        <p class="text-gray-500 text-shadow">Lista de Facturas Creadas</p>
+        <p class="text-3xl font-semibold text-shadow">RIPS</p>
+        <p class="text-gray-500 text-shadow">
+          Lista de Facturas disponibles para descargar el reporte de Rips
+        </p>
       </div>
       <div class="sm:flex justify-between pt-2">
         <PaginatedTable
@@ -149,18 +144,31 @@ onMounted(async () => {
                 <Popper
                   arrow
                   offsetDistance="12"
-                  content="Ver Detalle"
+                  content="Descargar Excel"
                   :hover="true"
-                  placement="left"
+                  placement="top"
                   class="tooltip"
                 >
                   <div
-                    class="bg-gray-50 rounded-md py-2"
-                    @click="goToDetail(rowProps.row.id)"
+                    class="bg-gray-50 rounded-md py-2 cursor-pointer hover:scale-110"
+                    @click="downloadRipsReport(rowProps.row.id, 'xlsx')"
                   >
-                    <SearchLgIcon
-                      class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
-                    />
+                    <XlsxIcon class="h-4 w-4 mx-2 text-gray-600" />
+                  </div>
+                </Popper>
+                <Popper
+                  arrow
+                  offsetDistance="12"
+                  content="Descargar JSON"
+                  :hover="true"
+                  placement="top"
+                  class="tooltip"
+                >
+                  <div
+                    class="bg-gray-50 rounded-md py-2 cursor-pointer hover:scale-110"
+                    @click="downloadRipsReport(rowProps.row.id, 'json')"
+                  >
+                    <JsonIcon class="h-4 w-4 mx-2 text-gray-600" />
                   </div>
                 </Popper>
               </div>

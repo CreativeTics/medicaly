@@ -103,7 +103,7 @@ defineExpose({
       :style="{ maxHeight: heightTable }"
     >
       <table class="min-w-full table-auto">
-        <thead class="h-14 sticky top-0" style="z-index: 1">
+        <thead class="h-14 sticky top-0">
           <tr class="bg-white">
             <th v-if="enableSelectRows" class="w-16">
               <div class="flex w-20 items-center justify-center">

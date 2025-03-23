@@ -11,3 +11,14 @@ export const getMetabaseDashboardUrl = async (
 
   return ''
 }
+
+export const getRipsReport = async (
+  invoiceId: string,
+  format: 'xlsx' | 'json'
+): Promise<void> => {
+  const response = await http.get(`/reports/rips/${invoiceId}?format=${format}`)
+
+  if (response.status === 200) {
+    // Do something with the response
+  }
+}

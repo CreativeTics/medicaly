@@ -4,102 +4,102 @@
 
 /* Tipografias */
 @font-face {
-  font-family: "Inter-100";
-  src: local("Inter-100"),
-    url("./assets/font/Inter/inter-latin-100-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-100-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-100-normal.woff2") format("woff2");
+  font-family: 'Inter-100';
+  src: local('Inter-100'),
+    url('./assets/font/Inter/inter-latin-100-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-100-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-100-normal.woff2') format('woff2');
 }
 @font-face {
-  font-family: "Inter-200";
-  src: local("Inter-200"),
-    url("./assets/font/Inter/inter-latin-200-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-200-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-200-normal.woff2") format("woff2");
+  font-family: 'Inter-200';
+  src: local('Inter-200'),
+    url('./assets/font/Inter/inter-latin-200-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-200-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-200-normal.woff2') format('woff2');
 }
 @font-face {
-  font-family: "Inter-300";
-  src: local("Inter-300"),
-    url("./assets/font/Inter/inter-latin-300-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-300-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-300-normal.woff2") format("woff2");
+  font-family: 'Inter-300';
+  src: local('Inter-300'),
+    url('./assets/font/Inter/inter-latin-300-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-300-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-300-normal.woff2') format('woff2');
 }
 @font-face {
-  font-family: "Inter-400";
-  src: local("Inter-400"),
-    url("./assets/font/Inter/inter-latin-400-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-400-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-400-normal.woff2") format("woff2");
+  font-family: 'Inter-400';
+  src: local('Inter-400'),
+    url('./assets/font/Inter/inter-latin-400-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-400-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-400-normal.woff2') format('woff2');
 }
 @font-face {
-  font-family: "Inter-500";
-  src: local("Inter-500"),
-    url("./assets/font/Inter/inter-latin-500-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-500-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-500-normal.woff2") format("woff2");
+  font-family: 'Inter-500';
+  src: local('Inter-500'),
+    url('./assets/font/Inter/inter-latin-500-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-500-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-500-normal.woff2') format('woff2');
 }
 @font-face {
-  font-family: "Inter-600";
-  src: local("Inter-600"),
-    url("./assets/font/Inter/inter-latin-600-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-600-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-600-normal.woff2") format("woff2");
+  font-family: 'Inter-600';
+  src: local('Inter-600'),
+    url('./assets/font/Inter/inter-latin-600-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-600-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-600-normal.woff2') format('woff2');
 }
 @font-face {
-  font-family: "Inter-700";
-  src: local("Inter-700"),
-    url("./assets/font/Inter/inter-latin-700-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-700-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-700-normal.woff2") format("woff2");
+  font-family: 'Inter-700';
+  src: local('Inter-700'),
+    url('./assets/font/Inter/inter-latin-700-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-700-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-700-normal.woff2') format('woff2');
 }
 @font-face {
-  font-family: "Inter-800";
-  src: local("Inter-800"),
-    url("./assets/font/Inter/inter-latin-800-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-800-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-800-normal.woff2") format("woff2");
+  font-family: 'Inter-800';
+  src: local('Inter-800'),
+    url('./assets/font/Inter/inter-latin-800-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-800-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-800-normal.woff2') format('woff2');
 }
 @font-face {
-  font-family: "Inter-900";
-  src: local("Inter-900"),
-    url("./assets/font/Inter/inter-latin-900-normal.woff") format("woff"),
-    url("./assets/font/Inter/inter-latin-900-normal.ttf") format("truetype"),
-    url("./assets/font/Inter/inter-latin-900-normal.woff2") format("woff2");
+  font-family: 'Inter-900';
+  src: local('Inter-900'),
+    url('./assets/font/Inter/inter-latin-900-normal.woff') format('woff'),
+    url('./assets/font/Inter/inter-latin-900-normal.ttf') format('truetype'),
+    url('./assets/font/Inter/inter-latin-900-normal.woff2') format('woff2');
 }
 
 .font-thin {
-  font-family: "Inter-100";
+  font-family: 'Inter-100';
 }
 .font-extralight {
-  font-family: "Inter-200";
+  font-family: 'Inter-200';
 }
 .font-light {
-  font-family: "Inter-300";
+  font-family: 'Inter-300';
 }
 .font-normal,
 body {
-  font-family: "Inter-400";
+  font-family: 'Inter-400';
 }
 .font-medium {
-  font-family: "Inter-500";
+  font-family: 'Inter-500';
 }
 .font-semibold,
 h4,
 h5,
 h5 {
-  font-family: "Inter-600";
+  font-family: 'Inter-600';
 }
 .font-bold,
 h1,
 h2,
 h3 {
-  font-family: "Inter-700";
+  font-family: 'Inter-700';
 }
 .font-extrabold {
-  font-family: "Inter-800";
+  font-family: 'Inter-800';
 }
 .font-black {
-  font-family: "Inter-900";
+  font-family: 'Inter-900';
 }
 
 /* diseño scroll */
@@ -154,12 +154,13 @@ input::-ms-clear {
 
 /* tooltip */
 .tooltip {
-  --popper-theme-background-color: #1b182c;
-  --popper-theme-background-color-hover: #1b182c;
+  --popper-theme-background-color: #000000;
+  --popper-theme-background-color-hover: #444444;
   --popper-theme-text-color: #ffffff;
   --popper-theme-border-radius: 6px;
-  --popper-theme-padding: 10px;
-  font-size: 14px;
+  --popper-theme-padding: 5px;
+  font-size: 10px;
+  cursor:default
 }
 
 /* title form */

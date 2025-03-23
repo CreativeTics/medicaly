@@ -4,6 +4,15 @@ import { defineAsyncComponent } from 'vue'
 
 // export * from './icons/countries/countries'
 
+// files icons
+
+export const XlsxIcon = defineAsyncComponent(
+  () => import('./files/XlsxIcon.vue')
+)
+export const JsonIcon = defineAsyncComponent(
+  () => import('./files/JsonIcon.vue')
+)
+
 // table
 export const DPagination = defineAsyncComponent(
   () => import('./table/DPagination.vue')
