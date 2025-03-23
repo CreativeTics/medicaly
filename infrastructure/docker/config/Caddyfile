@@ -37,9 +37,9 @@
 		reverse_proxy front:80
 	}
 
-	# tls internal {
-	# 	on_demand
-	# }	
+	tls internal {
+		on_demand
+	}	
 	
 }
 
