@@ -1,5 +1,5 @@
-const location = window.location.host.replace(/:[0-9]*/, '')
-// const location = 'app.javapsaludocupacional.com.co'
+// const location = window.location.host.replace(/:[0-9]*/, '')
+const location = 'app.javapsaludocupacional.com.co'
 // const location = 'localhost:8080'
 
 // export const API_URL = `http://${location}/api/v1`
