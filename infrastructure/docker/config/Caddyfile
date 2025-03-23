@@ -2,9 +2,7 @@
 
 :80 {
 
-	log {
-        output stdout
-    }
+	
 
     handle /api/files/* {
 		reverse_proxy certificates:3002
@@ -39,6 +37,8 @@
 	# tls internal {
 	# 	on_demand
 	# }	
+	
+	log
 	
 }
 
