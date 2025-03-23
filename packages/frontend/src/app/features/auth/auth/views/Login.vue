@@ -94,6 +94,7 @@ const handleLogin = async () => {
     <DBtn
       class="font-semibold py-3 text-base"
       :loading="loading"
+      :disabled="loading"
       @click="handleLogin"
     >
       Iniciar sesión
