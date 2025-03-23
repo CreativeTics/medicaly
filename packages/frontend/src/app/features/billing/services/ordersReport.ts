@@ -1,6 +1,9 @@
 import { formatCurrency } from '@/app/core/util/currencies'
 import { formatDate } from '@/app/core/util/dates'
+import { DB, PouchService } from '@/app/services/pouch'
 import ExcelJS from 'exceljs'
+
+const pouch = new PouchService()
 
 // REPORTE DE ORDENES PROCESADAS PARA APOYO LABORAL TS S.A.S ENTRE 29-11-2024 y 29-11-2024
 // CODIGO	FECHA	NOMBRE	CEDULA	SEDE/FINCA	TIPO EXAMEN	EXAMEN	COSTO EXAMEN	RESTRICCIONES	RECOMENDACIONES	DIAGNOSTICO	LUGAR
@@ -24,6 +27,7 @@ async function createInvoiceOrdersReport(
   invoice: any
 ): Promise<ExcelJS.Workbook> {
   const { startDate, endDate, subsidiaryName, contractName, orders } = invoice
+
   const workbook = new ExcelJS.Workbook()
   const worksheet = workbook.addWorksheet('Reporte de ordenes')
 
@@ -82,85 +86,91 @@ async function createInvoiceOrdersReport(
     }
   > = new Map()
   // Agregar datos de órdenes
-  orders.forEach((order: any) => {
-    order.services.forEach((service: any) => {
-      const key = `${service.code}-${service.name}`
-      if (!servicesResume.has(key)) {
-        servicesResume.set(key, {
-          total: 0,
-          unitAmount: service.amount,
-          totalAmount: 0,
-        })
+  await Promise.all(
+    orders.map(async (order: any) => {
+      order.services.forEach((service: any) => {
+        const key = `${service.code}-${service.name}`
+        if (!servicesResume.has(key)) {
+          servicesResume.set(key, {
+            total: 0,
+            unitAmount: service.amount,
+            totalAmount: 0,
+          })
+        }
+
+        const serviceData = servicesResume.get(key)
+        if (serviceData) {
+          serviceData.total++
+          serviceData.totalAmount += Number(service.amount)
+        }
+      })
+
+      const { diagnosis, recommendations, restrictions } = await getDiagnosis(
+        order.id
+      )
+
+      const row = worksheet.addRow([
+        order.code,
+        formatDate(order.finalizedAt),
+        order.patientName.split(' - ')[1],
+        order.patientName.split(' - ')[0],
+
+        order.contractSubsidiary,
+        order.medicalExamTypeName,
+        '',
+        '',
+        restrictions,
+        recommendations,
+        diagnosis,
+        subsidiaryName,
+      ])
+
+      row.getCell('G').value = {
+        richText: [
+          ...order.services.map((service: any) => ({
+            text: `${service.code} - ${service.name}\n`,
+          })),
+          {
+            text: 'TOTAL:\n',
+            font: { bold: true },
+          },
+        ],
       }
 
-      const serviceData = servicesResume.get(key)
-      if (serviceData) {
-        serviceData.total++
-        serviceData.totalAmount += Number(service.amount)
+      row.getCell('H').value = {
+        richText: [
+          ...order.services.map((service: any) => ({
+            text: `${formatCurrency(service.amount)}\n`,
+          })),
+          {
+            text: formatCurrency(order.totalAmount),
+            font: { bold: true },
+          },
+        ],
       }
-    })
 
-    const row = worksheet.addRow([
-      order.code,
-      formatDate(order.finalizedAt),
-      order.patientName.split(' - ')[1],
-      order.patientName.split(' - ')[0],
+      row.eachCell((cell) => {
+        cell.alignment = {
+          wrapText: true,
+          vertical: 'middle',
+          horizontal: 'left',
+        }
+        cell.font = { name: 'Times New Roman', size: 10 }
+      })
 
-      order.contractSubsidiary,
-      order.medicalExamTypeName,
-      '',
-      '',
-      'RESTRICCIONES',
-      'RECOMENDACIONES',
-      'DIAGNOSTICO',
-      subsidiaryName,
-    ])
+      row.getCell('A').font = {
+        bold: true,
+        name: 'Times New Roman',
+        size: 10,
+      }
 
-    row.getCell('G').value = {
-      richText: [
-        ...order.services.map((service: any) => ({
-          text: `${service.code} - ${service.name}\n`,
-        })),
-        {
-          text: 'TOTAL:\n',
-          font: { bold: true },
-        },
-      ],
-    }
-
-    row.getCell('H').value = {
-      richText: [
-        ...order.services.map((service: any) => ({
-          text: `${formatCurrency(service.amount)}\n`,
-        })),
-        {
-          text: formatCurrency(order.totalAmount),
-          font: { bold: true },
-        },
-      ],
-    }
-
-    row.eachCell((cell) => {
-      cell.alignment = {
+      row.getCell('H').alignment = {
         wrapText: true,
         vertical: 'middle',
-        horizontal: 'left',
+        horizontal: 'right',
       }
-      cell.font = { name: 'Times New Roman', size: 10 }
     })
-
-    row.getCell('A').font = {
-      bold: true,
-      name: 'Times New Roman',
-      size: 10,
-    }
-
-    row.getCell('H').alignment = {
-      wrapText: true,
-      vertical: 'middle',
-      horizontal: 'right',
-    }
-  })
+  )
 
   // Agregar resumen de servicios
   worksheet.addRow([''])
@@ -244,4 +254,40 @@ async function createInvoiceOrdersReport(
   }
 
   return workbook
+}
+
+async function getDiagnosis(orderId: any): Promise<{
+  restrictions: string
+  recommendations: string
+  diagnosis: string
+}> {
+  const EXAM_MEDICAL_ID = 'e6ce571a03dba5b38099b6852d000762'
+
+  const order = await pouch.use(DB.GENERAL).get(orderId)
+
+  let annotationId = ''
+
+  order.services.forEach((service: any) => {
+    if (annotationId) return
+
+    annotationId = service.annotations.find((annotationId: any) =>
+      annotationId.includes(EXAM_MEDICAL_ID)
+    )
+  })
+
+  if (!annotationId) {
+    return {
+      restrictions: '',
+      recommendations: '',
+      diagnosis: '',
+    }
+  }
+
+  const annotation = await pouch.use(DB.MEDICAL).get(annotationId)
+
+  return {
+    restrictions: annotation.diagnosisRestrictions.join('\n'),
+    recommendations: annotation.diagnosisRecommendations.join('\n'),
+    diagnosis: annotation.diagnosis.join('\n'),
+  }
 }
