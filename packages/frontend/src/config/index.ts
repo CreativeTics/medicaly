@@ -1,13 +1,13 @@
-// const location = window.location.host.replace(/:[0-9]*/, '')
+const location = window.location.host.replace(/:[0-9]*/, '')
 // const location = 'app.javapsaludocupacional.com.co'
-const location = 'localhost:8080'
+// const location = 'localhost:8080'
 
-export const API_URL = `http://${location}/api/v1`
-export const DB_URL = `http://${location}/db`
-export const WS_URL = `ws://${location}`
-// export const API_URL = `https://${location}/api/v1`
-// export const DB_URL = `https://${location}/db`
-// export const WS_URL = `wss://${location}`
+// export const API_URL = `http://${location}/api/v1`
+// export const DB_URL = `http://${location}/db`
+// export const WS_URL = `ws://${location}`
+export const API_URL = `https://${location}/api/v1`
+export const DB_URL = `https://${location}/db`
+export const WS_URL = `wss://${location}`
 
 export const menu = [
   {
