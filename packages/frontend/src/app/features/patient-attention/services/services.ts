@@ -1,9 +1,9 @@
-import { PouchService, DB } from '../../../services/pouch'
-import { getData } from '../../../core/services/get-table/'
-import { OrderStatus } from '@/app/core/types/order-status'
-import { useAuthStore } from '@/store/auth'
 import { useFileAttachment } from '@/app/core/composable/useFileAttachment'
 import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
+import { OrderStatus } from '@/app/core/types/order-status'
+import { useAuthStore } from '@/store/auth'
+import { getData } from '../../../core/services/get-table/'
+import { DB, PouchService } from '../../../services/pouch'
 
 const pouch = new PouchService()
 
@@ -238,6 +238,7 @@ export async function finalizeOrder(orderId: string): Promise<boolean> {
     orderCycle,
     status: OrderStatus.completed,
     finalizedBy: employee,
+    finalizedAt: new Date().toISOString,
   }
 
   await pouch.use(DB.GENERAL).update(orderUpdated)

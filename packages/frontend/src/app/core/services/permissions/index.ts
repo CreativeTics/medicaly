@@ -87,13 +87,18 @@ export const permissions = [
     id: 'reports:basics',
     name: 'Reportes > Básicos',
   },
-  {
-    id: 'reports:billing',
-    name: 'Reportes > Facturación',
-  },
+
   {
     id: 'reports:rips',
     name: 'Reportes > RIPS',
+  },
+  {
+    id: 'billing:customers',
+    name: 'Facturación > Cuentas Clientes',
+  },
+  {
+    id: 'billing:invoices',
+    name: 'Facturación > Facturas Generadas',
   },
 ]
 

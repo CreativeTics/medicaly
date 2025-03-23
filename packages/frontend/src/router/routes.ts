@@ -1,27 +1,28 @@
 import { RouteRecordRaw } from 'vue-router'
 
 import { authRoutes } from '@features/auth'
-import { employeesRoutes } from '@features/employees'
-import { positionsRoutes } from '@features/positions'
-import { laboratoriesRoutes } from '@features/laboratories'
+import { billingRoutes } from '@features/billing'
+import { cie10Routes } from '@features/cie10'
+import { citiesRoutes } from '@features/cities'
+import { contractsRoutes } from '@features/contracts'
 import { countriesRoutes } from '@features/countries'
 import { departmentsRoutes } from '@features/departments'
-import { citiesRoutes } from '@features/cities'
-import { identificationTypesRoutes } from '@features/identification-types'
+import { employeesRoutes } from '@features/employees'
 import { entitiesRoutes } from '@features/entities'
-import { restrictionsRoutes } from '@features/restrictions'
-import { recommendationsRoutes } from '@features/recommendations'
-import { cie10Routes } from '@features/cie10'
 import { examsRoutes } from '@features/exams'
-import { contractsRoutes } from '@features/contracts'
-import { subsidiariesRoutes } from '@features/subsidiaries'
-import { serviceOrdersRoutes } from '@features/service-orders'
+import { identificationTypesRoutes } from '@features/identification-types'
+import { laboratoriesRoutes } from '@features/laboratories'
 import { patientAdmissionRoutes } from '@features/patient-admission'
 import { patientAttentionRoutes } from '@features/patient-attention'
-import { patientLaboratoryRoutes } from '@features/patient-laboratories'
-import { signaturePadRoutes } from '@features/signature-pad'
 import { patientHistoryRoutes } from '@features/patient-history'
+import { patientLaboratoryRoutes } from '@features/patient-laboratories'
+import { positionsRoutes } from '@features/positions'
+import { recommendationsRoutes } from '@features/recommendations'
 import { reportsRoutes } from '@features/reports'
+import { restrictionsRoutes } from '@features/restrictions'
+import { serviceOrdersRoutes } from '@features/service-orders'
+import { signaturePadRoutes } from '@features/signature-pad'
+import { subsidiariesRoutes } from '@features/subsidiaries'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -55,4 +56,5 @@ export const routes: RouteRecordRaw[] = [
   ...signaturePadRoutes,
   ...patientHistoryRoutes,
   ...reportsRoutes,
+  ...billingRoutes,
 ]

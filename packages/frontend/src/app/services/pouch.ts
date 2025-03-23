@@ -1,7 +1,7 @@
+import { useAuthStore } from '@/store/auth'
 import PouchDB from 'pouchdb'
 import PouchDBFind from 'pouchdb-find'
 import { DB_URL } from '../../config'
-import { useAuthStore } from '@/store/auth'
 
 PouchDB.plugin(PouchDBFind)
 
@@ -10,6 +10,7 @@ export enum DB {
   GENERAL = 'general',
   MEDICAL = 'medical',
   FILES = 'files',
+  BILLING = 'billing',
 }
 
 export class PouchService {
@@ -17,7 +18,7 @@ export class PouchService {
   private db: PouchDB.Database | undefined
 
   constructor() {
-    const allDB = [DB.AUTH, DB.GENERAL, DB.MEDICAL, DB.FILES]
+    const allDB = [DB.AUTH, DB.GENERAL, DB.MEDICAL, DB.FILES, DB.BILLING]
     allDB.forEach((dbName) => {
       this.dbs.set(
         dbName,

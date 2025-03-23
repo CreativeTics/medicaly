@@ -1,9 +1,10 @@
 // const location = window.location.host.replace(/:[0-9]*/, '')
-const location = 'app.javapsaludocupacional.com.co'
+// const location = 'app.javapsaludocupacional.com.co'
+const location = 'localhost:8080'
 
-export const API_URL = `https://${location}/api/v1`
-export const DB_URL = `https://${location}/db`
-export const WS_URL = `wss://${location}`
+export const API_URL = `http://${location}/api/v1`
+export const DB_URL = `http://${location}/db`
+export const WS_URL = `ws://${location}`
 // export const API_URL = `https://${location}/api/v1`
 // export const DB_URL = `https://${location}/db`
 // export const WS_URL = `wss://${location}`
@@ -58,7 +59,7 @@ export const menu = [
   },
   {
     name: 'Contratos',
-    icon: 'File02Icon',
+    icon: 'Building07Icon',
     children: [
       {
         name: 'Contratos',
@@ -68,6 +69,40 @@ export const menu = [
     ],
   },
 
+  {
+    name: 'Facturación',
+    icon: 'File02Icon',
+    children: [
+      {
+        name: 'Cuentas clientes',
+        route: '/billing/customers',
+        permission: 'billing:customers',
+      },
+      {
+        name: 'Facturas generadas',
+        route: '/billing/invoices',
+        permission: 'billing:invoices',
+      },
+    ],
+  },
+
+  {
+    name: 'Reportes',
+    icon: 'File07Icon',
+    children: [
+      {
+        name: 'Básicos',
+        route: '/reports/basics',
+        permission: 'reports:basics',
+      },
+
+      {
+        name: 'RIPS',
+        route: '/reports/rips',
+        permission: 'reports:rips',
+      },
+    ],
+  },
   {
     name: 'Tablas Básicas',
     icon: 'Tool02Icon',
@@ -134,27 +169,6 @@ export const menu = [
             permission: 'exams:list',
           },
         ],
-      },
-    ],
-  },
-  {
-    name: 'Reportes',
-    icon: 'File07Icon',
-    children: [
-      {
-        name: 'Básicos',
-        route: '/reports/basics',
-        permission: 'reports:basics',
-      },
-      {
-        name: 'Facturación',
-        route: '/reports/billing',
-        permission: 'reports:billing',
-      },
-      {
-        name: 'RIPS',
-        route: '/reports/rips',
-        permission: 'reports:rips',
       },
     ],
   },
