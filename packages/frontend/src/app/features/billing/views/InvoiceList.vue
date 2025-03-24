@@ -22,6 +22,11 @@ const actionsColumn = {
 
 const columns = [
   {
+    key: 'createdAt',
+    title: 'Fecha de Registro',
+    align: 'left',
+  },
+  {
     key: 'invoiceNumber',
     title: 'N° Factura',
     align: 'left',

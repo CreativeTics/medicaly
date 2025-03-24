@@ -111,7 +111,7 @@ export async function getInvoices(searchOptions: any): Promise<Invoice[]> {
       endDate: doc.endDate,
       totalOrders: doc.totalOrders,
       totalAmount: formatCurrency(Number(doc.totalAmount)),
-      createdAt: doc.createdAt,
+      createdAt: formatDate(doc.createdAt, true),
     }
   })
 }

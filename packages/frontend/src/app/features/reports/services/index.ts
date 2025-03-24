@@ -14,6 +14,7 @@ export const getMetabaseDashboardUrl = async (
 
 export const getRipsReport = async (
   invoiceId: string,
+  invoiceNumber: string,
   format: 'xlsx' | 'json'
 ): Promise<void> => {
   const response = await http.get(
@@ -28,7 +29,7 @@ export const getRipsReport = async (
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `report.${format}`
+    a.download = `rips-${invoiceNumber}.${format}`
     a.click()
     window.URL.revokeObjectURL(url)
   }

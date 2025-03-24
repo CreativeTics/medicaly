@@ -20,6 +20,11 @@ const actionsColumn = {
 
 const columns = [
   {
+    key: 'createdAt',
+    title: 'Fecha de Registro',
+    align: 'left',
+  },
+  {
     key: 'invoiceNumber',
     title: 'N° Factura',
     align: 'left',
@@ -60,8 +65,12 @@ const search = async () => {
   data.value = await getInvoices(searchOptions)
 }
 
-const downloadRipsReport = async (id: string, format: 'xlsx' | 'json') => {
-  await getRipsReport(id, format)
+const downloadRipsReport = async (
+  id: string,
+  invoiceNumber: string,
+  format: 'xlsx' | 'json'
+) => {
+  await getRipsReport(id, invoiceNumber, format)
 }
 
 onMounted(async () => {
@@ -151,7 +160,13 @@ onMounted(async () => {
                 >
                   <div
                     class="bg-gray-50 rounded-md py-2 cursor-pointer hover:scale-110"
-                    @click="downloadRipsReport(rowProps.row.id, 'xlsx')"
+                    @click="
+                      downloadRipsReport(
+                        rowProps.row.id,
+                        rowProps.row.invoiceNumber,
+                        'xlsx'
+                      )
+                    "
                   >
                     <XlsxIcon class="h-4 w-4 mx-2 text-gray-600" />
                   </div>
@@ -166,7 +181,13 @@ onMounted(async () => {
                 >
                   <div
                     class="bg-gray-50 rounded-md py-2 cursor-pointer hover:scale-110"
-                    @click="downloadRipsReport(rowProps.row.id, 'json')"
+                    @click="
+                      downloadRipsReport(
+                        rowProps.row.id,
+                        rowProps.row.invoiceNumber,
+                        'json'
+                      )
+                    "
                   >
                     <JsonIcon class="h-4 w-4 mx-2 text-gray-600" />
                   </div>
