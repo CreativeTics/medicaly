@@ -16,15 +16,16 @@ export const getRipsReport = async (
   invoiceId: string,
   format: 'xlsx' | 'json'
 ): Promise<void> => {
-  const response = await http.get(`/reports/rips/${invoiceId}?format=${format}`)
+  const response = await http.get(
+    `/reports/rips/${invoiceId}?format=${format}`,
+    {
+      responseType: 'arraybuffer',
+    }
+  )
 
   if (response.status === 200) {
-    // is file json or xlsx, download it
-    const blob = new Blob([JSON.stringify(response.data, null, 2)], {
-      type: `application/${format}`,
-    })
+    const blob = new Blob([response.data], { type: `application/${format}` })
     const url = window.URL.createObjectURL(blob)
-    console.log('url', url)
     const a = document.createElement('a')
     a.href = url
     a.download = `report.${format}`

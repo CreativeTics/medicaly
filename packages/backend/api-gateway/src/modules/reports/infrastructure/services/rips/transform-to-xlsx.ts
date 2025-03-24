@@ -72,7 +72,7 @@ export function transformRipsTransactionToXlsx(
       'numFEVPagoModerador',
       'consecutivo',
     ],
-    ...report.usuarios.map((usuario) =>
+    ...report.usuarios.flatMap((usuario) =>
       usuario.servicios.consultas.map((consulta) => [
         report.numDocumentoIdObligado,
         usuario.consecutivo,
