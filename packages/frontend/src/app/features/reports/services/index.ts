@@ -19,6 +19,16 @@ export const getRipsReport = async (
   const response = await http.get(`/reports/rips/${invoiceId}?format=${format}`)
 
   if (response.status === 200) {
-    // Do something with the response
+    // is file json or xlsx, download it
+    const blob = new Blob([JSON.stringify(response.data, null, 2)], {
+      type: `application/${format}`,
+    })
+    const url = window.URL.createObjectURL(blob)
+    console.log('url', url)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `report.${format}`
+    a.click()
+    window.URL.revokeObjectURL(url)
   }
 }

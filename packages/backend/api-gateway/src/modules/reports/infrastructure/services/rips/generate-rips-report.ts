@@ -27,7 +27,7 @@ export async function generateRipsReport(
     })
   )
 
-  return { rips: report, name: 'rips' }
+  return { rips: report, name: `rips-${invoice.invoiceNumber}` }
 }
 
 async function getUserFromOrder(orderId: string): Promise<RipsUsuario> {
