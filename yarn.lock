@@ -1440,6 +1440,7 @@ __metadata:
     ts-node: ^10.9.2
     typescript: ^5.3.3
     ulid: ^2.3.0
+    zod: ^3.24.2
   languageName: unknown
   linkType: soft
 
@@ -6765,5 +6766,12 @@ __metadata:
     compress-commons: ^4.1.2
     readable-stream: ^3.6.0
   checksum: 33bd5ee7017656c2ad728b5d4ba510e15bd65ce1ec180c5bbdc7a5f063256353ec482e6a2bc74de7515219d8494147924b9aae16e63fdaaf37cdf7d1ee8df125
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.24.2":
+  version: 3.24.2
+  resolution: "zod@npm:3.24.2"
+  checksum: c02455c09678c5055c636d64f9fcda2424fea0aa46ac7d9681e7f41990bc55f488bcd84b9d7cfef0f6e906f51f55b245239d92a9f726248aa74c5b84edf00c2d
   languageName: node
   linkType: hard
