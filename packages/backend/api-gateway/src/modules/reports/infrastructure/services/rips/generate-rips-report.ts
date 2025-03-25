@@ -8,8 +8,10 @@ export async function generateRipsReport(
   // Do something with the response
   const invoice = await getInvoice(invoiceId)
 
+  const subsidiary = await getSubsidiary(invoice.subsidiary)
+
   const report: RipsTransaction = {
-    numDocumentoIdObligado: invoice.subsidiaryFiscalId,
+    numDocumentoIdObligado: subsidiary.fiscalId,
     numFactura: invoice.invoiceNumber,
     tipoNota: null,
     numNota: null,
@@ -22,7 +24,7 @@ export async function generateRipsReport(
     invoice.orders.map(async (order, index) => {
       // setInvoiceToOrder(order.id, invoice.id)
       report.usuarios.push({
-        ...(await getUserFromOrder(order.id)),
+        ...(await getUserFromOrder(order.id, subsidiary)),
         consecutivo: index + 1,
       })
     })
@@ -31,7 +33,10 @@ export async function generateRipsReport(
   return { rips: report, name: `rips-${invoice.invoiceNumber}` }
 }
 
-async function getUserFromOrder(orderId: string): Promise<RipsUsuario> {
+async function getUserFromOrder(
+  orderId: string,
+  subsidiary: any
+): Promise<RipsUsuario> {
   const order = await getOrder(orderId)
   const patient = await getPatient(order.patientId, order.patientDataId)
 
@@ -49,7 +54,7 @@ async function getUserFromOrder(orderId: string): Promise<RipsUsuario> {
     consecutivo: 0, // se calcula en el map
     codPaisOrigen: (await getCity(patient.precedenceCity))?.country,
     servicios: {
-      consultas: [await getMedicalConsultationFromOrder(order)],
+      consultas: [await getMedicalConsultationFromOrder(order, subsidiary)],
       procedimientos: [],
       urgencias: [],
       hospitalizacion: [],
@@ -61,7 +66,8 @@ async function getUserFromOrder(orderId: string): Promise<RipsUsuario> {
 }
 
 async function getMedicalConsultationFromOrder(
-  order: any
+  order: any,
+  subsidiary: any
 ): Promise<RipsConsulta> {
   //     fechaInicioAtencion: string
   //   numAutorizacion: string | null
@@ -83,6 +89,7 @@ async function getMedicalConsultationFromOrder(
   //   valorPagoModerador: number
   //   numFEVPagoModerador: string | null
   //   consecutivo: number
+
   const admissionDate = order.orderCycle.find(
     (cycle: any) => cycle.type === 'admission'
   )?.at
@@ -90,19 +97,22 @@ async function getMedicalConsultationFromOrder(
   const annotation = await getDiagnosisFormOrder(order)
 
   return {
-    codPrestador: '254300276001', // TODO: get from subsidiary
+    codPrestador: subsidiary.serviceDeliveryCode,
     fechaInicioAtencion: dayjs(admissionDate).format('YYYY-MM-DD HH:mm'),
     numAutorizacion: null,
     codConsulta: 'PENDIENTE DEFINIR',
-    modalidadGrupoServicioTecSal: '01', // TODO: get from subsidiary  01: Intramural
+    modalidadGrupoServicioTecSal: subsidiary.serviceModality,
     grupoServicios: '01', // Consulta externa
-    codServicio: 1, // TODO: get from subsidiary  328  - Medicina General, 407 - Medicina laboral
+    codServicio: subsidiary.serviceType,
     finalidadTecnologiaSalud: '15', // 15: Diagnóstico, 16: Tratamiento
     causaMotivoAtencion: '38', // 38: Enfermedad general
-    codDiagnosticoPrincipal: annotation.diagnosis[0] ?? 'Z000', // Z000: No aplica
-    codDiagnosticoRelacionado1: annotation.diagnosis[1] ?? null,
-    codDiagnosticoRelacionado2: annotation.diagnosis[2] ?? null,
-    codDiagnosticoRelacionado3: annotation.diagnosis[3] ?? null,
+    codDiagnosticoPrincipal: annotation.diagnosis[0]?.split(' - ')[0] ?? 'Z000', // Z000: No aplica
+    codDiagnosticoRelacionado1:
+      annotation.diagnosis[1]?.split(' - ')[0] ?? null,
+    codDiagnosticoRelacionado2:
+      annotation.diagnosis[2]?.split(' - ')[0] ?? null,
+    codDiagnosticoRelacionado3:
+      annotation.diagnosis[3]?.split(' - ')[0] ?? null,
     tipoDiagnosticoPrincipal: '01', // TODO: Validar
     tipoDocumentoIdentificacion: 'CC',
     numDocumentoIdentificacion: order?.finalizedBy?.document ?? '',
@@ -157,6 +167,20 @@ async function getCity(id: string) {
   return {
     code: cityResponse.data.code,
     country: cityResponse.data.countryCode,
+  }
+}
+
+async function getSubsidiary(id: string) {
+  const subsidiaryResponse = await couchHttp.get(`/general/${id}`)
+  if (subsidiaryResponse.status !== 200) {
+    return
+  }
+  return {
+    code: subsidiaryResponse.data.code,
+    fiscalId: subsidiaryResponse.data.fiscalId,
+    serviceType: subsidiaryResponse.data.serviceType,
+    serviceModality: subsidiaryResponse.data.serviceModality,
+    serviceDeliveryCode: subsidiaryResponse.data.serviceDeliveryCode,
   }
 }
 
