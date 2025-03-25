@@ -66,6 +66,7 @@ export type RipsUsuario = {
 // consultas	C21	consecutivo	Numérico	1-7	Dato obligatorio	Tamaño Variable sin nulo	Admite de 1 a 7 dígitos
 
 export type RipsConsulta = {
+  codPrestador: string
   fechaInicioAtencion: string
   numAutorizacion: string | null
   codConsulta: string

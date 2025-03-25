@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { couchHttp } from '../../../../../shared/infrastructure/databases/util/http'
 import { RipsConsulta, RipsTransaction, RipsUsuario } from './types'
 
@@ -8,7 +9,7 @@ export async function generateRipsReport(
   const invoice = await getInvoice(invoiceId)
 
   const report: RipsTransaction = {
-    numDocumentoIdObligado: '123465789',
+    numDocumentoIdObligado: invoice.subsidiaryFiscalId,
     numFactura: invoice.invoiceNumber,
     tipoNota: null,
     numNota: null,
@@ -37,15 +38,16 @@ async function getUserFromOrder(orderId: string): Promise<RipsUsuario> {
   return {
     tipoDocumentoldentificacion: patient.documentType,
     numDocumentoIdentificacion: patient.documentNumber,
-    tipoUsuario: '01',
+    tipoUsuario: '12', // 12: particulares
     fechaNacimiento: patient.birthDate,
     codSexo: patient.biologicalSex == 'Masculino' ? 'M' : 'F',
-    codPaisResidencia: 'CO',
-    codMunicipioResidencia: patient.cityCode,
-    codZonaTerritorialResidencia: patient.territorialZoneCode,
-    incapacidad: '00',
-    consecutivo: 1,
-    codPaisOrigen: 'CO',
+    codPaisResidencia: '170', // Colombia
+    codMunicipioResidencia: (await getCity(patient.residenceCity))?.code,
+    codZonaTerritorialResidencia:
+      patient.residenceType == 'Rural' ? '01' : '02',
+    incapacidad: 'NO', // Se solicita de esta manera
+    consecutivo: 0, // se calcula en el map
+    codPaisOrigen: (await getCity(patient.precedenceCity))?.country,
     servicios: {
       consultas: [await getMedicalConsultationFromOrder(order)],
       procedimientos: [],
@@ -81,31 +83,34 @@ async function getMedicalConsultationFromOrder(
   //   valorPagoModerador: number
   //   numFEVPagoModerador: string | null
   //   consecutivo: number
-  const fechaInicioAtencion = order.orderCycle.find(
+  const admissionDate = order.orderCycle.find(
     (cycle: any) => cycle.type === 'admission'
   )?.at
 
+  const annotation = await getDiagnosisFormOrder(order)
+
   return {
-    fechaInicioAtencion,
+    codPrestador: '254300276001', // TODO: get from subsidiary
+    fechaInicioAtencion: dayjs(admissionDate).format('YYYY-MM-DD HH:mm'),
     numAutorizacion: null,
-    codConsulta: '01',
-    modalidadGrupoServicioTecSal: '01',
-    grupoServicios: '01',
-    codServicio: 1,
-    finalidadTecnologiaSalud: '01',
-    causaMotivoAtencion: '01',
-    codDiagnosticoPrincipal: 'A00',
-    codDiagnosticoRelacionado1: null,
-    codDiagnosticoRelacionado2: null,
-    codDiagnosticoRelacionado3: null,
-    tipoDiagnosticoPrincipal: '01',
+    codConsulta: 'PENDIENTE DEFINIR',
+    modalidadGrupoServicioTecSal: '01', // TODO: get from subsidiary  01: Intramural
+    grupoServicios: '01', // Consulta externa
+    codServicio: 1, // TODO: get from subsidiary  328  - Medicina General, 407 - Medicina laboral
+    finalidadTecnologiaSalud: '15', // 15: Diagnóstico, 16: Tratamiento
+    causaMotivoAtencion: '38', // 38: Enfermedad general
+    codDiagnosticoPrincipal: annotation.diagnosis[0] ?? 'Z000', // Z000: No aplica
+    codDiagnosticoRelacionado1: annotation.diagnosis[1] ?? null,
+    codDiagnosticoRelacionado2: annotation.diagnosis[2] ?? null,
+    codDiagnosticoRelacionado3: annotation.diagnosis[3] ?? null,
+    tipoDiagnosticoPrincipal: '01', // TODO: Validar
     tipoDocumentoIdentificacion: 'CC',
     numDocumentoIdentificacion: order?.finalizedBy?.document ?? '',
-    vrServicio: 10000,
-    conceptoRecaudo: '01',
-    valorPagoModerador: 0,
+    vrServicio: null,
+    conceptoRecaudo: '05', // 05: No aplica
+    valorPagoModerador: null,
     numFEVPagoModerador: null,
-    consecutivo: 1,
+    consecutivo: 1, // es 1 consulta por orden
   }
 }
 
@@ -141,5 +146,43 @@ async function getPatient(id: string, patientDataId: string) {
   return {
     ...patientRow,
     ...patientData,
+  }
+}
+
+async function getCity(id: string) {
+  const cityResponse = await couchHttp.get(`/general/${id}`)
+  if (cityResponse.status !== 200) {
+    return
+  }
+  return {
+    code: cityResponse.data.code,
+    country: cityResponse.data.countryCode,
+  }
+}
+
+async function getDiagnosisFormOrder(order: any) {
+  const EXAM_MEDICAL_ID = 'e6ce571a03dba5b38099b6852d000762'
+
+  let annotationId = ''
+
+  order.services.forEach((service: any) => {
+    if (annotationId) return
+
+    annotationId = service.annotations.find((annotationId: any) =>
+      annotationId.includes(EXAM_MEDICAL_ID)
+    )
+  })
+
+  if (!annotationId) {
+    return {
+      diagnosis: [],
+    }
+  }
+  const diagnosisResponse = await couchHttp.get(`/medical/${annotationId}`)
+  if (diagnosisResponse.status !== 200) {
+    return
+  }
+  return {
+    diagnosis: diagnosisResponse.data.diagnosis as string[],
   }
 }

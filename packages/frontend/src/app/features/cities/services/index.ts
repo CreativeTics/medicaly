@@ -1,6 +1,6 @@
 import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from '../../../services/pouch'
+import { DB, PouchService } from '../../../services/pouch'
 
 const pouch = new PouchService()
 const doctype = 'cities'
@@ -49,7 +49,9 @@ export async function create(entity: any): Promise<boolean> {
   const response = await pouch.use(DB.GENERAL).create({
     doctype,
     ...entity,
+    countryCode: country.code,
     countryName: country.name,
+    departmentCode: department.code,
     departmentName: department.name,
   })
   console.log('create', response)
@@ -64,7 +66,9 @@ export async function edit(id: string, entity: any): Promise<boolean> {
     doctype,
     id,
     ...entity,
+    countryCode: country.code,
     countryName: country.name,
+    departmentCode: department.code,
     departmentName: department.name,
   })
   console.log('edit', response)
