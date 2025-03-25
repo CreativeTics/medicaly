@@ -69,7 +69,6 @@ const handleDownloadExamCertificate = async (
 }
 
 const back = () => {
-  console.log('Back')
   router.back()
 }
 

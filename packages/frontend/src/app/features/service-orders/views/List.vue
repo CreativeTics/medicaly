@@ -16,12 +16,12 @@ import { useRouter } from 'vue-router'
 import { getList, getContracts } from '../services'
 
 import OrderStatus from '../components/OrderStatus.vue'
-import { useAuthStore } from '@/store/auth'
+// import { useAuthStore } from '@/store/auth'
 
 const router = useRouter()
 const modulePath = 'service-orders'
 
-const user = useAuthStore().user
+// const user = useAuthStore().user
 
 const actionsColumn = {
   key: 'actions',
