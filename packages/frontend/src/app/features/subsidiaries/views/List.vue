@@ -22,6 +22,11 @@ const columns = [
     align: 'left',
   },
   {
+    key: 'fiscalId',
+    title: 'Identificación fiscal',
+    align: 'left',
+  },
+  {
     key: 'prefix',
     title: 'Prefijo de ordenes',
     align: 'left',
