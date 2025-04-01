@@ -55,13 +55,11 @@ const handleDownloadExamCertificate = async (
   try {
     const examId = exam.id
     // Descargar el examen
-    const url = await downloadExamCertificate(order.value.id, serviceId, examId)
-    selectedAnnotationUrl.value = url || ''
-    modalActive.value = true
+    await downloadExamCertificate(order.value.id, serviceId, examId)
   } catch (error: any) {
     notifications.addNotification({
       type: 'error',
-      title: 'No se puede mostrar el examen',
+      title: 'No se puede descargar el examen',
       text: error.message,
     })
   }

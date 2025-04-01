@@ -1,11 +1,11 @@
-import express, { query } from 'express'
-import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { GenerateCertificateController } from './controllers/generate-certificate'
-import { GetFileController } from './controllers/get-file'
-import { GenerateMedicalHistoryController } from './controllers/generate-medical-history'
+import express from 'express'
+import morgan from 'morgan'
 import { GenerateAnnotationViewController } from './controllers/generate-annotation-view'
+import { GenerateCertificateController } from './controllers/generate-certificate'
+import { GenerateMedicalHistoryController } from './controllers/generate-medical-history'
+import { GetFileController } from './controllers/get-file'
 
 import { GenerateConsentController } from './controllers/generate-consent'
 
@@ -58,8 +58,10 @@ app.post('/api/certificates/', async (req, res) => {
     res.end()
     return
   }
+
   res.setHeader('Content-Disposition', `inline; filename=${certificate.name}`)
   res.setHeader('Content-Type', certificate.mimeType) // 'application/pdf'
+  res.setHeader('Content-Length', certificate.data.length)
   res.send(certificate.data)
   res.end()
 })

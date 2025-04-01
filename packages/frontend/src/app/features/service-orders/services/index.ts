@@ -1,12 +1,11 @@
 import { getData } from '../../../core/services/get-table/'
-import { generateInformedConsent } from '../../../core/services/generate-cert/'
 
-import { PouchService, DB } from '../../../services/pouch'
-import { useAuthStore } from '@/store/auth'
+import { http } from '@/app/core/services/http'
 import { OrderStatus } from '@/app/core/types/order-status'
 import { formatDate } from '@/app/core/util/dates'
 import { API_URL } from '@/config'
-import { http } from '@/app/core/services/http'
+import { useAuthStore } from '@/store/auth'
+import { DB, PouchService } from '../../../services/pouch'
 
 const pouch = new PouchService()
 const doctype = 'service-orders'
@@ -333,7 +332,7 @@ export async function downloadExamCertificate(
 ) {
   try {
     // get exam print blob
-    const examPrintBlob = await http.post(
+    const examPrintBuffer = await http.post(
       'files/api/certificates/',
       {
         order: orderId,
@@ -344,16 +343,21 @@ export async function downloadExamCertificate(
         headers: {
           Authorization: `${useAuthStore().token}`,
         },
-        responseType: 'blob',
+        responseType: 'arraybuffer',
       }
     )
 
-    if (examPrintBlob.status !== 200) {
+    if (examPrintBuffer.status !== 200) {
       throw 'Error al descargar el archivo'
     }
 
-    // generate download file url
-    return URL.createObjectURL(examPrintBlob.data)
+    const blob = new Blob([examPrintBuffer.data], { type: `application/json` })
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `certificado-${orderId}-${serviceId}-${examId}.pdf`
+    a.click()
+    window.URL.revokeObjectURL(url)
   } catch (error) {
     console.error(error)
   }
