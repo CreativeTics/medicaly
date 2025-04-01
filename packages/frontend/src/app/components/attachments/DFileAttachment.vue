@@ -19,6 +19,7 @@ const props = withDefaults(
     modelValue: string | undefined // fileId
     helpText?: string
     accept?: string // 'application/pdf'
+    maxSize?: number
     disabled?: boolean
     required?: boolean
     error?: string
@@ -27,6 +28,7 @@ const props = withDefaults(
     label: '',
     helpText: 'Carga tu archivo',
     accept: '*',
+    maxSize: 10, // 10MB
     disabled: true,
     required: false,
     error: '',
@@ -53,6 +55,11 @@ const inputFileChange = (e: any) => {
   if (files.length > 0) {
     const file = files[0]
     if (file.type.match(props.accept)) {
+      if (file.size > props.maxSize * 1024 * 1024) {
+        emit('update:modelValue', '')
+        props.error = `El tamaño máximo del archivo es de ${props.maxSize}MB`
+        return
+      }
       onFileChange(file)
     }
     // emitUpdate(e)
@@ -134,6 +141,9 @@ watch(
       <label class="block text-sm font-medium text-gray-700 mb-1.5"
         >{{ label }}
         <span v-if="required" class="text-red-500">*</span>
+        <span class="text-xs text-gray-500"
+          >({{ accept }}) max {{ maxSize }}MB
+        </span>
       </label>
       <div
         v-if="isLoading"
