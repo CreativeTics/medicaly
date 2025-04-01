@@ -25,6 +25,10 @@ const handleLogout = () => {
   authStore.logout()
   router.push('/')
 }
+
+const handleSupport = () => {
+  window.open('https://javapsaludocupacional.com.co/soporte/', '_blank')
+}
 </script>
 
 <template>
@@ -49,6 +53,7 @@ const handleLogout = () => {
       @change:route="changeRoute"
       @logout="handleLogout"
       @config="showChangePasswordModal = true"
+      @support="handleSupport"
     >
     </Sidebar>
     <div class="w-full h-full overflow-hidden mb-1">
