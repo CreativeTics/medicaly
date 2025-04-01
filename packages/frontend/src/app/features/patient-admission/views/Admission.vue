@@ -17,6 +17,7 @@ import { DAlertText, DModal, DToggleField } from '@components/basic'
 import DCameraInput from '@components/DCameraInput.vue'
 import DSignatureInput from '@components/biometric/DSignatureInput.vue'
 import DFingerPrintInput from '@components/biometric/DFingerPrintInput.vue'
+import dayjs from 'dayjs'
 
 const route = useRoute()
 const router = useRouter()
@@ -27,7 +28,6 @@ const loading = ref(false)
 const modalIsOpen = ref(false)
 
 const back = () => {
-  console.log('Back')
   router.back()
 }
 let model = ref<any>({})
@@ -38,6 +38,22 @@ const signature = useImageFile('patientSignature.png')
 const fingerprint = useImageFile('patientFingerprint.png')
 
 const informedConsents = ref<InformedConsent[]>([])
+
+const validateIfResponsibleIsRequired = (newBirdDate?: string) => {
+  const today = dayjs()
+  const birth = dayjs(newBirdDate ?? model.value.birthDate)
+  if (today.diff(birth, 'year') > 14) {
+    model.value.accompanyingRequired = false
+    model.value.accompanyingNotRequired = true
+    dynamicForm.value?.setModelValue('accompanyingRequired', false)
+    dynamicForm.value?.setModelValue('accompanyingNotRequired', true)
+  } else {
+    model.value.accompanyingRequired = true
+    model.value.accompanyingNotRequired = false
+    dynamicForm.value?.setModelValue('accompanyingRequired', true)
+    dynamicForm.value?.setModelValue('accompanyingNotRequired', false)
+  }
+}
 
 onMounted(async () => {
   if (route.params.id) {
@@ -51,7 +67,7 @@ onMounted(async () => {
     photo.loadImageFromId(order.value.patient?.photoId)
     signature.loadImageFromId(order.value.patient?.signatureId)
     fingerprint.loadImageFromId(order.value.patient?.fingerprintId)
-
+    validateIfResponsibleIsRequired()
     loading.value = false
   }
 })
@@ -258,9 +274,8 @@ const form: any = {
               { id: 'Primaria Completa', name: 'Primaria Completa' },
               { id: 'Secundaria Incompleta', name: 'Secundaria Incompleta' },
               { id: 'Secundaria Completa', name: 'Secundaria Completa' },
-
               { id: 'Técnica', name: 'Técnica' },
-              { id: 'Tecnólogica', name: 'Tecnólogica' },
+              { id: 'Tecnológica', name: 'Tecnológica' },
               { id: 'Profesional', name: 'Profesional' },
               { id: 'Especialización', name: 'Especialización' },
               { id: 'Maestría', name: 'Maestría' },
@@ -315,7 +330,7 @@ const form: any = {
             entity: 'general:contract-positions',
             fields: ['id', 'name'],
             where: {
-              // contractId: "",
+              contractId: order.value.contractId,
             },
           },
           rules: ['required'],
@@ -324,7 +339,7 @@ const form: any = {
     },
 
     {
-      name: 'Datos Demograficos',
+      name: 'Datos Demográficos',
       description: '',
       fields: [
         {
@@ -402,25 +417,99 @@ const form: any = {
       description: '',
       fields: [
         {
+          name: 'accompanyingRequired',
+          label: 'Requiere acompañante?',
+          type: 'check',
+          props: {
+            class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
+            required: true,
+            hidden: true,
+          },
+          default: true,
+        },
+        {
+          name: 'accompanyingNotRequired',
+          label: 'No Requiere acompañante?',
+          type: 'check',
+          props: {
+            class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
+            required: true,
+            hidden: true,
+          },
+          default: false,
+        },
+        {
+          if: 'accompanyingNotRequired',
           name: 'accompanyingName',
           label: 'Nombre',
           type: 'text',
+          props: {
+            class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
+          },
+          rules: ['maxlength:100'],
         },
+
         {
+          if: 'accompanyingNotRequired',
           name: 'accompanyingParent',
           label: 'Parentesco',
           type: 'text',
         },
 
         {
+          if: 'accompanyingNotRequired',
           name: 'accompanyingAddress',
           label: 'Lugar de residencia',
           type: 'text',
         },
         {
+          if: 'accompanyingNotRequired',
           name: 'accompanyingPhone',
           label: 'Teléfono ',
           type: 'number',
+        },
+        {
+          if: 'accompanyingRequired',
+          name: 'accompanyingName',
+          label: 'Nombre',
+          type: 'text',
+          props: {
+            class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
+            required: true,
+          },
+          rules: ['required', 'upper', 'minlength:3', 'maxlength:100'],
+        },
+
+        {
+          if: 'accompanyingRequired',
+          name: 'accompanyingParent',
+          label: 'Parentesco',
+          type: 'text',
+          props: {
+            required: true,
+          },
+          rules: ['required', 'minlength:3', 'maxlength:100'],
+        },
+
+        {
+          if: 'accompanyingRequired',
+          name: 'accompanyingAddress',
+          label: 'Lugar de residencia',
+          type: 'text',
+          props: {
+            required: true,
+          },
+          rules: ['required', 'minlength:3', 'maxlength:100'],
+        },
+        {
+          if: 'accompanyingRequired',
+          name: 'accompanyingPhone',
+          label: 'Teléfono ',
+          type: 'number',
+          props: {
+            required: true,
+          },
+          rules: ['required', 'minlength:3', 'maxlength:100'],
         },
       ],
     },
@@ -513,6 +602,12 @@ const onSubmit = async () => {
     params: { id: route.params.id },
   })
 }
+
+const handleUpdateField = (change: { name: string; value: string }) => {
+  if (change.name === 'birthDate') {
+    validateIfResponsibleIsRequired(change.value)
+  }
+}
 </script>
 
 <template>
@@ -568,6 +663,7 @@ const onSubmit = async () => {
               gridClass="grid grid-cols-6 px-6 pb-5 w-full"
               @cancel="back"
               @submit="modalIsOpen = true"
+              @update-field="handleUpdateField"
             />
           </div>
         </div>
