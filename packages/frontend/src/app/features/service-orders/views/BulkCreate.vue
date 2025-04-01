@@ -165,7 +165,6 @@ const loadForm = async () => {
                   required: true,
                   class: 'lg:col-span-6 xl:col-span-6',
                 },
-                rules: ['required-array'],
               },
             ],
           },
@@ -173,12 +172,9 @@ const loadForm = async () => {
       },
     ],
   }
-  console.log('Form Loaded', form)
 }
 
 const onSubmit = async (data: any) => {
-  console.log('Submit', data)
-
   const { isOk, errors } = await create(toRaw(data))
 
   if (isOk) {

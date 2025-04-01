@@ -299,6 +299,12 @@ async function getServicesFromAttachOrder(services: any[]) {
 
 function validatePatients(patients: any[]) {
   const errors: any[] = []
+
+  if (!patients || patients.length === 0) {
+    errors.push('Debe agregar al menos un paciente!')
+    return errors
+  }
+
   patients.forEach((patient: any, index: number) => {
     if (!patient.doctype) {
       errors.push(
