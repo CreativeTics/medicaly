@@ -3,6 +3,7 @@ import { formatCurrency } from '@/app/core/util/currencies'
 import { formatDate } from '@/app/core/util/dates'
 import { DB, PouchService } from '@/app/services/pouch'
 import { AccountOfFinishedOrders } from '@/store/billing'
+import dayjs from 'dayjs'
 
 const pouch = new PouchService()
 
@@ -69,8 +70,8 @@ export async function getInvoices(searchOptions: any): Promise<Invoice[]> {
 
   if (searchOptions.startDate && searchOptions.endDate) {
     where.createdAt = {
-      $gte: searchOptions.startDate,
-      $lte: searchOptions.endDate,
+      $gte: dayjs(searchOptions.startDate),
+      $lte: dayjs(searchOptions.endDate).endOf('day'),
     }
   }
 

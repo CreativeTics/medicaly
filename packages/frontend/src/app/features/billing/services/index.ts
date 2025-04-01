@@ -6,6 +6,7 @@ import {
   AccountOfFinishedOrders,
   AccountOfFinishedOrdersFilters,
 } from '@/store/billing'
+import dayjs from 'dayjs'
 
 const pouch = new PouchService()
 
@@ -33,10 +34,10 @@ export async function getAccountOfFinishedOrders(
   } = {
     status: OrderStatus.completed,
     invoice: { $exists: false },
-    // finalizedAt: {
-    //   $gte: searchOptions.startDate,
-    //   $lte: searchOptions.endDate,
-    // },
+    finalizedAt: {
+      $gte: dayjs(searchOptions.startDate),
+      $lte: dayjs(searchOptions.endDate).endOf('day'),
+    },
   }
 
   if (searchOptions.subsidiaryId) {
