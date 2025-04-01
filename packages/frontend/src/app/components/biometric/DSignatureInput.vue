@@ -97,7 +97,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  {{ code }}
   <div
     class="w-full flex justify-center items-center rounded-lg bg-amber-50 border-2 border-dashed overflow-hidden relative"
     :class="{
@@ -118,6 +117,9 @@ onBeforeUnmount(() => {
       >
         Esperando Firma [{{ code }}]...
       </div>
+      <div v-else class="text-gray-500 h-20 flex items-center">
+        Pad desconectado [{{ code }}]
+      </div>
 
       <img
         v-show="!error && (image || tempImage)"
@@ -131,7 +133,7 @@ onBeforeUnmount(() => {
     >
       <div
         v-if="!image"
-        title="Tomar foto"
+        title="Capturar firma"
         class="bg-gray-100 hover:bg-white rounded-full py-2"
         @click="takePhoto"
       >
@@ -148,5 +150,5 @@ onBeforeUnmount(() => {
       </div>
     </div>
   </div>
-  {{ modelValue.length }}
+  <!-- {{ modelValue.length }} -->
 </template>

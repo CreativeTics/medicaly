@@ -552,12 +552,11 @@ const onSubmit = async () => {
               :model-value="signature.imageBase64.value"
               @update:model-value="signature.setImage"
             />
-            {{ signature.unsaved }}
+
             <DFingerPrintInput
               :model-value="fingerprint.imageBase64.value"
               @update:model-value="fingerprint.setImage"
             />
-            {{ fingerprint.unsaved }}
           </div>
           <div class="w-full overflow-y-scroll">
             <DynamicFormWithOutTabs

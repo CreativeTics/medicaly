@@ -41,13 +41,6 @@ const emitValue = () => {
     <div class="w-full flex justify-center items-center">
       <span v-if="error">
         {{ error }}
-        <!-- <a
-          href="/driver/DPClient.exe"
-          class="text-blue-500 hover:text-blue-700 flex"
-          download
-          >Descargar driver
-          <Download01Icon class="h-6 w-6 mx-2 cursor-pointer" />
-        </a> -->
       </span>
 
       <div
@@ -66,9 +59,18 @@ const emitValue = () => {
           !(image || fingerprintImage) &&
           deviceStatus === DeviceStatus.Disconnected
         "
-        class="text-gray-500 h-20 flex items-center"
+        class="text-gray-500 h-20 flex flex-col items-center justify-center"
       >
         Huellero desconectado
+        <br />
+        <a
+          href="/driver/DPClient.exe"
+          class="text-blue-500 hover:text-blue-700 flex"
+          download
+        >
+          Descargar driver
+          <Download01Icon class="h-6 w-6 mx-2 cursor-pointer" />
+        </a>
       </div>
       <div
         v-if="
