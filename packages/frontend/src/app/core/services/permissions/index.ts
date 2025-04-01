@@ -20,6 +20,10 @@ export const permissions = [
     name: 'Ordenes de Servicio:Listar',
   },
   {
+    id: 'service-orders:full',
+    name: 'Ordenes de Servicio:Completo',
+  },
+  {
     id: 'contracts:list',
     name: 'Contratos:Listar',
   },

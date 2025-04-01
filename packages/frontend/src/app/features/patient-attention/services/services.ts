@@ -225,20 +225,22 @@ export async function finalizeOrder(orderId: string): Promise<boolean> {
   if (!orderCycle.map((_) => _.employee?.id).includes(employee.id))
     throw new Error('Este usuario no puede finalizar la orden!')
 
-  orderCycle.push({
+  const orderCycleFinalized = {
     type: OrderCycleTypes.finalized,
     user: user?.id,
     employee,
     status: OrderStatus.completed,
     at: new Date().toISOString(),
-  })
+  }
+
+  orderCycle.push(orderCycleFinalized)
 
   const orderUpdated = {
     ...oldOrder,
     orderCycle,
     status: OrderStatus.completed,
     finalizedBy: employee,
-    finalizedAt: new Date().toISOString,
+    finalizedAt: orderCycleFinalized.at,
   }
 
   await pouch.use(DB.GENERAL).update(orderUpdated)

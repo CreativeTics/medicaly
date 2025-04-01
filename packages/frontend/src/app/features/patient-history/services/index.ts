@@ -1,12 +1,12 @@
-import { getData } from '../../../core/services/get-table/'
 import { formatDate } from '@/app/core/util/dates'
+import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from '../../../services/pouch'
-import { useAuthStore } from '@/store/auth'
-import { API_URL } from '@/config'
-import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
-import { InformedConsent } from '@features/patient-admission/services'
 import { http } from '@/app/core/services/http'
+import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
+import { API_URL } from '@/config'
+import { useAuthStore } from '@/store/auth'
+import { InformedConsent } from '@features/patient-admission/services'
+import { DB, PouchService } from '../../../services/pouch'
 
 const pouch = new PouchService()
 
@@ -70,7 +70,7 @@ export async function getDocumentTypes(): Promise<DocumentType[]> {
     return {
       id: doc.id,
       code: doc.code,
-      name: doc.name,
+      name: `${doc.code} - ${doc.name}`,
     }
   })
 }

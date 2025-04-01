@@ -1,7 +1,7 @@
+import { calculateAgeFromBirthDate, formatDate } from '@/app/core/util/dates'
 import { getData } from '../../../core/services/get-table/'
-import { formatDate, calculateAgeFromBirthDate } from '@/app/core/util/dates'
 
-import { PouchService, DB } from '../../../services/pouch'
+import { DB, PouchService } from '../../../services/pouch'
 // import { useAuthStore } from "@/store/auth";
 import { OrderStatus } from '@/app/core/types/order-status'
 import { useAuthStore } from '@/store/auth'

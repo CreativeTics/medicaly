@@ -20,6 +20,8 @@ import {
   XIcon,
   ArrowRightIcon,
 } from '@components/basic/icons'
+import OrderCycle from '../components/OrderCycle.vue'
+import { useAuthStore } from '@/store/auth'
 
 const notifications = useNotificationsStore()
 const route = useRoute()
@@ -97,7 +99,7 @@ onUnmounted(() => {
 
 <template>
   <div class="h-full px-5">
-    <div class="bg-gray-50 pb-4">
+    <div class="bg-gray-50 pb-4 flex items-center justify-between">
       <div class="leading-4 pt-responsive">
         <p
           class="text-3xl flex items-center gap-5 font-semibold text-shadow text-blue-900"
@@ -106,6 +108,14 @@ onUnmounted(() => {
           <OrderStatus :status="order.status" class="text-lg" />
         </p>
       </div>
+      <OrderCycle
+        v-if="
+          useAuthStore().user?.role?.permissions?.includes(
+            'service-orders:full'
+          )
+        "
+        :orderCycle="order.orderCycle"
+      />
     </div>
     <div class="w-full bg-white rounded-lg shadow-lg p-5 flex gap-5">
       <div class="flex items-center gap-5 w-1/3">
