@@ -47,6 +47,11 @@ export async function getList(searchOptions: any) {
 
   const user = useAuthStore().user
   if (user && user?.type != 'employee' && user.relations.length > 0) {
+    // validate if has active contracts
+    if ((await getContracts()).length === 0) {
+      return []
+    }
+
     // get all subsidiaries for the user
     const data = await getData<any[]>({
       entity: `${DB.GENERAL}:contract-users`,
