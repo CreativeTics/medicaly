@@ -88,6 +88,8 @@ export const defaultFields: Field[] = [
     props: {
       placeholder: '',
       class: 'col-span-6',
+      accept: 'application/pdf',
+      size: 5, // MB
     },
     rules: [],
   },
