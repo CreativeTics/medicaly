@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs } from 'vue'
+import { ref, toRefs, watch } from 'vue'
 import DBtn from './DBtn.vue'
 import DTextField from './DTextField.vue'
 import DList from './DList.vue'
@@ -47,6 +47,14 @@ const itemsList = ref<any[]>([])
 onMounted(() => {
   itemsList.value = props.options
 })
+
+watch(
+  () => props.options,
+  (newVal) => {
+    itemsList.value = newVal
+  },
+  { immediate: true }
+)
 
 const arraySelected = ref<any[]>([])
 const count = ref(0)
