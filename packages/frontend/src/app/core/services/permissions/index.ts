@@ -24,6 +24,10 @@ export const permissions = [
     name: 'Contratos:Listar',
   },
   {
+    id: 'contracts:full',
+    name: 'Contratos:Completo',
+  },
+  {
     id: 'countries:list',
     name: 'Configuración > Países:Listar',
   },

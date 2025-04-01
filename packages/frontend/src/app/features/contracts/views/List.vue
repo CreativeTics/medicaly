@@ -5,6 +5,7 @@ const ModuleListBasic = defineAsyncComponent(
   () => import('@components/ModuleListBasic.vue')
 )
 import { getList } from '../services'
+import { useAuthStore } from '@/store/auth'
 
 const router = useRouter()
 const moduleName = 'Contrato'
@@ -39,6 +40,12 @@ const columns = [
 
 const data = ref<any>([])
 
+const actions = ref([
+  ...(useAuthStore().user?.role.permissions.includes('contracts:full')
+    ? ['create', 'edit', 'delete']
+    : ['view']),
+])
+
 const goToCreate = () => {
   console.log('Create')
   router.push({ name: `${modulePath}.create` })
@@ -60,8 +67,9 @@ onMounted(async () => {
     :subtitle="`Gestión de ${moduleName}s`"
     :columns="columns"
     :rows="data"
-    :actions="['edit', 'delete', 'create']"
+    :actions="actions"
     @edit="goToEdit"
+    @view="goToEdit"
     @create="goToCreate"
   >
   </ModuleListBasic>

@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { Form, DynamicForm } from '../../dynamic-form'
 import { useNotificationsStore } from '@/store/notifications'
 import { create, getEntity, edit } from '../services'
+import { useAuthStore } from '@/store/auth'
 
 const notifications = useNotificationsStore()
 const moduleName = 'Contrato'
@@ -378,6 +379,9 @@ onBeforeMount(async () => {
         v-if="form?.tabs && !loading"
         :form-schema="form"
         :initial-model="model"
+        :readonly="
+          !useAuthStore().user?.role.permissions.includes('contracts:full')
+        "
         :title-btn-save="
           route.params.id === undefined ? 'Guardar' : 'Actualizar'
         "
@@ -387,4 +391,3 @@ onBeforeMount(async () => {
     </div>
   </div>
 </template>
-<style scoped></style>

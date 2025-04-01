@@ -1,6 +1,6 @@
 import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from '../../../services/pouch'
+import { DB, PouchService } from '../../../services/pouch'
 
 const pouch = new PouchService()
 const doctype = 'contract-users'

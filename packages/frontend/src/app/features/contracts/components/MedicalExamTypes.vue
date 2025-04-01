@@ -18,6 +18,7 @@ import {
 import { Form, DynamicForm } from '../../dynamic-form'
 import { defineAsyncComponent, onMounted, ref } from 'vue'
 import { useNotificationsStore } from '@/store/notifications'
+import { useAuthStore } from '@/store/auth'
 
 const moduleName = 'Tipos de Examen'
 // const modulePath = "contract-subsidiaries";
@@ -189,7 +190,12 @@ onMounted(async () => {
         :rows="rows"
         style="max-height: 400px"
       >
-        <template #newAction>
+        <template
+          v-if="
+            useAuthStore().user?.role.permissions.includes('contracts:full')
+          "
+          #newAction
+        >
           <DBtn class="mr-10" color="success" @click="handleAdd">Agregar</DBtn>
         </template>
         <template #row="rowProps">
@@ -208,6 +214,11 @@ onMounted(async () => {
 
             <div class="flex justify-end gap-1" v-else>
               <Popper
+                v-if="
+                  useAuthStore().user?.role.permissions.includes(
+                    'contracts:full'
+                  )
+                "
                 arrow
                 offsetDistance="12"
                 content="Editar"
@@ -225,6 +236,11 @@ onMounted(async () => {
                 </div>
               </Popper>
               <Popper
+                v-if="
+                  useAuthStore().user?.role.permissions.includes(
+                    'contracts:full'
+                  )
+                "
                 arrow
                 offsetDistance="12"
                 content="Eliminar"

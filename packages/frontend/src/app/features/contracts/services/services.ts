@@ -1,6 +1,6 @@
 import { getData } from '../../../core/services/get-table/'
 
-import { PouchService, DB } from '../../../services/pouch'
+import { DB, PouchService } from '../../../services/pouch'
 
 const pouch = new PouchService()
 const doctype = 'contract-services'
@@ -36,8 +36,8 @@ export async function getList(contractId: string) {
         currency: 'COP',
         minimumFractionDigits: 0,
       }),
-      exams: doc.exams.length,
-      showForContract: Boolean(doc.showForContract)
+      exams: doc.exams.join(', '),
+      showForContract: doc.showForContract
         ? `SI(${doc.visibleExams?.length})`
         : 'NO',
       visibleExams: doc.visibleExams,
