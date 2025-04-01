@@ -43,7 +43,13 @@ onMounted(async () => {
 })
 
 const back = () => {
-  useBillingStore().resetActiveAccount()
+  if (useBillingStore().activeAccount) {
+    useBillingStore().resetActiveAccount()
+    router.replace({
+      name: 'billing.customers',
+    })
+    return
+  }
   router.back()
 }
 
