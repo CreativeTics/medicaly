@@ -17,6 +17,7 @@ export async function getList() {
       'updatedAt',
     ],
     sort: [{ code: 'asc' }],
+    limit: 2000,
   })
 
   return data.map((doc: any) => {

@@ -134,7 +134,7 @@ const form: Form = {
                 entity: 'general:departments',
                 fields: ['id', 'name'],
                 where: {
-                  countryName: 'Colombia',
+                  countryName: 'COLOMBIA',
                 },
                 sort: [{ name: 'asc' }],
               },
