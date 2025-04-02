@@ -356,6 +356,7 @@ const form: any = {
             modifier: {
               concat: ['name', '(', 'departmentName', ')'],
             },
+            limit: 2000,
           },
           rules: ['required'],
         },
@@ -373,6 +374,7 @@ const form: any = {
             modifier: {
               concat: ['name', '(', 'departmentName', ')'],
             },
+            limit: 2000,
           },
           rules: ['required'],
         },
