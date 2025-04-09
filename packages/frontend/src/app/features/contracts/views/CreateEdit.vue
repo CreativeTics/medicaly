@@ -65,7 +65,7 @@ const form: Form = {
                 class: 'lg:col-span-1 xl:col-span-1',
                 required: true,
               },
-              rules: ['required', 'integer', 'minlength:3', 'maxlength:50'],
+              rules: ['required', 'minlength:3', 'maxlength:50'],
             },
             {
               name: 'name',
@@ -75,7 +75,7 @@ const form: Form = {
                 placeholder: 'Nombre',
                 required: true,
               },
-              rules: ['required', 'minlength:3', 'maxlength:50'],
+              rules: ['required', 'minlength:3', 'maxlength:200'],
             },
             // {
             //   name: "billingCode",
@@ -99,7 +99,7 @@ const form: Form = {
                 'required',
                 'alphanumeric',
                 'minlength:3',
-                'maxlength:50',
+                'maxlength:100',
               ],
             },
             {
