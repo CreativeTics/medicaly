@@ -122,7 +122,7 @@ export const useFingerprint = (onSampleAcquired: () => void) => {
 
   onMounted(async () => {
     console.log('Mounted useFingerprint')
-    await loadSdk()
+    // await loadSdk()
     init()
   })
   onBeforeUnmount(() => {
@@ -130,42 +130,42 @@ export const useFingerprint = (onSampleAcquired: () => void) => {
 
     stopAcquisition()
     reader = null
-    unloadSdk()
+    // unloadSdk()
   })
 
   // Load fingerprint sdk
 
-  let scriptSdk: HTMLScriptElement | null = null
-  let scriptDpWebSdk: HTMLScriptElement | null = null
+  // let scriptSdk: HTMLScriptElement | null = null
+  // let scriptDpWebSdk: HTMLScriptElement | null = null
 
-  const loadSdk = async () => {
-    await new Promise((resolve) => {
-      scriptSdk = document.createElement('script')
-      scriptSdk.src = '/scripts/fingerprint.sdk.min.js'
-      scriptSdk.async = false
-      scriptSdk.onload = () => {
-        console.log('fingerprint.sdk.min.js loaded')
-        resolve(true)
-      }
-      document.body.appendChild(scriptSdk)
-    })
+  // const loadSdk = async () => {
+  //   await new Promise((resolve) => {
+  //     scriptSdk = document.createElement('script')
+  //     scriptSdk.src = '/scripts/fingerprint.sdk.min.js'
+  //     scriptSdk.async = false
+  //     scriptSdk.onload = () => {
+  //       console.log('fingerprint.sdk.min.js loaded')
+  //       resolve(true)
+  //     }
+  //     document.body.appendChild(scriptSdk)
+  //   })
 
-    await new Promise((resolve) => {
-      scriptDpWebSdk = document.createElement('script')
-      scriptDpWebSdk.src = '/scripts/dpwebsdk.js'
-      scriptDpWebSdk.async = false
-      scriptDpWebSdk.onload = () => {
-        console.log('dpwebsdk.js loaded')
-        resolve(true)
-      }
-      document.body.appendChild(scriptDpWebSdk)
-    })
-  }
+  //   await new Promise((resolve) => {
+  //     scriptDpWebSdk = document.createElement('script')
+  //     scriptDpWebSdk.src = '/scripts/dpwebsdk.js'
+  //     scriptDpWebSdk.async = false
+  //     scriptDpWebSdk.onload = () => {
+  //       console.log('dpwebsdk.js loaded')
+  //       resolve(true)
+  //     }
+  //     document.body.appendChild(scriptDpWebSdk)
+  //   })
+  // }
 
-  const unloadSdk = () => {
-    if (scriptSdk) document.body.removeChild(scriptSdk)
-    if (scriptDpWebSdk) document.body.removeChild(scriptDpWebSdk)
-  }
+  // const unloadSdk = () => {
+  //   if (scriptSdk) document.body.removeChild(scriptSdk)
+  //   if (scriptDpWebSdk) document.body.removeChild(scriptDpWebSdk)
+  // }
 
   return {
     reader,
