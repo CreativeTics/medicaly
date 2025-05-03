@@ -1,0 +1,5 @@
+// This file is used to specify files and directories that should be ignored by Prettier.
+**/public/**
+**/dist/**
+**/build/**
+**/coverage/**
