@@ -1,4 +1,4 @@
-import { string, number, date, array, boolean } from 'yup'
+import { array, boolean, date, number, string } from 'yup'
 // @ts-ignore
 import dayjs from 'dayjs'
 
@@ -15,7 +15,7 @@ export const globalRules = new Map<string, any>([
   [
     'upper',
     () =>
-      string().matches(/^[A-Z0-9\s]+$/, {
+      string().matches(/^[A-Z0-9Ñ\s]+$/, {
         excludeEmptyString: true,
         message: 'Solo se permiten mayúsculas',
       }),

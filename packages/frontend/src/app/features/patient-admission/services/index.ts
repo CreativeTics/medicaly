@@ -213,19 +213,19 @@ export async function admitPatientOrder(
     }
   }
 
-  // if (!patient.signatureId) {
-  //   return {
-  //     success: false,
-  //     errorMessage: 'La firma del paciente es requerida',
-  //   }
-  // }
+  if (!patient.signatureId) {
+    return {
+      success: false,
+      errorMessage: 'La firma del paciente es requerida',
+    }
+  }
 
-  // if (!patient.fingerprintId) {
-  //   return {
-  //     success: false,
-  //     errorMessage: 'La huella del paciente es requerida',
-  //   }
-  // }
+  if (!patient.fingerprintId) {
+    return {
+      success: false,
+      errorMessage: 'La huella del paciente es requerida',
+    }
+  }
   // validate consents accepted
 
   if (informedConsents.filter((consent) => !consent.accepted).length > 0) {
@@ -243,9 +243,9 @@ export async function admitPatientOrder(
     patientDataId: oldOrder.patientDataId,
   })
 
-  const orderCycle: any[] = oldOrder.orderCycle || []
+  const orderCycle: any[] = oldOrder.orderCycle ?? []
   const user = useAuthStore().user
-  if (!user || !user?.relations[0]) {
+  if (!user?.relations?.[0]) {
     return {
       success: false,
       errorMessage: 'Usuario Invalido!',
