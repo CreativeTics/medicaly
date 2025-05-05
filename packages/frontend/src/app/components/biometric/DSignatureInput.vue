@@ -110,17 +110,18 @@ onBeforeUnmount(() => {
       <span v-if="error">
         {{ error }}
       </span>
-
       <div
-        v-if="!error && wsStatus === 'joined'"
+        v-if="error && wsStatus != 'joined'"
+        class="text-gray-500 h-20 flex items-center"
+      >
+        Pad desconectado [{{ code }}]
+      </div>
+      <div
+        v-else-if="wsStatus === 'joined' && !(image || tempImage)"
         class="text-gray-500 h-20 flex items-center"
       >
         Esperando Firma [{{ code }}]...
       </div>
-      <div v-else class="text-gray-500 h-20 flex items-center">
-        Pad desconectado [{{ code }}]
-      </div>
-
       <img
         v-show="!error && (image || tempImage)"
         :src="image || tempImage"
