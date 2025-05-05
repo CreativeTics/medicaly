@@ -25,6 +25,7 @@ const notifications = useNotificationsStore()
 
 const order = ref<any>({})
 const loading = ref(false)
+const formIsReady = ref(false)
 const modalIsOpen = ref(false)
 
 const back = () => {
@@ -68,6 +69,7 @@ onMounted(async () => {
     signature.loadImageFromId(order.value.patient?.signatureId)
     fingerprint.loadImageFromId(order.value.patient?.fingerprintId)
     validateIfResponsibleIsRequired()
+    formIsReady.value = true
     loading.value = false
   }
 })
@@ -560,31 +562,19 @@ const form: any = {
 }
 
 const onSubmit = async () => {
-  if (
-    informedConsents.value.filter((consent) => !consent.accepted).length > 0
-  ) {
-    notifications.addNotification({
-      title: 'Error',
-      text: 'Debe aceptar todos los consentimientos!',
-      type: 'error',
-    })
-    return
-  }
-
-  const data = dynamicForm.value?.getAllModel()
-
-  console.log('Submit', data)
   loading.value = true
 
+  const data = dynamicForm.value?.getAllModel()
+  const images = {
+    photoId: await photo.saveImage(),
+    signatureId: await signature.saveImage(),
+    fingerprintId: await fingerprint.saveImage(),
+  }
   const result = await admitPatientOrder(
     route.params.id.toString(),
     {
       ...data,
-      ...{
-        photoId: await photo.saveImage(),
-        signatureId: await signature.saveImage(),
-        fingerprintId: await fingerprint.saveImage(),
-      },
+      ...images,
     },
     informedConsents.value
   )
@@ -657,7 +647,7 @@ const handleUpdateField = (change: { name: string; value: string }) => {
           </div>
           <div class="w-full overflow-y-scroll">
             <DynamicFormWithOutTabs
-              v-if="!loading"
+              v-if="formIsReady"
               ref="dynamicForm"
               :form-schema="form"
               :initial-model="model"
@@ -667,6 +657,11 @@ const handleUpdateField = (change: { name: string; value: string }) => {
               @submit="modalIsOpen = true"
               @update-field="handleUpdateField"
             />
+            <div v-else class="w-full h-full flex justify-center items-center">
+              <span class="text-gray-500">
+                Cargando formulario de admisión...
+              </span>
+            </div>
           </div>
         </div>
       </div>

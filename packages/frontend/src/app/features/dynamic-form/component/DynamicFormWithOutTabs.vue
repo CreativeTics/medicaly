@@ -4,6 +4,7 @@ import { useValidation } from '../../../core/composable/validation/index'
 import { DBtn } from '@components/basic'
 import DynamicField from './DynamicField.vue'
 import { useNotificationsStore } from '../../../../store/notifications'
+import { deepClone } from '@/app/core/util/objects'
 
 const notifications = useNotificationsStore()
 
@@ -131,7 +132,7 @@ const getModelValue = (fieldName: string) => {
 }
 
 const getAllModel = () => {
-  return model
+  return deepClone(model)
 }
 
 defineExpose<{

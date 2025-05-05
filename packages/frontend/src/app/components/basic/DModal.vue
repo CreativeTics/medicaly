@@ -154,6 +154,7 @@ onMounted(() => {
               </div>
               <div>
                 <DBtn
+                  type="button"
                   :color="form ? '' : 'danger'"
                   class="py-2 px-8 mx-2"
                   @click="$emit('otherMethod')"

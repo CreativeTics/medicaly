@@ -111,7 +111,7 @@ onBeforeUnmount(() => {
         {{ error }}
       </span>
       <div
-        v-if="error && wsStatus != 'joined'"
+        v-else-if="wsStatus != 'joined'"
         class="text-gray-500 h-20 flex items-center"
       >
         Pad desconectado [{{ code }}]

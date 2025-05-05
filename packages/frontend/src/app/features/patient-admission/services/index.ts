@@ -209,21 +209,21 @@ export async function admitPatientOrder(
   if (!patient.photoId) {
     return {
       success: false,
-      errorMessage: 'La foto del paciente es requerida',
+      errorMessage: 'La foto del paciente es requerida!',
     }
   }
 
   if (!patient.signatureId) {
     return {
       success: false,
-      errorMessage: 'La firma del paciente es requerida',
+      errorMessage: 'La firma del paciente es requerida!',
     }
   }
 
   if (!patient.fingerprintId) {
     return {
       success: false,
-      errorMessage: 'La huella del paciente es requerida',
+      errorMessage: 'La huella del paciente es requerida!',
     }
   }
   // validate consents accepted
