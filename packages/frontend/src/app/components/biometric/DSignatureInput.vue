@@ -112,7 +112,7 @@ onBeforeUnmount(() => {
       </span>
 
       <div
-        v-if="!error && !(image || tempImage) && wsStatus === 'joined'"
+        v-if="!error && wsStatus === 'joined'"
         class="text-gray-500 h-20 flex items-center"
       >
         Esperando Firma [{{ code }}]...
