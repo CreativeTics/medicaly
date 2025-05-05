@@ -38,7 +38,7 @@ const emitValue = () => {
       'border-blue-600': deviceStatus === DeviceStatus.GettingSamples,
     }"
   >
-    <div class="w-full flex justify-center items-center">
+    <div class="w-full flex flex-col justify-center items-center">
       <span v-if="error">
         {{ error }}
       </span>
@@ -56,7 +56,6 @@ const emitValue = () => {
       <div
         v-if="
           !error &&
-          !(image || fingerprintImage) &&
           deviceStatus === DeviceStatus.Disconnected
         "
         class="text-gray-500 h-20 flex flex-col items-center justify-center"

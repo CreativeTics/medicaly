@@ -672,7 +672,6 @@ const handleUpdateField = (change: { name: string; value: string }) => {
               :model-value="photo.imageBase64.value"
               @update:model-value="photo.setImage"
             />
-            <div>FIRMA : {{ signature.imageBase64.value.length }}</div>
             <DSignatureInput
               v-if="formIsReady"
               :model-value="signature.imageBase64.value"
