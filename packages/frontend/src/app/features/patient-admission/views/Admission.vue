@@ -356,7 +356,7 @@ const form: any = {
             entity: 'general:cities',
             fields: ['id', 'name', 'departmentName'],
             modifier: {
-              concat: ['name', '(', 'departmentName', ')'],
+              concat: ['code', ' - ', 'name', '(', 'departmentName', ')'],
             },
             limit: 2000,
           },
@@ -374,7 +374,7 @@ const form: any = {
             entity: 'general:cities',
             fields: ['id', 'name', 'departmentName'],
             modifier: {
-              concat: ['name', '(', 'departmentName', ')'],
+              concat: ['code', ' - ', 'name', '(', 'departmentName', ')'],
             },
             limit: 2000,
           },
@@ -451,6 +451,7 @@ const form: any = {
             class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
           },
           rules: ['maxlength:100'],
+          default: 'NO REFIERE',
         },
 
         {
@@ -459,12 +460,23 @@ const form: any = {
           label: 'Parentesco',
           type: 'text',
         },
-
         {
           if: 'accompanyingNotRequired',
           name: 'accompanyingAddress',
           label: 'Lugar de residencia',
-          type: 'text',
+          type: 'select',
+          props: {
+            showKey: 'concat',
+            valueKey: 'concat',
+          },
+          query: {
+            entity: 'general:cities',
+            fields: ['id', 'code', 'name', 'departmentName'],
+            modifier: {
+              concat: ['code', ' - ', 'name', '(', 'departmentName', ')'],
+            },
+            limit: 2000,
+          },
         },
         {
           if: 'accompanyingNotRequired',
@@ -494,16 +506,25 @@ const form: any = {
           },
           rules: ['required', 'minlength:3', 'maxlength:100'],
         },
-
         {
           if: 'accompanyingRequired',
           name: 'accompanyingAddress',
           label: 'Lugar de residencia',
-          type: 'text',
+          type: 'select',
           props: {
             required: true,
+            valueKey: 'concat',
+            showKey: 'concat',
           },
-          rules: ['required', 'minlength:3', 'maxlength:100'],
+          query: {
+            entity: 'general:cities',
+            fields: ['id', 'code', 'name', 'departmentName'],
+            modifier: {
+              concat: ['code', ' - ', 'name', '(', 'departmentName', ')'],
+            },
+            limit: 2000,
+          },
+          rules: ['required'],
         },
         {
           if: 'accompanyingRequired',
@@ -524,6 +545,9 @@ const form: any = {
         {
           name: 'responsibleName',
           label: 'Nombre',
+          props: {
+            class: 'sm:col-span-6 lg:col-span-6 xl:col-span-6',
+          },
           type: 'text',
         },
         {
@@ -531,11 +555,23 @@ const form: any = {
           label: 'Parentesco',
           type: 'text',
         },
-
         {
           name: 'responsibleAddress',
           label: 'Lugar de residencia',
-          type: 'text',
+          type: 'select',
+          props: {
+            valueKey: 'concat',
+            showKey: 'concat',
+          },
+          query: {
+            entity: 'general:cities',
+            fields: ['id', 'code', 'name', 'departmentName'],
+            modifier: {
+              concat: ['code', ' - ', 'name', '(', 'departmentName', ')'],
+            },
+            limit: 2000,
+          },
+          rules: ['required'],
         },
         {
           name: 'responsiblePhone',
