@@ -1,6 +1,6 @@
+import { Buffer } from 'buffer'
 import { ref } from 'vue'
 import { http } from '../services/http'
-import { Buffer } from 'buffer'
 
 import { DB, PouchService } from '@/app/services/pouch'
 import { useAuthStore } from '@/store/auth'

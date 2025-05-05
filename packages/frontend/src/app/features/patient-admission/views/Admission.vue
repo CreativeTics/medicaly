@@ -65,9 +65,9 @@ onMounted(async () => {
       ...order.value.patient,
       applyPosition: order.value.position,
     }
-    photo.loadImageFromId(order.value.patient?.photoId)
-    signature.loadImageFromId(order.value.patient?.signatureId)
-    fingerprint.loadImageFromId(order.value.patient?.fingerprintId)
+    await photo.loadImageFromId(order.value.patient?.photoId)
+    await signature.loadImageFromId(order.value.patient?.signatureId)
+    await fingerprint.loadImageFromId(order.value.patient?.fingerprintId)
     validateIfResponsibleIsRequired()
     formIsReady.value = true
     loading.value = false
@@ -668,15 +668,19 @@ const handleUpdateField = (change: { name: string; value: string }) => {
         <div class="w-full flex flex-row h-full">
           <div class="w-96 p-2 bg-slate-100 flex flex-col gap-2">
             <DCameraInput
+              v-if="formIsReady"
               :model-value="photo.imageBase64.value"
               @update:model-value="photo.setImage"
             />
+            <div>FIRMA : {{ signature.imageBase64.value.length }}</div>
             <DSignatureInput
+              v-if="formIsReady"
               :model-value="signature.imageBase64.value"
               @update:model-value="signature.setImage"
             />
 
             <DFingerPrintInput
+              v-if="formIsReady"
               :model-value="fingerprint.imageBase64.value"
               @update:model-value="fingerprint.setImage"
             />

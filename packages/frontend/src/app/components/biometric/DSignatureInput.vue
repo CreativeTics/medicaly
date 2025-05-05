@@ -106,19 +106,19 @@ onBeforeUnmount(() => {
       'bg-white': wsStatus === 'joined',
     }"
   >
-    <div class="w-full h-full flex justify-center items-center">
+    <div class="w-full h-full flex flex-col justify-center items-center">
       <span v-if="error">
         {{ error }}
       </span>
       <div
         v-else-if="wsStatus != 'joined'"
-        class="text-gray-500 h-20 flex items-center"
+        class="text-gray-500 flex items-center"
       >
         Pad desconectado [{{ code }}]
       </div>
       <div
         v-else-if="wsStatus === 'joined' && !(image || tempImage)"
-        class="text-gray-500 h-20 flex items-center"
+        class="text-gray-500 flex items-center"
       >
         Esperando Firma [{{ code }}]...
       </div>
