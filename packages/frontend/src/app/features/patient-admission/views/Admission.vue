@@ -326,7 +326,6 @@ const form: any = {
           props: {
             class: 'lg:col-span-1 xl:col-span-1',
             required: true,
-            disabled: true,
           },
           query: {
             entity: 'general:contract-positions',
