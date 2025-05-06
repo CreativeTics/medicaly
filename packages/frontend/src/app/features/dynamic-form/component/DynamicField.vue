@@ -20,6 +20,9 @@ import {
 } from '../../../core/services/get-table/index'
 import { computed, onMounted, ref, watch } from 'vue'
 
+import { comparators } from '@/app/core/util/strings'
+import { getNestedValue } from '@/app/core/util/objects'
+
 const props = defineProps({
   count: { type: Number, required: false, default: () => 0 },
   field: { type: Object, required: true, default: () => {} },
@@ -129,11 +132,32 @@ onMounted(async () => {
   }
   registerDependsOn()
 })
+
+const fieldIsVisible = computed(() => {
+  if (props.field['if'] === undefined) return true
+  if (props.field['if'] === true) return true
+  if (props.field['if'] === false) return false
+  if (typeof props.field['if'] === 'string') {
+    return !!props.allModel[props.field['if']]
+  }
+
+  if (typeof props.field['if'] === 'object') {
+    const _if = props.field['if'] as { field: string; condition: string }
+    if (_if.field && _if.condition) {
+      const value = getNestedValue(props.allModel, _if.field)
+      if (value === undefined) return false
+      // condition is a  operator and value
+      const [operator, expected] = _if.condition.split(' ')
+      return comparators[operator](value, expected) ?? false
+    }
+  }
+  return true
+})
 </script>
 <template>
   <component
     :label="field.label"
-    v-if="field['if'] ? !!allModel[field?.['if']] : true"
+    v-if="fieldIsVisible"
     :is="components.get(field.type)?.component ?? field.type"
     :model-value="modelValue"
     :field="field"

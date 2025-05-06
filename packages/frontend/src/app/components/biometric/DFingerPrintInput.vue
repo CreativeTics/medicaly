@@ -54,10 +54,7 @@ const emitValue = () => {
         No se ha tomado la huella
       </div>
       <div
-        v-if="
-          !error &&
-          deviceStatus === DeviceStatus.Disconnected
-        "
+        v-if="!error && deviceStatus === DeviceStatus.Disconnected"
         class="text-gray-500 h-20 flex flex-col items-center justify-center"
       >
         Huellero desconectado

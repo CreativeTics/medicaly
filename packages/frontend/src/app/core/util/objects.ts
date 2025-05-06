@@ -16,3 +16,7 @@ export function deepClone<T>(obj: T): T {
 
   return clonedObj as T
 }
+
+export function getNestedValue(obj: any, path: string): any {
+  return path.split('.').reduce((acc, part) => acc?.[part], obj)
+}

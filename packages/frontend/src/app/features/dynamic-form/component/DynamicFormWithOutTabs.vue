@@ -4,7 +4,7 @@ import { useValidation } from '../../../core/composable/validation/index'
 import { DBtn } from '@components/basic'
 import DynamicField from './DynamicField.vue'
 import { useNotificationsStore } from '../../../../store/notifications'
-import { deepClone } from '@/app/core/util/objects'
+import { deepClone, getNestedValue } from '@/app/core/util/objects'
 
 const notifications = useNotificationsStore()
 
@@ -75,12 +75,16 @@ const setFieldsRules = () => {
         }
       }
       if (field?.default) {
+        const overrideDefault =
+          getNestedValue(model, field?.default) ?? field.default
+
         if (field.type === 'multiselect') {
           defaultValues.value[field.name] = [
+            ...overrideDefault,
             // replacePayrollTags(field.default[0]),
           ]
         } else {
-          defaultValues.value[field.name] = field.default
+          defaultValues.value[field.name] = overrideDefault
         }
       } else {
         let defaultValue: any = ''
@@ -146,10 +150,17 @@ defineExpose<{
   setFieldsRules,
   getAllModel,
 })
+
+const debug = (event: MouseEvent) => {
+  if (event.ctrlKey) {
+    console.log('debug copiado al Clipboard', model)
+    navigator.clipboard.writeText(JSON.stringify(model, null, 2))
+  }
+}
 </script>
 
 <template>
-  <div class="w-full">
+  <div class="w-full" @click.middle="debug">
     <div v-for="(group, index) in groups" :key="index" :class="gridClass">
       <div
         v-if="group.if ? !!model[group.if] : true"
@@ -168,7 +179,7 @@ defineExpose<{
       >
         <DynamicField
           v-for="(field, index) in group.fields as any []"
-          class="col-span-6"
+          :key="index"
           :class="[
             !field.class?.includes('sm:col-span')
               ? 'sm:col-span-3'
@@ -181,7 +192,6 @@ defineExpose<{
               : field.class,
           ]"
           :count="index"
-          :key="index"
           :field="field"
           v-model="model[field.name]"
           :error="validationSchema[field.name]?.errors.join(',')"
