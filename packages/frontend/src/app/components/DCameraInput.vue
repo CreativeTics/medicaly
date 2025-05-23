@@ -15,10 +15,10 @@ const canvas = ref<HTMLCanvasElement | null>(null)
 const selectedDevice = ref<MediaDeviceInfo | null>(null)
 const error = ref<string>('')
 const image = ref<string>('')
-let resolution = {
-  width: 1920,
-  height: 1920,
-}
+// let resolution = {
+//   width: 1920,
+//   height: 1920,
+// }
 
 let stream: MediaStream | null = null
 
@@ -34,13 +34,13 @@ const getDevices = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     video: {
       deviceId: selectedDevice.value.deviceId,
-      width: resolution.width,
-      height: resolution.height,
+      // width: resolution.width,
+      // height: resolution.height,
     },
   })
   if (video.value === null) return
-  resolution.width = video.value.clientWidth
-  resolution.height = video.value.clientHeight
+  // resolution.width = video.value.clientWidth
+  // resolution.height = video.value.clientHeight
   video.value.srcObject = stream
   video.value?.play()
 }
@@ -57,11 +57,11 @@ onMounted(async () => {
 
 const takePhoto = () => {
   if (video.value === null || canvas.value === null) return
-  canvas.value.width = resolution.width
-  canvas.value.height = resolution.height
+  canvas.value.width = video.value.clientWidth
+  canvas.value.height = video.value.clientHeight
 
   const context = canvas.value?.getContext('2d') as CanvasRenderingContext2D
-  context.drawImage(video.value, 0, 0, resolution.width, resolution.height)
+  context.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height)
   const data = canvas.value.toDataURL('image/png')
   image.value = data
   emitValue()
