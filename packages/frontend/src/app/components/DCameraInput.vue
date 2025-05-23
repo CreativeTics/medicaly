@@ -17,7 +17,7 @@ const error = ref<string>('')
 const image = ref<string>('')
 const resolution = {
   width: 1920,
-  height: 1080,
+  height: 1920,
 }
 
 let stream: MediaStream | null = null
