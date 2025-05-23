@@ -56,8 +56,8 @@ onMounted(async () => {
 
 const takePhoto = () => {
   if (video.value === null || canvas.value === null) return
-  canvas.value.width = resolution.width
-  canvas.value.height = resolution.height
+  // canvas.value.width = resolution.width
+  // canvas.value.height = resolution.height
 
   const context = canvas.value?.getContext('2d') as CanvasRenderingContext2D
   context.drawImage(video.value, 0, 0, resolution.width, resolution.height)
