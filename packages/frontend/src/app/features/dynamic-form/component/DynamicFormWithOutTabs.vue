@@ -75,8 +75,9 @@ const setFieldsRules = () => {
         }
       }
       if (field?.default) {
-        const overrideDefault =
-          getNestedValue(model, field?.default) ?? field.default
+        const overrideDefault = field?.default.toString().includes('.')
+          ? getNestedValue(model, field?.default)
+          : field?.default
 
         if (field.type === 'multiselect') {
           defaultValues.value[field.name] = [
