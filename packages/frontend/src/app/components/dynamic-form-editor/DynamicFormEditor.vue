@@ -364,6 +364,7 @@ const onDrop = (evt: any, newGroupIndex: number, newFieldIndex: number) => {
           <FieldEditor
             v-model="group.fields[fieldIndex]"
             class="absolute -top-3 right-0"
+            @delete="group.fields.splice(fieldIndex, 1)"
           />
         </div>
         <div
