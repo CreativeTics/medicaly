@@ -95,10 +95,10 @@ export const defaultFields: Field[] = [
   },
   {
     name: 'subtitle_field',
-    label: 'Subtitle field',
+
     type: 'subtitle',
     props: {
-      placeholder: '',
+      text: 'Subtitle Text',
       class: 'col-span-6',
     },
     rules: [],
