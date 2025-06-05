@@ -19,6 +19,18 @@
   "python.formatting.provider": "none",
   "cSpell.language": "en,es,lorem",
   "yaml.schemas": {
+    "/Users/gokaju/.vscode-insiders/extensions/continue.continue-1.1.33-darwin-arm64/config-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ],
+    "/Users/gokaju/.vscode-insiders/extensions/continue.continue-1.1.42-darwin-arm64/config-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ],
+    "/Users/gokaju/.vscode-insiders/extensions/continue.continue-1.1.43-darwin-arm64/config-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ],
+    "/Users/gokaju/.vscode-insiders/extensions/continue.continue-1.1.44-darwin-arm64/config-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ],
     "https://www.artillery.io/schema.json": []
   },
   "sonarlint.connectedMode.project": {

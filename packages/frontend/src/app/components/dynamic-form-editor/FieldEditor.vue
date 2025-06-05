@@ -33,6 +33,7 @@ const validateSchema = () => {
     inError.value = false
   } catch (error) {
     inError.value = true
+    console.error('Invalid JSON in fieldText:', error)
   }
 }
 
@@ -75,6 +76,7 @@ const handleDelete = () => {
       class="w-full"
       @update:model-value="validateSchema"
     />
+
     <div class="flex justify-end gap-1">
       <DBtn color="disabled" @click="isEditing = false">Cancelar</DBtn>
       <DBtn
