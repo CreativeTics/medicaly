@@ -31,7 +31,7 @@ export interface Field {
 
 export interface Group {
   name: string
-  description?: string
+  description: string
   fields: Field[]
 }
 

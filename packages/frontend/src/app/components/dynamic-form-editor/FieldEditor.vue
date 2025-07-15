@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Field } from './types'
 import {
   Edit05Icon as EditIcon,
   Trash01Icon,
@@ -7,6 +6,7 @@ import {
 import DBtn from '@components/basic/DBtn.vue'
 import DTextAreaField from '@components/basic/DTextAreaField.vue'
 import { ref } from 'vue'
+import { Field } from './types'
 
 const props = defineProps<{
   modelValue: Field
@@ -71,7 +71,7 @@ const handleDelete = () => {
     </div>
     <DTextAreaField
       v-model="fieldText"
-      :label="props.modelValue.label"
+      :label="props.modelValue.label || ''"
       :rows="10"
       class="w-full"
       @update:model-value="validateSchema"
