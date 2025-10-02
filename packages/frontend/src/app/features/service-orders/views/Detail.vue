@@ -50,6 +50,7 @@ const handleDownloadExamCertificate = async (
   serviceId: string,
   exam: {
     id: string
+    name: string
     loading: boolean
   }
 ) => {
@@ -57,7 +58,12 @@ const handleDownloadExamCertificate = async (
   try {
     const examId = exam.id
     // Descargar el examen
-    await downloadExamCertificate(order.value.id, serviceId, examId)
+    await downloadExamCertificate(
+      order.value.id,
+      serviceId,
+      examId,
+      `${order.value.code}-${order.value.patientName}-${exam.name}`
+    )
   } catch (error: any) {
     notifications.addNotification({
       type: 'error',
