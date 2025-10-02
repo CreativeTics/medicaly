@@ -68,7 +68,7 @@ export async function edit(
 
 export async function deleteEntity(id: string): Promise<boolean> {
   const entity = await getEntity(id)
-  await removeContractRelationFromUser(id, entity.user)
+  await removeContractRelationFromUser(entity.contractId, entity.user)
   const response = await pouch.use(DB.GENERAL).delete(id)
   return !!response?.ok
 }
