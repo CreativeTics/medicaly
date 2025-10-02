@@ -10,6 +10,7 @@ export interface Field {
     | 'check'
     | 'date'
     | 'select'
+    | 'simple_multiselect'
     | 'multiselect'
     | 'textarea'
     | 'file'
@@ -22,7 +23,7 @@ export interface Field {
   editingProps?: any
   rules?: string[]
   query?: TableDataQuery
-  default?: string | number | boolean | []
+  default?: string | number | boolean | Array<string>
   dependsOn?: {
     field: string
     filterTag?: string

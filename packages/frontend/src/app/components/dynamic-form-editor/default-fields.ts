@@ -57,6 +57,31 @@ export const defaultFields: Field[] = [
     rules: [],
   },
   {
+    name: 'simple_multiselect_field',
+    label: 'Simple multiselect field',
+    type: 'simple_multiselect',
+    default: ['Opción 1'],
+    props: {
+      required: true,
+      placeholder: 'Placeholder de ejemplo',
+      options: [
+        {
+          id: 'Opción 1',
+          name: 'Opción 1',
+        },
+        {
+          id: 'Opción 2',
+          name: 'Opción 2',
+        },
+        {
+          id: 'Opción 3',
+          name: 'Opción 3',
+        },
+      ],
+    },
+    rules: ['required-array'],
+  },
+  {
     name: 'multiselect_field',
     label: 'Multiselect field',
     type: 'multiselect',
@@ -125,6 +150,16 @@ export const defaultFields: Field[] = [
         { id: '2', name: 'Opción 2' },
         { id: '3', name: 'Opción 3' },
       ],
+    },
+    rules: [],
+  },
+  {
+    name: 'audiogram_field',
+    label: 'EXAMEN DE AUDIOMETRIA',
+    type: 'audiogram',
+    props: {
+      placeholder: 'Placeholder de ejemplo',
+      class: 'col-span-6',
     },
     rules: [],
   },

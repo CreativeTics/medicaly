@@ -10,6 +10,7 @@ import {
 import DFileAttachment from '@components/attachments/DFileAttachment.vue'
 import IMCField from '@components/medical/IMCField.vue'
 import MultiSelectSearch from '@components/basic/MultiSelectSearch.vue'
+import DSelectMultipleSimpleField from '@components/basic/DSelectMultipleSimpleField.vue'
 import JsonEditorVue from 'json-editor-vue'
 import Audiogram from '@components/audiogram/Audiogram.vue'
 import DynamicFormEditor from '@components/dynamic-form-editor/DynamicFormEditor.vue'
@@ -51,6 +52,10 @@ const components = new Map<string, any>([
   ['check', { component: DToggleField, defaultProps: {} }],
   ['date', { component: DTextField, defaultProps: { type: 'date' } }],
   ['select', { component: DSelectFieldSearch, defaultProps: {} }],
+  [
+    'simple_multiselect',
+    { component: DSelectMultipleSimpleField, defaultProps: {} },
+  ],
   ['multiselect', { component: DMultiselect, defaultProps: {} }],
   ['textarea', { component: DTextAreaField, defaultProps: {} }],
   ['file', { component: DFileAttachment, defaultProps: {} }],
@@ -77,9 +82,13 @@ const optionsFiltered = computed<SelectOption[]>(() =>
 
 const updateOptions = async (val: any = {}) => {
   if (
-    ['text', 'select', 'multiselect', 'multiselect_search'].includes(
-      props.field.type
-    ) &&
+    [
+      'text',
+      'select',
+      'simple_multiselect',
+      'multiselect',
+      'multiselect_search',
+    ].includes(props.field.type) &&
     props.field.props?.options
   ) {
     options.value = props.field.props.options
