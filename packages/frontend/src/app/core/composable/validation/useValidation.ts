@@ -10,7 +10,7 @@ export default function useValidation() {
 
   const validateSchema = (): boolean => {
     globalErrors = []
-    Object.keys(validationSchema).forEach(key => {
+    Object.keys(validationSchema).forEach((key) => {
       const rules = validationSchema[key].rules
       let errors = []
       const passDependsOn = !dependsOn[key] || !!model[dependsOn[key]]
@@ -21,8 +21,13 @@ export default function useValidation() {
             if (typeof rule === 'string') {
               const [ruleName, ruleParamsString = ''] = rule.split(':')
               if (ruleParamsString) {
-                const ruleParams = ruleParamsString.split(',')
-                params.push(...ruleParams)
+                if (['pattern', 'regex'].includes(ruleName)) {
+                  // For pattern and regex, do not split by comma
+                  params.push(ruleParamsString)
+                } else {
+                  const ruleParams = ruleParamsString.split(',')
+                  params.push(...ruleParams)
+                }
               }
               rule = globalRules.get(ruleName)
             }
@@ -48,7 +53,7 @@ export default function useValidation() {
   }
 
   const replaceModelParams = (params: any[]) => {
-    return params.map(param => {
+    return params.map((param) => {
       if (param.startsWith('$')) {
         const key = param.replace('$', '')
         return model[key]
@@ -65,12 +70,12 @@ export default function useValidation() {
     validationSchema[key] = {
       rules,
       isValid: false,
-      errors: []
+      errors: [],
     }
   }
 
   const setInitialModel = (initialModel: any) => {
-    Object.keys(initialModel).forEach(key => {
+    Object.keys(initialModel).forEach((key) => {
       model[key] = initialModel[key]
     })
   }
@@ -89,7 +94,7 @@ export default function useValidation() {
     globalErrors,
     handleValidation,
     addValidation,
-    setInitialModel
+    setInitialModel,
   }
 }
 

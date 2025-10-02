@@ -20,6 +20,8 @@ const emitUpdate = (val) => {
   emit('update:modelValue', val)
 }
 function toggleOptions(e) {
+  if (e.target.tagName !== 'OPTION') return
+
   const option = e.target
   const value = option.value
 

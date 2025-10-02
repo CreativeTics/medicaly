@@ -75,7 +75,10 @@ const setFieldsRules = () => {
         }
       }
       if (field?.default) {
-        const overrideDefault = field?.default.toString().includes('.')
+        // validate if the default is a nested value field.field like user.name or user.address.city
+        const isNested = new RegExp('^\\w+(\\.\\w+)+$').test(field?.default)
+
+        const overrideDefault = isNested
           ? getNestedValue(model, field?.default)
           : field?.default
 
@@ -93,6 +96,7 @@ const setFieldsRules = () => {
         defaultValue = field.type === 'multiselect' ? [] : defaultValue
         defaultValue = field.type === 'number' ? undefined : defaultValue
         defaultValue = field.type === 'multiselect_search' ? [] : defaultValue
+        defaultValue
 
         defaultValues.value[field.name] = defaultValue
       }
