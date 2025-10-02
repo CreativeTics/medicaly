@@ -252,7 +252,7 @@ const form: any = {
           },
           query: {
             entity: 'general:entities',
-            fields: ['id', 'name'],
+            fields: ['code', 'name'],
             where: {
               type: 'ARL',
             },
@@ -353,7 +353,7 @@ const form: any = {
           },
           query: {
             entity: 'general:cities',
-            fields: ['id', 'name', 'departmentName'],
+            fields: ['id', 'code', 'name', 'departmentName'],
             modifier: {
               concat: ['code', ' - ', 'name', '(', 'departmentName', ')'],
             },
@@ -371,7 +371,7 @@ const form: any = {
           },
           query: {
             entity: 'general:cities',
-            fields: ['id', 'name', 'departmentName'],
+            fields: ['id', 'code', 'name', 'departmentName'],
             modifier: {
               concat: ['code', ' - ', 'name', '(', 'departmentName', ')'],
             },
