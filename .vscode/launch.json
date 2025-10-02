@@ -23,10 +23,21 @@
     },
     {
       "type": "node-terminal",
-      "name": "debug: frontend",
+      "name": "debug: frontend (terminal)",
       "request": "launch",
-      "command": "yarn workspace frontend dev",
-      "cwd": "${workspaceFolder}/"
+      "command": "yarn dev",
+      "cwd": "${workspaceFolder}/packages/frontend/",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "chrome",
+      "name": "debug: frontend (browser)",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/packages/frontend/src",
+      "preLaunchTask": "start-frontend"
     }
   ]
 }

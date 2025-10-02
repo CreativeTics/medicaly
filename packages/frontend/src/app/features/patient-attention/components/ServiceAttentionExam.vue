@@ -57,7 +57,10 @@ const getExamAndAnnotation = async () => {
   exam.value = await getLastExamOrAnnotationExam(props.examId, annotation)
 
   model.value = {
-    patient: patientData,
+    patient: {
+      age: patientData.age,
+      biologicalSex: patientData.biologicalSex,
+    },
     ...(annotation ?? {}),
   }
 }
