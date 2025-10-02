@@ -44,7 +44,7 @@ export async function getContractPositions(contractId: string) {
 export async function searchPatient(doctype: string, docNumber: string) {
   const data = await getData<any[]>({
     entity: `${DB.MEDICAL}:patients`,
-    fields: ['id', 'name', 'lastName'],
+    fields: ['id', 'name', 'secondName', 'lastName', 'secondLastName'],
     where: {
       documentType: doctype,
       documentNumber: docNumber,
@@ -55,7 +55,9 @@ export async function searchPatient(doctype: string, docNumber: string) {
     return {
       id: doc.id,
       name: doc.name,
+      secondName: doc.secondName,
       lastName: doc.lastName,
+      secondLastName: doc.secondLastName,
     }
   })
 }
