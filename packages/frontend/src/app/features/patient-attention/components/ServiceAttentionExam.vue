@@ -60,6 +60,8 @@ const getExamAndAnnotation = async () => {
     patient: {
       age: patientData.age,
       biologicalSex: patientData.biologicalSex,
+      birthDate: patientData.birthDate,
+      position: patientData.position,
     },
     ...(annotation ?? {}),
   }
