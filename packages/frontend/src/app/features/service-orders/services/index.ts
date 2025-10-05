@@ -22,6 +22,9 @@ export async function getContracts(): Promise<ContractSelectResult[]> {
   const where: any = {
     status: 'active',
   }
+  if (user && user?.type != 'employee' && !user.relations.length) {
+    return []
+  }
   if (user && user?.type != 'employee' && user.relations.length > 0) {
     where['_id'] = {
       $in: user.relations,
@@ -352,7 +355,8 @@ function validatePatients(patients: any[]) {
 export async function downloadExamCertificate(
   orderId: string,
   serviceId: string,
-  examId: string
+  examId: string,
+  name: string
 ) {
   try {
     // get exam print blob
@@ -379,7 +383,7 @@ export async function downloadExamCertificate(
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `certificado-${orderId}-${serviceId}-${examId}.pdf`
+    a.download = `${name}.pdf`
     a.click()
     window.URL.revokeObjectURL(url)
   } catch (error) {

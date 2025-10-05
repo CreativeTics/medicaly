@@ -71,8 +71,12 @@ const searchPatientByDocument = async (patient: Patient, index: number) => {
     const patientOld = await searchPatient(patient.doctype, patient.document)
     if (patientOld.length > 0) {
       patients.value[index].id = patientOld[0].id
-      patients.value[index].name = patientOld[0].name
-      patients.value[index].lastName = patientOld[0].lastName
+      patients.value[
+        index
+      ].name = `${patientOld[0].name} ${patientOld[0].secondName}`
+      patients.value[
+        index
+      ].lastName = `${patientOld[0].lastName} ${patientOld[0].secondLastName}`
       patients.value[index].isOld = true
     }
   }

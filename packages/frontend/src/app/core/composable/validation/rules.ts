@@ -28,6 +28,16 @@ export const globalRules = new Map<string, any>([
         message: 'El formato no es válido!',
       }),
   ],
+  [
+    'pattern',
+    (pattern: string) => {
+      console.log(pattern)
+      return string().matches(new RegExp(pattern), {
+        excludeEmptyString: true,
+        message: 'El formato no es válido!',
+      })
+    },
+  ],
   ['email', () => string().email('El email no es válido!')],
   ['url', () => string().url('La URL no es válida!')],
   [
