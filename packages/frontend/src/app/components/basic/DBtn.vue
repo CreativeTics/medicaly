@@ -16,11 +16,15 @@ const props = withDefaults(
     loading: false,
     disabled: false,
     type: 'submit',
-    icon: ''
+    icon: '',
   }
 )
 
 const classes = computed(() => {
+  if (props.disabled) {
+    return 'bg-gray-300 text-gray-500 cursor-not-allowed'
+  }
+
   switch (props.color) {
     case 'disabled':
       return 'bg-gray-300 text-gray-500 cursor-not-allowed'
@@ -46,7 +50,11 @@ const classes = computed(() => {
     :disabled="disabled"
     :type="type"
     class="inline-flex text-sm justify-center items-center py-1.5 px-4 border border-transparent shadow-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-    :class="[classes, { 'cursor-pointer': !disabled, 'cursor-not-allowed': disabled }]">
+    :class="[
+      classes,
+      { 'cursor-pointer': !disabled, 'cursor-not-allowed': disabled },
+    ]"
+  >
     <DIcon class="text-white pr-2 w-7" v-if="icon" :name="icon" />
     <Loading02Icon v-if="loading" class="rotate"></Loading02Icon>
     <slot v-else />

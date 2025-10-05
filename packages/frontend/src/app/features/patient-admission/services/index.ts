@@ -257,6 +257,7 @@ export async function admitPatientOrder(
   orderCycle.push({
     type: 'admission',
     user: user?.id,
+    username: user?.username,
     employee,
     status: OrderStatus.inprogress,
     at: new Date().toISOString(),

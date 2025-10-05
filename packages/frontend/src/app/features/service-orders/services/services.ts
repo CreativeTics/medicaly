@@ -4,13 +4,13 @@ import { DB } from '../../../services/pouch'
 
 const doctype = 'contract-services'
 
-export async function getList(contractId: string, examType: string) {
+export async function getList(contractId: string, examType?: string) {
   const data = await getData<any[]>({
     entity: `${DB.GENERAL}:${doctype}`,
     fields: ['id', 'code', 'name', 'amount'],
     where: {
       contractId: contractId,
-      examType: examType,
+      examType,
     },
   })
 

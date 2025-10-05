@@ -1,27 +1,25 @@
 <script setup lang="ts">
+import { useImageFile } from '@/app/core/composable/useImageFile'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useImageFile } from '@/app/core/composable/useImageFile'
 
-import {
-  downloadExamCertificate,
-  getOrder,
-  getAnnotationUrl,
-} from '../services'
-import OrderStatus from '../components/OrderStatus.vue'
-import { getPatient } from '../services/patients'
 import { OrderStatus as OrderStatusEnum } from '@/app/core/types/order-status'
 import { useNotificationsStore } from '@/store/notifications'
+import OrderStatus from '../components/OrderStatus.vue'
+import {
+  downloadExamCertificate,
+  getAnnotationUrl,
+  getOrder,
+} from '../services'
+import { getPatient } from '../services/patients'
 
 import { DBtn } from '@components/basic'
 import {
+  ArrowRightIcon,
   FileAttachment01Icon as ExamIcon,
   Loading01Icon,
   XIcon,
-  ArrowRightIcon,
 } from '@components/basic/icons'
-import OrderCycle from '../components/OrderCycle.vue'
-import { useAuthStore } from '@/store/auth'
 
 const notifications = useNotificationsStore()
 const route = useRoute()
@@ -114,14 +112,6 @@ onUnmounted(() => {
           <OrderStatus :status="order.status" class="text-lg" />
         </p>
       </div>
-      <OrderCycle
-        v-if="
-          useAuthStore().user?.role?.permissions?.includes(
-            'service-orders:full'
-          )
-        "
-        :orderCycle="order.orderCycle"
-      />
     </div>
     <div class="w-full bg-white rounded-lg shadow-lg p-5 flex gap-5">
       <div class="flex items-center gap-5 w-1/3">

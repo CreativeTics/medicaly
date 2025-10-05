@@ -1,20 +1,21 @@
 <script setup lang="ts">
+import { DBtn, DSelectFieldSearch, DTextField } from '@/app/components/basic'
+import { Edit03Icon, SearchMdIcon } from '@components/basic/icons'
 import {
-  ref,
+  defineAsyncComponent,
+  onBeforeUnmount,
   onMounted,
   reactive,
-  onBeforeUnmount,
-  defineAsyncComponent,
+  ref,
 } from 'vue'
-import { DBtn, DTextField, DSelectFieldSearch } from '@/app/components/basic'
-import { SearchMdIcon } from '@components/basic/icons'
+import { useRouter } from 'vue-router'
+import Popper from 'vue3-popper'
+import { getContracts, getList } from '../services'
 const PaginatedTable = defineAsyncComponent(
   () => import('@/app/components/PaginatedTable.vue')
 )
-import Popper from 'vue3-popper'
-import { useRouter } from 'vue-router'
-import { getList, getContracts } from '../services'
 
+import { useAuthStore } from '@/store/auth'
 import OrderStatus from '../components/OrderStatus.vue'
 // import { useAuthStore } from '@/store/auth'
 
@@ -73,13 +74,11 @@ const goToCreate = () => {
   router.push({ name: `${modulePath}.create` })
 }
 
-// const goToEdit = (id: string) => {
-//   console.log("Edit", id);
-//   router.push({ name: `${modulePath}.edit`, params: { id } });
-// };
-
 const goToView = (id: string) => {
   router.push({ name: `${modulePath}.view`, params: { id } })
+}
+const goToEdit = (id: string) => {
+  router.push({ name: `${modulePath}.edit`, params: { id } })
 }
 
 let interval: number = 0
@@ -171,7 +170,7 @@ onBeforeUnmount(() => {
                   offsetDistance="12"
                   content="Ver detalle"
                   :hover="true"
-                  placement="left"
+                  placement="top"
                   class="tooltip"
                 >
                   <div
@@ -183,20 +182,28 @@ onBeforeUnmount(() => {
                     />
                   </div>
                 </Popper>
-                <!-- <Popper
+                <Popper
+                  v-if="
+                    useAuthStore().user?.role?.permissions?.includes(
+                      'service-orders:full'
+                    )
+                  "
                   arrow
                   offsetDistance="12"
                   content="Editar"
                   :hover="true"
-                  placement="left"
+                  placement="top"
                   class="tooltip"
                 >
-                  <div class="bg-gray-50 rounded-md py-2">
+                  <div
+                    class="bg-gray-50 rounded-md py-2"
+                    @click="goToEdit(rowProps.row.id)"
+                  >
                     <Edit03Icon
                       class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                     />
                   </div>
-                </Popper> -->
+                </Popper>
               </div>
             </td>
           </template>

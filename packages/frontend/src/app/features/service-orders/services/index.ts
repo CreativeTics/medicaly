@@ -6,6 +6,8 @@ import { formatDate } from '@/app/core/util/dates'
 import { API_URL } from '@/config'
 import { useAuthStore } from '@/store/auth'
 import { DB, PouchService } from '../../../services/pouch'
+import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
+import { UserType } from '@/app/core/types/user-types'
 
 const pouch = new PouchService()
 const doctype = 'service-orders'
@@ -174,6 +176,15 @@ export async function create(entity: any): Promise<{
     }
   }
 
+  const user = useAuthStore().user
+
+  if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+
+  let employee: any
+  if (user.type === UserType.employee) {
+    employee = await getEmployee(user?.relations[0])
+  }
+
   // crear service order for each patient
 
   entity.patients.forEach(async (patient: any) => {
@@ -237,8 +248,10 @@ export async function create(entity: any): Promise<{
       createdBy: user?.id ?? '',
       orderCycle: [
         {
-          type: 'created',
+          type: OrderCycleTypes.created,
           user: user?.id ?? '',
+          username: user?.username ?? '',
+          employee,
           status: OrderStatus.pending,
           at: new Date().toISOString(),
         },
@@ -424,5 +437,176 @@ async function getExam(examId: string): Promise<{
     code: examRaw.code,
     name: examRaw.name,
     requireCertificate: examRaw.requireCertificate,
+  }
+}
+
+export async function cancelOrder(
+  id: string,
+  cancellationReason: string
+): Promise<void | {
+  error?: string
+}> {
+  try {
+    const order = await pouch.use(DB.GENERAL).get(id)
+    order.status = OrderStatus.cancelled
+    const user = useAuthStore().user
+    if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+
+    const employee = await getEmployee(user?.relations[0])
+
+    const orderCycle: any[] = order.orderCycle || []
+    orderCycle.push({
+      type: OrderCycleTypes.cancellation,
+      user: user?.id,
+      username: user?.username,
+      employee,
+      status: OrderStatus.cancelled,
+      at: new Date().toISOString(),
+      reason: cancellationReason,
+    })
+
+    await pouch.use(DB.GENERAL).update(order)
+  } catch (error) {
+    console.error(error)
+    return { error: 'Error al cancelar la orden' }
+  }
+}
+
+async function getEmployee(id: string) {
+  const employee = await pouch.use(DB.GENERAL).get(id)
+
+  return {
+    id: employee.id,
+    name: employee.fullName,
+    position: employee.positionName,
+    document: employee.documentNumber,
+  }
+}
+
+export async function reopenOrder(
+  id: string,
+  reason: string
+): Promise<void | {
+  error?: string
+}> {
+  try {
+    const order = await pouch.use(DB.GENERAL).get(id)
+
+    if (
+      order.status !== OrderStatus.completed &&
+      order.status !== OrderStatus.cancelled
+    ) {
+      throw new Error('Solo se pueden reabrir ordenes finalizadas o canceladas')
+    }
+
+    order.status = order.admittedBy
+      ? OrderStatus.inprogress
+      : OrderStatus.pending
+
+    const user = useAuthStore().user
+    if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+
+    const employee = await getEmployee(user?.relations[0])
+
+    const orderCycle: any[] = order.orderCycle || []
+    orderCycle.push({
+      type: OrderCycleTypes.reopen,
+      user: user?.id,
+      username: user?.username,
+      employee,
+      status: order.status,
+      at: new Date().toISOString(),
+      reason,
+    })
+
+    await pouch.use(DB.GENERAL).update(order)
+  } catch (error) {
+    console.error(error)
+    return { error: 'Error al reabrir la orden' }
+  }
+}
+
+export async function addServicesToOrder(
+  orderId: string,
+  newServices: any[]
+): Promise<void | { error?: string }> {
+  try {
+    const order = await pouch.use(DB.GENERAL).get(orderId)
+
+    const newServicesEnriched = await getServicesFromAttachOrder(newServices)
+    console.log(newServicesEnriched)
+
+    order.services = [...order.services, ...newServicesEnriched]
+
+    const user = useAuthStore().user
+    if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+
+    const employee = await getEmployee(user?.relations[0])
+
+    const orderCycle: any[] = order.orderCycle || []
+    orderCycle.push({
+      type: OrderCycleTypes.addService,
+      user: user?.id,
+      username: user?.username,
+      employee,
+      status: order.status,
+      at: new Date().toISOString(),
+    })
+
+    await pouch.use(DB.GENERAL).update(order)
+  } catch (error) {
+    console.error(error)
+    return { error: 'Error al agregar servicios a la orden' }
+  }
+}
+
+export async function removeServiceFromOrder(
+  orderId: string,
+  serviceId: string,
+  reason: string
+): Promise<void | { error?: string }> {
+  try {
+    const order = await pouch.use(DB.GENERAL).get(orderId)
+
+    const serviceToRemove = order.services.find(
+      (service: any) => service.id === serviceId
+    )
+    if (!serviceToRemove) {
+      throw new Error('Servicio no encontrado en la orden')
+    }
+
+    if (serviceToRemove.status === OrderStatus.completed) {
+      throw new Error('No se puede eliminar un servicio finalizado')
+    }
+
+    order.services = order.services.filter(
+      (service: any) => service.id !== serviceId
+    )
+
+    const user = useAuthStore().user
+    if (!user || !user?.relations[0]) throw new Error('Usuario Invalido!')
+
+    const employee = await getEmployee(user?.relations[0])
+
+    const orderCycle: any[] = order.orderCycle || []
+    orderCycle.push({
+      type: OrderCycleTypes.removeService,
+      user: user?.id,
+      username: user?.username,
+      employee,
+      status: order.status,
+      at: new Date().toISOString(),
+      reason,
+      removedService: {
+        id: serviceToRemove.id,
+        code: serviceToRemove.code,
+        name: serviceToRemove.name,
+      },
+    })
+
+    await pouch.use(DB.GENERAL).update(order)
+  } catch (error) {
+    console.error(error)
+    return { error: 'Error al eliminar el servicio de la orden' }
   }
 }

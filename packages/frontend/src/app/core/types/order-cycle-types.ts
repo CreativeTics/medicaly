@@ -1,5 +1,10 @@
 export enum OrderCycleTypes {
+  created = 'created',
   admission = 'admission',
-  finalized = 'finalize',
+  finalized = 'finalized',
   attention = 'attention',
+  cancellation = 'cancellation',
+  reopen = 'reopen',
+  addService = 'addService',
+  removeService = 'removeService',
 }
