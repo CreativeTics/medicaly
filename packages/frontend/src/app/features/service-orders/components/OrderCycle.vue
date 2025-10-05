@@ -9,10 +9,13 @@ import OrderStatus from './OrderStatus.vue'
 defineProps<{
   orderCycle: {
     user: string
+    username?: string
     type: OrderCycleTypes
-    employee: any
+    employee?: any
+    contract?: any
     status: OrderStatusEnum
     at: string
+    reason?: string
   }[]
 }>()
 </script>
@@ -47,14 +50,21 @@ defineProps<{
             <OrderStatus :status="cycle.status" />
           </div>
           <div v-if="cycle.employee" class="flex-1 flex flex-col">
-            <span class="text-xs text-gray-700">{{ cycle.user }}</span>
+            <span class="text-xs text-gray-700">{{
+              cycle.username || cycle.user
+            }}</span>
             <span class="text-xs text-gray-700">{{ cycle.employee.name }}</span>
             <span class="text-xs text-blue-900">{{
               cycle.employee.position
             }}</span>
+            <span v-if="cycle.reason" class="text-xs text-gray-500"
+              >Motivo: {{ cycle.reason }}</span
+            >
           </div>
           <div v-else class="flex-1 flex flex-col">
-            <span class="text-xs text-gray-700">{{ cycle.user }}</span>
+            <span class="text-xs text-gray-700">{{
+              cycle.username || cycle.user
+            }}</span>
           </div>
         </div>
       </div>

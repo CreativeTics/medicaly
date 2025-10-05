@@ -1,34 +1,34 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    modelValue: string;
-    label: string;
-    placeholder?: string;
-    hint?: string;
-    disabled?: boolean;
-    rows?: number;
-    validation?: object;
-    error?: string;
-    required?: boolean;
+    modelValue: string
+    label: string
+    placeholder?: string
+    hint?: string
+    disabled?: boolean
+    rows?: number
+    validation?: object
+    error?: string
+    required?: boolean
   }>(),
   {
-    modelValue: "",
-    label: "",
-    placeholder: "",
-    hint: "",
+    modelValue: '',
+    label: '',
+    placeholder: '',
+    hint: '',
     disabled: false,
     rows: 3,
     validation: () => ({}),
-    error: "",
+    error: '',
     required: false,
   }
-);
+)
 
-const emit = defineEmits(["update:modelValue", "enter"]);
+const emit = defineEmits(['update:modelValue', 'enter'])
 
 const emitUpdate = (val: any) => {
-  emit("update:modelValue", val.target.value);
-};
+  emit('update:modelValue', val.target.value)
+}
 </script>
 <template>
   <div>
@@ -38,6 +38,12 @@ const emitUpdate = (val: any) => {
     <div>
       <textarea
         class="shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-transparent mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"
+        style="
+          field-sizing: content;
+          resize: vertical;
+          min-height: 50px;
+          max-height: 300px;
+        "
         type="text"
         :placeholder="placeholder"
         :value="modelValue"

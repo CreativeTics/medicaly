@@ -70,7 +70,7 @@ const optionsFiltered = computed<SelectOption[]>(() =>
   options.value.filter(
     (item) =>
       item.name
-        .toLowerCase()
+        ?.toLowerCase()
         .indexOf(selectSearchText.value.toString().toLowerCase()) > -1
   )
 )

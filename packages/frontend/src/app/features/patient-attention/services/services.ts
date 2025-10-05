@@ -185,6 +185,7 @@ async function updateOrder(
   orderCycle.push({
     type: OrderCycleTypes.attention,
     user: user?.id,
+    username: user?.username,
     employee,
     status: OrderStatus.inprogress,
     at: new Date().toISOString(),
@@ -228,6 +229,7 @@ export async function finalizeOrder(orderId: string): Promise<boolean> {
   const orderCycleFinalized = {
     type: OrderCycleTypes.finalized,
     user: user?.id,
+    username: user?.username,
     employee,
     status: OrderStatus.completed,
     at: new Date().toISOString(),
