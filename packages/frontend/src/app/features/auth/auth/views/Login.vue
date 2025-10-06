@@ -29,7 +29,10 @@ const handleLogin = async () => {
   const isLogged = await login(
     dataLogin.value.userName,
     dataLogin.value.userPassword
-  )
+  ).catch(() => {
+    loading.value = false
+    return false
+  })
   if (isLogged) {
     router.push({ name: 'Home' })
   } else {

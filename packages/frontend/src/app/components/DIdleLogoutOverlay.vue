@@ -10,7 +10,7 @@
       <div class="text-2xl p-2">Parece que estas ausente!</div>
       <hr />
       <div class="text-sm text-slate-500 p-2">
-        Tu sesion se cerrara al finalizar el tiempo, si deseas continuar mueve
+        Tu sesión se cerrará al finalizar el tiempo, si deseas continuar mueve
         el mouse sobre la pantalla.
       </div>
       <div class="z-50 text-4xl text-red-700 grid place-items-center p-5">
@@ -25,18 +25,18 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from "../../store/auth";
-import { useRouter } from "vue-router";
+import { useAuthStore } from '../../store/auth'
+import { useRouter } from 'vue-router'
 
-import { useIdle } from "@/app/core/composable";
+import { useIdle } from '@/app/core/composable'
 
-const store = useAuthStore();
-const router = useRouter();
-
-const { display, isRemind } = useIdle(900, 700, onIdle);
+const store = useAuthStore()
+const router = useRouter()
+// 15 minutes idle,  after 12 minutes remind
+const { display, isRemind } = useIdle(900, 720, onIdle)
 
 function onIdle() {
-  store.logout();
-  router.push("/");
+  store.logout()
+  router.push('/')
 }
 </script>
