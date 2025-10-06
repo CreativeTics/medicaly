@@ -20,6 +20,9 @@ export function publicAuthRoutes(): Router {
       res
     )
   )
+  router.post('/logout', (req, res) => {
+    new LogoutController(new LogoutUseCase()).execute(req, res)
+  })
 
   return router
 }
@@ -41,10 +44,6 @@ export function AuthRoutes(): Router {
     const { token } = req.params
     AuthSessions.instance.delete(token)
     res.status(200).json({ message: 'Session deleted' })
-  })
-
-  router.post('/logout', (req, res) => {
-    new LogoutController(new LogoutUseCase()).execute(req, res)
   })
 
   router.post('/user/', (req, res) => {
