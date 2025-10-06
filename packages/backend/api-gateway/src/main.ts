@@ -7,7 +7,10 @@ import morgan from 'morgan'
 
 import httpProxy from 'express-http-proxy'
 
-import { AuthRoutes } from './modules/auth/infrastructure/rest/routes'
+import {
+  AuthRoutes,
+  publicAuthRoutes,
+} from './modules/auth/infrastructure/rest/routes'
 import { AuthSessions } from './shared/infrastructure/databases/util/auth-sessions'
 import { PatientRoutes } from './modules/patients/infrastructure/rest/routes'
 
@@ -48,10 +51,10 @@ app.use(
   validateAuth,
   httpProxy(process.env.CERTIFICATES_URL || 'http://certificates:3002')
 )
-
-app.use('/api/v1/auth', AuthRoutes())
-app.use('/api/v1/patients', PatientRoutes())
-app.use('/api/v1/reports', ReportsRoutes())
+app.use('/api/v1/auth', publicAuthRoutes())
+app.use('/api/v1/auth', validateAuth, AuthRoutes())
+app.use('/api/v1/patients', validateAuth, PatientRoutes())
+app.use('/api/v1/reports', validateAuth, ReportsRoutes())
 
 app.listen(process.env.PORT || 4000, () => {
   console.log('API Gateway listening on port 4000')

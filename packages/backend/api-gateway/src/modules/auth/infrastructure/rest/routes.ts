@@ -12,7 +12,7 @@ import { UpdateUserController } from './controllers/update-user'
 import { UpdateUserUseCase } from '../../application/use-cases/update'
 import { AuthSessions } from '../../../../shared/infrastructure/databases/util/auth-sessions'
 
-export function AuthRoutes(): Router {
+export function publicAuthRoutes(): Router {
   const router: Router = Router()
   router.post('/login', async (req, res) =>
     new LoginController(new LoginUseCase(new CouchUserRepository())).execute(
@@ -20,6 +20,12 @@ export function AuthRoutes(): Router {
       res
     )
   )
+
+  return router
+}
+
+export function AuthRoutes(): Router {
+  const router: Router = Router()
 
   router.get('/sessions', (_, res) => {
     res.json(AuthSessions.instance.list())
