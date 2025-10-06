@@ -206,6 +206,11 @@ export const menu = [
         route: '/users',
         permission: 'users:list',
       },
+      {
+        name: 'Sesiones',
+        route: '/sessions',
+        permission: 'auth:sessions',
+      },
     ],
   },
 ]

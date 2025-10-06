@@ -108,6 +108,10 @@ export const permissions = [
     id: 'billing:invoices',
     name: 'Facturación > Facturas Generadas',
   },
+  {
+    id: 'auth:sessions',
+    name: 'Autenticación > Sesiones',
+  },
 ]
 
 export const userTypes = [

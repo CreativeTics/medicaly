@@ -18,7 +18,7 @@ export class LoginUseCase {
       throw new InvalidUsernameOrPasswordError()
     }
     const token = user.generateToken()
-    AuthSessions.instance.add(token, user.id)
+    AuthSessions.instance.add(token, user.id, dto.username)
 
     return {
       token,

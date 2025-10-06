@@ -3,6 +3,7 @@ export class AuthSessions {
     string,
     {
       userId: string
+      username: string
       createdAt: Date
     }
   >()
@@ -16,10 +17,11 @@ export class AuthSessions {
     return AuthSessions.instance
   }
 
-  add(token: string, userId: string): void {
-    console.log('add', token, userId)
+  add(token: string, userId: string, username: string): void {
+    console.log('add', token, userId, username)
     this.sessions.set(token, {
       userId,
+      username,
       createdAt: new Date(),
     })
   }
@@ -38,6 +40,9 @@ export class AuthSessions {
     ) {
       return false
     }
+    //refresh time to the session
+    session.createdAt = new Date()
+    this.sessions.set(token, session)
     return true
   }
 
@@ -52,5 +57,14 @@ export class AuthSessions {
 
   delete(token: string): void {
     this.sessions.delete(token)
+  }
+
+  list(): { token: string; userId: string; lastUsage: Date }[] {
+    return Array.from(this.sessions.entries()).map(([token, session]) => ({
+      token,
+      userId: session.userId,
+      username: session.username,
+      lastUsage: session.createdAt,
+    }))
   }
 }

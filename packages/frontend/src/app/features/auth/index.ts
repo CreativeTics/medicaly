@@ -3,6 +3,7 @@ import RolesList from './roles/views/List.vue'
 import RolesCreate from './roles/views/CreateEdit.vue'
 import UsersList from './users/views/List.vue'
 import UsersCreate from './users/views/CreateEdit.vue'
+import Sessions from './auth/views/Sessions.vue'
 
 export const authRoutes = [
   {
@@ -63,6 +64,15 @@ export const authRoutes = [
     path: '/users/edit/:id',
     name: 'users.edit',
     component: UsersCreate,
+    meta: {
+      auth: true,
+      layout: 'home',
+    },
+  },
+  {
+    path: '/sessions',
+    name: 'auth.sessions',
+    component: Sessions,
     meta: {
       auth: true,
       layout: 'home',
