@@ -1,20 +1,28 @@
 import { API_URL } from '@/config'
 import { useAuthStore } from '@/store/auth'
 import axios from 'axios'
-export const http = axios.create({
+const http = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  validateStatus: (status) => status < 500,
-  withCredentials: true,
+  validateStatus: (status) => status >= 200 && status < 300,
 })
 
-// logout on 401
-http.interceptors.response.use(async (response) => {
-  if (response.status === 401) {
-    // logout user
-    await useAuthStore().logout()
+http.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const { status } = error.response
+
+    // Manejo de errores 401 y 403
+    if (status === 401 || status === 403) {
+      const authStore = useAuthStore()
+      if (authStore.isAuthenticated) {
+        await authStore.logout()
+      }
+    }
+    return Promise.reject(error)
   }
-  return response
-})
+)
+
+export { http }

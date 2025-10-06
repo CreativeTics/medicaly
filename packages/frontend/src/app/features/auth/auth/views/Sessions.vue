@@ -4,13 +4,14 @@ import { getSessions, deleteSession } from '../services'
 import DBtn from '@components/basic/DBtn.vue'
 import { DTextField } from '@components/basic'
 import DConfirmationModal from '@components/basic/DConfirmationModal.vue'
+import { useAuthStore } from '@/store/auth'
 
 const sessions = ref<
   { token: string; userId: string; username: string; lastUsage: Date }[]
 >([])
 
 const search = ref('')
-
+const auth = useAuthStore()
 const showDeleteSessionModal = ref(false)
 const sessionToDelete = ref<string | null>(null)
 
@@ -65,6 +66,12 @@ const handleDeleteSession = async () => {
     >
       <div class="flex justify-between items-center">
         <div>
+          <span
+            v-if="session.token === auth.token"
+            class="text-green-500 font-bold"
+          >
+            Esta sesión
+          </span>
           <p><strong>User ID:</strong> {{ session.userId }}</p>
           <p><strong>Username:</strong> {{ session.username }}</p>
           <p>

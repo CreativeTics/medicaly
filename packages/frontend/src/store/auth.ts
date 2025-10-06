@@ -1,4 +1,5 @@
 import { http } from '@/app/core/services/http'
+import router from '@/router'
 import { defineStore } from 'pinia'
 
 interface User {
@@ -45,7 +46,7 @@ export const useAuthStore = defineStore('auth', {
       })
       this.user = null as any
       this.token = ''
-
+      router.push({ name: 'auth.login' })
       return true
     },
   },
