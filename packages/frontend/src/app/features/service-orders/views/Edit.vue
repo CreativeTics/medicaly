@@ -243,7 +243,7 @@ const handleDeleteService = async (reason: string) => {
           <span class="text-sm">{{ order?.contractCostCenter?.name }}</span>
         </div>
         <div class="flex items-center justify-end flex-1">
-          <DBtn @click="">Cambiar contrato</DBtn>
+          <!-- <DBtn @click="">Cambiar contrato</DBtn> -->
         </div>
       </div>
       <div class="w-full bg-white rounded-lg shadow-lg p-3 flex flex-col gap-3">
