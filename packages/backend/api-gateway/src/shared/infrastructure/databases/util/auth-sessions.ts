@@ -30,6 +30,13 @@ export class AuthSessions {
   }
 
   add(token: string, userId: string, username: string): void {
+    //remove any existing session for the user
+    Array.from(this.sessions.entries()).forEach(([key, value]) => {
+      if (value.userId === userId) {
+        this.sessions.delete(key)
+      }
+    })
+
     this.sessions.set(token, {
       userId,
       username,
