@@ -1,19 +1,24 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
-import { useAudiogram, TransportType, MaskType, Ear } from './useAudiogram'
+import { onMounted, ref, watch } from 'vue'
+import {
+  useAudiogram,
+  TransportType,
+  MaskType,
+  Ear,
+  SerializedAudiogram,
+} from './useAudiogram'
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string
-    label: string
-    hint: string
-    disabled: boolean
-    hidden: boolean
-    error: string
-    required: boolean
+    modelValue: SerializedAudiogram
+    label?: string
+    hint?: string
+    disabled?: boolean
+    hidden?: boolean
+    error?: string
+    required?: boolean
   }>(),
   {
-    modelValue: '',
     label: 'Audiograma',
     hint: '',
     disabled: false,
@@ -41,7 +46,21 @@ const {
 watch(
   () => audiogram,
   () => {
-    emit('update:modelValue', exportAudiogram())
+    if (JSON.stringify(audiogram) !== JSON.stringify(props.modelValue)) {
+      emit('update:modelValue', exportAudiogram())
+    }
+  },
+  { deep: true }
+)
+
+const loaded = ref(false)
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    if (!loaded.value && newVal) {
+      importAudiogram(newVal)
+      loaded.value = true
+    }
   },
   { deep: true }
 )
@@ -50,10 +69,6 @@ onMounted(() => {
   const canvas = document.getElementById('canvas') as HTMLCanvasElement
   if (!canvas) return
   init(canvas)
-
-  if (props.modelValue) {
-    importAudiogram(props.modelValue)
-  }
 })
 </script>
 
@@ -141,7 +156,11 @@ onMounted(() => {
         <table class="w-full border">
           <thead class="border">
             <tr>
-              <th colspan="2" class="text-center">Promedio tonal</th>
+              <th colspan="2" class="text-center">
+                Promedio tonal <br /><span class="text-xs text-gray-500"
+                  >(500, 1k, 2k, 4k)</span
+                >
+              </th>
             </tr>
           </thead>
 

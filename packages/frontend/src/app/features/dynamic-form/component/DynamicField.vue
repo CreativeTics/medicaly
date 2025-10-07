@@ -28,7 +28,7 @@ const props = defineProps({
   count: { type: Number, required: false, default: () => 0 },
   field: { type: Object, required: true, default: () => {} },
   modelValue: {
-    type: [String, Boolean, Number, Array],
+    type: [String, Boolean, Number, Array, Object],
   },
   error: { type: String, required: false, default: () => '' },
   allModel: { type: Object, required: true, default: () => {} },

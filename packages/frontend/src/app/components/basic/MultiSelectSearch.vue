@@ -5,7 +5,7 @@ import { XIcon } from '../basic/icons'
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string[]
+    modelValue?: string[]
     allModel?: object
     label?: string
     placeholder?: string
@@ -20,6 +20,9 @@ const props = withDefaults(
     searchInternal?: boolean
   }>(),
   {
+    modelValue: () => [],
+    allModel: () => ({}),
+    options: () => [],
     label: '',
     placeholder: '',
     hint: '',

@@ -49,6 +49,24 @@ export interface EarPoint extends SoundFieldPoint {
   mask: MaskType
 }
 
+export interface SerializedAudiogram {
+  ear: {
+    left: {
+      air: EarPoint[]
+      bone: EarPoint[]
+    }
+    right: {
+      air: EarPoint[]
+      bone: EarPoint[]
+    }
+  }
+  tonalAverage: {
+    left: number
+    right: number
+  }
+  // image: string
+}
+
 const ratio = window.devicePixelRatio || 1
 const ICON_SIZE = 30 * ratio
 const AUDIOGRAM_SYMBOLS = loadSymbols(ICON_SIZE)
@@ -330,7 +348,7 @@ export function useAudiogram(
     //   drawSoundFieldPoints(point)
     // })
     // save image
-    audiogram.image = canvasAudiogram.toDataURL()
+    // audiogram.image = canvasAudiogram.toDataURL()
   }
 
   const drawEarPoints = (symbolName: string, point: EarPoint) => {
@@ -421,7 +439,7 @@ export function useAudiogram(
     ear.value = earType
   }
 
-  const exportAudiogram = () => {
+  const exportAudiogram = (): SerializedAudiogram => {
     const data = {
       ear: {
         left: {
@@ -437,31 +455,40 @@ export function useAudiogram(
         left: audiogram.tonalAverage.left,
         right: audiogram.tonalAverage.right,
       },
-      image: audiogram.image,
+      // image: audiogram.image,
     }
 
-    return JSON.stringify(data)
+    return data
   }
 
-  const importAudiogram = (data: any) => {
+  const importAudiogram = (data: SerializedAudiogram) => {
+    console.log('importAudiogram', data)
     if (!data) return
-    data = JSON.parse(data)
-    if (!data) return
-    audiogram.ear.left.air = new Map(
-      data.ear.left.air.map((point: EarPoint) => [point.frequency, point])
-    )
-    audiogram.ear.left.bone = new Map(
-      data.ear.left.bone.map((point: EarPoint) => [point.frequency, point])
-    )
-    audiogram.ear.right.air = new Map(
-      data.ear.right.air.map((point: EarPoint) => [point.frequency, point])
-    )
-    audiogram.ear.right.bone = new Map(
-      data.ear.right.bone.map((point: EarPoint) => [point.frequency, point])
-    )
+    audiogram.ear.left.air.clear()
+    audiogram.ear.left.bone.clear()
+    audiogram.ear.right.air.clear()
+    audiogram.ear.right.bone.clear()
+
+    data.ear.left?.air?.map((point: EarPoint) => {
+      const frequency: Frequency = Object.values(FREQUENCIES)[point.x]
+      audiogram.ear.left.air.set(frequency.label, point)
+    })
+    data.ear.left?.bone?.map((point: EarPoint) => {
+      const frequency: Frequency = Object.values(FREQUENCIES)[point.x]
+      audiogram.ear.left.bone.set(frequency.label, point)
+    })
+    data.ear.right?.air?.map((point: EarPoint) => {
+      const frequency: Frequency = Object.values(FREQUENCIES)[point.x]
+      audiogram.ear.right.air.set(frequency.label, point)
+    })
+    data.ear.right?.bone?.map((point: EarPoint) => {
+      const frequency: Frequency = Object.values(FREQUENCIES)[point.x]
+      audiogram.ear.right.bone.set(frequency.label, point)
+    })
+
     audiogram.tonalAverage.left = data.tonalAverage.left
     audiogram.tonalAverage.right = data.tonalAverage.right
-    audiogram.image = data.image
+    // audiogram.image = data.image
 
     drawPoints()
   }
