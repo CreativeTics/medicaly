@@ -1,3 +1,4 @@
+import { publicHttp } from '@/app/core/services/http-public'
 import { http } from '@/app/core/services/http'
 import { PouchService, DB } from '@/app/services/pouch'
 
@@ -9,7 +10,7 @@ export async function login(
   username: string,
   password: string
 ): Promise<boolean> {
-  const response = await http.post('/auth/login', {
+  const response = await publicHttp.post('/auth/login', {
     username,
     password,
   })
@@ -81,6 +82,7 @@ export async function getSessions(): Promise<
     lastUsage: new Date(session.lastUsage),
   }))
 }
+
 export async function deleteSession(token: string): Promise<boolean> {
   const response = await http.delete(`/auth/session/${token}`, {
     headers: {

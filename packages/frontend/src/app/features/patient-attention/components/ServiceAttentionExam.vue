@@ -111,8 +111,9 @@ const submit = async (data: any) => {
   <div v-if="!isLoading" class="w-full mb-5">
     <span
       class="text-sm text-gray-500 w-full flex items-center hover:bg-slate-50 cursor-pointer"
+      @click="isHidden = !isHidden"
     >
-      <div class="flex-grow flex" @click="isHidden = !isHidden">
+      <div class="flex-grow flex">
         {{ exam.name?.toUpperCase() }} v.{{ exam.version }}
         <div v-if="isSaving">Guardando examen...</div>
         <div v-else>

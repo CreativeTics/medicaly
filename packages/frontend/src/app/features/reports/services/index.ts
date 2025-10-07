@@ -1,9 +1,14 @@
 import { http } from '@/app/core/services/http'
+import { useAuthStore } from '@/store/auth'
 
 export const getMetabaseDashboardUrl = async (
   dashboardId: number
 ): Promise<string> => {
-  const response = await http.get(`/reports/bi/${dashboardId}`)
+  const response = await http.get(`/reports/bi/${dashboardId}`, {
+    headers: {
+      Authorization: useAuthStore().token,
+    },
+  })
 
   if (response.status === 200) {
     return response.data.url
@@ -19,8 +24,12 @@ export const getRipsReport = async (
 ): Promise<void> => {
   const response = await http.get(
     `/reports/rips/${invoiceId}?format=${format}`,
+
     {
       responseType: 'arraybuffer',
+      headers: {
+        Authorization: useAuthStore().token,
+      },
     }
   )
 

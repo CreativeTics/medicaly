@@ -14,12 +14,6 @@ http.interceptors.response.use(
   async (error) => {
     const { status } = error.response
 
-    // if login page, do nothing
-
-    if (window.location.pathname === '/') {
-      return Promise.reject(error)
-    }
-
     // Manejo de errores 401 y 403
     if (status === 401 || status === 403) {
       const authStore = useAuthStore()
