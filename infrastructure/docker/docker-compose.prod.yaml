@@ -6,14 +6,14 @@ services:
       - 3080:80
       - 3443:443
     volumes:
-      - ./config/Caddyfile:/etc/caddy/Caddyfile
-      - ./config/certs:/data/caddy
+      - config/Caddyfile:/etc/caddy/Caddyfile
+      - config/certs:/data/caddy
 
   db:
     image: couchdb:3.4.2
     volumes:
       - db_data:/opt/couchdb/data # this is for couchdb data
-      - ./config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
+      - config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
     restart: unless-stopped
     environment:
       COUCHDB_USER: $COUCHDB_USERNAME
