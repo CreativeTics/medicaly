@@ -6,14 +6,14 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./infrastructure/docker/config/Caddyfile:/etc/caddy/Caddyfile
-      - ./infrastructure/docker/config/certs:/data/caddy
+      - ./config/Caddyfile:/etc/caddy/Caddyfile
+      - ./config/certs:/data/caddy
 
   db:
     image: couchdb:3.4.2
     volumes:
       - db_data:/opt/couchdb/data # this is for couchdb data
-      - ./infrastructure/docker/config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
+      - ./config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
     restart: unless-stopped
     environment:
       COUCHDB_USER: $COUCHDB_USERNAME
@@ -23,7 +23,7 @@ services:
 
   api-gateway:
     build:
-      context: packages/backend/api-gateway
+      context: ../../packages/backend/api-gateway
       dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
@@ -51,7 +51,7 @@ services:
 
   encode-orders:
     build:
-      context: packages/backend/ticket-codes
+      context: ../../packages/backend/ticket-codes
       dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
@@ -64,7 +64,7 @@ services:
 
   datawarehouse-sync:
     build:
-      context: packages/backend/datawarehouse-sync
+      context: ../../packages/backend/datawarehouse-sync
       dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
@@ -79,7 +79,7 @@ services:
 
   ws-service:
     build:
-      context: packages/backend/ws-service
+      context: ../../packages/backend/ws-service
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
@@ -87,7 +87,7 @@ services:
 
   front:
     build:
-      context: packages/frontend
+      context: ../../packages/frontend
       dockerfile: Dockerfile
     restart: unless-stopped
     # ports:
@@ -122,7 +122,7 @@ services:
 
   certificates:
     build:
-      context: packages/backend/certificates
+      context: ../../packages/backend/certificates
       dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
