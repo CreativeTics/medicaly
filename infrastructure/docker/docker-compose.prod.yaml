@@ -99,7 +99,7 @@ services:
     depends_on:
       - metabase-db
     ports:
-      - 3000:3000
+      - 3003:3000
     environment:
       MB_ENABLE_EMBEDDING_STATIC: true
       MB_DB_CONNECTION_URI: $DB_CONNECTION_URI
