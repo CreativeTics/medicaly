@@ -35,7 +35,6 @@ export class PouchService {
               if (!res.ok) {
                 if (res.status === 401) useAuthStore().logout()
               }
-
               return res
             })
           },
@@ -66,6 +65,7 @@ export class PouchService {
     doc.updatedAt = new Date().toISOString()
     doc.updatedBy = user?.id ?? ''
     doc.isDeleted = false
+    // TODO: emit audit event
     return await this.db?.post(doc)
   }
 
