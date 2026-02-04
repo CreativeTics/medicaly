@@ -60,7 +60,7 @@ services:
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
-      CRON_JOB_EXPRESSION: "0/15 * * * * *"
+      CRON_JOB_EXPRESSION: "0/15 * * * * *" # every 15 seconds
 
   datawarehouse-sync:
     build:
@@ -74,7 +74,7 @@ services:
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
-      CRON_JOB_EXPRESSION: "30 * * * * *"
+      CRON_JOB_EXPRESSION: "* * * * *" #  every minute
       WAREHOUSE_DB_URL: $WAREHOUSE_DB_URL
 
   ws-service:

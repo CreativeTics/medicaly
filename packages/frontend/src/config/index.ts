@@ -1,13 +1,14 @@
 // const location = window.location.host.replace(/:[0-9]*/, '')
-const location = 'app.javapsaludocupacional.com.co'
-// const location = 'localhost:8080'
+// get from env variable VITE_API_HOST if exists
+// VITE_API_URL=https://api.javapsaludocupacional.com.co
+// VITE_WS_URL=wss://api.javapsaludocupacional.com.co
 
 // export const API_URL = `http://${location}/api/v1`
 // export const DB_URL = `http://${location}/db`
 // export const WS_URL = `ws://${location}`
-export const API_URL = `https://${location}/api/v1`
-export const DB_URL = `https://${location}/db`
-export const WS_URL = `wss://${location}`
+export const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:4000'}/api/v1`
+export const DB_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:4000'}/db`
+export const WS_URL = `${import.meta.env.VITE_WS_URL || 'ws://localhost:4000'}`
 
 export const menu = [
   {

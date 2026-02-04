@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { API_URL } from '@/config'
 import DToastStack from '@components/DToastStack.vue'
 </script>
 <template>
@@ -15,7 +16,7 @@ import DToastStack from '@components/DToastStack.vue'
           <slot />
         </div>
       </div>
-      <p class="text-gray-400">©</p>
+      <p class="text-gray-400">© {{ API_URL }}</p>
     </div>
     <div class="lg:flex justify-end items-center bg-gray-100 h-screen bg-login">
       <div class="wallpaper-login"></div>
@@ -31,10 +32,13 @@ import DToastStack from '@components/DToastStack.vue'
   width: 80%;
 }
 .bg-login {
-  background-image: url(/src/assets/LinePattern_login.svg),
+  background-image:
+    url(/src/assets/LinePattern_login.svg),
     url(/src/assets/LinePattern_login.svg);
   background-repeat: no-repeat, no-repeat;
-  background-position: bottom -32vh left, top right;
+  background-position:
+    bottom -32vh left,
+    top right;
   background-size: 38vh;
 }
 .form-login {

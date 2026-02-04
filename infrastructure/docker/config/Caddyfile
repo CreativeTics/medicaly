@@ -2,8 +2,6 @@
 
 :80 {
 
-	
-
     handle /api/files/* {
 		reverse_proxy certificates:3002
 	}
@@ -20,31 +18,16 @@
 		reverse_proxy api-gateway:4000
 	}
 
-	# handle /_session {
-	# 	reverse_proxy db:5984
-	# }
-
     handle /socket.io/*  {
        reverse_proxy  ws-service:3001
 	}
 
-
-    handle { # frontend
-		reverse_proxy front:80
-		# reverse_proxy host.docker.internal:5173 # for local development
-	}
-
-	# tls internal {
-	# 	on_demand
-	# }	
-	
-	log
+	log {
+        format json
+        level INFO
+    }
 	
 }
-
-# :5984 {
-# 	reverse_proxy db:5984
-# }
 
 
  
