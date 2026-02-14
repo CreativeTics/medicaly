@@ -33,7 +33,7 @@ services:
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
-      FRONTEND_URL: http://localhost:5173
+      FRONTEND_URL: ${FRONT_URL}
       PORT: 4000
       METABASE_SECRET_KEY: $MB_EMBEDDING_SECRET_KEY
       METABASE_SITE_URL: https://app-bi.javapsaludocupacional.com.co
