@@ -3,8 +3,7 @@ services:
     image: caddy:2.4.5
     restart: unless-stopped
     ports:
-      - 3080:80
-      - 3443:443
+      - 80
     volumes:
       - ./config/Caddyfile:/etc/caddy/Caddyfile
       - ./config/certs:/data/caddy
@@ -19,7 +18,7 @@ services:
       COUCHDB_USER: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
     ports:
-      - 5984:5984
+      - 5984
 
   api-gateway:
     build:
@@ -45,7 +44,7 @@ services:
     volumes:
       - warehouse_data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5432
     environment:
       POSTGRES_DB: medicaly
       POSTGRES_USER: $WAREHOUSE_POSTGRES_USER
@@ -123,7 +122,7 @@ services:
     image: gotenberg/gotenberg:8
     restart: unless-stopped
     ports:
-      - 30000:3000
+      - 3000
 
   certificates:
     build:
@@ -133,7 +132,7 @@ services:
     depends_on:
       - pdf-engine
     ports:
-      - 3002:3002
+      - 3002
     environment:
       GOTENBERG_ENDPOINT: http://pdf-engine:3000
       COUCHDB_URL: http://db:5984
