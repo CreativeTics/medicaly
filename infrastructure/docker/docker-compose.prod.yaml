@@ -28,6 +28,8 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    ports:
+      - 4000
     environment:
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: $COUCHDB_USERNAME
@@ -83,7 +85,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - 3001:3001
+      - 3001
 
   front:
     build:
@@ -93,8 +95,8 @@ services:
     environment:
       VITE_API_URL: $VITE_API_URL
       VITE_WS_URL: $VITE_WS_URL
-    # ports:
-    #   - 80:80
+    ports:
+      - 80
 
   metabase:
     image: metabase/metabase:latest
@@ -102,7 +104,7 @@ services:
     depends_on:
       - metabase-db
     ports:
-      - 3003:3000
+      - 3000
     environment:
       MB_ENABLE_EMBEDDING_STATIC: true
       MB_DB_CONNECTION_URI: $DB_CONNECTION_URI
