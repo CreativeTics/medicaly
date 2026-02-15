@@ -8,29 +8,27 @@ services:
       - ./config/Caddyfile:/etc/caddy/Caddyfile
       - ./config/certs:/data/caddy
 
-  db:
-    image: couchdb:3.4.2
-    volumes:
-      - db_data:/opt/couchdb/data # this is for couchdb data
-      - ./config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
-    restart: unless-stopped
-    environment:
-      COUCHDB_USER: $COUCHDB_USERNAME
-      COUCHDB_PASSWORD: $COUCHDB_PASSWORD
-    ports:
-      - 5984
+  # db:
+  #   image: couchdb:3.4.2
+  #   volumes:
+  #     - db_data:/opt/couchdb/data # this is for couchdb data
+  #     - ./config/couchdb.ini:/opt/couchdb/etc/local.d/couchdb.ini # this is for couchdb config
+  #   restart: unless-stopped
+  #   environment:
+  #     COUCHDB_USER: $COUCHDB_USERNAME
+  #     COUCHDB_PASSWORD: $COUCHDB_PASSWORD
+  #   ports:
+  #     - 5984
 
   api-gateway:
     build:
       context: ../../packages/backend/api-gateway
       dockerfile: Dockerfile
     restart: unless-stopped
-    depends_on:
-      - db
     ports:
       - 4000
     environment:
-      COUCHDB_URL: http://db:5984
+      COUCHDB_URL: http://couchdb:5984
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       FRONTEND_URL: ${FRONT_URL}
@@ -55,10 +53,8 @@ services:
       context: ../../packages/backend/ticket-codes
       dockerfile: Dockerfile
     restart: unless-stopped
-    depends_on:
-      - db
     environment:
-      COUCHDB_URL: http://db:5984
+      COUCHDB_URL: http://couchdb:5984
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       CRON_JOB_EXPRESSION: "0/15 * * * * *" # every 15 seconds
@@ -68,11 +64,8 @@ services:
       context: ../../packages/backend/datawarehouse-sync
       dockerfile: Dockerfile
     restart: unless-stopped
-    depends_on:
-      - db
-      - datawarehouse
     environment:
-      COUCHDB_URL: http://db:5984
+      COUCHDB_URL: http://couchdb:5984
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       CRON_JOB_EXPRESSION: "* * * * *" #  every minute
@@ -136,7 +129,7 @@ services:
       - 3002
     environment:
       GOTENBERG_ENDPOINT: http://pdf-engine:3000
-      COUCHDB_URL: http://db:5984
+      COUCHDB_URL: http://couchdb:5984
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       FILES_API: /api/v1/files/api/
