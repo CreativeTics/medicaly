@@ -7,7 +7,8 @@ services:
     volumes:
       - ./config/Caddyfile:/etc/caddy/Caddyfile
       - ./config/certs:/data/caddy
-
+    networks:
+      - medicaly-backend
   # db:
   #   image: couchdb:3.4.2
   #   volumes:
@@ -27,8 +28,10 @@ services:
     restart: unless-stopped
     ports:
       - 4000
+    networks:
+      - medicaly-backend
     environment:
-      COUCHDB_URL: http://couchdb:5984
+      COUCHDB_URL: ${COUCHDB_URL}
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       FRONTEND_URL: ${FRONT_URL}
@@ -47,6 +50,8 @@ services:
       POSTGRES_DB: medicaly
       POSTGRES_USER: $WAREHOUSE_POSTGRES_USER
       POSTGRES_PASSWORD: $WAREHOUSE_POSTGRES_PASSWORD
+    networks:
+      - medicaly-backend
 
   encode-orders:
     build:
@@ -54,10 +59,12 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:
-      COUCHDB_URL: http://couchdb:5984
+      COUCHDB_URL: ${COUCHDB_URL}
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       CRON_JOB_EXPRESSION: "0/15 * * * * *" # every 15 seconds
+    networks:
+      - medicaly-backend
 
   datawarehouse-sync:
     build:
@@ -65,11 +72,13 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:
-      COUCHDB_URL: http://couchdb:5984
+      COUCHDB_URL: ${COUCHDB_URL}
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       CRON_JOB_EXPRESSION: "* * * * *" #  every minute
       WAREHOUSE_DB_URL: $WAREHOUSE_DB_URL
+    networks:
+      - medicaly-backend
 
   ws-service:
     build:
@@ -78,6 +87,8 @@ services:
     restart: unless-stopped
     ports:
       - 3001
+    networks:
+      - medicaly-backend
 
   front:
     build:
@@ -98,6 +109,8 @@ services:
       - metabase-db
     ports:
       - 3000
+    networks:
+      - medicaly-backend
     environment:
       MB_ENABLE_EMBEDDING_STATIC: true
       MB_DB_CONNECTION_URI: $DB_CONNECTION_URI
@@ -108,6 +121,8 @@ services:
     restart: unless-stopped
     volumes:
       - metabase_data:/var/lib/postgresql/data
+    networks:
+      - medicaly-backend
     environment:
       POSTGRES_USER: $DB_POSTGRES_USER
       POSTGRES_PASSWORD: $DB_POSTGRES_PASSWORD
@@ -117,6 +132,8 @@ services:
     restart: unless-stopped
     ports:
       - 3000
+    networks:
+      - medicaly-backend
 
   certificates:
     build:
@@ -127,9 +144,11 @@ services:
       - pdf-engine
     ports:
       - 3002
+    networks:
+      - medicaly-backend
     environment:
       GOTENBERG_ENDPOINT: http://pdf-engine:3000
-      COUCHDB_URL: http://couchdb:5984
+      COUCHDB_URL: ${COUCHDB_URL}
       COUCHDB_USERNAME: $COUCHDB_USERNAME
       COUCHDB_PASSWORD: $COUCHDB_PASSWORD
       FILES_API: /api/v1/files/api/
@@ -143,3 +162,7 @@ volumes:
   metabase_data:
     driver: local
   # minio_data:
+
+networks:
+  medicaly-backend:
+    external: true
