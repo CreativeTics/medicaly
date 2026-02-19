@@ -22,6 +22,10 @@
        reverse_proxy  ws-service:3001
 	}
 
+	handle / {
+		reverse_proxy front:80
+	}
+
 	log {
         format json
         level INFO
