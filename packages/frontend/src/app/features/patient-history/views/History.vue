@@ -14,10 +14,10 @@ import { DBtn } from '@components/basic'
 import OrderStatus from '@features/service-orders/components/OrderStatus.vue'
 import Popper from 'vue3-popper'
 const PaginatedTable = defineAsyncComponent(
-  () => import('@/app/components/PaginatedTable.vue')
+  () => import('@/app/components/PaginatedTable.vue'),
 )
 const PatientHeader = defineAsyncComponent(
-  () => import('../components/PatientHeader.vue')
+  () => import('../components/PatientHeader.vue'),
 )
 
 import {
@@ -77,15 +77,16 @@ const columns = [
 const data = ref<PatientOrder[]>([])
 
 const selectedUrl = ref('')
-const iframe = ref<HTMLIFrameElement>()
 const printingTicket = ref('')
 const generatePrint = async (ticketId: string) => {
   printingTicket.value = ticketId
   console.log('Generate print', ticketId)
-  // print only iframe content
+
+  // Solo cambiar la URL del iframe
   selectedUrl.value = getPrintUrl(ticketId)
-  await new Promise((resolve) => setTimeout(resolve, 5000))
-  if (iframe.value?.contentWindow) iframe.value?.contentWindow?.print()
+
+  // (opcional) esperar un poco si quieres mostrar loader
+  await new Promise((resolve) => setTimeout(resolve, 500))
 
   printingTicket.value = ''
 }
@@ -159,7 +160,7 @@ onUnmounted(() => {
                   class="w-full"
                   v-if="
                     !['actions', 'status', 'informedConsents'].includes(
-                      column.key
+                      column.key,
                     )
                   "
                 >
