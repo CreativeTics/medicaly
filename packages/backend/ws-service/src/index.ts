@@ -6,7 +6,10 @@ import cnf from './config'
 config()
 const httpServer = createServer()
 const io = new Server(httpServer, {
-  cors: { origin: ['localhost:5173', 'localhost'] },
+  cors: {
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true,
+  },
 })
 
 io.of('signature-pad').on('connection', (socket: Socket) => {

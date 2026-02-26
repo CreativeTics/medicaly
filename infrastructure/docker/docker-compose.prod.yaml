@@ -64,6 +64,8 @@ services:
       - 3001
     networks:
       - medicaly-backend
+    environment:
+      FRONTEND_URL: ${FRONT_URL}
 
   front:
     build:
