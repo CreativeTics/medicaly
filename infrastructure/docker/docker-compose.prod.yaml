@@ -57,6 +57,7 @@ services:
       WAREHOUSE_DB_URL: ${WAREHOUSE_DB_URL}
     networks:
       - medicaly-backend
+      - dokploy-network
 
   datawarehouse-migrate:
     image: node:20-alpine
@@ -69,6 +70,7 @@ services:
     command: sh -c "npm install && npm run migrate:up"
     networks:
       - medicaly-backend
+      - dokploy-network
 
   ws-service:
     build:
@@ -126,4 +128,6 @@ volumes:
 
 networks:
   medicaly-backend:
+    external: true
+  dokploy-network:
     external: true
