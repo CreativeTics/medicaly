@@ -46,12 +46,27 @@ services:
       context: ../../packages/backend/datawarehouse-sync
       dockerfile: Dockerfile
     restart: unless-stopped
+    depends_on:
+      datawarehouse-migrate:
+        condition: service_completed_successfully
     environment:
       COUCHDB_URL: ${COUCHDB_URL}
       COUCHDB_USERNAME: ${COUCHDB_USERNAME}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       CRON_JOB_EXPRESSION: "* * * * *" #  every minute
       WAREHOUSE_DB_URL: ${WAREHOUSE_DB_URL}
+    networks:
+      - medicaly-backend
+
+  datawarehouse-migrate:
+    image: node:20-alpine
+    restart: "no"
+    working_dir: /app
+    volumes:
+      - ../migrations/datawarehouse:/app
+    environment:
+      DATABASE_URL: ${WAREHOUSE_DB_URL}
+    command: sh -c "npm install && npm run migrate:up"
     networks:
       - medicaly-backend
 

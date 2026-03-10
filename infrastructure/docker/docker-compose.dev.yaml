@@ -47,6 +47,19 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pgp4ssw0rd
 
+  datawarehouse-migrate:
+    image: node:20-alpine
+    restart: "no"
+    working_dir: /app
+    depends_on:
+      datawarehouse:
+        condition: service_started
+    volumes:
+      - ../migrations/datawarehouse:/app
+    environment:
+      DATABASE_URL: postgres://postgres:pgp4ssw0rd@datawarehouse:5432/medicaly
+    command: sh -c "npm install && npm run migrate:up"
+
   encode-orders:
     build: ../../packages/backend/ticket-codes
     restart: unless-stopped
@@ -56,19 +69,23 @@ services:
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: 4dm1n-us3r
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
-      CRON_JOB_EXPRESSION: '0/15 * * * * *'
+      CRON_JOB_EXPRESSION: "0/15 * * * * *"
 
   datawarehouse-sync:
     build: ../../packages/backend/datawarehouse-sync
     restart: unless-stopped
     depends_on:
-      - db
-      - datawarehouse
+      db:
+        condition: service_started
+      datawarehouse:
+        condition: service_started
+      datawarehouse-migrate:
+        condition: service_completed_successfully
     environment:
       COUCHDB_URL: http://db:5984
       COUCHDB_USERNAME: 4dm1n-us3r
       COUCHDB_PASSWORD: 4dm1n-p4ssw0rd!!
-      CRON_JOB_EXPRESSION: '30 * * * * *'
+      CRON_JOB_EXPRESSION: "30 * * * * *"
       WAREHOUSE_DB_URL: postgres://postgres:pgp4ssw0rd@datawarehouse:5432/medicaly
 
   ws-service:

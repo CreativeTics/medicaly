@@ -3,6 +3,8 @@
 exports.shorthands = undefined
 
 exports.up = (pgm) => {
+  pgm.createSchema('datawarehouse')
+
   pgm.createExtension('uuid-ossp', { ifNotExists: true })
 
   pgm.createTable('sync_control', {
@@ -296,4 +298,6 @@ exports.down = (pgm) => {
   pgm.dropTable('patients_data', { ifExists: true })
   pgm.dropTable('annotations', { ifExists: true })
   pgm.dropTable('annotation_answers', { ifExists: true })
+  pgm.dropExtension('uuid-ossp', { ifExists: true })
+  pgm.dropSchema('datawarehouse', { ifExists: true })
 }
