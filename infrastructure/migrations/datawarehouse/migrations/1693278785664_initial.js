@@ -4,6 +4,7 @@ exports.shorthands = undefined
 
 exports.up = (pgm) => {
   pgm.createSchema('datawarehouse')
+  pgm.sql('SET search_path TO datawarehouse')
 
   pgm.createExtension('uuid-ossp', { ifNotExists: true })
 
@@ -292,6 +293,7 @@ exports.up = (pgm) => {
 }
 
 exports.down = (pgm) => {
+  pgm.sql('SET search_path TO datawarehouse')
   pgm.dropTable('sync_control', { ifExists: true })
   pgm.dropTable('tickets', { ifExists: true })
   pgm.dropTable('patients', { ifExists: true })

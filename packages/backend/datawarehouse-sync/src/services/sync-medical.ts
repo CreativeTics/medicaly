@@ -8,21 +8,21 @@ export async function syncMedical() {
 
     const changes = await getChanges(
       'medical',
-      lastEventId[0]?.last_completed_sync
+      lastEventId[0]?.last_completed_sync,
     )
 
     const filteredChanges = changes.data.results.filter(
       (change) =>
         change.doc.doctype === 'patients' ||
         change.doc.doctype === 'patients-data' ||
-        change.doc.doctype === 'annotations'
+        change.doc.doctype === 'annotations',
     )
 
     console.log(`medical :: found ${filteredChanges.length} changes`)
 
     for (const change of filteredChanges) {
       console.log(
-        `medical :: processing change ${change.doc.doctype}::${change.doc._id} `
+        `medical :: processing change ${change.doc.doctype}::${change.doc._id} `,
       )
       if (change.doc.doctype === 'patients') {
         await upsertPatient(change.doc as Patient)
@@ -59,7 +59,7 @@ interface Patient {
 async function upsertPatient(patient: Patient) {
   // validate if exists and delete if exists
   const exist = await query(
-    `SELECT * FROM patients WHERE id = '${patient._id}'`
+    `SELECT * FROM patients WHERE id = '${patient._id}'`,
   )
 
   if (exist.rows.length > 0) {
@@ -104,7 +104,7 @@ async function upsertPatient(patient: Patient) {
       patient.lastName,
       patient.secondLastName,
       patient.createdAt,
-    ]
+    ],
   )
 }
 
@@ -148,7 +148,7 @@ async function upsertPatientData(patientData: PatientData) {
   // validate if exists and delete if exists
 
   const exist = await query(
-    `SELECT * FROM patients_data WHERE id = '${patientData._id}'`
+    `SELECT * FROM patients_data WHERE id = '${patientData._id}'`,
   )
 
   if (exist.rows.length > 0) {
@@ -158,7 +158,7 @@ async function upsertPatientData(patientData: PatientData) {
   const position = await getDoc('general', patientData.applyPosition || '')
   const precedenceCity = await getDoc(
     'general',
-    patientData.precedenceCity || ''
+    patientData.precedenceCity || '',
   )
   const residenceCity = await getDoc('general', patientData.residenceCity || '')
 
@@ -252,6 +252,6 @@ async function upsertPatientData(patientData: PatientData) {
       patientData.fingerprintUrl,
       patientData.photoUrl,
       patientData.createdAt,
-    ]
+    ],
   )
 }

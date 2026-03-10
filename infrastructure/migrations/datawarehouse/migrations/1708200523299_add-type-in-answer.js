@@ -3,6 +3,7 @@
 exports.shorthands = undefined
 
 exports.up = (pgm) => {
+  pgm.sql('SET search_path TO datawarehouse')
   pgm.sql(`
         ALTER TABLE annotation_answers
         ADD COLUMN field_type text NOT NULL DEFAULT '';
@@ -10,6 +11,7 @@ exports.up = (pgm) => {
 }
 
 exports.down = (pgm) => {
+  pgm.sql('SET search_path TO datawarehouse')
   pgm.sql(`
             ALTER TABLE annotation_answers
             DROP COLUMN field_type;

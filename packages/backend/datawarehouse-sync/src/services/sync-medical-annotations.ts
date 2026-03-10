@@ -15,7 +15,7 @@ export async function upsertAnnotation(annotation: any) {
 
   await query(
     `
-    INSERT INTO public.annotations
+    INSERT INTO annotations
     (id,
      ticket_id,
      service_code,
@@ -47,14 +47,13 @@ export async function upsertAnnotation(annotation: any) {
   for (const field of formFields) {
     await query(
       `
-      INSERT INTO public.annotation_answers
+      INSERT INTO annotation_answers
       (
       annotation_id, 
       field_code, 
       field_label,
       answer,
-      field_type
-      )
+      field_type)
       VALUES(
       '${annotation._id}', 
       '${field.fielName}', 

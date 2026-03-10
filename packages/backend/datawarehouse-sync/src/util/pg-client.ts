@@ -19,13 +19,13 @@ export async function disconnect() {
 export async function getLastEventId(database: string) {
   return (
     await pool.query(
-      `SELECT * FROM sync_control WHERE database = '${database}' `
+      `SELECT * FROM sync_control WHERE database = '${database}' `,
     )
   ).rows
 }
 
 export async function updateLastEventId(database: string, lastEventId: string) {
   await pool.query(
-    `UPDATE sync_control SET last_completed_sync = '${lastEventId}' WHERE database = '${database}' `
+    `UPDATE sync_control SET last_completed_sync = '${lastEventId}' WHERE database = '${database}' `,
   )
 }

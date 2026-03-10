@@ -3,6 +3,7 @@
 exports.shorthands = undefined
 
 exports.up = (pgm) => {
+  pgm.sql('SET search_path TO datawarehouse')
   pgm.sql(`
           ALTER TABLE tickets
           ADD COLUMN admitted_by jsonb  NULL DEFAULT '{}';
@@ -11,11 +12,12 @@ exports.up = (pgm) => {
   pgm.sql(
     `ALTER TABLE tickets
             ADD COLUMN finalized_by jsonb  NULL DEFAULT '{}';
-        `
+        `,
   )
 }
 
 exports.down = (pgm) => {
+  pgm.sql('SET search_path TO datawarehouse')
   pgm.sql(`
               ALTER TABLE tickets
               DROP COLUMN admitted_by;
@@ -24,6 +26,6 @@ exports.down = (pgm) => {
   pgm.sql(
     `ALTER TABLE tickets
               DROP COLUMN finalized_by;
-          `
+          `,
   )
 }
