@@ -3,14 +3,14 @@ import { getDoc } from './get-couch-changes'
 
 export async function upsertAnnotation(annotation: any) {
   const exist = await query(
-    `SELECT * FROM annotations WHERE id = '${annotation._id}'`
+    `SELECT * FROM annotations WHERE id = '${annotation._id}'`,
   )
   if (exist.rows.length > 0) return // already synced
 
   const serviceOrder = await getDoc('general', annotation.orderId)
 
   const service = serviceOrder.services.find(
-    (s: any) => s.id === annotation.serviceId
+    (s: any) => s.id === annotation.serviceId,
   )
 
   await query(
@@ -25,7 +25,8 @@ export async function upsertAnnotation(annotation: any) {
      exam_version,
      patient_id, 
      patient_data_id, 
-     create_at)
+     create_at,
+     is_deleted)
     VALUES(
     '${annotation._id}', 
     '${annotation.orderId}',
@@ -36,8 +37,9 @@ export async function upsertAnnotation(annotation: any) {
     '${annotation.examVersion}', 
     '${serviceOrder.patientId}', 
     '${serviceOrder.patientDataId}', 
-    '${annotation.createdAt}');
-  `
+    '${annotation.createdAt}',
+    '${annotation.isDeleted ?? false}');
+  `,
   )
 
   const formFields = await getFormFieldsFromExam(annotation.examId)
@@ -51,14 +53,15 @@ export async function upsertAnnotation(annotation: any) {
       field_code, 
       field_label,
       answer,
-      field_type)
+      field_type
+      )
       VALUES(
       '${annotation._id}', 
       '${field.fielName}', 
       '${field.label}',
       '${annotation?.[`${field.fielName}`] ?? ''}', 
       '${field.type}');
-    `
+    `,
     )
   }
 
@@ -66,7 +69,7 @@ export async function upsertAnnotation(annotation: any) {
 }
 
 async function getFormFieldsFromExam(
-  examId: string
+  examId: string,
 ): Promise<FieldExtraction[]> {
   const exam = await getDoc('medical', examId)
 
