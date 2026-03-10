@@ -10,7 +10,13 @@ export async function getChanges(database: string, lastSeq: string) {
 }
 
 export async function getDoc(database: string, id: string) {
-  return (await couchHttp.get(`/${database}/${id}`)).data
+  try {
+    return (await couchHttp.get(`/${database}/${id}`)).data
+  } catch (error: any) {
+    if (error?.response?.status === 404) {
+      return {}
+    }
+  }
 }
 
 export async function searchDocs(database: string, selector: any): Promise<[]> {
