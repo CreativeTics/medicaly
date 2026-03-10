@@ -4,6 +4,7 @@ exports.shorthands = undefined
 
 exports.up = (pgm) => {
   pgm.createSchema('datawarehouse')
+
   pgm.sql('SET search_path TO datawarehouse')
 
   pgm.createExtension('uuid-ossp', { ifNotExists: true })
