@@ -63,7 +63,7 @@ const confirmDelete = async () => {
   if (!canConfirmDelete.value) return
 
   try {
-    await deleteExam(examToDelete.value.id)
+    await deleteExam(examToDelete.value.code)
     notifications.addNotification({
       type: 'success',
       title: `${moduleName} eliminado`,

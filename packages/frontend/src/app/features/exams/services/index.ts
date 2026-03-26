@@ -1,4 +1,5 @@
 import { getData } from '../../../core/services/get-table/'
+import { formatDate } from '../../../core/util/dates'
 
 import { PouchService, DB } from '../../../services/pouch'
 
@@ -31,7 +32,7 @@ export async function getList() {
       name: doc.name,
       code: doc.code,
       version: doc.version,
-      updatedAt: doc.updatedAt,
+      updatedAt: formatDate(doc.updatedAt, true),
     }
   })
 }
@@ -93,7 +94,16 @@ export async function edit(entity: any): Promise<boolean> {
   return true
 }
 
-export async function deleteExam(id: string): Promise<boolean> {
-  await pouch.use(DB.MEDICAL).delete(id)
+export async function deleteExam(code: string): Promise<boolean> {
+  const allVersions = await pouch.use(DB.MEDICAL).find({
+    selector: { doctype, code },
+  })
+
+  if (allVersions?.length) {
+    for (const doc of allVersions) {
+      await pouch.use(DB.MEDICAL).delete(doc.id)
+    }
+  }
+
   return true
 }
