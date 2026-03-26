@@ -48,6 +48,9 @@ const goToEdit = (id: string) => {
   console.log('Edit', id)
   router.push({ name: `${modulePath}.edit`, params: { id } })
 }
+const goToCopy = (id: string) => {
+  router.push({ name: `${modulePath}.create`, query: { copyFrom: id } })
+}
 
 onMounted(async () => {
   data.value = await getList()
@@ -61,8 +64,9 @@ onMounted(async () => {
     :subtitle="`Gestión de ${moduleName}es`"
     :columns="columns"
     :rows="data"
-    :actions="['edit', 'delete', 'create']"
+    :actions="['edit', 'copy', 'delete', 'create']"
     @edit="goToEdit"
+    @copy="goToCopy"
     @create="goToCreate"
   >
   </ModuleListBasic>

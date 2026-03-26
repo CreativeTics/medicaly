@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { DLoading, DBtn } from '@/app/components/basic'
 
 import {
+  Copy01Icon,
   Edit03Icon,
   FileSearch01Icon,
   SearchLgIcon,
@@ -28,7 +29,7 @@ withDefaults(
   }
 )
 
-const emit = defineEmits(['edit', 'create', 'delete', 'view', 'preview'])
+const emit = defineEmits(['edit', 'create', 'delete', 'view', 'preview', 'copy'])
 
 const emitEdit = (id: string) => {
   emit('edit', id)
@@ -114,6 +115,24 @@ const loading = ref(false)
                     @click="emit('view', rowProps.row['id'])"
                   >
                     <SearchLgIcon
+                      class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
+                    />
+                  </div>
+                </Popper>
+                <Popper
+                  v-if="actions.includes('copy')"
+                  arrow
+                  offsetDistance="12"
+                  content="Duplicar"
+                  :hover="true"
+                  placement="left"
+                  class="tooltip"
+                >
+                  <div
+                    class="bg-gray-50 rounded-md py-2"
+                    @click="emit('copy', rowProps.row['id'])"
+                  >
+                    <Copy01Icon
                       class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
                     />
                   </div>

@@ -231,10 +231,13 @@ const back = () => {
 onBeforeMount(async () => {
   loading.value = true
 
-  console.log('Mounted', route.params.id)
   if (route.params.id) {
     model = await getEntity(route.params.id as string)
-    console.log('Model', model)
+  } else if (route.query.copyFrom) {
+    model = await getEntity(route.query.copyFrom as string)
+    model.code = ''
+    model.name = `${model.name} (Copia)`
+    delete model.version
   }
   loading.value = false
 })
