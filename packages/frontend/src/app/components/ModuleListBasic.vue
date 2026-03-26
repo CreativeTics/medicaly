@@ -8,6 +8,7 @@ import {
   Edit03Icon,
   FileSearch01Icon,
   SearchLgIcon,
+  Trash01Icon,
 } from '@/app/components/basic/icons'
 import PaginatedTable from './PaginatedTable.vue'
 import Popper from 'vue3-popper'
@@ -152,6 +153,24 @@ const loading = ref(false)
                   >
                     <Edit03Icon
                       class="h-6 w-6 mx-2 cursor-pointer text-gray-600"
+                    />
+                  </div>
+                </Popper>
+                <Popper
+                  v-if="actions.includes('delete')"
+                  arrow
+                  offsetDistance="12"
+                  content="Eliminar"
+                  :hover="true"
+                  placement="left"
+                  class="tooltip"
+                >
+                  <div
+                    class="bg-gray-50 rounded-md py-2"
+                    @click="emit('delete', rowProps.row)"
+                  >
+                    <Trash01Icon
+                      class="h-6 w-6 mx-2 cursor-pointer text-red-600"
                     />
                   </div>
                 </Popper>

@@ -92,3 +92,8 @@ export async function edit(entity: any): Promise<boolean> {
 
   return true
 }
+
+export async function deleteExam(id: string): Promise<boolean> {
+  await pouch.use(DB.MEDICAL).delete(id)
+  return true
+}
