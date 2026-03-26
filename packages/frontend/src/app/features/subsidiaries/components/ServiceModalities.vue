@@ -30,6 +30,16 @@ onMounted(() => {
 })
 
 watch(
+  () => props.modelValue,
+  (newVal) => {
+    if (Array.isArray(newVal) && newVal.length > 0 && items.value.length === 0) {
+      items.value = [...newVal]
+    }
+  },
+  { deep: true }
+)
+
+watch(
   () => items.value,
   (value) => {
     emit('update:modelValue', value)

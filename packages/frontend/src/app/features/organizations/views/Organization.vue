@@ -46,7 +46,8 @@ const form: Form = {
             {
               name: "address",
               label: "Dirección Principal",
-              type: "text",
+              type: "textarea",
+              class: "sm:col-span-6 lg:col-span-6 xl:col-span-6",
               props: {
                 placeholder: "Dirección principal de la organización",
                 required: true,
