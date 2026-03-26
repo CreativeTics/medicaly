@@ -16,25 +16,56 @@ export interface JwtTokenPayload {
   exp?: number
 }
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'change-this-secret-in-production'
-)
-
 const TOKEN_EXPIRATION = '1h'
+
+let privateKey: any
+let publicKey: any
+let jwks: { keys: any[] }
+
+let keysReady: Promise<void> | null = null
+
+async function initKeys(): Promise<void> {
+  const { generateKeyPair, exportJWK } = await import('jose')
+
+  const pair = await generateKeyPair('RS256')
+  privateKey = pair.privateKey
+  publicKey = pair.publicKey
+
+  const publicJwk = await exportJWK(publicKey)
+  publicJwk.alg = 'RS256'
+  publicJwk.use = 'sig'
+  publicJwk.kid = 'medicaly-auth-1'
+
+  jwks = { keys: [publicJwk] }
+}
+
+function ensureKeys(): Promise<void> {
+  if (!keysReady) {
+    keysReady = initKeys()
+  }
+  return keysReady
+}
 
 export class JwtService {
   static async sign(payload: Omit<JwtTokenPayload, 'iat' | 'exp'>): Promise<string> {
+    await ensureKeys()
     const { SignJWT } = await import('jose')
     return new SignJWT(payload as Record<string, unknown>)
-      .setProtectedHeader({ alg: 'HS256' })
+      .setProtectedHeader({ alg: 'RS256', kid: 'medicaly-auth-1' })
       .setIssuedAt()
       .setExpirationTime(TOKEN_EXPIRATION)
-      .sign(JWT_SECRET)
+      .sign(privateKey)
   }
 
   static async verify(token: string): Promise<JwtTokenPayload> {
+    await ensureKeys()
     const { jwtVerify } = await import('jose')
-    const { payload } = await jwtVerify(token, JWT_SECRET)
+    const { payload } = await jwtVerify(token, publicKey)
     return payload as unknown as JwtTokenPayload
+  }
+
+  static async getJwks(): Promise<{ keys: any[] }> {
+    await ensureKeys()
+    return jwks
   }
 }

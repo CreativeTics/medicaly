@@ -15,6 +15,10 @@
 		reverse_proxy certificates:3002
 	}
 
+	handle /.well-known/* {
+		reverse_proxy api-gateway:4000
+	}
+
 	handle /api/* {
 		reverse_proxy api-gateway:4000
 	}

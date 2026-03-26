@@ -52,6 +52,15 @@ app.use(
   validateAuth,
   httpProxy(process.env.CERTIFICATES_URL || 'http://certificates:3002') as any,
 )
+app.get('/.well-known/jwks.json', async (_req, res) => {
+  try {
+    const jwks = await JwtService.getJwks()
+    res.json(jwks)
+  } catch {
+    res.status(500).json({ message: 'Internal server error' })
+  }
+})
+
 app.use('/api/v1/auth', publicAuthRoutes())
 app.use('/api/v1/auth', validateAuth, AuthRoutes())
 app.use('/api/v1/patients', validateAuth, PatientRoutes())
