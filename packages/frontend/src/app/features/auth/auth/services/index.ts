@@ -62,33 +62,4 @@ export async function getUsers(): Promise<User[]> {
   }))
 }
 
-export async function getSessions(): Promise<
-  { token: string; userId: string; username: string; lastUsage: Date }[]
-> {
-  const response = await http.get('/auth/sessions', {
-    headers: {
-      Authorization: `${useAuthStore().token}`,
-    },
-  })
 
-  if (response.status !== 200) {
-    return []
-  }
-
-  return response.data.map((session: any) => ({
-    token: session.token,
-    userId: session.userId,
-    username: session.username,
-    lastUsage: new Date(session.lastUsage),
-  }))
-}
-
-export async function deleteSession(token: string): Promise<boolean> {
-  const response = await http.delete(`/auth/session/${token}`, {
-    headers: {
-      Authorization: `${useAuthStore().token}`,
-    },
-  })
-
-  return response.status === 200
-}

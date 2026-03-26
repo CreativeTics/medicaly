@@ -40,14 +40,4 @@ export class TokenBlacklist {
 
     return true
   }
-
-  /**
-   * List all currently revoked tokens (for admin/debug purposes).
-   */
-  list(): { token: string; expiresAt: Date }[] {
-    return Array.from(this.revokedTokens.entries()).map(([token, expiresAt]) => ({
-      token,
-      expiresAt: new Date(expiresAt),
-    }))
-  }
 }
