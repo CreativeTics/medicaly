@@ -56,3 +56,8 @@ export interface Role {
   description?: string;
   permissions: string[];
 }
+
+export async function deleteRecord(id: string): Promise<boolean> {
+  await pouch.use(DB.AUTH).delete(id);
+  return true;
+}

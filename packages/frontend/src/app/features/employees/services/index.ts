@@ -104,3 +104,8 @@ async function saveSignatureImage(entity: any) {
   }
   useFileAttachment().changeBucket(entity.signature, 'employees')
 }
+
+export async function deleteRecord(id: string): Promise<boolean> {
+  await pouch.use(DB.GENERAL).delete(id)
+  return true
+}

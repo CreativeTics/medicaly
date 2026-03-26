@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import { useNotificationsStore } from '@/store/notifications'
 const ModuleListBasic = defineAsyncComponent(
   () => import('@components/ModuleListBasic.vue')
 )
-import { getList } from '../services'
+const DeleteConfirmModal = defineAsyncComponent(
+  () => import('@components/DeleteConfirmModal.vue')
+)
+import { getList, deleteRecord } from '../services'
 
 const router = useRouter()
+const notifications = useNotificationsStore()
 const moduleName = 'Cargo'
 const modulePath = 'positions'
 
@@ -26,17 +31,47 @@ const columns = [
 const data = ref<any>([])
 
 const goToCreate = () => {
-  console.log('Create')
   router.push({ name: `${modulePath}.create` })
 }
 const goToEdit = (id: string) => {
-  console.log('Edit', id)
   router.push({ name: `${modulePath}.edit`, params: { id } })
+}
+
+// Delete
+const showDeleteModal = ref(false)
+const recordToDelete = ref<any>(null)
+
+const openDeleteModal = (row: any) => {
+  recordToDelete.value = row
+  showDeleteModal.value = true
+}
+
+const closeDeleteModal = () => {
+  showDeleteModal.value = false
+  recordToDelete.value = null
+}
+
+const confirmDelete = async () => {
+  try {
+    await deleteRecord(recordToDelete.value.id)
+    notifications.addNotification({
+      type: 'success',
+      title: `${moduleName} eliminado`,
+      text: `"${recordToDelete.value.name}" se ha eliminado correctamente`,
+    })
+    closeDeleteModal()
+    data.value = await getList()
+  } catch {
+    notifications.addNotification({
+      type: 'error',
+      title: 'Error',
+      text: `No se pudo eliminar el ${moduleName.toLowerCase()}`,
+    })
+  }
 }
 
 onMounted(async () => {
   data.value = await getList()
-  console.log('Mounted', data.value)
 })
 </script>
 
@@ -49,6 +84,15 @@ onMounted(async () => {
     :actions="['edit', 'delete', 'create']"
     @edit="goToEdit"
     @create="goToCreate"
-  >
-  </ModuleListBasic>
+    @delete="openDeleteModal"
+  />
+
+  <DeleteConfirmModal
+    v-if="showDeleteModal"
+    :title="`Eliminar ${moduleName}`"
+    :record-name="recordToDelete?.name"
+    :label="`nombre del ${moduleName.toLowerCase()}`"
+    @close="closeDeleteModal"
+    @confirm="confirmDelete"
+  />
 </template>

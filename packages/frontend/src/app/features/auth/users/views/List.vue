@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import { useNotificationsStore } from '@/store/notifications'
 
 const ModuleListBasic = defineAsyncComponent(
   () => import('@components/ModuleListBasic.vue')
 )
-import { getUsers } from '../services'
+const DeleteConfirmModal = defineAsyncComponent(
+  () => import('@components/DeleteConfirmModal.vue')
+)
+import { getUsers, remove } from '../services'
 
 const router = useRouter()
+const notifications = useNotificationsStore()
 
 const columns = [
   {
@@ -40,17 +45,47 @@ const columns = [
 const data = ref<any>([])
 
 const goToCreate = () => {
-  console.log('Create')
   router.push({ name: 'users.create' })
 }
 const goToEdit = (id: string) => {
-  console.log('Edit', id)
   router.push({ name: 'users.edit', params: { id } })
+}
+
+// Delete
+const showDeleteModal = ref(false)
+const recordToDelete = ref<any>(null)
+
+const openDeleteModal = (row: any) => {
+  recordToDelete.value = row
+  showDeleteModal.value = true
+}
+
+const closeDeleteModal = () => {
+  showDeleteModal.value = false
+  recordToDelete.value = null
+}
+
+const confirmDelete = async () => {
+  try {
+    await remove(recordToDelete.value.id)
+    notifications.addNotification({
+      type: 'success',
+      title: 'Usuario eliminado',
+      text: `"${recordToDelete.value.name}" se ha eliminado correctamente`,
+    })
+    closeDeleteModal()
+    data.value = await getUsers()
+  } catch {
+    notifications.addNotification({
+      type: 'error',
+      title: 'Error',
+      text: 'No se pudo eliminar el usuario',
+    })
+  }
 }
 
 onMounted(async () => {
   data.value = await getUsers()
-  console.log('Mounted', data.value)
 })
 </script>
 
@@ -63,6 +98,15 @@ onMounted(async () => {
     :actions="['edit', 'delete', 'create']"
     @edit="goToEdit"
     @create="goToCreate"
-  >
-  </ModuleListBasic>
+    @delete="openDeleteModal"
+  />
+
+  <DeleteConfirmModal
+    v-if="showDeleteModal"
+    title="Eliminar Usuario"
+    :record-name="recordToDelete?.name"
+    label="nombre del usuario"
+    @close="closeDeleteModal"
+    @confirm="confirmDelete"
+  />
 </template>

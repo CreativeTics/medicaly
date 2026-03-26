@@ -52,3 +52,8 @@ export async function edit(id: string, entity: any): Promise<boolean> {
 
   return true
 }
+
+export async function deleteRecord(id: string): Promise<boolean> {
+  await pouch.use(DB.GENERAL).delete(id)
+  return true
+}

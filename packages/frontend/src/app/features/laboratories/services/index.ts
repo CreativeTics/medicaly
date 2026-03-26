@@ -74,3 +74,8 @@ async function addLaboratoryRelationToUser(
   ]
   await pouch.use(DB.AUTH).update(user)
 }
+
+export async function deleteRecord(id: string): Promise<boolean> {
+  await pouch.use(DB.GENERAL).delete(id)
+  return true
+}
