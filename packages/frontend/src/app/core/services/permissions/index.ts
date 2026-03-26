@@ -68,6 +68,10 @@ export const permissions = [
     name: 'Configuración > Exámenes:Listar',
   },
   {
+    id: 'organizations:view',
+    name: 'Administración > Organizaciones:Ver',
+  },
+  {
     id: 'subsidiaries:list',
     name: 'Administración > Sedes:Listar',
   },

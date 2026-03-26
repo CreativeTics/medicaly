@@ -23,6 +23,7 @@ import { restrictionsRoutes } from '@features/restrictions'
 import { serviceOrdersRoutes } from '@features/service-orders'
 import { signaturePadRoutes } from '@features/signature-pad'
 import { subsidiariesRoutes } from '@features/subsidiaries'
+import { organizationsRoutes } from '@features/organizations'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -49,6 +50,7 @@ export const routes: RouteRecordRaw[] = [
   ...examsRoutes,
   ...contractsRoutes,
   ...subsidiariesRoutes,
+  ...organizationsRoutes,
   ...serviceOrdersRoutes,
   ...patientAdmissionRoutes,
   ...patientAttentionRoutes,

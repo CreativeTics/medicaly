@@ -178,6 +178,11 @@ export const menu = [
     icon: 'Shield02Icon',
     children: [
       {
+        name: 'Organizaciones',
+        route: '/organizations',
+        permission: 'organizations:view',
+      },
+      {
         name: 'Sedes de atención',
         route: '/subsidiaries',
         permission: 'subsidiaries:list',
