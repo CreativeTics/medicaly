@@ -1,4 +1,5 @@
 import { getData } from '../../../core/services/get-table/'
+import { formatDate } from '../../../core/util/dates'
 
 import { DB, PouchService } from '../../../services/pouch'
 
@@ -41,7 +42,7 @@ export async function getList(contractId: string) {
         ? `SI(${doc.visibleExams?.length})`
         : 'NO',
       visibleExams: doc.visibleExams,
-      updatedAt: doc.updatedAt,
+      updatedAt: formatDate(doc.updatedAt, true),
     }
   })
 }

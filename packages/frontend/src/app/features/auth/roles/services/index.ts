@@ -1,4 +1,5 @@
 import { getData } from "../../../../core/services/get-table/";
+import { formatDate } from "../../../../core/util/dates";
 
 import { PouchService, DB } from "../../../../services/pouch";
 
@@ -16,7 +17,7 @@ export async function getRoles() {
       name: doc.name,
       description: doc.description,
       permissions: doc.permissions.length,
-      updatedAt: doc.updatedAt,
+      updatedAt: formatDate(doc.updatedAt, true),
     };
   });
 }

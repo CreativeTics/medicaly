@@ -1,4 +1,5 @@
 import { getData } from '../../../core/services/get-table/'
+import { formatDate } from '../../../core/util/dates'
 
 import { PouchService, DB } from '../../../services/pouch'
 
@@ -19,7 +20,7 @@ export async function getList() {
       name: doc.name,
       exams: doc.exams.length,
       user: user.name,
-      updatedAt: doc.updatedAt,
+      updatedAt: formatDate(doc.updatedAt, true),
     })
   }
   return dataWithUsers

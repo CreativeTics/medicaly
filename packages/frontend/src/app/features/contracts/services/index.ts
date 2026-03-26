@@ -1,4 +1,5 @@
 import { getData } from '../../../core/services/get-table/'
+import { formatDate } from '../../../core/util/dates'
 
 import { PouchService, DB } from '../../../services/pouch'
 
@@ -32,7 +33,7 @@ export async function getList() {
       email: doc.email,
       phone: doc.phone,
       status: doc.status === Status.ACTIVE ? 'Activo' : 'Inactivo',
-      updatedAt: doc.updatedAt,
+      updatedAt: formatDate(doc.updatedAt, true),
     }
   })
 }

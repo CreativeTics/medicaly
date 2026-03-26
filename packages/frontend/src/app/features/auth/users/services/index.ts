@@ -1,5 +1,6 @@
 import Base64 from 'crypto-js/enc-base64'
 import { getData } from '../../../../core/services/get-table/'
+import { formatDate } from '../../../../core/util/dates'
 
 import { PouchService, DB } from '../../../../services/pouch'
 import { SHA256 } from 'crypto-js'
@@ -19,7 +20,7 @@ export async function getUsers() {
       username: doc.username,
       roleName: doc.roleName,
       type: doc.type,
-      updatedAt: doc.updatedAt,
+      updatedAt: formatDate(doc.updatedAt, true),
     }
   })
 }

@@ -178,7 +178,7 @@ export const menu = [
     icon: 'Shield02Icon',
     children: [
       {
-        name: 'Organizaciones',
+        name: 'Organización',
         route: '/organizations',
         permission: 'organizations:view',
       },

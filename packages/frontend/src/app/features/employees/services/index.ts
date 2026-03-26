@@ -1,5 +1,6 @@
 import { useFileAttachment } from '@/app/core/composable/useFileAttachment'
 import { getData } from '../../../core/services/get-table/'
+import { formatDate } from '../../../core/util/dates'
 
 import { PouchService, DB } from '../../../services/pouch'
 
@@ -28,7 +29,7 @@ export async function getList() {
       fullName: doc.fullName,
       position: doc.positionName,
       user: user.name,
-      updatedAt: doc.updatedAt,
+      updatedAt: formatDate(doc.updatedAt, true),
     })
   }
   return users
