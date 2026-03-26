@@ -27,32 +27,11 @@ const form: Form = {
           description: '',
           fields: [
             {
-              name: 'code',
-              label: 'Código de la sede',
-              type: 'text',
-              props: {
-                placeholder: 'Código de la sede',
-                required: true,
-              },
-              rules: ['required', 'upper', 'minlength:3', 'maxlength:50'],
-            },
-
-            {
               name: 'name',
               label: 'Nombre de la sede',
               type: 'text',
               props: {
                 placeholder: 'Nombre de la sede',
-                required: true,
-              },
-              rules: ['required', 'minlength:3', 'maxlength:50'],
-            },
-            {
-              name: 'fiscalId',
-              label: 'Identificación fiscal(Nit)',
-              type: 'text',
-              props: {
-                placeholder: 'Nit de la sede',
                 required: true,
               },
               rules: ['required', 'minlength:3', 'maxlength:50'],
@@ -75,32 +54,21 @@ const form: Form = {
             },
             {
               name: 'serviceModality',
-              label: 'Modalidad de prestación de servicios',
-              type: 'select',
+              label: 'Modalidades de prestación de servicios',
+              type: 'SubsidiaryServiceModalities',
+              default: [],
               props: {
-                required: true,
-                options: [
-                  { id: '01', name: '01 - Intramural' },
-                  { id: '04', name: '04 - Extramural jornada de salud' },
-                ],
+                class: 'lg:col-span-6 xl:col-span-6',
               },
-              rules: ['required'],
             },
             {
               name: 'serviceType',
-              label: 'Servicio a Prestar',
-              type: 'select',
+              label: 'Servicios a Prestar',
+              type: 'SubsidiaryServiceTypes',
+              default: [],
               props: {
-                required: true,
-                options: [
-                  { id: '328', name: '328  - Medicina General' },
-                  {
-                    id: '407',
-                    name: '407 - Medicina del trabajo y medicina Laboral',
-                  },
-                ],
+                class: 'lg:col-span-6 xl:col-span-6',
               },
-              rules: ['required'],
             },
           ],
         },

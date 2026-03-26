@@ -12,8 +12,6 @@ export async function getList() {
     fields: [
       'id',
       'name',
-      'code',
-      'fiscalId',
       'prefix',
       'lastOrderNumber',
       'updatedAt',
@@ -23,9 +21,7 @@ export async function getList() {
   return data.map((doc: any) => {
     return {
       id: doc.id,
-      code: doc.code,
       name: doc.name,
-      fiscalId: doc.fiscalId,
       prefix: doc.prefix,
       lastOrderNumber: doc.lastOrderNumber,
       updatedAt: formatDate(doc.updatedAt, true),
@@ -36,12 +32,10 @@ export async function getList() {
 export async function getEntity(id: string): Promise<any> {
   const doc = await pouch.use(DB.GENERAL).get(id)
   return {
-    code: doc.code,
     name: doc.name,
-    fiscalId: doc.fiscalId,
     serviceDeliveryCode: doc.serviceDeliveryCode,
-    serviceType: doc.serviceType,
-    serviceModality: doc.serviceModality,
+    serviceType: doc.serviceType ?? [],
+    serviceModality: doc.serviceModality ?? [],
     prefix: doc.prefix,
     lastOrderNumber: doc.lastOrderNumber,
   }

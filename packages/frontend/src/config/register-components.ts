@@ -28,6 +28,8 @@ import SubsidiaryList from '../app/features/contracts/components/SubsidiaryList.
 import UserList from '../app/features/contracts/components/UserList.vue'
 import ServiceOrderPatients from '../app/features/service-orders/components/Patients.vue'
 import ServiceOrdersList from '../app/features/service-orders/components/ServicesList.vue'
+import SubsidiaryServiceModalities from '../app/features/subsidiaries/components/ServiceModalities.vue'
+import SubsidiaryServiceTypes from '../app/features/subsidiaries/components/ServiceTypes.vue'
 
 export function registerGlobalComponents(app: App) {
   app.component('LoginLayout', Login)
@@ -58,4 +60,8 @@ export function registerGlobalComponents(app: App) {
   // service orders
   app.component('ServiceOrdersList', ServiceOrdersList)
   app.component('ServiceOrderPatients', ServiceOrderPatients)
+
+  // subsidiaries
+  app.component('SubsidiaryServiceModalities', SubsidiaryServiceModalities)
+  app.component('SubsidiaryServiceTypes', SubsidiaryServiceTypes)
 }

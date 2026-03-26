@@ -12,18 +12,8 @@ const modulePath = 'subsidiaries'
 
 const columns = [
   {
-    key: 'code',
-    title: 'Codigo',
-    align: 'left',
-  },
-  {
     key: 'name',
     title: 'Nombre',
-    align: 'left',
-  },
-  {
-    key: 'fiscalId',
-    title: 'Identificación fiscal',
     align: 'left',
   },
   {
