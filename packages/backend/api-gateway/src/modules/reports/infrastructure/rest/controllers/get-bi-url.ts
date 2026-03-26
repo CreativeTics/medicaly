@@ -16,7 +16,7 @@ export class GetBiReportUrl {
         params: {},
         exp: Math.round(Date.now() / 1000) + 30 * 60, // 30 minute expiration
       }
-      const token = new JWTSigner().sign(
+      const token = await new JWTSigner().sign(
         payload,
         constants().METABASE.SECRET_KEY
       )

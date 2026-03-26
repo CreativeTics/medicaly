@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 
-import { AuthSessions } from '../../../../../shared/infrastructure/databases/util/auth-sessions'
 import {
   GetSessionUserUseCase,
   InvalidSessionError,
@@ -12,8 +11,6 @@ export class getSessionUserController {
   async execute(req: Request, res: Response) {
     const { authorization } = req.headers
     try {
-      AuthSessions.instance.get(authorization)
-
       const session = await this.getSessionUserUseCase.execute({
         token: authorization,
       })

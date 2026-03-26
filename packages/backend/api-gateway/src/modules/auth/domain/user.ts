@@ -1,6 +1,3 @@
-import sha256 from 'crypto-js/sha256'
-import Base64 from 'crypto-js/enc-base64'
-
 import { UserPassword } from './user-password'
 import { Username } from './user-username'
 import { UserType } from './user-type'
@@ -64,12 +61,18 @@ export class User {
     return this.props.password.compareWith(password)
   }
 
-  generateToken(): string {
-    const token = Base64.stringify(
-      sha256(`${this._id}:${this.props.username.value}-${Date.now()}`)
-    )
-    const sanitizedToken = token.replace(/[^a-zA-Z0-9]/g, '')
-    return sanitizedToken
+  get tokenPayload() {
+    return {
+      sub: this._id.value,
+      username: this.props.username.value,
+      role: {
+        id: this.props.role.id,
+        name: this.props.role.name,
+        permissions: this.props.role.permissions,
+      },
+      type: this.props.type.value,
+      relations: this.props.relations.map((r) => r.value),
+    }
   }
 
   static create(props: UserProps, id?: string): User {

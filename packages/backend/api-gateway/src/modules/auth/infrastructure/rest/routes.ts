@@ -10,7 +10,7 @@ import { CreateUserController } from './controllers/create-user'
 import { CreateUserUseCase } from '../../application/use-cases/create'
 import { UpdateUserController } from './controllers/update-user'
 import { UpdateUserUseCase } from '../../application/use-cases/update'
-import { AuthSessions } from '../../../../shared/infrastructure/databases/util/auth-sessions'
+import { TokenBlacklist } from '../../../../shared/infrastructure/databases/util/auth-sessions'
 
 export function publicAuthRoutes(): Router {
   const router: Router = Router()
@@ -31,7 +31,7 @@ export function AuthRoutes(): Router {
   const router: Router = Router()
 
   router.get('/sessions', (_, res) => {
-    res.json(AuthSessions.instance.list())
+    res.json(TokenBlacklist.instance.list())
   })
 
   router.get('/session', (req, res) => {
@@ -42,8 +42,8 @@ export function AuthRoutes(): Router {
 
   router.delete('/session/:token', (req, res) => {
     const { token } = req.params
-    AuthSessions.instance.delete(token)
-    res.status(200).json({ message: 'Session deleted' })
+    TokenBlacklist.instance.revoke(token)
+    res.status(200).json({ message: 'Session revoked' })
   })
 
   router.post('/user/', (req, res) => {

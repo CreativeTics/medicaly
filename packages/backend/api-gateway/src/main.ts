@@ -11,7 +11,8 @@ import {
   AuthRoutes,
   publicAuthRoutes,
 } from './modules/auth/infrastructure/rest/routes'
-import { AuthSessions } from './shared/infrastructure/databases/util/auth-sessions'
+import { JwtService } from './shared/infrastructure/services/jwt'
+import { TokenBlacklist } from './shared/infrastructure/databases/util/auth-sessions'
 import { PatientRoutes } from './modules/patients/infrastructure/rest/routes'
 
 import { ReportsRoutes } from './modules/reports/infrastructure/rest/routes'
@@ -43,13 +44,13 @@ app.use(
 
       return proxyReqOpts
     },
-  }),
+  }) as any,
 )
 
 app.use(
   '/api/v1/files',
   validateAuth,
-  httpProxy(process.env.CERTIFICATES_URL || 'http://certificates:3002'),
+  httpProxy(process.env.CERTIFICATES_URL || 'http://certificates:3002') as any,
 )
 app.use('/api/v1/auth', publicAuthRoutes())
 app.use('/api/v1/auth', validateAuth, AuthRoutes())
@@ -60,13 +61,23 @@ app.listen(process.env.PORT || 4000, () => {
   console.log('API Gateway listening on port 4000')
 })
 
-function validateAuth(req: Request, res: Response, next: NextFunction) {
+async function validateAuth(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization || req.query.h?.toString()
-  console.log('token', token)
 
-  if (!AuthSessions.instance.validate(token)) {
+  if (!token) {
     res.status(401).json({ message: 'Unauthorized' })
     return
   }
-  next()
+
+  if (TokenBlacklist.instance.isRevoked(token)) {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
+
+  try {
+    await JwtService.verify(token)
+    next()
+  } catch {
+    res.status(401).json({ message: 'Unauthorized' })
+  }
 }
