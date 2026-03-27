@@ -18,7 +18,7 @@ export async function getList() {
       id: doc.id,
       name: doc.name,
       code: doc.code,
-      isForeign: doc.isForeign,
+      isForeign: doc.isForeign ? 'SI' : 'NO',
       updatedAt: formatDate(doc.updatedAt, true),
     }
   })
