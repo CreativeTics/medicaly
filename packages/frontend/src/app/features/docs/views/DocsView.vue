@@ -23,6 +23,13 @@ const htmlContent = computed(() => {
   min-height: 100vh;
 }
 
+@media (max-width: 768px) {
+  .docs-container {
+    max-width: 100%;
+    padding: 1rem 1rem 2rem;
+  }
+}
+
 .docs-content {
   color: #1e293b;
   font-size: 15px;
