@@ -95,7 +95,9 @@ services:
       - 3001:3001
 
   front:
-    build: ../../packages/frontend
+    build:
+      context: ../../
+      dockerfile: packages/frontend/Dockerfile
     restart: unless-stopped
     # ports:
     #   - 80:80
