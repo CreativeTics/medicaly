@@ -5,6 +5,7 @@ import { billingRoutes } from '@features/billing'
 import { cie10Routes } from '@features/cie10'
 import { citiesRoutes } from '@features/cities'
 import { contractsRoutes } from '@features/contracts'
+import { docsRoutes } from '@features/docs'
 import { countriesRoutes } from '@features/countries'
 import { departmentsRoutes } from '@features/departments'
 import { employeesRoutes } from '@features/employees'
@@ -59,4 +60,5 @@ export const routes: RouteRecordRaw[] = [
   ...patientHistoryRoutes,
   ...reportsRoutes,
   ...billingRoutes,
+  ...docsRoutes,
 ]

@@ -9,6 +9,7 @@ import {
   Copy01Icon,
   PlusIcon,
   Code01Icon,
+  BookOpen01Icon,
 } from '@/app/components/basic/icons'
 import Popper from 'vue3-popper'
 import { deepClone } from '@/app/core/util/objects'
@@ -91,6 +92,10 @@ const changeMode = () => {
 
   textSchema.value = JSON.stringify(formSchema, null, 2)
   codeMode.value = true
+}
+
+const openDocs = () => {
+  window.open('/docs/dynamic-forms', '_blank')
 }
 
 const validateSchema = () => {
@@ -216,6 +221,19 @@ const onDrop = (evt: any, newGroupIndex: number, newFieldIndex: number) => {
             @click="changeMode"
           >
             <Code01Icon class="h-6 w-6 mx-2 cursor-pointer text-gray-600" />
+          </div>
+        </Popper>
+
+        <Popper
+          arrow
+          offsetDistance="12"
+          content="Manual de Formularios"
+          :hover="true"
+          placement="top"
+          class="tooltip"
+        >
+          <div class="bg-gray-50 rounded-md py-2" @click="openDocs">
+            <BookOpen01Icon class="h-6 w-6 mx-2 cursor-pointer text-blue-600" />
           </div>
         </Popper>
 

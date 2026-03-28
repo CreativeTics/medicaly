@@ -1,5 +1,6 @@
 import Home from '@/app/layouts/Home.vue'
 import Login from '@/app/layouts/Login.vue'
+import Public from '@/app/layouts/Public.vue'
 import { App } from 'vue'
 
 import {
@@ -34,6 +35,7 @@ import SubsidiaryServiceTypes from '../app/features/subsidiaries/components/Serv
 export function registerGlobalComponents(app: App) {
   app.component('LoginLayout', Login)
   app.component('HomeLayout', Home)
+  app.component('PublicLayout', Public)
   app.component('Home03Icon', Home03Icon)
   app.component('Tool02Icon', Tool02Icon)
   app.component('Users01Icon', Users01Icon)

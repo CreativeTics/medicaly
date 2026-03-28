@@ -11,6 +11,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
       '@components': path.resolve(__dirname, 'src/app/components'),
       '@features': path.resolve(__dirname, 'src/app/features'),
+      '@docs': path.resolve(__dirname, '../../docs'),
       './runtimeConfig': './runtimeConfig.browser',
     },
   },

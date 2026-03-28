@@ -8,6 +8,7 @@ import { create, getEntity, edit } from '../services'
 import DynamicFormWithOutTabs from '@features/dynamic-form/component/DynamicFormWithOutTabs.vue'
 import XIcon from '@components/basic/icons/XIcon.vue'
 import FileSearch01Icon from '@components/basic/icons/FileSearch01Icon.vue'
+import BookOpen01Icon from '@components/basic/icons/BookOpen01Icon.vue'
 import Popper from 'vue3-popper'
 
 const notifications = useNotificationsStore()
@@ -228,6 +229,11 @@ const back = () => {
   router.push({ name: `${modulePath}.list` })
 }
 
+const openDocs = () => {
+  const resolved = router.resolve({ name: 'docs.dynamic-forms' })
+  window.open(resolved.href, '_blank')
+}
+
 onBeforeMount(async () => {
   loading.value = true
 
@@ -253,18 +259,32 @@ onBeforeMount(async () => {
           {{ route.params.id == undefined ? 'Crear' : 'Editar' }}
           {{ moduleName }}
         </p>
-        <Popper
-          arrow
-          offsetDistance="12"
-          content="Previsualizar Formulario"
-          :hover="true"
-          placement="left"
-          class="tooltip"
-        >
-          <div @click="preview">
-            <FileSearch01Icon class="w-6 h-6 cursor-pointer" />
-          </div>
-        </Popper>
+        <div class="flex items-center gap-3">
+          <Popper
+            arrow
+            offsetDistance="12"
+            content="Manual de Formularios"
+            :hover="true"
+            placement="left"
+            class="tooltip"
+          >
+            <div @click="openDocs">
+              <BookOpen01Icon class="w-6 h-6 cursor-pointer text-blue-600 hover:text-blue-800" />
+            </div>
+          </Popper>
+          <Popper
+            arrow
+            offsetDistance="12"
+            content="Previsualizar Formulario"
+            :hover="true"
+            placement="left"
+            class="tooltip"
+          >
+            <div @click="preview">
+              <FileSearch01Icon class="w-6 h-6 cursor-pointer" />
+            </div>
+          </Popper>
+        </div>
       </div>
     </div>
     <DynamicForm
