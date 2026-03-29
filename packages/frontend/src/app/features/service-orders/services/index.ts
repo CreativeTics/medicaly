@@ -187,78 +187,93 @@ export async function create(entity: any): Promise<{
 
   // crear service order for each patient
 
-  entity.patients.forEach(async (patient: any) => {
-    const servicesFromAttachOrder = await getServicesFromAttachOrder(
-      entity.services
-    )
+  const errors: string[] = []
 
-    if (servicesFromAttachOrder.length === 0) {
-      return {
-        isOk: false,
-        errors: ['No se encontraron servicios en la orden'],
+  for (const patient of entity.patients) {
+    try {
+      const servicesFromAttachOrder = await getServicesFromAttachOrder(
+        entity.services
+      )
+
+      if (servicesFromAttachOrder.length === 0) {
+        errors.push('No se encontraron servicios en la orden')
+        continue
       }
+
+      const patientEntity = {
+        doctype: 'patients',
+        id: patient.id ?? '',
+        documentType: patient.doctype,
+        documentNumber: patient.document,
+        fullName: `${patient.name.toUpperCase().trim()} ${patient.lastName
+          .toUpperCase()
+          .trim()}`,
+        name: patient.name.toUpperCase().trim().split(' ')[0],
+        secondName: patient.name.toUpperCase().trim().split(' ')?.[1] ?? '',
+        lastName: patient.lastName.toUpperCase().trim().split(' ')[0],
+        secondLastName:
+          patient.lastName.toUpperCase().trim().split(' ')[1] ?? '',
+      }
+
+      if (!patient.isOld) {
+        const response = await pouch.use(DB.MEDICAL).create(patientEntity)
+
+        console.log('create patient', response)
+
+        patientEntity.id = response?.id ?? ''
+      }
+      const user = useAuthStore().user
+
+      const contract = await pouch.use(DB.GENERAL).get(entity.contract)
+      const medicalExamType = await pouch
+        .use(DB.GENERAL)
+        .get(entity.medicalExamType)
+
+      const serviceOrder = {
+        doctype,
+        code: 'Por generar',
+        status: OrderStatus.pending,
+        contract: entity.contract,
+        contractName: contract.name,
+        services: servicesFromAttachOrder,
+        medicalExamType: entity.medicalExamType,
+        medicalExamTypeName: `${medicalExamType.name}:${medicalExamType.emphasis}`,
+        contractCostCenter: entity.contractCostCenter,
+        contractSubsidiary: entity.contractSubsidiary,
+        subsidiary: entity.subsidiary,
+        position: patient.position,
+        observation: patient.observation,
+        patientId: patientEntity.id,
+        patientName: `${patientEntity.documentNumber} - ${patientEntity.fullName}`,
+        patientDocumentNumber: patientEntity.documentNumber,
+        patientIsNew: !patient.isOld,
+        createdBy: user?.id ?? '',
+        orderCycle: [
+          {
+            type: OrderCycleTypes.created,
+            user: user?.id ?? '',
+            username: user?.username ?? '',
+            employee,
+            status: OrderStatus.pending,
+            at: new Date().toISOString(),
+          },
+        ],
+      }
+      await pouch.use(DB.GENERAL).create(serviceOrder)
+    } catch (error: any) {
+      console.error('Error creando orden para paciente:', error)
+      errors.push(
+        `Error al crear orden para ${patient.name} ${patient.lastName}: ${error.message}`
+      )
     }
+  }
 
-    const patientEntity = {
-      doctype: 'patients',
-      id: patient.id ?? '',
-      documentType: patient.doctype,
-      documentNumber: patient.document,
-      fullName: `${patient.name.toUpperCase().trim()} ${patient.lastName
-        .toUpperCase()
-        .trim()}`,
-      name: patient.name.toUpperCase().trim().split(' ')[0],
-      secondName: patient.name.toUpperCase().trim().split(' ')?.[1] ?? '',
-      lastName: patient.lastName.toUpperCase().trim().split(' ')[0],
-      secondLastName: patient.lastName.toUpperCase().trim().split(' ')[1] ?? '',
+  if (errors.length > 0) {
+    return {
+      isOk: false,
+      errors,
     }
-
-    if (!patient.isOld) {
-      const response = await pouch.use(DB.MEDICAL).create(patientEntity)
-
-      console.log('create patient', response)
-
-      patientEntity.id = response?.id ?? ''
-    }
-    const user = useAuthStore().user
-
-    const contract = await pouch.use(DB.GENERAL).get(entity.contract)
-    const medicalExamType = await pouch
-      .use(DB.GENERAL)
-      .get(entity.medicalExamType)
-
-    const serviceOrder = {
-      doctype,
-      code: 'Por generar',
-      status: OrderStatus.pending,
-      contract: entity.contract,
-      contractName: contract.name,
-      services: servicesFromAttachOrder,
-      medicalExamType: entity.medicalExamType,
-      medicalExamTypeName: `${medicalExamType.name}:${medicalExamType.emphasis}`,
-      contractCostCenter: entity.contractCostCenter,
-      contractSubsidiary: entity.contractSubsidiary,
-      subsidiary: entity.subsidiary,
-      position: patient.position,
-      observation: patient.observation,
-      patientId: patientEntity.id,
-      patientName: `${patientEntity.documentNumber} - ${patientEntity.fullName}`,
-      patientDocumentNumber: patientEntity.documentNumber,
-      patientIsNew: !patient.isOld,
-      createdBy: user?.id ?? '',
-      orderCycle: [
-        {
-          type: OrderCycleTypes.created,
-          user: user?.id ?? '',
-          username: user?.username ?? '',
-          employee,
-          status: OrderStatus.pending,
-          at: new Date().toISOString(),
-        },
-      ],
-    }
-    await pouch.use(DB.GENERAL).create(serviceOrder)
-  })
+  }
 
   return {
     isOk: true,
@@ -299,7 +314,9 @@ async function getServicesFromAttachOrder(services: any[]) {
       exams: serviceFromAttachOrder.exams.map((examCode: string) => {
         const exam = allExams.find((exam) => exam.code === examCode)
         if (!exam) {
-          throw new Error('Examen no encontrado')
+          throw new Error(
+            `Examen con código "${examCode}" no encontrado para el servicio "${serviceFromAttachOrder.name}"`
+          )
         }
         return exam.currentVersionId
       }),
@@ -308,7 +325,9 @@ async function getServicesFromAttachOrder(services: any[]) {
         (examCode: string) => {
           const exam = allExams.find((exam) => exam.code === examCode)
           if (!exam) {
-            throw new Error('Examen no encontrado')
+            throw new Error(
+              `Examen con código "${examCode}" no encontrado para el servicio "${serviceFromAttachOrder.name}"`
+            )
           }
           return exam.currentVersionId
         }

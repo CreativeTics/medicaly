@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import DSimpleModal from '@components/basic/DSimpleModal.vue'
+import { AlertTriangleIcon } from '@components/basic/icons'
 import { computed, onMounted, ref } from 'vue'
-import { getList } from '../services/services'
+import { getList, type ServiceListItem } from '../services/services'
 import { DTextField, DBtn } from '@components/basic'
 import { XIcon, PlusCircleIcon } from '@components/basic/icons'
 
@@ -13,9 +14,9 @@ const props = defineProps<{
 const emits = defineEmits(['close', 'confirm'])
 
 const search = ref('')
-const selectedServices = ref<any[]>([])
+const selectedServices = ref<ServiceListItem[]>([])
 
-const allServices = ref<any[]>([])
+const allServices = ref<ServiceListItem[]>([])
 
 const filteredServices = computed(() => {
   return allServices.value
@@ -28,12 +29,17 @@ const filteredServices = computed(() => {
     )
 })
 
+const hasInvalidSelected = computed(() =>
+  selectedServices.value.some((s) => s.missingExams.length > 0)
+)
+
 const closeModal = () => {
   emits('close')
 }
 
 const confirm = () => {
   if (selectedServices.value.length == 0) return
+  if (hasInvalidSelected.value) return
   emits('confirm', selectedServices.value)
 }
 
@@ -60,12 +66,32 @@ onMounted(async () => {
         >
           <div
             v-for="service in filteredServices"
-            v-key="service.id"
-            class="bg-white hover:bg-gray-100 cursor-pointer rounded-lg shadow-sm p-1 flex items-center"
-            @click="selectedServices.push(service)"
+            :key="service.id"
+            class="rounded-lg shadow-sm p-1 flex items-center"
+            :class="
+              service.missingExams.length > 0
+                ? 'bg-red-50 text-red-700 cursor-not-allowed'
+                : 'bg-white hover:bg-gray-100 cursor-pointer'
+            "
+            @click="
+              service.missingExams.length === 0 &&
+                selectedServices.push(service)
+            "
           >
-            {{ service.code }} - {{ service.name }}
-            <PlusCircleIcon class="w-4 h-4 ml-auto text-gray-500" />
+            <div class="flex-1">
+              <span>{{ service.code }} - {{ service.name }}</span>
+              <p
+                v-if="service.missingExams.length > 0"
+                class="text-xs text-red-500 flex items-center gap-1"
+              >
+                <AlertTriangleIcon class="w-3 h-3" />
+                Exámenes no encontrados: {{ service.missingExams.join(', ') }}
+              </p>
+            </div>
+            <PlusCircleIcon
+              v-if="service.missingExams.length === 0"
+              class="w-4 h-4 ml-auto text-gray-500"
+            />
           </div>
         </div>
 
@@ -74,7 +100,7 @@ onMounted(async () => {
         <div class="w-full flex flex-col items-stretch gap-2 mb-4">
           <div
             v-for="service in selectedServices"
-            v-key="service.id"
+            :key="service.id"
             class="bg-white hover:bg-gray-100 cursor-pointer rounded-lg shadow-sm p-1 flex items-center text-green-700"
             @click="
               selectedServices = selectedServices.filter(
