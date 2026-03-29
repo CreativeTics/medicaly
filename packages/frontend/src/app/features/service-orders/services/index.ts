@@ -122,8 +122,8 @@ export async function getList(
       ],
       where,
       sort: [{ createdAt: 'desc' }],
-      limit: hasTextSearch ? undefined : perPage,
-      skip: hasTextSearch ? undefined : (page - 1) * perPage,
+      limit: hasTextSearch ? 0 : perPage,
+      skip: hasTextSearch ? 0 : (page - 1) * perPage,
     },
     undefined,
     countView

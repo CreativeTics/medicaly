@@ -24,12 +24,15 @@ export async function getData<T>(
     })
   }
 
+  // limit: 0 means no limit (fetch all), undefined defaults to 1000 as a safety net
+  const limit = query.limit === 0 ? undefined : (query.limit ?? 1000)
+
   const docs: any = await db.find({
     use_index: index?.name,
     fields: query.fields,
     selector: { doctype: tableName, ...query.where },
     sort: query.sort,
-    limit: query.limit ?? 1000,
+    limit,
     skip: query.skip,
   })
 

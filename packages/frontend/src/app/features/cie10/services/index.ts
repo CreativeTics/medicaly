@@ -30,8 +30,8 @@ export async function getList(
       entity: `${DB.MEDICAL}:${doctype}`,
       fields: ['id', 'code', 'name', 'parentCode'],
       sort: [{ code: 'asc' }],
-      limit: hasTextSearch ? undefined : perPage,
-      skip: hasTextSearch ? undefined : (page - 1) * perPage,
+      limit: hasTextSearch ? 0 : perPage,
+      skip: hasTextSearch ? 0 : (page - 1) * perPage,
     },
     undefined,
     { view: 'counts/by_doctype', key: doctype }
