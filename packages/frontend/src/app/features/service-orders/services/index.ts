@@ -273,19 +273,21 @@ async function getServicesFromAttachOrder(services: any[]) {
       ...serviceFromAttachOrder.exams,
       ...serviceFromAttachOrder.visibleExams,
     ]
+
+    // Query exam headers by code to get their currentVersionId
     const allExams = await getData<
       {
         id: string
         code: string
+        currentVersionId: string
       }[]
     >({
       entity: `${DB.MEDICAL}:exams`,
-      fields: ['id', 'code'],
+      fields: ['id', 'code', 'currentVersionId'],
       where: {
         code: {
           $in: usedExams,
         },
-        isLastVersion: true,
       },
     })
 
@@ -299,7 +301,7 @@ async function getServicesFromAttachOrder(services: any[]) {
         if (!exam) {
           throw new Error('Examen no encontrado')
         }
-        return exam.id
+        return exam.currentVersionId
       }),
       showForContract: serviceFromAttachOrder.showForContract,
       visibleExams: serviceFromAttachOrder.visibleExams.map(
@@ -308,7 +310,7 @@ async function getServicesFromAttachOrder(services: any[]) {
           if (!exam) {
             throw new Error('Examen no encontrado')
           }
-          return exam.id
+          return exam.currentVersionId
         }
       ),
       examTypeName: serviceFromAttachOrder.examTypeName,

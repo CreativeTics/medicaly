@@ -30,9 +30,27 @@ export async function getData<T>(
     selector: { doctype: tableName, ...query.where },
     sort: query.sort,
     limit: query.limit ?? 1000,
+    skip: query.skip,
   })
 
   return docs as T
+}
+
+export async function getDataPaginated<T>(
+  query: TableDataQuery,
+  index?: getDataIndex
+): Promise<{ rows: T; total: number }> {
+  query.where = query.where ?? {}
+  const [dbName, tableName] = query.entity.split(':')
+  const db = pouch.use(dbName as DB)
+  const selector = { doctype: tableName, ...query.where }
+
+  const [rows, total] = await Promise.all([
+    getData<T>(query, index),
+    db.count(selector),
+  ])
+
+  return { rows, total }
 }
 
 export async function getSelectData<T>(
@@ -67,30 +85,6 @@ export async function getSelectData<T>(
   }
 
   let data = (await getData<T>(localQuery)) as T[]
-
-  if (localQuery.entity === 'medical:exams') {
-    const uniques = data.reduce((acc: Map<string, any>, curr: any) => {
-      if (acc.has(curr.code)) {
-        const prev = acc.get(curr.code).version
-        if (prev < curr.version) {
-          acc.set(curr.code, curr)
-        }
-        return acc
-      }
-      acc.set(curr.code, curr)
-      return acc
-    }, new Map<string, any>())
-
-    data = Array.from(uniques).map(([, doc]) => {
-      return {
-        id: doc.id,
-        name: doc.name,
-        code: doc.code,
-        version: doc.version,
-        updatedAt: doc.updatedAt,
-      }
-    }) as T[]
-  }
 
   return applyModifiers(data, query) as T
 }
@@ -139,6 +133,7 @@ export interface TableDataQuery {
     concat?: string[]
   }
   limit?: number
+  skip?: number
 }
 
 export interface SelectOption {

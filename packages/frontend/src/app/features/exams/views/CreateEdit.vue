@@ -185,7 +185,7 @@ const onSubmit = async (data: any) => {
       })
     }
   } else {
-    if (await edit(data)) {
+    if (await edit(data, route.params.id as string)) {
       notifications.addNotification({
         type: 'success',
         title: `${moduleName} actualizado`,

@@ -9,7 +9,6 @@ import {
   Copy01Icon,
   PlusIcon,
   Code01Icon,
-  BookOpen01Icon,
 } from '@/app/components/basic/icons'
 import Popper from 'vue3-popper'
 import { deepClone } from '@/app/core/util/objects'
@@ -28,14 +27,20 @@ const props = withDefaults(
     label: '',
     required: false,
     error: '',
-  }
+  },
 )
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void
 }>()
 
 const formSchema = reactive<Tab>({
-  groups: [],
+  groups: [
+    {
+      name: 'Titulo',
+      description: 'Descripción',
+      fields: [],
+    },
+  ],
 })
 
 const codeMode = ref(false)
@@ -47,21 +52,21 @@ watch(
   () => {
     updateModel(JSON.stringify(formSchema, null, 2))
   },
-  { deep: true }
+  { deep: true },
 )
 
 watch(
   () => props.modelValue,
   () => {
     loadModel(props.modelValue)
-  }
+  },
 )
 
 watch(
   () => textSchema.value,
   () => {
     loadModel(textSchema.value)
-  }
+  },
 )
 
 const updateModel = (value: string) => {
@@ -70,6 +75,8 @@ const updateModel = (value: string) => {
 
 const errorMessage = ref('')
 const loadModel = (textSchema: string) => {
+  if (!textSchema) return
+
   try {
     formSchema.groups = JSON.parse(textSchema).groups
     errorMessage.value = ''
@@ -92,10 +99,6 @@ const changeMode = () => {
 
   textSchema.value = JSON.stringify(formSchema, null, 2)
   codeMode.value = true
-}
-
-const openDocs = () => {
-  window.open('/docs/dynamic-forms', '_blank')
 }
 
 const validateSchema = () => {
@@ -166,7 +169,7 @@ const addField = (groupIndex: number) => {
 const startDrag = (
   evt: any,
   originGroupIndex: number,
-  originFieldIndex: number
+  originFieldIndex: number,
 ) => {
   evt.dataTransfer.dropEffect = 'move'
   evt.dataTransfer.effectAllowed = 'move'
@@ -194,7 +197,7 @@ const onDrop = (evt: any, newGroupIndex: number, newFieldIndex: number) => {
     formSchema.groups[newGroupIndex].fields.splice(
       newFieldIndex,
       0,
-      draggedField[0]
+      draggedField[0],
     )
   }
 }
@@ -221,19 +224,6 @@ const onDrop = (evt: any, newGroupIndex: number, newFieldIndex: number) => {
             @click="changeMode"
           >
             <Code01Icon class="h-6 w-6 mx-2 cursor-pointer text-gray-600" />
-          </div>
-        </Popper>
-
-        <Popper
-          arrow
-          offsetDistance="12"
-          content="Manual de Formularios"
-          :hover="true"
-          placement="top"
-          class="tooltip"
-        >
-          <div class="bg-gray-50 rounded-md py-2" @click="openDocs">
-            <BookOpen01Icon class="h-6 w-6 mx-2 cursor-pointer text-blue-600" />
           </div>
         </Popper>
 

@@ -133,6 +133,15 @@ export class PouchService {
     return result?.docs.map((doc) => this.mapCommonFields(doc))
   }
 
+  public async count(selector: PouchDB.Find.Selector): Promise<number> {
+    const result = await this.db?.find({
+      selector: { ...selector, isDeleted: false },
+      fields: ['_id'],
+      limit: 999999,
+    })
+    return result?.docs.length ?? 0
+  }
+
   public destroy() {
     this.db?.destroy()
   }

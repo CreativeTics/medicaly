@@ -24,6 +24,8 @@ const props = withDefaults(
     enableSelectRows?: boolean
     selectRowsProp?: string
     heightTable?: string
+    serverSide?: boolean
+    totalRows?: number
   }>(),
   {
     rows: () => [],
@@ -33,8 +35,14 @@ const props = withDefaults(
     enableSelectRows: false,
     selectRowsProp: 'id',
     heightTable: '',
+    serverSide: false,
+    totalRows: 0,
   }
 )
+
+const emit = defineEmits<{
+  'page-change': [page: number, perPage: number]
+}>()
 
 const searchText = ref('')
 
@@ -43,11 +51,13 @@ const {
   updateRows,
   currentPage,
   totalPages,
-  nextPage,
-  prevPage,
-  goToFirsPage,
-  goToLastPage,
+  nextPage: paginationNextPage,
+  prevPage: paginationPrevPage,
+  goToFirsPage: paginationGoToFirst,
+  goToLastPage: paginationGoToLast,
   search,
+  setServerSide,
+  setServerPage,
 } = usePagination<any>(props.rows)
 
 const {
@@ -61,15 +71,62 @@ const {
 
 onMounted(() => {
   setSelectProp(props.selectRowsProp)
+  if (props.serverSide) {
+    setServerSide(true)
+  }
 })
 
+// In server-side mode, update totalPages when totalRows changes
 watch(
-  () => props.rows.length,
+  () => props.totalRows,
+  (total) => {
+    if (props.serverSide) {
+      const pages = Math.max(1, Math.ceil(total / props.perPage))
+      setServerPage(currentPage.value, pages, props.rows)
+    }
+  }
+)
+
+watch(
+  () => props.rows,
   () => {
-    updateRows(props.rows)
+    if (props.serverSide) {
+      const pages = Math.max(1, Math.ceil(props.totalRows / props.perPage))
+      setServerPage(currentPage.value, pages, props.rows)
+    } else {
+      updateRows(props.rows)
+    }
     setRows(props.rows)
   }
 )
+
+function handleNextPage() {
+  paginationNextPage()
+  if (props.serverSide) {
+    emit('page-change', currentPage.value, props.perPage)
+  }
+}
+
+function handlePrevPage() {
+  paginationPrevPage()
+  if (props.serverSide) {
+    emit('page-change', currentPage.value, props.perPage)
+  }
+}
+
+function handleGoToFirst() {
+  paginationGoToFirst()
+  if (props.serverSide) {
+    emit('page-change', currentPage.value, props.perPage)
+  }
+}
+
+function handleGoToLast() {
+  paginationGoToLast()
+  if (props.serverSide) {
+    emit('page-change', currentPage.value, props.perPage)
+  }
+}
 
 defineExpose({
   updateRows,
@@ -178,21 +235,21 @@ defineExpose({
                   <span> Pag. {{ currentPage }} de {{ totalPages }} </span>
                   <div class="flex">
                     <ChevronLeftDoubleIcon
-                      @click="goToFirsPage"
+                      @click="handleGoToFirst"
                       :class="[
                         currentPage == 1 ? 'text-gray-300' : 'text-gray-600',
                         'cursor-pointer h-7 w-7',
                       ]"
                     />
                     <ChevronLeftIcon
-                      @click="prevPage"
+                      @click="handlePrevPage"
                       :class="[
                         currentPage == 1 ? 'text-gray-300' : 'text-gray-600',
                         'cursor-pointer h-7 w-7',
                       ]"
                     />
                     <ChevronRightIcon
-                      @click="nextPage"
+                      @click="handleNextPage"
                       :class="[
                         currentPage == totalPages
                           ? 'text-gray-300'
@@ -201,7 +258,7 @@ defineExpose({
                       ]"
                     />
                     <ChevronRightDoubleIcon
-                      @click="goToLastPage"
+                      @click="handleGoToLast"
                       :class="[
                         currentPage == totalPages
                           ? 'text-gray-300'
