@@ -133,9 +133,34 @@ export class PouchService {
     return result?.docs.map((doc) => this.mapCommonFields(doc))
   }
 
-  public async count(selector: PouchDB.Find.Selector): Promise<number> {
+  /**
+   * Count documents using a CouchDB MapReduce view with _count reduce.
+   * Falls back to find()-based count if no view/key is provided.
+   *
+   * @param viewOrSelector - Either a view query object or a Mango selector (fallback).
+   *   View query: { view: "counts/by_doctype", key: "exams" } or
+   *               { view: "counts/by_doctype_type", key: ["exams", "EXAM"] }
+   */
+  public async count(
+    viewOrSelector:
+      | PouchDB.Find.Selector
+      | { view: string; key: string | string[] },
+  ): Promise<number> {
+    // MapReduce view path: fast _count reduce
+    if (typeof viewOrSelector === 'object' && 'view' in viewOrSelector) {
+      const { view, key } = viewOrSelector
+      const result = await (this.db as any).query(view, {
+        reduce: true,
+        group: true,
+        key,
+      })
+      if (result.rows.length === 0) return 0
+      return result.rows[0].value
+    }
+
+    // Fallback: Mango find-based count (for complex selectors)
     const result = await this.db?.find({
-      selector: { ...selector, isDeleted: false },
+      selector: { ...viewOrSelector, isDeleted: false },
       fields: ['_id'],
       limit: 999999,
     })

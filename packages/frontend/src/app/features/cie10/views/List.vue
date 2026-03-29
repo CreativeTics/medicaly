@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, defineAsyncComponent } from 'vue'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { getList } from '../services'
 import DTextField from '@components/basic/DTextField.vue'
 import Popper from 'vue3-popper'
 import { Edit03Icon } from '@components/basic/icons'
-import { DBtn, DLoading } from '@components/basic'
+import { DBtn } from '@components/basic'
 
 const PaginatedTable = defineAsyncComponent(
   () => import('@components/PaginatedTable.vue')
@@ -33,35 +33,45 @@ const columns = [
   },
 ]
 
-const data = ref<any>([])
+const data = ref<any[]>([])
+const totalRows = ref(0)
+const currentPage = ref(1)
+const perPage = 10
 const searchText = ref('')
 
-const loading = ref(false)
+const loadData = async () => {
+  const result = await getList({
+    searchText: searchText.value || undefined,
+    page: currentPage.value,
+    perPage,
+  })
+  data.value = result.rows
+  totalRows.value = result.total
+}
 
-const search = async () => {
-  loading.value = true
-  data.value = await getList(searchText.value)
-  loading.value = false
+const onSearch = async () => {
+  currentPage.value = 1
+  await loadData()
+}
+
+const onPageChange = async (page: number) => {
+  currentPage.value = page
+  await loadData()
 }
 
 const goToCreate = () => {
-  console.log('Create')
   router.push({ name: `${modulePath}.create` })
 }
 const goToEdit = (id: string) => {
-  console.log('Edit', id)
   router.push({ name: `${modulePath}.edit`, params: { id } })
 }
 
-onBeforeMount(async () => {
-  await search()
-  console.log('Mounted', data.value)
+onMounted(async () => {
+  await loadData()
 })
 </script>
 
 <template>
-  <DLoading v-show="loading" message="Cargando datos..." />
-
   <div class="h-full px-5 overflow-auto scroll">
     <div class="bg-gray-50 pb-4">
       <div class="leading-4 pt-responsive">
@@ -74,7 +84,11 @@ onBeforeMount(async () => {
         <PaginatedTable
           :columns="columns"
           :rows="data"
+          :server-side="true"
+          :total-rows="totalRows"
+          :per-page="perPage"
           style="height: calc(100vh - 200px)"
+          @page-change="onPageChange"
         >
           <template #header>
             <div class="py-3 flex items-end sm:mb-0 sm:w-3/4 md:w-3/4">
@@ -84,10 +98,10 @@ onBeforeMount(async () => {
                 :icon="'SearchLgIcon'"
                 class="mr-2 w-full"
                 v-model="searchText"
-                @keyup.enter="search"
+                @keyup.enter="onSearch"
               />
 
-              <DBtn class="h-10 w-20" @click.prevent="search">Buscar</DBtn>
+              <DBtn class="h-10 w-20" @click.prevent="onSearch">Buscar</DBtn>
             </div>
             <div class="py-3">
               <DBtn @click.prevent="goToCreate">Crear nuevo</DBtn>

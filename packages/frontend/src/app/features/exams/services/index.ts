@@ -23,14 +23,23 @@ export async function getList(filters?: ExamListFilters): Promise<{ rows: any[];
     where.type = filters.type
   }
 
-  const { rows: data, total: rawTotal } = await getDataPaginated<any[]>({
-    entity: `${DB.MEDICAL}:${examDoctype}`,
-    fields: ['id', 'type', 'code', 'name', 'currentVersion', 'updatedAt'],
-    sort: [{ code: 'asc' }],
-    where,
-    limit: filters?.searchText ? undefined : perPage,
-    skip: filters?.searchText ? undefined : (page - 1) * perPage,
-  })
+  // Use compound view when filtering by type, simple doctype view otherwise
+  const countView = filters?.type
+    ? { view: 'counts/by_doctype_type', key: [examDoctype, filters.type] }
+    : { view: 'counts/by_doctype', key: examDoctype }
+
+  const { rows: data, total: rawTotal } = await getDataPaginated<any[]>(
+    {
+      entity: `${DB.MEDICAL}:${examDoctype}`,
+      fields: ['id', 'type', 'code', 'name', 'currentVersion', 'updatedAt'],
+      sort: [{ code: 'asc' }],
+      where,
+      limit: filters?.searchText ? undefined : perPage,
+      skip: filters?.searchText ? undefined : (page - 1) * perPage,
+    },
+    undefined,
+    countView
+  )
 
   let results = data.map((doc: any) => ({
     id: doc.id,

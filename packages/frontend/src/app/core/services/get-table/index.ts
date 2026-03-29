@@ -38,16 +38,19 @@ export async function getData<T>(
 
 export async function getDataPaginated<T>(
   query: TableDataQuery,
-  index?: getDataIndex
+  index?: getDataIndex,
+  countView?: { view: string; key: string | string[] }
 ): Promise<{ rows: T; total: number }> {
   query.where = query.where ?? {}
   const [dbName, tableName] = query.entity.split(':')
   const db = pouch.use(dbName as DB)
-  const selector = { doctype: tableName, ...query.where }
+
+  // Use MapReduce view for count when provided, otherwise fall back to Mango find
+  const countArg = countView ?? { doctype: tableName, ...query.where }
 
   const [rows, total] = await Promise.all([
     getData<T>(query, index),
-    db.count(selector),
+    db.count(countArg),
   ])
 
   return { rows, total }

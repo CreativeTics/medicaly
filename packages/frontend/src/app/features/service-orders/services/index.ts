@@ -97,22 +97,37 @@ export async function getList(
     where['contract'] = filters.contract
   }
 
-  const { rows: data, total: rawTotal } = await getDataPaginated<any[]>({
-    entity: `${DB.GENERAL}:${doctype}`,
-    fields: [
-      'id',
-      'code',
-      'medicalExamTypeName',
-      'patientName',
-      'status',
-      'createdAt',
-      'updatedAt',
-    ],
-    where,
-    sort: [{ createdAt: 'desc' }],
-    limit: hasTextSearch ? undefined : perPage,
-    skip: hasTextSearch ? undefined : (page - 1) * perPage,
-  })
+  // Determine the count view based on filter complexity
+  // Simple contract filter → compound view; no filters → doctype view; complex $in → Mango fallback
+  const hasComplexWhere = Object.values(where).some(
+    (v: any) => typeof v === 'object' && ('$in' in v || '$or' in v)
+  )
+  const countView = hasComplexWhere
+    ? undefined
+    : filters.contract
+      ? { view: 'counts/by_doctype_contract', key: [doctype, filters.contract] }
+      : { view: 'counts/by_doctype', key: doctype }
+
+  const { rows: data, total: rawTotal } = await getDataPaginated<any[]>(
+    {
+      entity: `${DB.GENERAL}:${doctype}`,
+      fields: [
+        'id',
+        'code',
+        'medicalExamTypeName',
+        'patientName',
+        'status',
+        'createdAt',
+        'updatedAt',
+      ],
+      where,
+      sort: [{ createdAt: 'desc' }],
+      limit: hasTextSearch ? undefined : perPage,
+      skip: hasTextSearch ? undefined : (page - 1) * perPage,
+    },
+    undefined,
+    countView
+  )
 
   let results = data.map((doc: any) => ({
     id: doc.id,

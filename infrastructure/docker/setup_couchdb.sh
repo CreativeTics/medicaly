@@ -55,6 +55,38 @@ curl -X POST $COUCHDB_URL/medical/_index -H "Content-Type:application/json" -d '
 
 echo "Indices creados"
 
+echo "Creando design documents para MapReduce views (conteos)"
+
+# Design document for general database - count views
+curl -X PUT $COUCHDB_URL/general/_design/counts -H "Content-Type:application/json" -d '{
+  "views": {
+    "by_doctype": {
+      "map": "function(doc) { if (!doc.isDeleted && doc.doctype) { emit(doc.doctype, null); } }",
+      "reduce": "_count"
+    },
+    "by_doctype_contract": {
+      "map": "function(doc) { if (!doc.isDeleted && doc.doctype && doc.contract) { emit([doc.doctype, doc.contract], null); } }",
+      "reduce": "_count"
+    }
+  }
+}'
+
+# Design document for medical database - count views
+curl -X PUT $COUCHDB_URL/medical/_design/counts -H "Content-Type:application/json" -d '{
+  "views": {
+    "by_doctype": {
+      "map": "function(doc) { if (!doc.isDeleted && doc.doctype) { emit(doc.doctype, null); } }",
+      "reduce": "_count"
+    },
+    "by_doctype_type": {
+      "map": "function(doc) { if (!doc.isDeleted && doc.doctype && doc.type) { emit([doc.doctype, doc.type], null); } }",
+      "reduce": "_count"
+    }
+  }
+}'
+
+echo "Design documents creados"
+
 echo "Creando datos iniciales"
 
 # crear datos de inicio
