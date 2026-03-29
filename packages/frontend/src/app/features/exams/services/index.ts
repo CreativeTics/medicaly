@@ -1,4 +1,4 @@
-import { getData, getDataPaginated } from '../../../core/services/get-table/'
+import { getDataPaginated } from '../../../core/services/get-table/'
 import { formatDate } from '../../../core/util/dates'
 
 import { PouchService, DB } from '../../../services/pouch'
@@ -34,8 +34,8 @@ export async function getList(filters?: ExamListFilters): Promise<{ rows: any[];
       fields: ['id', 'type', 'code', 'name', 'currentVersion', 'updatedAt'],
       sort: [{ code: 'asc' }],
       where,
-      limit: filters?.searchText ? undefined : perPage,
-      skip: filters?.searchText ? undefined : (page - 1) * perPage,
+      limit: filters?.searchText ? 0 : perPage,
+      skip: filters?.searchText ? 0 : (page - 1) * perPage,
     },
     undefined,
     countView
@@ -152,16 +152,15 @@ export async function edit(entity: any, examId: string): Promise<boolean> {
   return true
 }
 
-export async function getExamTypes(): Promise<{ code: string; name: string }[]> {
-  const data = await getData<any[]>({
-    entity: `${DB.MEDICAL}:exam-types`,
-    fields: ['code', 'name'],
-  })
+// Exam types are fixed seed data — no need to query CouchDB for 3 static records
+const EXAM_TYPES: { code: string; name: string }[] = [
+  { code: 'EXAM', name: 'EXAMEN' },
+  { code: 'PARACLINIC', name: 'PARACLINICO' },
+  { code: 'LABORATORY', name: 'LABORATORIO' },
+]
 
-  return data.map((doc: any) => ({
-    code: doc.code,
-    name: doc.name,
-  }))
+export function getExamTypes(): { code: string; name: string }[] {
+  return EXAM_TYPES
 }
 
 export async function deleteExam(id: string): Promise<boolean> {
