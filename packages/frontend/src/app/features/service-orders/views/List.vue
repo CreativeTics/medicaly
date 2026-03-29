@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { DBtn, DSelectFieldSearch, DTextField } from '@/app/components/basic'
 import { Edit03Icon, SearchMdIcon } from '@components/basic/icons'
-import {
-  defineAsyncComponent,
-  onBeforeUnmount,
-  onMounted,
-  reactive,
-  ref,
-} from 'vue'
+import { defineAsyncComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Popper from 'vue3-popper'
 import { getContracts, getList } from '../services'
@@ -17,12 +11,9 @@ const PaginatedTable = defineAsyncComponent(
 
 import { useAuthStore } from '@/store/auth'
 import OrderStatus from '../components/OrderStatus.vue'
-// import { useAuthStore } from '@/store/auth'
 
 const router = useRouter()
 const modulePath = 'service-orders'
-
-// const user = useAuthStore().user
 
 const actionsColumn = {
   key: 'actions',
@@ -58,15 +49,40 @@ const columns = [
 ]
 
 const contractList = ref<{ id: any; name: any }[]>([])
-const searchOptions = reactive({
-  contract: '',
-  orderCode: '',
-  patient: '',
-})
-const data = ref<any>([])
+const selectedContract = ref('')
+const searchOrderCode = ref('')
+const searchPatient = ref('')
+const data = ref<any[]>([])
+const totalRows = ref(0)
+const currentPage = ref(1)
+const perPage = 10
 
-const search = async () => {
-  data.value = await getList(searchOptions)
+const loadData = async () => {
+  const result = await getList({
+    contract: selectedContract.value || undefined,
+    orderCode: searchOrderCode.value || undefined,
+    patient: searchPatient.value || undefined,
+    page: currentPage.value,
+    perPage,
+  })
+  data.value = result.rows
+  totalRows.value = result.total
+}
+
+const onSearch = async () => {
+  currentPage.value = 1
+  await loadData()
+}
+
+const onContractChange = async (value: string) => {
+  selectedContract.value = value
+  currentPage.value = 1
+  await loadData()
+}
+
+const onPageChange = async (page: number) => {
+  currentPage.value = page
+  await loadData()
 }
 
 const goToCreate = () => {
@@ -81,21 +97,9 @@ const goToEdit = (id: string) => {
   router.push({ name: `${modulePath}.edit`, params: { id } })
 }
 
-let interval: number = 0
-
 onMounted(async () => {
   contractList.value = await getContracts()
-  data.value = await getList(searchOptions)
-
-  interval = setInterval(async () => {
-    data.value = await getList(searchOptions)
-  }, 500)
-})
-
-onBeforeUnmount(() => {
-  data.value = []
-  contractList.value = []
-  if (interval) clearInterval(interval)
+  await loadData()
 })
 </script>
 
@@ -110,16 +114,21 @@ onBeforeUnmount(() => {
         <PaginatedTable
           :columns="[...columns, actionsColumn]"
           :rows="data"
+          :server-side="true"
+          :total-rows="totalRows"
+          :per-page="perPage"
           style="height: calc(100vh - 200px)"
+          @page-change="onPageChange"
         >
           <template #header>
             <div class="py-3 flex items-end sm:mb-0 sm:w-3/4 md:w-3/4">
               <DSelectFieldSearch
                 label="Contrato:"
-                v-model="searchOptions.contract"
+                v-model="selectedContract"
                 :options="contractList"
-                @search="search"
+                placeholder="Todos"
                 class="mr-2 w-full"
+                @change="onContractChange"
               />
 
               <DTextField
@@ -127,18 +136,18 @@ onBeforeUnmount(() => {
                 placeholder="Digite el numero de orden"
                 :icon="'SearchLgIcon'"
                 class="mr-2 w-full"
-                v-model="searchOptions.orderCode"
-                @keyup.enter="search"
+                v-model="searchOrderCode"
+                @keyup.enter="onSearch"
               />
               <DTextField
                 label="Paciente"
                 placeholder="Digite el nombre o documento del paciente"
                 :icon="'SearchLgIcon'"
                 class="mr-2 w-full"
-                v-model="searchOptions.patient"
-                @keyup.enter="search"
+                v-model="searchPatient"
+                @keyup.enter="onSearch"
               />
-              <DBtn class="h-10 w-20" @click.prevent="search">Buscar</DBtn>
+              <DBtn class="h-10 w-20" @click.prevent="onSearch">Buscar</DBtn>
             </div>
             <div class="py-3">
               <DBtn @click.prevent="goToCreate">Crear Ordenes</DBtn>
@@ -212,5 +221,3 @@ onBeforeUnmount(() => {
     </div>
   </div>
 </template>
-
-attendance patient ingress

@@ -1,4 +1,4 @@
-import { getData } from '../../../core/services/get-table/'
+import { getData, getDataPaginated } from '../../../core/services/get-table/'
 
 import { http } from '@/app/core/services/http'
 import { OrderStatus } from '@/app/core/types/order-status'
@@ -45,16 +45,29 @@ export async function getContracts(): Promise<ContractSelectResult[]> {
   })
 }
 
-export async function getList(searchOptions: any) {
-  console.log('getList', searchOptions)
+export interface OrderListFilters {
+  contract?: string
+  orderCode?: string
+  patient?: string
+  page?: number
+  perPage?: number
+}
+
+export async function getList(
+  filters: OrderListFilters
+): Promise<{ rows: any[]; total: number }> {
+  console.log('getList', filters)
 
   const where: any = {}
+  const page = filters.page ?? 1
+  const perPage = filters.perPage ?? 10
+  const hasTextSearch = !!(filters.orderCode || filters.patient)
 
   const user = useAuthStore().user
   if (user && user?.type != 'employee' && user.relations.length > 0) {
     // validate if has active contracts
     if ((await getContracts()).length === 0) {
-      return []
+      return { rows: [], total: 0 }
     }
 
     // get all subsidiaries for the user
@@ -80,19 +93,11 @@ export async function getList(searchOptions: any) {
     }
   }
 
-  if (searchOptions.contract) {
-    where['contract'] = searchOptions.contract
+  if (filters.contract) {
+    where['contract'] = filters.contract
   }
 
-  if (searchOptions.orderCode) {
-    where['code'] = { $regex: `(?i).*${searchOptions.orderCode}.*` }
-  }
-
-  if (searchOptions.patient) {
-    where['patientName'] = { $regex: `(?i).*${searchOptions.patient}.*` }
-  }
-
-  const data = await getData<any[]>({
+  const { rows: data, total: rawTotal } = await getDataPaginated<any[]>({
     entity: `${DB.GENERAL}:${doctype}`,
     fields: [
       'id',
@@ -103,21 +108,42 @@ export async function getList(searchOptions: any) {
       'createdAt',
       'updatedAt',
     ],
-    where: where,
+    where,
     sort: [{ createdAt: 'desc' }],
-    limit: 50,
+    limit: hasTextSearch ? undefined : perPage,
+    skip: hasTextSearch ? undefined : (page - 1) * perPage,
   })
 
-  return data.map((doc: any) => {
-    return {
-      id: doc.id,
-      code: doc.code,
-      type: doc.medicalExamTypeName,
-      patientName: doc.patientName,
-      status: doc.status,
-      updatedAt: formatDate(doc.updatedAt, true),
+  let results = data.map((doc: any) => ({
+    id: doc.id,
+    code: doc.code,
+    type: doc.medicalExamTypeName,
+    patientName: doc.patientName,
+    status: doc.status,
+    updatedAt: formatDate(doc.updatedAt, true),
+  }))
+
+  // Text search is applied client-side on PouchDB results
+  // When searching, we fetch all records (no limit/skip) and filter + paginate here
+  if (hasTextSearch) {
+    if (filters.orderCode) {
+      const term = filters.orderCode.toLowerCase()
+      results = results.filter((row) =>
+        row.code?.toLowerCase().includes(term)
+      )
     }
-  })
+    if (filters.patient) {
+      const term = filters.patient.toLowerCase()
+      results = results.filter((row) =>
+        row.patientName?.toLowerCase().includes(term)
+      )
+    }
+    const total = results.length
+    const start = (page - 1) * perPage
+    return { rows: results.slice(start, start + perPage), total }
+  }
+
+  return { rows: results, total: rawTotal }
 }
 
 export async function getOrder(id: string) {
