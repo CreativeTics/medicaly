@@ -20,12 +20,13 @@ services:
     networks:
       - medicaly-backend
     environment:
+      PORT: 4000
+      JWT_ISSUER: https://auth.on-prem.medicaly.app
       COUCHDB_URL: ${COUCHDB_URL}
       COUCHDB_USERNAME: ${COUCHDB_USERNAME}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       FRONTEND_URL: ${FRONT_URL}
       ENABLE_LOCALHOST: ${ENABLE_LOCALHOST}
-      PORT: 4000
       METABASE_SECRET_KEY: ${MB_EMBEDDING_SECRET_KEY}
       METABASE_SITE_URL: https://app-bi.javapsaludocupacional.com.co
 

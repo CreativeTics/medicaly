@@ -1,3 +1,6 @@
+import { generateKeyPair, exportJWK, SignJWT, jwtVerify } from 'jose'
+import config from '../../../config'
+
 export interface JwtTokenPayload {
   sub: string
   username: string
@@ -12,6 +15,7 @@ export interface JwtTokenPayload {
     contractName: string
     subsidiaries: string[]
   }[]
+  iss?: string
   iat?: number
   exp?: number
 }
@@ -25,8 +29,6 @@ let jwks: { keys: any[] }
 let keysReady: Promise<void> | null = null
 
 async function initKeys(): Promise<void> {
-  const { generateKeyPair, exportJWK } = await import('jose')
-
   const pair = await generateKeyPair('RS256')
   privateKey = pair.privateKey
   publicKey = pair.publicKey
@@ -47,11 +49,14 @@ function ensureKeys(): Promise<void> {
 }
 
 export class JwtService {
-  static async sign(payload: Omit<JwtTokenPayload, 'iat' | 'exp'>): Promise<string> {
+  static async sign(
+    payload: Omit<JwtTokenPayload, 'iss' | 'iat' | 'exp'>,
+  ): Promise<string> {
     await ensureKeys()
-    const { SignJWT } = await import('jose')
+    const { JWT } = config()
     return new SignJWT(payload as Record<string, unknown>)
       .setProtectedHeader({ alg: 'RS256', kid: 'medicaly-auth-1' })
+      .setIssuer(JWT.ISSUER)
       .setIssuedAt()
       .setExpirationTime(TOKEN_EXPIRATION)
       .sign(privateKey)
@@ -59,8 +64,10 @@ export class JwtService {
 
   static async verify(token: string): Promise<JwtTokenPayload> {
     await ensureKeys()
-    const { jwtVerify } = await import('jose')
-    const { payload } = await jwtVerify(token, publicKey)
+    const { JWT } = config()
+    const { payload } = await jwtVerify(token, publicKey, {
+      issuer: JWT.ISSUER,
+    })
     return payload as unknown as JwtTokenPayload
   }
 
