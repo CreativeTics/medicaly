@@ -22,6 +22,7 @@ services:
     environment:
       PORT: 4000
       JWT_ISSUER: https://auth.on-prem.medicaly.app
+      JWT_AUDIENCE: medicaly-app
       COUCHDB_URL: ${COUCHDB_URL}
       COUCHDB_USERNAME: ${COUCHDB_USERNAME}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}

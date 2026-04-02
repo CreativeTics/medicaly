@@ -15,6 +15,7 @@ export interface JwtTokenPayload {
     subsidiaries: string[]
   }[]
   iss?: string
+  aud?: string
   iat?: number
   exp?: number
 }
@@ -50,13 +51,14 @@ function ensureKeys(): Promise<void> {
 }
 
 export class JwtService {
-  static async sign(payload: Omit<JwtTokenPayload, 'iss' | 'iat' | 'exp'>): Promise<string> {
+  static async sign(payload: Omit<JwtTokenPayload, 'iss' | 'aud' | 'iat' | 'exp'>): Promise<string> {
     await ensureKeys()
     const { SignJWT } = await import('jose')
     const { JWT } = config()
     return new SignJWT(payload as Record<string, unknown>)
       .setProtectedHeader({ alg: 'RS256', kid: 'medicaly-auth-1' })
       .setIssuer(JWT.ISSUER)
+      .setAudience(JWT.AUDIENCE)
       .setIssuedAt()
       .setExpirationTime(TOKEN_EXPIRATION)
       .sign(privateKey)
@@ -68,6 +70,7 @@ export class JwtService {
     const { JWT } = config()
     const { payload } = await jwtVerify(token, publicKey, {
       issuer: JWT.ISSUER,
+      audience: JWT.AUDIENCE,
     })
     return payload as unknown as JwtTokenPayload
   }

@@ -6,6 +6,7 @@ interface IConfig {
   }
   JWT: {
     ISSUER: string
+    AUDIENCE: string
   }
   METABASE: {
     URL: string
@@ -21,6 +22,7 @@ export default (): IConfig => ({
   },
   JWT: {
     ISSUER: process.env.JWT_ISSUER || '',
+    AUDIENCE: process.env.JWT_AUDIENCE || 'medicaly-app',
   },
   METABASE: {
     URL: process.env.METABASE_SITE_URL || 'http://localhost:3000',
