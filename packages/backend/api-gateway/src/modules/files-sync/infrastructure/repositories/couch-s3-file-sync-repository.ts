@@ -23,48 +23,73 @@ export class CouchS3FileSyncRepository implements FileSyncRepository {
   }
 
   getUnsyncedFiles = async (limit: number): Promise<FileDocument[]> => {
-    const response = await couchHttp.post('/files/_find', {
-      selector: {
-        docType: 'files',
-        synced: false,
-        isDeleted: false,
-      },
-      limit,
-    })
+    try {
+      const response = await couchHttp.post('/files/_find', {
+        selector: {
+          docType: 'files',
+          synced: false,
+          isDeleted: false,
+        },
+        limit,
+      })
 
-    if (response.status !== 200) {
+      if (response.status !== 200) {
+        return []
+      }
+
+      return response.data.docs || []
+    } catch (error: any) {
+      console.error(
+        '[files-sync] Error fetching unsynced files:',
+        error?.code || error?.message
+      )
       return []
     }
-
-    return response.data.docs || []
   }
 
   getFileDocument = async (docId: string): Promise<FileDocument | null> => {
-    const response = await couchHttp.get(`/files/${docId}`)
+    try {
+      const response = await couchHttp.get(`/files/${docId}`)
 
-    if (response.status !== 200) {
+      if (response.status !== 200) {
+        return null
+      }
+
+      return response.data
+    } catch (error: any) {
+      console.error(
+        `[files-sync] Error fetching file document ${docId}:`,
+        error?.code || error?.message
+      )
       return null
     }
-
-    return response.data
   }
 
   getAttachment = async (
     docId: string,
     attachmentName: string
   ): Promise<Buffer | null> => {
-    const response = await couchHttp.get(
-      `/files/${docId}/${encodeURIComponent(attachmentName)}`,
-      {
-        responseType: 'arraybuffer',
-      }
-    )
+    try {
+      const response = await couchHttp.get(
+        `/files/${docId}/${encodeURIComponent(attachmentName)}`,
+        {
+          responseType: 'arraybuffer',
+          validateStatus: (status) => status < 500,
+        }
+      )
 
-    if (response.status !== 200) {
+      if (response.status !== 200) {
+        return null
+      }
+
+      return Buffer.from(response.data)
+    } catch (error: any) {
+      console.error(
+        `[files-sync] Error fetching attachment ${attachmentName} from ${docId}:`,
+        error?.code || error?.message
+      )
       return null
     }
-
-    return Buffer.from(response.data)
   }
 
   downloadFromS3 = async (
@@ -113,11 +138,19 @@ export class CouchS3FileSyncRepository implements FileSyncRepository {
     doc: FileDocument,
     s3Key: string
   ): Promise<void> => {
-    await couchHttp.put(`/files/${doc._id}`, {
-      ...doc,
-      synced: true,
-      s3Key,
-      updatedAt: new Date().toISOString(),
-    })
+    try {
+      await couchHttp.put(`/files/${doc._id}`, {
+        ...doc,
+        synced: true,
+        s3Key,
+        updatedAt: new Date().toISOString(),
+      })
+    } catch (error: any) {
+      console.error(
+        `[files-sync] Error marking file ${doc._id} as synced:`,
+        error?.code || error?.message
+      )
+      throw error
+    }
   }
 }

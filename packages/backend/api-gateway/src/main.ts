@@ -19,6 +19,16 @@ import { ReportsRoutes } from './modules/reports/infrastructure/rest/routes'
 import { FilesRoutes } from './modules/files-sync/infrastructure/rest/routes'
 import { startFilesSyncJob } from './modules/files-sync/infrastructure/services/files-sync-job'
 
+// Prevent EPIPE / socket errors from crashing the process
+process.on('uncaughtException', (err: NodeJS.ErrnoException) => {
+  if (err.code === 'EPIPE' || err.code === 'ECONNRESET') {
+    console.error(`[process] Ignored ${err.code}:`, err.message)
+    return
+  }
+  console.error('[process] Uncaught exception:', err)
+  process.exit(1)
+})
+
 const app = express()
 
 app.use(
