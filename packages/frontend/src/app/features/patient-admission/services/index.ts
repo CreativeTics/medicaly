@@ -271,7 +271,7 @@ export async function admitPatientOrder(
     patientName: `${patient.documentNumber} - ${patient.name} ${patient.secondName} ${patient.lastName} ${patient.secondLastName}`,
     orderCycle,
     admittedBy: oldOrder.employee ?? employee,
-    admittedAt: new Date().toISOString(),
+    admittedAt: oldOrder.admittedAt ?? new Date().toISOString(),
     informedConsents, // save informed consents
   }
 
