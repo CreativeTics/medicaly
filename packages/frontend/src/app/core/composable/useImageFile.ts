@@ -31,20 +31,22 @@ export function useImageFile(imageName: string = 'image.png') {
     return `data:image/png;base64,${base64}`
   }
 
-  const saveImage = async (): Promise<string> => {
+  const saveImage = async (folder: string = '', namePrefix: string = ''): Promise<string> => {
     if (unsaved.value === false) {
       return lastImageId.value
     }
+    const fileName = namePrefix ? `${namePrefix}_${imageName}` : imageName
     const response = await pouch.use(DB.FILES).create({
-      doctype: 'files',
-      bucket: 'patient-images',
-      createdAt: new Date(),
-      name: imageName,
+      docType: 'files',
+      bucket: 'patients',
+      folder,
+      name: fileName,
+      synced: false,
       _attachments: {
-        [imageName]: {
+        [fileName]: {
           content_type: 'image/png',
           data: imageBase64.value.replace('data:image/png;base64,', ''),
-          name: imageName,
+          name: fileName,
         },
       },
     })

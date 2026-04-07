@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 const pouch = new PouchService()
 
-export function useFileAttachment(bucket: string = 'temp') {
+export function useFileAttachment(bucket: string = 'temp', folder: string = '') {
   const actualFileName = ref<string>('')
   const actualFileType = ref<string>('')
 
@@ -20,9 +20,11 @@ export function useFileAttachment(bucket: string = 'temp') {
     actualFileType.value = contentType
 
     const response = await pouch.use(DB.FILES).create({
-      doctype: 'files',
+      docType: 'files',
       bucket,
+      folder,
       name: fileName,
+      synced: false,
       _attachments: {
         [fileName]: {
           content_type: contentType,

@@ -600,10 +600,12 @@ const onSubmit = async () => {
   loading.value = true
 
   const data = dynamicForm.value?.getAllModel()
+  const patientId = order.value.patientId
+  const orderCode = order.value.code
   const images = {
-    photoId: await photo.saveImage(),
-    signatureId: await signature.saveImage(),
-    fingerprintId: await fingerprint.saveImage(),
+    photoId: await photo.saveImage(`${patientId}/biometric/photos/`, orderCode),
+    signatureId: await signature.saveImage(`${patientId}/biometric/signatures/`, orderCode),
+    fingerprintId: await fingerprint.saveImage(`${patientId}/biometric/fingerprints/`, orderCode),
   }
   const result = await admitPatientOrder(
     route.params.id.toString(),

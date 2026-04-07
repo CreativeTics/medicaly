@@ -19,10 +19,13 @@ export async function getImageFromFileId(fileId: string) {
 
 export async function uploadFile(file: File) {
   const fileId = pouch.use(DB.FILES).create({
-    doctype: 'files',
+    docType: 'files',
+    bucket: '',
+    folder: '',
     name: file.name,
     size: file.size,
     type: file.type,
+    synced: false,
   })
 
   return fileId

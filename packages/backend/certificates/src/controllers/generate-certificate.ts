@@ -84,6 +84,7 @@ export class GenerateCertificateController {
       await this.saveCertificateAttachmentInAnnotation(
         patientData.id,
         annotation._id,
+        orderId,
         {
           data: certificate,
           name: certificateName,
@@ -233,6 +234,7 @@ export class GenerateCertificateController {
   async saveCertificateAttachmentInAnnotation(
     patientId: string,
     annotationId: string,
+    orderId: string,
     certificate: {
       data: Buffer
       name: string
@@ -243,7 +245,7 @@ export class GenerateCertificateController {
     const response = await couchHttp.post(`/files/`, {
       docType: 'files',
       bucket: 'patients',
-      folder: `${patientId}/certificates/`,
+      folder: `${patientId}/medical-attentions/${orderId}/`,
       name: certificate.name,
       _attachments: {
         'certificate.pdf': {

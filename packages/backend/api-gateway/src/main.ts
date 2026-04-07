@@ -16,6 +16,8 @@ import { TokenBlacklist } from './shared/infrastructure/databases/util/auth-sess
 import { PatientRoutes } from './modules/patients/infrastructure/rest/routes'
 
 import { ReportsRoutes } from './modules/reports/infrastructure/rest/routes'
+import { FilesRoutes } from './modules/files-sync/infrastructure/rest/routes'
+import { startFilesSyncJob } from './modules/files-sync/infrastructure/services/files-sync-job'
 
 const app = express()
 
@@ -51,10 +53,13 @@ app.use(
 )
 
 app.use(
-  '/api/v1/files',
+  '/api/v1/files/api',
   validateAuth,
-  httpProxy(process.env.CERTIFICATES_URL || 'http://certificates:3002') as any,
+  httpProxy(process.env.CERTIFICATES_URL || 'http://certificates:3002', {
+    proxyReqPathResolver: (req) => `/api${req.url}`,
+  }) as any,
 )
+app.use('/api/v1/files', validateAuth, FilesRoutes())
 app.get('/.well-known/jwks.json', async (_req, res) => {
   try {
     const jwks = await JwtService.getJwks()
@@ -71,6 +76,7 @@ app.use('/api/v1/reports', validateAuth, ReportsRoutes())
 
 app.listen(process.env.PORT || 4000, () => {
   console.log('API Gateway listening on port 4000')
+  startFilesSyncJob()
 })
 
 async function validateAuth(req: Request, res: Response, next: NextFunction) {
