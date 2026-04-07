@@ -118,7 +118,7 @@ export async function getOrder(id: string) {
       {
         name: 'sort-by-created-at',
         fields: ['createdAt'],
-      }
+      },
     )
 
     if (patientData.length) {
@@ -160,7 +160,7 @@ export interface InformedConsent {
 }
 
 export async function getInformedConsentsForOrder(
-  orderId: string
+  orderId: string,
 ): Promise<InformedConsent[]> {
   const order = await pouch.use(DB.GENERAL).get(orderId)
 
@@ -188,9 +188,9 @@ export async function getInformedConsentsForOrder(
               accepted: false,
             })
           }
-        })
+        }),
       )
-    })
+    }),
   )
 
   return Array.from(informedConsents.values())
@@ -199,7 +199,7 @@ export async function getInformedConsentsForOrder(
 export async function admitPatientOrder(
   orderId: string,
   patient: any,
-  informedConsents: InformedConsent[]
+  informedConsents: InformedConsent[],
 ): Promise<{
   success: boolean
   errorMessage?: string
@@ -271,6 +271,7 @@ export async function admitPatientOrder(
     patientName: `${patient.documentNumber} - ${patient.name} ${patient.secondName} ${patient.lastName} ${patient.secondLastName}`,
     orderCycle,
     admittedBy: oldOrder.employee ?? employee,
+    admittedAt: new Date().toISOString(),
     informedConsents, // save informed consents
   }
 

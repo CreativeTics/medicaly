@@ -8,6 +8,7 @@ import { useAuthStore } from '@/store/auth'
 import { DB, PouchService } from '../../../services/pouch'
 import { OrderCycleTypes } from '@/app/core/types/order-cycle-types'
 import { UserType } from '@/app/core/types/user-types'
+import { getOrganization } from '../../organizations/services'
 
 const pouch = new PouchService()
 const doctype = 'service-orders'
@@ -226,6 +227,9 @@ export async function create(entity: any): Promise<{
     employee = await getEmployee(user?.relations[0])
   }
 
+  const organization = await getOrganization()
+  if (!organization) throw new Error('No se encontró la organización')
+
   // crear service order for each patient
 
   const errors: string[] = []
@@ -274,6 +278,7 @@ export async function create(entity: any): Promise<{
         doctype,
         code: 'Por generar',
         status: OrderStatus.pending,
+        organizationId: organization.id,
         contract: entity.contract,
         contractName: contract.name,
         services: servicesFromAttachOrder,
