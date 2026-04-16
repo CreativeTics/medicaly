@@ -213,7 +213,7 @@ const onDrop = (evt: any, newGroupIndex: number, newFieldIndex: number) => {
         <Popper
           arrow
           offsetDistance="12"
-          content="Modo codigo "
+          content="Modo código"
           :hover="true"
           placement="top"
           class="tooltip"
