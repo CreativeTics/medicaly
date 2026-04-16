@@ -9,6 +9,7 @@
 export const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:4000'}/api/v1`
 export const DB_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:4000'}/db`
 export const WS_URL = `${import.meta.env.VITE_WS_URL || 'ws://localhost:4000'}`
+export const IHCE_API_URL = `${import.meta.env.VITE_IHCE_API_URL || 'https://ihce.api.javapsaludocupacional.com.co'}/api/v1`
 
 export const menu = [
   {
@@ -118,6 +119,11 @@ export const menu = [
             permission: 'countries:list',
           },
           {
+            name: 'Catálogos de referencia',
+            route: '/catalogs',
+            permission: 'catalogs:list',
+          },
+          {
             name: 'Departamentos',
             route: '/departments',
             permission: 'departments:list',
@@ -220,24 +226,28 @@ export const menuFilteredByPermissions = (permissions: string[]) => {
   return menu
     .map((item) => {
       if (item.children) {
-        return {
-          ...item,
-          children: item.children.filter((child: any) => {
+        const filteredChildren = item.children
+          .map((child: any) => {
             if (child.children) {
-              child.children = child.children.filter((subChild: any) => {
-                return (
+              const filteredSubChildren = child.children.filter(
+                (subChild: any) =>
                   !subChild.permission ||
-                  permissions.includes(subChild.permission)
-                )
-              })
-              return child.children.length > 0
+                  permissions.includes(subChild.permission),
+              )
+              if (filteredSubChildren.length === 0) return null
+              return { ...child, children: filteredSubChildren }
             } else {
-              return !child.permission || permissions.includes(child.permission)
+              if (!child.permission || permissions.includes(child.permission)) {
+                return child
+              }
+              return null
             }
-          }),
-        }
+          })
+          .filter(Boolean)
+        if (filteredChildren.length === 0) return null
+        return { ...item, children: filteredChildren }
       }
       return item
     })
-    .filter((item) => item.children && item.children.length > 0)
+    .filter(Boolean)
 }

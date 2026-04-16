@@ -36,6 +36,10 @@ export const permissions = [
     name: 'Configuración > Países:Listar',
   },
   {
+    id: 'catalogs:list',
+    name: 'Configuración > Catálogos de Referencia:Listar',
+  },
+  {
     id: 'departments:list',
     name: 'Configuración > Departamentos:Listar',
   },
