@@ -1,10 +1,12 @@
 import axios from 'axios'
 import { IHCE_API_URL } from '@/config'
+import { useAuthStore } from '@/store/auth'
 
 const ihceHttp = axios.create({
   baseURL: IHCE_API_URL,
   headers: {
     'Content-Type': 'application/json',
+    Authorization: `${useAuthStore().token}`,
   },
   validateStatus: (status) => status >= 200 && status < 300,
 })
