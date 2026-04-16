@@ -9,10 +9,14 @@ import { useRouter } from 'vue-router'
 
 import { menuFilteredByPermissions } from '../../config'
 import { ref } from 'vue'
+import useTokenRefresh from '@/app/core/composable/useTokenRefresh'
 
 const authStore = useAuthStore()
 
 const router = useRouter()
+
+// Silent token refresh — keeps JWT alive while user is active
+useTokenRefresh()
 
 const showChangePasswordModal = ref(false)
 

@@ -10,6 +10,8 @@ import { CreateUserController } from './controllers/create-user'
 import { CreateUserUseCase } from '../../application/use-cases/create'
 import { UpdateUserController } from './controllers/update-user'
 import { UpdateUserUseCase } from '../../application/use-cases/update'
+import { RefreshTokenController } from './controllers/refresh-token'
+import { RefreshTokenUseCase } from '../../application/use-cases/refresh-token'
 
 export function publicAuthRoutes(): Router {
   const router: Router = Router()
@@ -32,6 +34,12 @@ export function AuthRoutes(): Router {
   router.get('/session', (req, res) => {
     new getSessionUserController(
       new GetSessionUserUseCase(new CouchUserRepository())
+    ).execute(req, res)
+  })
+
+  router.post('/refresh', (req, res) => {
+    new RefreshTokenController(
+      new RefreshTokenUseCase(new CouchUserRepository())
     ).execute(req, res)
   })
 
