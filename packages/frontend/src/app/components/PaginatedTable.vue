@@ -210,7 +210,7 @@ defineExpose({
                 class="px-3"
               >
                 <div
-                  class="max-w-xs overflow-hidden whitespace-nowrap text-ellipsis"
+                  class="max-w-xs"
                 >
                   {{ row[column.key] }}
                 </div>

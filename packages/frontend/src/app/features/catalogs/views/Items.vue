@@ -20,7 +20,6 @@ const catalogKey = computed(() => route.params.catalogKey as string)
 const columns = [
   { key: 'code', title: 'Código', align: 'left' },
   { key: 'name', title: 'Nombre', align: 'left' },
-  { key: 'description', title: 'Descripción', align: 'left' },
   { key: 'version', title: 'Versión', align: 'left' },
 ]
 
@@ -48,7 +47,6 @@ const flattenedRows = computed(() => {
     const row: Record<string, any> = {
       code: item.code,
       name: item.name,
-      description: item.description ?? '',
       version: item.version,
     }
     if (item.extra) {
