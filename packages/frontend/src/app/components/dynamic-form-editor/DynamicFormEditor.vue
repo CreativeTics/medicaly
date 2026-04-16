@@ -367,7 +367,7 @@ const onDrop = (evt: any, newGroupIndex: number, newFieldIndex: number) => {
             {{ field.type }}
           </span>
 
-          {{ field.label }}
+          {{ field.label ?? field.props?.text }}
 
           <FieldEditor
             v-model="group.fields[fieldIndex]"
