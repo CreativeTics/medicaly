@@ -20,7 +20,7 @@ export interface JwtTokenPayload {
   exp?: number
 }
 
-const TOKEN_EXPIRATION = '1h'
+const TOKEN_EXPIRATION = '2h'
 
 let privateKey: any
 let publicKey: any
@@ -51,7 +51,9 @@ function ensureKeys(): Promise<void> {
 }
 
 export class JwtService {
-  static async sign(payload: Omit<JwtTokenPayload, 'iss' | 'aud' | 'iat' | 'exp'>): Promise<string> {
+  static async sign(
+    payload: Omit<JwtTokenPayload, 'iss' | 'aud' | 'iat' | 'exp'>,
+  ): Promise<string> {
     await ensureKeys()
     const { SignJWT } = await import('jose')
     const { JWT } = config()
