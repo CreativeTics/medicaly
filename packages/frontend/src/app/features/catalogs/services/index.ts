@@ -6,7 +6,6 @@ const ihceHttp = axios.create({
   baseURL: IHCE_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `${useAuthStore().token}`,
   },
   validateStatus: (status) => status >= 200 && status < 300,
 })
@@ -24,10 +23,15 @@ export interface CatalogListResult {
   total: number
 }
 
+function addAuthHeader() {
+  ihceHttp.defaults.headers['Authorization'] = `Bearer ${useAuthStore().token}`
+}
+
 export async function listCatalogs(params?: {
   page?: number
   size?: number
 }): Promise<CatalogListResult> {
+  addAuthHeader()
   const page = params?.page ?? 1
   const size = params?.size ?? 25
 
@@ -64,6 +68,7 @@ export async function listCatalogItems(
     q?: string
   },
 ): Promise<CatalogItemsResult> {
+  addAuthHeader()
   const page = params?.page ?? 1
   const size = params?.size ?? 25
 
