@@ -110,6 +110,11 @@ export const menu = [
     icon: 'Tool02Icon',
     children: [
       {
+        name: 'Catálogos de referencia',
+        route: '/catalogs',
+        permission: 'catalogs:list',
+      },
+      {
         name: 'Básica',
         idMenu: '1',
         children: [
@@ -118,11 +123,7 @@ export const menu = [
             route: '/countries',
             permission: 'countries:list',
           },
-          {
-            name: 'Catálogos de referencia',
-            route: '/catalogs',
-            permission: 'catalogs:list',
-          },
+
           {
             name: 'Departamentos',
             route: '/departments',
