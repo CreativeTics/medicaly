@@ -20,7 +20,6 @@ const columns = [
   { key: 'catalogKey', title: 'Clave', align: 'left' },
   { key: 'description', title: 'Descripción', align: 'left' },
   { key: 'latestVersion', title: 'Versión', align: 'left' },
-  { key: 'codingSystemReferenceUrl', title: 'Referencia', align: 'left' },
 ]
 
 const actionsColumn = { key: 'actions', title: '' }
@@ -111,16 +110,10 @@ onMounted(async () => {
               :class="column.key === 'actions' ? 'sticky right-0' : ''"
             >
               <div
-                v-if="column.key === 'codingSystemReferenceUrl'"
-                class="max-w-xs overflow-hidden whitespace-nowrap text-ellipsis"
+                v-if="column.key === 'description'"
+                class="whitespace-normal"
               >
-                <a
-                  :href="rowProps.row[column.key]"
-                  target="_blank"
-                  class="text-blue-600 hover:underline"
-                >
-                  {{ rowProps.row[column.key] }}
-                </a>
+                {{ rowProps.row[column.key] }}
               </div>
 
               <div
