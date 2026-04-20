@@ -2,7 +2,7 @@
 import { ref, onMounted, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useNotificationsStore } from '@/store/notifications'
-import { DBtn } from '@/app/components/basic'
+import { DBtn, DTextField } from '@/app/components/basic'
 import { FileSearch01Icon } from '@/app/components/basic/icons'
 import Popper from 'vue3-popper'
 
@@ -18,6 +18,7 @@ const notifications = useNotificationsStore()
 
 const columns = [
   { key: 'catalogKey', title: 'Clave', align: 'left' },
+  { key: 'description', title: 'Descripción', align: 'left' },
   { key: 'latestVersion', title: 'Versión', align: 'left' },
   { key: 'codingSystemReferenceUrl', title: 'Referencia', align: 'left' },
 ]
@@ -28,6 +29,7 @@ const data = ref<Catalog[]>([])
 const totalRows = ref(0)
 const currentPage = ref(1)
 const perPage = 25
+const searchText = ref('')
 const loading = ref(false)
 
 const loadData = async () => {
@@ -36,6 +38,7 @@ const loadData = async () => {
     const result = await listCatalogs({
       page: currentPage.value,
       size: perPage,
+      q: searchText.value || undefined,
     })
     data.value = result.rows
     totalRows.value = result.total
@@ -52,6 +55,11 @@ const loadData = async () => {
 
 const onPageChange = async (page: number) => {
   currentPage.value = page
+  await loadData()
+}
+
+const onSearch = async () => {
+  currentPage.value = 1
   await loadData()
 }
 
@@ -84,7 +92,15 @@ onMounted(async () => {
           @page-change="onPageChange"
         >
           <template #header>
-            <div class="py-3"></div>
+            <div class="py-3 flex items-center gap-2">
+              <DTextField
+                v-model="searchText"
+                placeholder="Buscar catálogos..."
+                class="w-80"
+                @keyup.enter="onSearch"
+              />
+              <DBtn size="sm" @click="onSearch">Buscar</DBtn>
+            </div>
           </template>
 
           <template #row="rowProps">

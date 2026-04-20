@@ -14,6 +14,7 @@ const ihceHttp = axios.create({
 
 export interface Catalog {
   catalogKey: string
+  description: string | null
   latestVersion: number
   codingSystemReferenceUrl: string
 }
@@ -30,13 +31,19 @@ function addAuthHeader() {
 export async function listCatalogs(params?: {
   page?: number
   size?: number
+  q?: string
 }): Promise<CatalogListResult> {
   addAuthHeader()
   const page = params?.page ?? 1
   const size = params?.size ?? 25
 
+  const queryParams: Record<string, string | number> = { page, size }
+  if (params?.q) {
+    queryParams.q = params.q
+  }
+
   const { data } = await ihceHttp.get('/reference-data/catalogs', {
-    params: { page, size },
+    params: queryParams,
   })
 
   return {
